@@ -11,7 +11,7 @@ class Deck
     private ArrayList<Card> sideDeck;
 
     
-    public void Deck() 		
+    public Deck()
     {
         
     }		
