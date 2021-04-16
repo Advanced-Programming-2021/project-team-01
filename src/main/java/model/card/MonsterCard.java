@@ -1,5 +1,8 @@
-package model.card;
+﻿package model.card;
 
-public class MonsterCard extends Card{
-
+ class MonsterCard extends Card
+{
+    private int attackPoint;		
+    private int defensePoint;		
+    private ArrayList<MonsterType> type;		
 }

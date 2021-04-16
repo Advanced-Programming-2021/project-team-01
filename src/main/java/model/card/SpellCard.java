@@ -1,5 +1,6 @@
-package model.card;
+﻿package model.card;
 
-public class SpellCard extends Card {
-
+ class SpellCard extends Card
+{
+    
 }

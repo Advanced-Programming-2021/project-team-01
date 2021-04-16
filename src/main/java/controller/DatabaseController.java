@@ -1,5 +1,20 @@
-package controller;
+﻿package controller;
 
-public class DatabaseController {
-
+ class DataBaseController
+{
+    
+    public void createDirectory() 		
+    {
+        
+    }		
+    
+    public void getPlayerDirectory() 		
+    {
+        
+    }		
+    
+    public Player getPlayerFromDirectory(String directory) 		
+    {
+        
+    }		
 }
