@@ -30,5 +30,9 @@ class MainMenu
     private void showCurrentMenu() 		
     {
         
-    }		
+    }
+
+    public void run(String command) {
+
+    }
 }

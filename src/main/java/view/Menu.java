@@ -1,6 +1,6 @@
 ﻿package view;
 
- enum CurrentMenu
+public enum Menu
 {
     EXIT,
     REGISTER_MENU,
@@ -9,5 +9,6 @@
     SHOP,
     IMPORT_EXPORT,
     GAME_MENU,
-    DECK_MENU
+    DECK_MENU,
+    SCOREBOARD
 }
