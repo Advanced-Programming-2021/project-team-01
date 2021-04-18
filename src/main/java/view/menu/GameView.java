@@ -24,12 +24,7 @@ class GameView
     {
         
     }		
-    
-    private void drawPhase(Matcher matcher) 		
-    {
-        
-    }		
-    
+
     private void standByPhase(Matcher matcher) 		
     {
         
