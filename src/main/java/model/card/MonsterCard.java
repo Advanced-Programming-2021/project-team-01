@@ -1,8 +1,10 @@
 ﻿package model.card;
 
- class MonsterCard extends Card
+import java.util.ArrayList;
+
+class MonsterCard extends Card
 {
     private int attackPoint;		
     private int defensePoint;		
-    private ArrayList<MonsterType> type;		
+    private ArrayList<MonsterType> type;
 }

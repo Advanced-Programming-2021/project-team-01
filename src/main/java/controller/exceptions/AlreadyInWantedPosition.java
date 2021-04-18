@@ -1,7 +1,7 @@
 package controller.exceptions;
 
 public class AlreadyInWantedPosition extends Exception {
-    public AlreadyInWantedPosition(String message) {
-        super(message);
+    public AlreadyInWantedPosition() {
+        super("this card is already in the wanted position");
     }
 }

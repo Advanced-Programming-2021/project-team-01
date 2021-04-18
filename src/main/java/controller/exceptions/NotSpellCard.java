@@ -1,7 +1,7 @@
 package controller.exceptions;
 
 public class NotSpellCard extends Exception {
-    public NotSpellCard(String message) {
-        super(message);
+    public NotSpellCard() {
+        super("activate effect is only for spell cards.");
     }
 }

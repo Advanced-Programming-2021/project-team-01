@@ -1,7 +1,7 @@
 package controller.exceptions;
 
 public class CardNotSelected extends Exception {
-    public CardNotSelected(String message) {
-        super(message);
+    public CardNotSelected() {
+        super("no card is selected yet");
     }
 }

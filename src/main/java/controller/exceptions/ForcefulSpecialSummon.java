@@ -1,7 +1,7 @@
 package controller.exceptions;
 
 public class ForcefulSpecialSummon extends Exception {
-    public ForcefulSpecialSummon(String message) {
-        super(message);
+    public ForcefulSpecialSummon() {
+        super("you should special summon right now");
     }
 }

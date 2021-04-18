@@ -1,7 +1,7 @@
 package controller.exceptions;
 
 public class NotSummonCard extends Exception {
-    public NotSummonCard(String message) {
-        super(message);
+    public NotSummonCard() {
+        super("you can’t summon this card");
     }
 }

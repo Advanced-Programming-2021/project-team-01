@@ -1,7 +1,7 @@
 package controller.exceptions;
 
 public class MonsterLevelNotMatch extends Exception {
-    public MonsterLevelNotMatch(String message) {
-        super(message);
+    public MonsterLevelNotMatch() {
+        super("selected monsters levels don’t match with ritual monster");
     }
 }

@@ -1,7 +1,7 @@
 package controller.exceptions;
 
 public class CardNotInHand extends Exception {
-    public CardNotInHand(String message) {
-        super(message);
+    public CardNotInHand() {
+        super("you can’t set this card");
     }
 }

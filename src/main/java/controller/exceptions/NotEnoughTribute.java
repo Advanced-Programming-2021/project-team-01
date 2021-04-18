@@ -1,7 +1,7 @@
 package controller.exceptions;
 
 public class NotEnoughTribute extends Exception {
-    public NotEnoughTribute(String message) {
-        super(message);
+    public NotEnoughTribute() {
+        super("there are not enough cards for tribute");
     }
 }

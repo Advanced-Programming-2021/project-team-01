@@ -18,6 +18,6 @@
     INSECT,
     CYBERSE,
     FAIRY,
-    BEAST-WARRIOR,
+    BEAST_WARRIOR,
     SEA_SERPANT
 }

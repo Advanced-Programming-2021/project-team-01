@@ -1,7 +1,7 @@
 package controller.exceptions;
 
 public class NotAllowedAction extends Exception {
-    public NotAllowedAction(String message) {
-        super(message);
+    public NotAllowedAction() {
+        super("you can’t do this action in this phase");
     }
 }
