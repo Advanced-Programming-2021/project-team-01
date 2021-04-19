@@ -4,13 +4,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ConsoleCommands {
-    LOGIN("^user login (?:username|u) (?<username>\\w+) (?:password|p) (?<password>\\w+)$",
-            "^user login (?:password|p) (?<password>\\w+) (?:username|u) (?<username>\\w+)$"),
-    LOGOUT,
-    MENU_ENTER,
-    MENU_EXIT,
-    CREATE_USER,
-    MENU_SHOW_CURRENT,
+    LOGIN(
+            "^user login (?:username|u) (?<username>\\w+) (?:password|p) (?<password>\\w+)$",
+                 "^user login (?:password|p) (?<password>\\w+) (?:username|u) (?<username>\\w+)$"),
+    LOGOUT(
+            "user logout"),
+    MENU_ENTER(
+            "menu enter (?<menu>\\w+)"),
+    MENU_EXIT(
+            "menu exit"),
+    CREATE_USER(
+            "^user create (?:username|u) (?<username>\\w+) (?:nickname|n) (?<nickname>\\w+) (?:password|p) (?<password>\\w+)$",
+                "^user create (?:username|u) (?<username>\\w+) (?:password|p) (?<password>\\w+) (?:nickname|n) (?<nickname>\\w+)$",
+                "^user create (?:nickname|n) (?<nickname>\\w+) (?:username|u) (?<username>\\w+) (?:password|p) (?<password>\\w+)$",
+                "^user create (?:nickname|n) (?<nickname>\\w+) (?:password|p) (?<password>\\w+) (?:username|u) (?<username>\\w+)$",
+                "^user create (?:password|p) (?<password>\\w+) (?:nickname|n) (?<nickname>\\w+) (?:username|u) (?<username>\\w+)$",
+                "^user create (?:password|p) (?<password>\\w+) (?:username|u) (?<username>\\w+) (?:nickname|n) (?<nickname>\\w+)$"),
+    MENU_SHOW_CURRENT(
+            "menu show-current"),
     SHOW_SCOREBOARD,
     PROFILE_CHANGE,
     CREATE_DECK,
