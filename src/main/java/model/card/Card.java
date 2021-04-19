@@ -1,4 +1,4 @@
-﻿package model.card;
+package model.card;
 
 //
 public class Card
@@ -10,6 +10,6 @@ public class Card
     //
     public String getName() 		
     {
-        
+        return null;
     }		
 }

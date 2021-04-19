@@ -1,4 +1,4 @@
-﻿package model;
+package model;
 
 import model.card.Card;
 

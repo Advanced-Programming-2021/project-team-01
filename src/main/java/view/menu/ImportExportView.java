@@ -1,4 +1,4 @@
-﻿package view.menu;
+package view.menu;
 
 import com.google.gson.Gson;
 

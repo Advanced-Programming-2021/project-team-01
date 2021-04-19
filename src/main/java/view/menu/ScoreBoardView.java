@@ -1,6 +1,8 @@
-﻿package view.menu;
+package view.menu;
 
- class ScoreBoardView
+import java.util.regex.Matcher;
+
+class ScoreBoardView
 {
     
     public void run(String input) 		
@@ -13,7 +15,7 @@
         
     }		
     
-    private void enterMenu(Matcher matcher) 		
+    private void enterMenu(Matcher matcher)
     {
         
     }		

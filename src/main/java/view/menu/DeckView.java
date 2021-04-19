@@ -1,6 +1,8 @@
-﻿package view.menu;
+package view.menu;
 
- class DeckView
+import java.util.regex.Matcher;
+
+class DeckView
 {
     
     public void run(String input) 		
@@ -8,7 +10,7 @@
         
     }		
     
-    private void createDeck(Matcher matcher) 		
+    private void createDeck(Matcher matcher)
     {
         
     }		

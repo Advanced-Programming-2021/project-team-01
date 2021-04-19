@@ -1,15 +1,11 @@
-﻿package view;
+package view;
 
-import controller.exceptions.InvalidCommandException;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-enum ConsoleCommands {
+public enum ConsoleCommands {
     LOGIN("^user login (?:username|u) (?<username>\\w+) (?:password|p) (?<password>\\w+)$",
-                 "^user login (?:password|p) (?<password>\\w+) (?:username|u) (?<username>\\w+)$"),
+            "^user login (?:password|p) (?<password>\\w+) (?:username|u) (?<username>\\w+)$"),
     LOGOUT,
     MENU_ENTER,
     MENU_EXIT,
@@ -51,24 +47,25 @@ enum ConsoleCommands {
     SET_WINNER,
     NewEnumerationItem41,
     IMPORT_CARD,
-    EXPORT_CARD("maz","zam","moz");
+    EXPORT_CARD("maz", "zam", "moz");
     private String[] strings;
 
     ConsoleCommands(String... string) {
+        strings = new String[string.length];
         System.arraycopy(string, 0, strings, 0, string.length);
     }
 
-    private String[] getValue(){
+    private String[] getValue() {
         return strings;
     }
 
-    public Matcher getMatcher(ConsoleCommands consoleCommands,String command){
+    public static Matcher getMatcher(ConsoleCommands consoleCommands, String command) {
         Matcher matcher;
         Pattern pattern;
-        for (int i = 0; i < consoleCommands.getValue().length; i++){
+        for (int i = 0; i < consoleCommands.getValue().length; i++) {
             pattern = Pattern.compile(consoleCommands.getValue()[i]);
             matcher = pattern.matcher(command);
-            if (matcher.matches()){
+            if (matcher.matches()) {
                 return matcher;
             }
         }

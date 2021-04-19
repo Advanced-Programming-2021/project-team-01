@@ -1,4 +1,4 @@
-﻿package view.menu;
+package view.menu;
 
 import java.util.regex.Matcher;
 
