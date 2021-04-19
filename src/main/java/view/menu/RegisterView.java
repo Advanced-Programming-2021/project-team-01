@@ -1,8 +1,6 @@
 package view.menu;
 
 import controller.RegisterController;
-import controller.exceptions.NicknameExists;
-import controller.exceptions.UsernameExists;
 import view.ConsoleCommands;
 import view.Menu;
 
@@ -35,9 +33,9 @@ class RegisterView {
         String password = matcher.group("password");
         String nickname = matcher.group("nickname");
         try {
-            RegisterController.getInstance().createUser(username,password,nickname);
+            RegisterController.getInstance().createUser(username, password, nickname);
             System.out.println("user created successfully!");
-        }catch (Exception exception){
+        } catch (Exception exception) {
             System.err.println(exception.getMessage());
         }
     }
@@ -46,9 +44,9 @@ class RegisterView {
         String username = matcher.group("username");
         String password = matcher.group("password");
         try {
-            RegisterController.getInstance().loginUser(username,password);
+            RegisterController.getInstance().loginUser(username, password);
             System.out.println("user logged in successfully!");
-        }catch (Exception exception){
+        } catch (Exception exception) {
             System.err.println(exception.getMessage());
         }
     }
@@ -60,11 +58,11 @@ class RegisterView {
 
     private void enterMenu(Matcher matcher) {
         String menu = matcher.group("menu");
-        if (Menu.getMenu(menu) == null){
+        if (Menu.getMenu(menu) == null) {
             System.out.println("invalid command");
             return;
         }
-        if (Menu.getMenu(menu) != Menu.MAIN_MENU){
+        if (Menu.getMenu(menu) != Menu.MAIN_MENU) {
             System.out.println("menu navigation is not possible");
             return;
         }
