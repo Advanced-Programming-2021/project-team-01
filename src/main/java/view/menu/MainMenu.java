@@ -19,7 +19,7 @@ class MainMenu
     
     private void enterMenu(Matcher matcher) 		
     {
-        Consol
+
     }
     
     private void exitMenu() 		

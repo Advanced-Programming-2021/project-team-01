@@ -11,7 +11,7 @@ public enum Menu {
     DECK_MENU,
     SCOREBOARD;
 
-    public Menu getMenu(String menu) {
+    public static Menu getMenu(String menu) {
         switch (menu) {
             case "Login":
                 return REGISTER_MENU;
