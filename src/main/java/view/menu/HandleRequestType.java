@@ -4,7 +4,7 @@ import view.Menu;
 
 import java.util.Scanner;
 
-class HandleRequestType {
+public class HandleRequestType {
     public static Scanner scanner = new Scanner(System.in);
     public Menu currentMenu = Menu.REGISTER_MENU;
 

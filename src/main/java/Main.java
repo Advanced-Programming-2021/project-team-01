@@ -1,10 +1,8 @@
-import java.net.Socket;
+import view.menu.HandleRequestType;
 
 public class Main{
     public static void main(String[] args) {
-        int x = 3;
-        int y = Integer.parseInt("323");
-        Integer z = x + y;
-        System.out.println(z);
+        HandleRequestType handleRequestType = new HandleRequestType();
+        handleRequestType.start();
     }
 }
