@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class HandleRequestType {
     public static Scanner scanner = new Scanner(System.in);
-    public Menu currentMenu = Menu.REGISTER_MENU;
+    public static Menu currentMenu = Menu.REGISTER_MENU;
 
     public void start() {
         RegisterView registerView = new RegisterView();
