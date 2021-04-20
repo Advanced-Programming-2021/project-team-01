@@ -1,5 +1,6 @@
 package view.menu;
 
+import controller.GameController;
 import controller.exceptions.*;
 import view.ConsoleCommands;
 import view.Menu;
@@ -8,11 +9,22 @@ import java.util.regex.Matcher;
 
 class MainMenu {
     private void newDuelWithFriend(Matcher matcher) {
-
+        try {
+            int roundNumber = Integer.parseInt(matcher.group("roundNumber"));
+            String username = matcher.group("username");
+            GameController.getInstance().startGame(username, roundNumber);
+        } catch (Exception expt) {
+            System.out.println(expt.getMessage());
+        }
     }
 
     private void newDuelWithAI(Matcher matcher) {
-        
+        try {
+            int roundNumber = Integer.parseInt(matcher.group("roundNumber"));
+            GameController.getInstance().startGame("ai", roundNumber);
+        } catch (Exception expt) {
+            System.out.println(expt.getMessage());
+        }
     }
 
     private void enterMenu(Matcher matcher) throws InvalidMenuNavigation {
@@ -44,23 +56,9 @@ class MainMenu {
         } else if (ConsoleCommands.getMatcher(ConsoleCommands.MENU_SHOW_CURRENT, command) != null) {
             showCurrentMenu();
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.NEW_DUEL_PLAYER, command)) != null) {
-//            try {
-//                newDuelWithFriend(matcher);
-//            } catch (UsernameNotExists expt) {
-//                System.out.println(expt.getMessage());
-//            } catch (NoActiveDeck expt) {
-//                System.out.println(expt.getMessage());
-//            } catch (InvalidDeck expt) {
-//                System.out.println(expt.getMessage());
-//            } catch (InvalidRoundNumber expt) {
-//                System.out.println(expt.getMessage());
-//            }
+            newDuelWithFriend(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.NEW_DUEL_AI, command)) != null) {
-//            try {
-//                newDuelWithAI(matcher);
-//            } catch (InvalidRoundNumber expt) {
-//                System.out.println(expt.getMessage());
-//            }
+            newDuelWithAI(matcher);
         } else
             System.out.println("invalid command");
     }
