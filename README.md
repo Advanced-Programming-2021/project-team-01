@@ -2,7 +2,6 @@
 ## Team 01
 
 ### Team Members:
-| Command | Description |
 | --- | --- |
 | 1      | Hossein Goli |
 | 2      | Dadbeh Tavanaei |
