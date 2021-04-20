@@ -1,7 +1,6 @@
 # Advanced Programming Project - Spring 2021
 ## Team 01
 
-### Team Members:
 ||Team Members|
 | --- | --- |
 | 1      | Hossein Goli |
