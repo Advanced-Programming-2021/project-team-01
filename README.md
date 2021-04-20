@@ -2,6 +2,6 @@
 ## Team 01
 
 ### Team Members:
-- Dadbeh Tavanaie 99101343
-- Erfan Sadraiye 99101835
-- Hossein Goli 99102123
+| 1      | Hossein Goli |
+| 2      | Dadbeh Tavanaei |
+| 3 | Erfan Sadraie  |
