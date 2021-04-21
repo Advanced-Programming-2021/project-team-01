@@ -1,30 +1,60 @@
 package view.menu;
 
+import controller.ShopController;
+import view.ConsoleCommands;
+import view.Menu;
+
+import java.util.HashMap;
 import java.util.regex.Matcher;
 
 class ShopView {
 
     public void run(String input) {
+        Matcher matcher;
+        if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.BUY_CARD, input)) != null) {
+            buyCard(matcher);
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.MENU_ENTER, input)) != null) {
+            enterMenu(matcher);
+        } else if (ConsoleCommands.getMatcher(ConsoleCommands.MENU_SHOW_CURRENT, input) != null) {
+            showCurrentMenu();
+        } else if (ConsoleCommands.getMatcher(ConsoleCommands.MENU_EXIT, input) != null) {
+            exitMenu();
+        } else if (ConsoleCommands.getMatcher(ConsoleCommands.SHOW_ALL_CARDS, input) != null){
+            showAllCards();
+        } else {
+            System.err.println("invalid command");
+        }
 
     }
 
     private void buyCard(Matcher matcher) {
-
+        String cardName = matcher.group("cardName");
+        try {
+            ShopController.getInstance().buyCard(cardName);
+        } catch (Exception exception) {
+            System.err.println(exception.getMessage());
+        }
     }
 
     private void showAllCards() {
-
+        HashMap<String, Integer> shopCards = ShopController.getInstance().getCards();
+        shopCards.forEach((key, value) -> System.out.println(key + " : " + value));
     }
 
     private void enterMenu(Matcher matcher) {
-
+        String menu = matcher.group("menu");
+        if (Menu.getMenu(menu) == null) {
+            System.err.println("invalid command");
+            return;
+        }
+        System.err.println("menu navigation is not possible");
     }
 
     private void exitMenu() {
-
+        HandleRequestType.currentMenu = Menu.MAIN_MENU;
     }
 
     private void showCurrentMenu() {
-
+        System.out.println("Shop");
     }
 }

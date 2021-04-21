@@ -20,7 +20,8 @@ public enum ConsoleCommands {
                 "^user create (?:nickname|n) (?<nickname>\\w+) (?:password|p) (?<password>\\w+) (?:username|u) (?<username>\\w+)$",
                 "^user create (?:password|p) (?<password>\\w+) (?:nickname|n) (?<nickname>\\w+) (?:username|u) (?<username>\\w+)$",
                 "^user create (?:password|p) (?<password>\\w+) (?:username|u) (?<username>\\w+) (?:nickname|n) (?<nickname>\\w+)$"),
-    MENU_SHOW_CURRENT("menu show-current"),
+    MENU_SHOW_CURRENT(
+            "menu show-current"),
     SHOW_SCOREBOARD,
     PROFILE_CHANGE,
     CREATE_DECK("^deck create (?<name>\\w+)$"),
@@ -42,7 +43,7 @@ public enum ConsoleCommands {
             "^deck show deck-name(?<side> side)* (?<deckName>\\w+)$"),
     SHOW_ALL_DECK("^deck show all$"),
     SHOW_DECK_CARDS("^show deck cards$"),
-    BUY_CARD,
+    BUY_CARD("^shop buy (?<cardName>\\w+)$"),
     SHOW_ALL_CARDS(),
     NEW_DUEL_PLAYER("^duel new second-player (?<username>\\w+) rounds (?<roundNumber>\\d+)$",
             "^duel new rounds (?<roundNumber>\\d+) second-player (?<username>\\w+)$",
@@ -80,7 +81,6 @@ public enum ConsoleCommands {
     NewEnumerationItem41,
     IMPORT_CARD,
     EXPORT_CARD("maz", "zam", "moz");
-
     private String[] strings;
 
     ConsoleCommands(String... string) {
