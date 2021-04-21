@@ -1,5 +1,10 @@
 package controller;
 
+import model.Deck;
+import model.card.Card;
+
+import java.util.ArrayList;
+
 public class DeckController {
     private static DeckController instance = null;
 
@@ -30,15 +35,15 @@ public class DeckController {
 
     }
 
-    public void showAllDecks() {
-
+    public ArrayList<Deck> showAllDecks() {
+        return null;
     }
 
-    public void showDeckByName(String name, boolean isMainDeck) {
-
+    public Deck showDeckByName(String name, boolean isMainDeck) {
+        return null;
     }
 
-    public void showPlayersAllCards() {
-
+    public ArrayList<Card> showPlayersAllCards() {
+        return null;
     }
 }

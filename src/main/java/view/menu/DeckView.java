@@ -1,8 +1,11 @@
 package view.menu;
 
 import controller.DeckController;
+import model.Deck;
 import view.ConsoleCommands;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.regex.Matcher;
 
 public class DeckView {
@@ -83,7 +86,25 @@ public class DeckView {
     }
 
     private void showDeck(Matcher matcher) {
+        boolean isMainDeck = matcher.group("side").equals("");
+        String name = matcher.group("deckName");
 
+        try {
+            Deck deck = DeckController.getInstance().showDeckByName(name, isMainDeck);
+            System.out.println("Deck: " + deck.getDeckName());
+            System.out.println(isMainDeck ? "Main deck:" : "Side deck:");
+            System.out.println("Monsters:");
+
+            if (isMainDeck) {
+
+            } else {
+
+            }
+
+            System.out.println("Spells and Traps:");
+        } catch (Exception expt) {
+            System.out.println(expt.getMessage());
+        }
     }
 
     private void showAllDeck() {

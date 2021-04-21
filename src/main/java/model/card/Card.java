@@ -1,15 +1,11 @@
 package model.card;
 
-//
-public class Card
-{
-    //
-    private String name;		
+public class Card {
+    private String name;
+    private String description;
 
-    
-    //
-    public String getName() 		
-    {
+
+    public String getName() {
         return null;
-    }		
+    }
 }
