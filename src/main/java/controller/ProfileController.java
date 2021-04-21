@@ -1,13 +1,17 @@
 package controller;
 
- class ProfileController
+public class ProfileController
 {
+    private static ProfileController instance = null;
     
-    public ProfileController getInstance() 		
+    public static ProfileController getInstance()
     {
-        return this;
+        if (instance == null){
+            instance = new ProfileController();
+        }
+        return instance;
     }		
-    
+
     public void changeNickname(String nickname) 		
     {
         

@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ConsoleCommands {
+    //RegisterMenu:
+
     LOGIN(
             "^user login (?:username|u) (?<username>\\w+) (?:password|p) (?<password>\\w+)$",
                  "^user login (?:password|p) (?<password>\\w+) (?:username|u) (?<username>\\w+)$"),
@@ -23,7 +25,20 @@ public enum ConsoleCommands {
     MENU_SHOW_CURRENT(
             "menu show-current"),
     SHOW_SCOREBOARD,
-    PROFILE_CHANGE,
+
+    //ProfileMenu:
+
+    CHANGE_NICKNAME("profile change nickname (?<nickname>\\w+)"),
+    CHANGE_PASSWORD(
+            "profile change password new (?<newPassword>\\w+) current (?<currentPassword>\\w+)",
+            "profile change password current (?<currentPassword>\\w+) new (?<newPassword>\\w+)",
+            "profile change new (?<newPassword>\\w+) password current (?<currentPassword>\\w+)",
+            "profile change current (?<currentPassword>\\w+) password new (?<newPassword>\\w+)",
+            "profile change new (?<newPassword>\\w+) current (?<currentPassword>\\w+) password",
+            "profile change current (?<currentPassword>\\w+) new (?<newPassword>\\w+) password"),
+
+    //DeckMenu:
+
     CREATE_DECK("^deck create (?<name>\\w+)$"),
     DELETE_DECK("^deck delete (?<name>\\w+)$"),
     ACTIVATE_DECK("^deck set-activate (?<name>\\w+)$"),
@@ -45,6 +60,9 @@ public enum ConsoleCommands {
     SHOW_DECK_CARDS("^show deck cards$"),
     BUY_CARD("^shop buy (?<cardName>\\w+)$"),
     SHOW_ALL_CARDS(),
+
+    //MainMenu:
+
     NEW_DUEL_PLAYER("^duel new second-player (?<username>\\w+) rounds (?<roundNumber>\\d+)$",
             "^duel new rounds (?<roundNumber>\\d+) second-player (?<username>\\w+)$",
             "^duel second-player (?<username>\\w+) new rounds (?<roundNumber>\\d+)$",
