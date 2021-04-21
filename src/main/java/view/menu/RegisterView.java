@@ -59,11 +59,11 @@ class RegisterView {
     private void enterMenu(Matcher matcher) {
         String menu = matcher.group("menu");
         if (Menu.getMenu(menu) == null) {
-            System.out.println("invalid command");
+            System.err.println("invalid command");
             return;
         }
         if (Menu.getMenu(menu) != Menu.MAIN_MENU) {
-            System.out.println("menu navigation is not possible");
+            System.err.println("menu navigation is not possible");
             return;
         }
         HandleRequestType.currentMenu = Menu.getMenu(menu);

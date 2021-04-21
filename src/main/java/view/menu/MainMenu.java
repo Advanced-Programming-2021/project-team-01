@@ -16,7 +16,7 @@ class MainMenu {
         } catch (Exception expt) {
             System.out.println(expt.getMessage());
         }
-        HandleRequestType.currentMenu = Menu.GAME_MENU
+        HandleRequestType.currentMenu = Menu.GAME_MENU;
     }
 
     private void newDuelWithAI(Matcher matcher) {
@@ -26,7 +26,7 @@ class MainMenu {
         } catch (Exception expt) {
             System.out.println(expt.getMessage());
         }
-        HandleRequestType.currentMenu = Menu.GAME_MENU
+        HandleRequestType.currentMenu = Menu.GAME_MENU;
     }
 
     private void enterMenu(Matcher matcher) throws InvalidMenuNavigation {
