@@ -1,9 +1,11 @@
 package controller;
 
+import model.Player;
 import view.Menu;
 import view.menu.HandleRequestType;
 
 public class RegisterController {
+    public Player onlineUser; //TODO Important: UPDATE DATABASE WHEN :-> AFTER LOGOUT, NEW_GAME
     private static RegisterController instance = null;
 
     public static RegisterController getInstance() {

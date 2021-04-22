@@ -1,12 +1,9 @@
 package controller;
 
 //
- class ScoreBoardController
-{
-    
-    //
-    public void showScoreBoard()
-    {
-        
-    }		
+class ScoreBoardController {
+
+    public void showScoreBoard() {
+
+    }
 }
