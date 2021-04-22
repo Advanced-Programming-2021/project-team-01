@@ -1,5 +1,6 @@
 package model;
 
+import com.google.gson.Gson;
 import model.card.Card;
 
 import java.util.ArrayList;
@@ -10,12 +11,18 @@ public class Player {
     private String nickname;
     private int money;
     private int score;
-    private Deck activeDeck;
-    private ArrayList<Deck> playerDecks;
-    private ArrayList<Card> playerCards;
+    private String activeDeck;
+    private ArrayList<String> playerDecks = new ArrayList<>();
+    private ArrayList<String> playerCards = new ArrayList<>();  //TODO: string or card
+    private int winRate;
+    private int looseRate;
 
-    public Player(String username, String nickname, String password) {
-
+    public Player(String username, String password, String nickname) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.winRate = 0;
+        this.looseRate = 0;
     }
 
     public String getNickname() {
@@ -46,20 +53,12 @@ public class Player {
         return money;
     }
 
-    public void setActiveDeck(Deck activeDeck) {
-        this.activeDeck = activeDeck;
-    }
-
     public void addDeck(Deck deck) {
 
     }
 
     public void deleteDeck(Deck deck) {
 
-    }
-
-    public ArrayList<Deck> getAllDecks() {
-        return playerDecks;
     }
 
     public Deck getDeckByName(String name) {

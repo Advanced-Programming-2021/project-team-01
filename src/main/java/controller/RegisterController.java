@@ -1,7 +1,5 @@
 package controller;
 
-import controller.exceptions.NicknameExists;
-import controller.exceptions.UsernameExists;
 import view.Menu;
 import view.menu.HandleRequestType;
 

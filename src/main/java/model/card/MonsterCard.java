@@ -1,7 +1,5 @@
 package model.card;
 
-import java.util.ArrayList;
-
 public class MonsterCard extends Card
 {
     private int attack;

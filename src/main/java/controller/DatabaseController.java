@@ -1,7 +1,7 @@
 package controller;
 
+import model.Deck;
 import model.Player;
-import model.card.Card;
 
 public class DatabaseController {
 
@@ -17,8 +17,12 @@ public class DatabaseController {
         return null;
     }
 
-    public void loadGameCards(){
+    public static void loadGameCards(){
         //todo : CSV HANDLE
         //Card.allCards.add();
+    }
+
+    public Deck getDeckByName(){
+        return null;
     }
 }
