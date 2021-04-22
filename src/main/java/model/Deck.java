@@ -41,4 +41,12 @@ public class Deck {
     public String getDeckName() {
         return deckName;
     }
+
+    public ArrayList<Card> getMainDeck() {
+        return mainDeck;
+    }
+
+    public ArrayList<Card> getSideDeck() {
+        return sideDeck;
+    }
 }
