@@ -24,7 +24,7 @@ public enum ConsoleCommands {
                 "^user create (?:password|p) (?<password>\\w+) (?:username|u) (?<username>\\w+) (?:nickname|n) (?<nickname>\\w+)$"),
     MENU_SHOW_CURRENT(
             "menu show-current"),
-    SHOW_SCOREBOARD,
+    SHOW_SCOREBOARD("scoreboard show"),
 
     //ProfileMenu:
 
