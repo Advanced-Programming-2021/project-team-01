@@ -1,6 +1,6 @@
 package model.card;
 
- class SpellCard extends Card
-{
-    
+public class SpellCard {
+    Property property;
+    //fixme: status is unclear
 }

@@ -1,6 +1,6 @@
 package model.card;
 
- class TrapCard extends Card
-{
-    
+public class TrapCard {
+    Property property;
+    //fixme : status is unclear
 }
