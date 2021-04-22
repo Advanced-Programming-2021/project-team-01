@@ -4,6 +4,7 @@ import model.Deck;
 import model.card.Card;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DeckController {
     private static DeckController instance = null;
@@ -39,7 +40,7 @@ public class DeckController {
         return null;
     }
 
-    public Deck showDeckByName(String name, boolean isMainDeck) {
+    public ArrayList<Card> showDeckByName(String name, boolean isMainDeck) {
         return null;
     }
 
