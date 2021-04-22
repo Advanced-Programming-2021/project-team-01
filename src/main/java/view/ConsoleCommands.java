@@ -97,8 +97,8 @@ public enum ConsoleCommands {
     INCREASE_LP,
     SET_WINNER,
     NewEnumerationItem41,
-    IMPORT_CARD,
-    EXPORT_CARD("maz", "zam", "moz");
+    IMPORT_CARD("^import card (?<cardName>\\w+)$"),
+    EXPORT_CARD("^export card (?<cardName>\\w+)$");
     private String[] strings;
 
     ConsoleCommands(String... string) {
