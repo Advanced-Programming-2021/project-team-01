@@ -59,6 +59,6 @@ class ProfileView {
     }
 
     private void showCurrentMenu() {
-
+        System.out.println("Profile");
     }
 }
