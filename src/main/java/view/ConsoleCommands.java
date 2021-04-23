@@ -24,7 +24,7 @@ public enum ConsoleCommands {
                 "^user create (?:password|p) (?<password>\\w+) (?:username|u) (?<username>\\w+) (?:nickname|n) (?<nickname>\\w+)$"),
     MENU_SHOW_CURRENT(
             "menu show-current"),
-    SHOW_SCOREBOARD,
+    SHOW_SCOREBOARD("scoreboard show"),
 
     //ProfileMenu:
 
@@ -97,8 +97,8 @@ public enum ConsoleCommands {
     INCREASE_LP,
     SET_WINNER,
     NewEnumerationItem41,
-    IMPORT_CARD,
-    EXPORT_CARD("maz", "zam", "moz");
+    IMPORT_CARD("^import card (?<cardName>\\w+)$"),
+    EXPORT_CARD("^export card (?<cardName>\\w+)$");
     private String[] strings;
 
     ConsoleCommands(String... string) {

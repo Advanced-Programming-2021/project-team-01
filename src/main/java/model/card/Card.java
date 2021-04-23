@@ -31,4 +31,7 @@ public class Card {
         return name;
     }
 
+    public String getDescription() {
+        return description;
+    }
 }
