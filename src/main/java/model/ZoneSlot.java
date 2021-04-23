@@ -2,7 +2,7 @@ package model;
 
 import model.card.Card;
 
-class FieldZoneSlot
+public class ZoneSlot
 {
     private Card card;
     private boolean isSet;		
