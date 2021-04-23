@@ -48,6 +48,9 @@ public class GameController {
 
     }
 
+    public void setCard() {
+
+    }
 
     public void setMonster() {
 
@@ -65,7 +68,7 @@ public class GameController {
 
     }
 
-    public void changeCardPosition() {
+    public void changeCardPosition(String newPosition) {
 
     }
 

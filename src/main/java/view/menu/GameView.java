@@ -13,6 +13,30 @@ class GameView {
             selectPlayerCard(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.DESELECT_CARD, input)) != null) {
             deselectCard(matcher);
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SUMMON_MONSTER, input)) != null) {
+            summonCard();
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SET_CARD, input)) != null) {
+            setCard();
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.CHANGE_MONSTER_POSITION, input)) != null) {
+            changeCardPosition(matcher);
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.FLIP_SUMMON, input)) != null) {
+            flipSummonCard();
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.ATTACK, input)) != null) {
+            attackOpponentsMonster(matcher);
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.DIRECT_ATTACK, input)) != null) {
+            directAttack(matcher);
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.ACTIVATE_EFFECT, input)) != null) {
+            activateSpellCard(matcher);
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
+            showGraveyard();
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SHOW_SELECTED_CARD, input)) != null) {
+            showCard();
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
+            directAttack(matcher);
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
+            directAttack(matcher);
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SURRENDER, input)) != null) {
+            surrender();
         } else {
             System.out.println("invalid command");
         }
@@ -52,7 +76,8 @@ class GameView {
     }
 
     private void standByPhase(Matcher matcher) {
-
+        System.out.println("phase: ");
+        //fixme kari bayad kar mge?! :|
     }
 
     private void drawPhase(Matcher matcher) {
@@ -67,55 +92,96 @@ class GameView {
 
     }
 
-    private void summonCard(Matcher matcher) {
-
+    private void summonCard() {
+        try {
+            GameController.getInstance().summon();
+            System.out.println("summoned successfully");
+        } catch (Exception exp) {
+            System.err.println(exp.getMessage());
+        }
     }
 
-    private void setMonster(Matcher matcher) {
-
+    private void setCard() {
+        try {
+            GameController.getInstance().setCard();
+            System.out.println("set successfully");
+        } catch (Exception exp) {
+            System.err.println(exp.getMessage());
+        }
     }
 
     private void changeCardPosition(Matcher matcher) {
-
+        try {
+            String newPosition = matcher.group("position");
+            GameController.getInstance().changeCardPosition(newPosition);
+            System.out.println("monster card position changed successfully");
+        } catch (Exception exp) {
+            System.err.println(exp.getMessage());
+        }
     }
 
-    private void flipSummonCard(Matcher matcher) {
-
+    private void flipSummonCard() {
+        try {
+            GameController.getInstance().flipSummon();
+            System.out.println("flip summoned successfully");
+        } catch (Exception exp) {
+            System.err.println(exp.getMessage());
+        }
     }
 
     private void attackOpponentsMonster(Matcher matcher) {
-
+        try {
+            int number = Integer.parseInt(matcher.group("number"));
+            GameController.getInstance().attack(number);
+            System.out.println("flip summoned successfully");
+        } catch (Exception exp) {
+            System.err.println(exp.getMessage());
+        }
     }
 
     private void directAttack(Matcher matcher) {
-
+        try {
+            GameController.getInstance().directAttack();
+            //TODO: print success message
+        } catch (Exception exp) {
+            System.err.println(exp.getMessage());
+        }
     }
 
     private void activateSpellCard(Matcher matcher) {
-
+        try {
+            GameController.getInstance().activateEffect();
+            System.out.println("spell activated");
+        } catch (Exception exp) {
+            System.err.println(exp.getMessage());
+        }
     }
 
-    private void setSpell(Matcher matcher) {
-
-    }
-
-    private void setTrap(Matcher matcher) {
-
-    }
-
-    private void showGraveyard(Matcher matcher) {
-
+    private void showGraveyard() {
+        try {
+            GameController.getInstance().showGraveyard();
+        } catch (Exception exp) {
+            System.err.println(exp.getMessage());
+        }
     }
 
     private void back(Matcher matcher) {
 
     }
 
-    private void showCard(Matcher matcher) {
-
+    private void showCard() {
+        try {
+            GameController.getInstance().showSelectedCard();
+        } catch (Exception exp) {
+            System.err.println(exp.getMessage());
+        }
     }
 
-    private void surrender(Matcher matcher) {
-
+    private void surrender() {
+        try {
+            GameController.getInstance().surrender();
+        } catch (Exception exp) {
+            System.err.println(exp.getMessage());
+        }
     }
 }
