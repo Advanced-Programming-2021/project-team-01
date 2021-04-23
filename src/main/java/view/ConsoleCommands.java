@@ -75,9 +75,15 @@ public enum ConsoleCommands {
             "^duel ai rounds (?<roundNumber>\\d+) new$",
             "^duel rounds (?<roundNumber>\\d+) new ai$",
             "^duel rounds (?<roundNumber>\\d+) ai new$"),
-    SELECT_PLAYER_CARD,
-    SELECT_OPPONENT_CARD,
-    NEXT_PHASE,
+
+    //Game Menu
+    SELECT_PLAYER_CARD("select (?<type>monster|spell)( (?<opponent>opponent))*( (?<number>\\d+))*",
+            "select (?<opponent>opponent)( (?<type>monster|spell))*( (?<number>\\d+))*",
+            "select (?<type>field)( (?<opponent>opponent))*",
+            "select (?<opponent>opponent) (?<type>field)",
+            "select (?<type>hand) (?<number>\\d+)"),
+    DESELECT_CARD("select -d"),
+    NEXT_PHASE("next phase"),
     REMOVE_SELECTION,
     SUMMON_MONSTER,
     SET_MONSTER,
@@ -105,6 +111,7 @@ public enum ConsoleCommands {
         strings = new String[string.length];
         System.arraycopy(string, 0, strings, 0, string.length);
     }
+
 
     private String[] getValue() {
         return strings;
