@@ -20,7 +20,7 @@ public class GameController {
         return instance;
     }
 
-    private void GameController() {
+    private GameController() {
 
     }
 
@@ -28,11 +28,19 @@ public class GameController {
 
     }
 
-    public void selectPlayer(String fieldType, int fieldNumber) {
+    public void selectPlayerCard(String fieldType) {
 
     }
 
-    public void selectOpponent(String fieldType, int fieldNumber) {
+    public void selectPlayerCard(String fieldType, int fieldNumber) {
+
+    }
+
+    public void selectOpponentCard(String fieldType) {
+
+    }
+
+    public void selectOpponentCard(String fieldType, int fieldNumber) {
 
     }
 
@@ -40,6 +48,9 @@ public class GameController {
 
     }
 
+    public void setCard() {
+
+    }
 
     public void setMonster() {
 
@@ -57,7 +68,7 @@ public class GameController {
 
     }
 
-    public void changeCardPosition() {
+    public void changeCardPosition(String newPosition) {
 
     }
 

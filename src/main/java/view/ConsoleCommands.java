@@ -75,23 +75,27 @@ public enum ConsoleCommands {
             "^duel ai rounds (?<roundNumber>\\d+) new$",
             "^duel rounds (?<roundNumber>\\d+) new ai$",
             "^duel rounds (?<roundNumber>\\d+) ai new$"),
-    SELECT_PLAYER_CARD,
-    SELECT_OPPONENT_CARD,
-    NEXT_PHASE,
+
+    //Game Menu
+    SELECT_PLAYER_CARD("select (?<type>monster|spell)( (?<opponent>opponent))*( (?<number>\\d+))*",
+            "select (?<opponent>opponent)( (?<type>monster|spell))*( (?<number>\\d+))*",
+            "select (?<type>field)( (?<opponent>opponent))*",
+            "select (?<opponent>opponent) (?<type>field)",
+            "select (?<type>hand) (?<number>\\d+)"),
+    DESELECT_CARD("select -d"),
+    NEXT_PHASE("next phase"),
     REMOVE_SELECTION,
-    SUMMON_MONSTER,
-    SET_MONSTER,
-    CHANGE_MONSTER_POSITION,
-    FLIP_SUMMON,
-    ATTACK,
-    DIRECT_ATTACK,
-    ACTIVATE_EFFECT,
-    SET_SPELL,
-    SET_TRAP,
-    SHOW_GRAVEYARD,
-    SHOW_SELECTED_CARD,
-    BACK,
-    SURRENDER,
+    SUMMON_MONSTER("summon"),
+    SET_CARD("set"),
+    CHANGE_MONSTER_POSITION("set position (?<position>attack|defense)"),
+    FLIP_SUMMON("flip-summon"),
+    ATTACK("attack (?<number>\\d+)"),
+    DIRECT_ATTACK("attack direct"),
+    ACTIVATE_EFFECT("active effect"),
+    SHOW_GRAVEYARD("show graveyard"),
+    SHOW_SELECTED_CARD("card show selected"),
+    BACK("back"),
+    SURRENDER("surrender"),
     INCREASE_MONEY,
     FORCEFUL_SELECT,
     INCREASE_LP,
@@ -105,6 +109,7 @@ public enum ConsoleCommands {
         strings = new String[string.length];
         System.arraycopy(string, 0, strings, 0, string.length);
     }
+
 
     private String[] getValue() {
         return strings;
