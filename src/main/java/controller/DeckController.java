@@ -1,6 +1,7 @@
 package controller;
 
 import model.Deck;
+import model.Player;
 import model.card.Card;
 
 import java.util.ArrayList;

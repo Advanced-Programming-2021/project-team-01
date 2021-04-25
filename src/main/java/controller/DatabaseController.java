@@ -1,10 +1,13 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonWriter;
 import model.Deck;
 import model.Player;
 
+
 import java.io.*;
+
 
 public class DatabaseController {
 
@@ -13,7 +16,7 @@ public class DatabaseController {
         //Card.allCards.add();
     }
 
-    public static void write(String data, String directory) {
+    private static void write(String data, String directory) {
         try {
             FileWriter fileWriter = new FileWriter(directory);
             PrintWriter printWriter = new PrintWriter(fileWriter);
@@ -25,11 +28,11 @@ public class DatabaseController {
     }
 
     public static String getUserDirectory(String username) {
-        return "resources" + File.separator + "users" + File.separator + username;
+        return "src" + File.separator + "resources" + File.separator + "users" + File.separator + username + ".json";
     }
 
     public static String getDeckDirectory(String deck) {
-        return "resources" + File.separator + "deck" + File.separator + deck;
+        return "src" + File.separator +"resources" + File.separator + "deck" + File.separator + deck + ".json";
     }
 
     public static String read(String directory) {
@@ -45,19 +48,7 @@ public class DatabaseController {
         return null;
     }
 
-    public static void main(String[] args) {
-        try {
-            Gson gson = new Gson();
-            FileWriter fileWriter = new FileWriter("x.txt");
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            gson.toJson("\"name\":\"ali\"", bufferedWriter);
-            bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Player getUserFromDirectory(String username) {
+    public static Player getUserFromDirectory(String username) {
         String directory = getUserDirectory(username);
         try {
             FileReader fileReader = new FileReader(directory);
@@ -79,5 +70,31 @@ public class DatabaseController {
             e.printStackTrace();
         }
         return null;
+    }
+    public static void updateDeck(Deck deck){
+        String deckName = deck.getDeckName();
+        try {
+            FileWriter fileWriter = new FileWriter(getUserDirectory(deckName));
+            Gson gson = new Gson();
+            gson.toJson(deck, fileWriter);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void updatePlayer(Player player){
+        String username = player.getUsername();
+        try {
+            FileWriter fileWriter = new FileWriter(getUserDirectory(username));
+            Gson gson = new Gson();
+            gson.toJson(player, fileWriter);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void main(String[] args) {
+        Player player = new Player("ali","123","hoy");
+        updatePlayer(player);
     }
 }
