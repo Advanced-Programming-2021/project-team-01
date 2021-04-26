@@ -8,7 +8,7 @@ public enum Attribute {
     FIRE,
     WIND;
 
-    public static Attribute getMenu(String attribute) {
+    public static Attribute getAttribute(String attribute) {
         switch (attribute) {
             case "EARTH":
                 return EARTH;

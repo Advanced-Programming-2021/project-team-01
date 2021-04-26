@@ -1,7 +1,6 @@
 package model.card;
 
-public class MonsterCard extends Card
-{
+public class MonsterCard extends Card {
     private int attack;
     private int defense;
     private CardType cardType;
