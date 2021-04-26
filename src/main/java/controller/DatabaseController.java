@@ -53,11 +53,11 @@ public class DatabaseController {
         }
     }
 
-    public static String getUserDirectory(String username) {
+    private static String getUserDirectory(String username) {
         return "src" + File.separator + "resources" + File.separator + "users" + File.separator + username + ".json";
     }
 
-    public static String getDeckDirectory(String deck) {
+    private static String getDeckDirectory(String deck) {
         return "src" + File.separator +"resources" + File.separator + "deck" + File.separator + deck + ".json";
     }
 
@@ -74,7 +74,7 @@ public class DatabaseController {
         return null;
     }
 
-    public static Player getUserFromDirectory(String username) {
+    public static Player getUserFromDirectory(String username){
         String directory = getUserDirectory(username);
         try {
             FileReader fileReader = new FileReader(directory);
@@ -84,6 +84,18 @@ public class DatabaseController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean doesUserExists(String username){
+        String directory = getUserDirectory(username);
+        File file = new File(directory);
+        return file.exists();
+    }
+
+    public static boolean doesDeckExists(String deckName){
+        String directory = getDeckDirectory(deckName);
+        File file = new File(directory);
+        return file.exists();
     }
 
     public Deck getDeckByName(String deck) {
