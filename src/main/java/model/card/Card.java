@@ -23,7 +23,7 @@ public class Card {
         return null;
     }
 
-    public void addCardToDatabase(Card card){
+    public static void addCardToDatabase(Card card){
         allCards.add(card);
     }
 
