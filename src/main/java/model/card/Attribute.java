@@ -6,5 +6,24 @@ public enum Attribute {
     DARK,
     LIGHT,
     FIRE,
-    WIND,
+    WIND;
+
+    public static Attribute getMenu(String attribute) {
+        switch (attribute) {
+            case "EARTH":
+                return EARTH;
+            case "WATER":
+                return WATER;
+            case "DARK":
+                return DARK;
+            case "LIGHT":
+                return LIGHT;
+            case "FIRE":
+                return FIRE;
+            case "WIND":
+                return WIND;
+            default:
+                return null;
+        }
+    }
 }
