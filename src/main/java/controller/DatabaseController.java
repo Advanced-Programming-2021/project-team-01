@@ -15,7 +15,7 @@ import java.io.*;
 public class DatabaseController {
 
     public static void loadGameCards() throws IOException, CsvValidationException {
-        File file = new File(System.getProperty("user.dir") + "/src/main/java/controller/Monster.csv");
+        File file = new File(System.getProperty("user.dir") + "/src/resources/Monster.csv");
         FileReader fileReader = new FileReader(file);
         CSVReader reader = new CSVReader(fileReader);
 
@@ -26,7 +26,7 @@ public class DatabaseController {
                     MonsterType.getMonsterTypesArray(monsterArray[3]), Attribute.getAttribute(monsterArray[2]), Integer.parseInt(monsterArray[1])));
         }
 
-        file = new File(System.getProperty("user.dir") + "/src/main/java/controller/SpellTrap.csv");
+        file = new File(System.getProperty("user.dir") + "/src/resources/SpellTrap.csv");
         fileReader = new FileReader(file);
         reader = new CSVReader(fileReader);
 
