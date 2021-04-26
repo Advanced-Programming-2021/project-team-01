@@ -2,8 +2,11 @@ package controller;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonWriter;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import model.Deck;
 import model.Player;
+import model.card.*;
 
 
 import java.io.*;
@@ -11,9 +14,32 @@ import java.io.*;
 
 public class DatabaseController {
 
-    public static void loadGameCards() {
-        //todo : CSV HANDLE
-        //Card.allCards.add();
+    public static void loadGameCards() throws IOException, CsvValidationException {
+        File file = new File(System.getProperty("user.dir") + "/src/main/java/controller/Monster.csv");
+        FileReader fileReader = new FileReader(file);
+        CSVReader reader = new CSVReader(fileReader);
+
+        String[] monsterArray = reader.readNext();
+        while ((monsterArray = reader.readNext()) != null) {
+            Card.addCardToDatabase(new MonsterCard(monsterArray[0], monsterArray[7], Integer.parseInt(monsterArray[8]),
+                    Integer.parseInt(monsterArray[5]), Integer.parseInt(monsterArray[6]), CardType.getCardType(monsterArray[4]),
+                    MonsterType.getMonsterTypesArray(monsterArray[3]), Attribute.getAttribute(monsterArray[2]), Integer.parseInt(monsterArray[1])));
+        }
+
+        file = new File(System.getProperty("user.dir") + "/src/main/java/controller/SpellTrap.csv");
+        fileReader = new FileReader(file);
+        reader = new CSVReader(fileReader);
+
+        String[] spellTrapArray = reader.readNext();
+        while ((spellTrapArray = reader.readNext()) != null) {
+            if (spellTrapArray[1].equals("Trap")) {
+                Card.addCardToDatabase(new TrapCard(spellTrapArray[0], spellTrapArray[3], Integer.parseInt(spellTrapArray[5]),
+                        Property.getProperty(spellTrapArray[2])));
+            } else {
+                Card.addCardToDatabase(new SpellCard(spellTrapArray[0], spellTrapArray[3], Integer.parseInt(spellTrapArray[5]),
+                        Property.getProperty(spellTrapArray[2])));
+            }
+        }
     }
 
     private static void write(String data, String directory) {
