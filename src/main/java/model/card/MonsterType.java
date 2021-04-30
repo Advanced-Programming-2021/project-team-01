@@ -21,7 +21,7 @@ public enum MonsterType
     BEAST_WARRIOR,
     SEA_SERPENT;
 
-    public static MonsterType[] getMonsterTypesArray(String types) {
+    public static ArrayList<MonsterType> getMonsterTypesArray(String types) {
         ArrayList<MonsterType> monsterTypes = new ArrayList<>();
         String[] monsterTypeStringArray = types.split("-");
 
@@ -54,10 +54,12 @@ public enum MonsterType
                 monsterTypes.add(FAIRY);
             } else if (type.equals("Sea Serpent")) {
                 monsterTypes.add(SEA_SERPENT);
+            } else if (type.equals("Beast-Warrior")) {
+                monsterTypes.add(BEAST_WARRIOR);
             } else
                 monsterTypes.add(null);
         }
 
-        return (MonsterType[]) monsterTypes.toArray();
+        return monsterTypes;
     }
 }

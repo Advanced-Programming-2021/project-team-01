@@ -1,15 +1,17 @@
 package model.card;
 
+import java.util.ArrayList;
+
 public class MonsterCard extends Card {
     private int attack;
     private int defense;
     private CardType cardType;
-    private MonsterType[] monsterTypes;
+    private ArrayList<MonsterType> monsterTypes;
     private Attribute attribute;
     int level;
 
     public MonsterCard(String name, String description, int price, int attack, int defense,
-                       CardType cardType, MonsterType[] monsterTypes, Attribute attribute, int level) {
+                       CardType cardType, ArrayList<MonsterType> monsterTypes, Attribute attribute, int level) {
         super(name, description, price);
         this.attack = attack;
         this.defense = defense;

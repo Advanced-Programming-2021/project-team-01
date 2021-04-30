@@ -131,8 +131,7 @@ public class DatabaseController {
             e.printStackTrace();
         }
     }
-    public static void main(String[] args) {
-        Player player = new Player("ali","123","hoy");
-        updatePlayer(player);
+    public static void main(String[] args) throws IOException, CsvValidationException {
+        loadGameCards();
     }
 }
