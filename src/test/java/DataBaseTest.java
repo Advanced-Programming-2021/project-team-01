@@ -13,7 +13,7 @@ class DataBaseTest {
         Player player = new Player("ali","123","hoy");
         DatabaseController.updatePlayer(player);
         assertEquals(new Gson().toJson(player),
-                new Gson().toJson(DatabaseController.getUserFromDirectory("ali")));
+                new Gson().toJson(DatabaseController.getUserByName("ali")));
     }
     @Test
     void f(){
