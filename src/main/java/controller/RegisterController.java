@@ -1,5 +1,8 @@
 package controller;
 
+import controller.exceptions.UsernameExists;
+import controller.exceptions.UsernameNotExists;
+import controller.exceptions.WrongUsernamePassword;
 import model.Player;
 import view.Menu;
 import view.menu.HandleRequestType;
@@ -16,23 +19,27 @@ public class RegisterController {
     }
 
     public void createUser(String username, String password, String nickname) throws Exception {
-        //TODO: login
-
-
-
-
+        if (DatabaseController.doesUserExists(username)){
+            throw new UsernameExists(username);
+        }
+        //TODO: HANDLE NICKNAME IN DATABASE!
+        DatabaseController.updatePlayer(new Player(username,password,nickname));
     }
 
-    public void loginUser(String username, String password) {
-        //TODO: login
-
-
-
+    public void loginUser(String username, String password) throws Exception{
+        if (!DatabaseController.doesUserExists(username)){
+            throw new UsernameNotExists();
+        }
+        Player player = DatabaseController.getUserByName(username);
+        if (!player.getPassword().equals(password)){
+            throw new WrongUsernamePassword();
+        }
+        onlineUser = player;
         HandleRequestType.currentMenu = Menu.MAIN_MENU;
     }
 
     public void logout() {
-        //TODO: code cleanup
+        onlineUser = null;
         HandleRequestType.currentMenu = Menu.REGISTER_MENU;
     }
 }

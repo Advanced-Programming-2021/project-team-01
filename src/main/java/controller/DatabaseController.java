@@ -73,7 +73,7 @@ public class DatabaseController {
         return null;
     }
 
-    public static Player getUserFromDirectory(String username){
+    public static Player getUserByName(String username){
         String directory = getUserDirectory(username);
         try {
             FileReader fileReader = new FileReader(directory);
