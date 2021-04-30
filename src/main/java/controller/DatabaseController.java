@@ -13,7 +13,6 @@ import java.io.*;
 
 
 public class DatabaseController {
-
     public static void loadGameCards() throws IOException, CsvValidationException {
         File file = new File(System.getProperty("user.dir") + "/src/resources/Monster.csv");
         FileReader fileReader = new FileReader(file);
