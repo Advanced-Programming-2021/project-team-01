@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import model.card.Card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Player {
     private String username;
@@ -53,12 +54,23 @@ public class Player {
         return money;
     }
 
-    public void addDeck(Deck deck) {
-
+    public void addDeck(String deckName) {
+        playerDecks.add(deckName);
     }
 
-    public void deleteDeck(Deck deck) {
+    public void deleteDeck(String deckName) {
+        playerDecks.removeIf(deck -> deck.equals(deckName));
+        if (activeDeck.equals(deckName)) {
+            activeDeck = null;
+        }
+    }
 
+    public void setActiveDeck(String deckName) {
+        activeDeck = deckName;
+    }
+
+    public ArrayList<String> getPlayerCards() {
+        return playerCards;
     }
 
     public Deck getDeckByName(String name) {
