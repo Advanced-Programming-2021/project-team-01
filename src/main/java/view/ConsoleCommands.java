@@ -59,7 +59,7 @@ public enum ConsoleCommands {
     SHOW_ALL_DECK("^deck show all$"),
     SHOW_DECK_CARDS("^show deck cards$"),
     BUY_CARD("^shop buy (?<cardName>\\w+)$"),
-    SHOW_ALL_CARDS(),
+    SHOW_ALL_CARDS("shop show all"),
 
     //MainMenu:
 

@@ -27,6 +27,8 @@ public enum Menu {
                 return PROFILE_VIEW;
             case "Import/Export":
                 return IMPORT_EXPORT;
+            case "Shop":
+                return SHOP;
             default:
                 return null;
         }
