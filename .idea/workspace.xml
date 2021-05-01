@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="30f3ad70-e2a3-4f08-9903-65cb25e4f153" name="Default Changelist" comment="ShopController and ProfileController updated">
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/Menu.java" afterDir="false" />
-    </list>
+    <list default="true" id="30f3ad70-e2a3-4f08-9903-65cb25e4f153" name="Default Changelist" comment="Fix some bugs" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -106,7 +104,7 @@
       <workItem from="1619763999578" duration="79000" />
       <workItem from="1619765649644" duration="10000" />
       <workItem from="1619816229935" duration="9000" />
-      <workItem from="1619872841886" duration="6013000" />
+      <workItem from="1619872841886" duration="6321000" />
     </task>
     <task id="LOCAL-00001" summary="Game view updated">
       <created>1619198909921</created>
@@ -143,7 +141,28 @@
       <option name="project" value="LOCAL" />
       <updated>1619879102449</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fix some bugs">
+      <created>1619879666581</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1619879666581</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fix some bugs">
+      <created>1619879776196</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1619879776196</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fix some bugs">
+      <created>1619879798493</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1619879798493</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +185,7 @@
     <MESSAGE value="ProfileController changeNickname" />
     <MESSAGE value="ProfileController updated" />
     <MESSAGE value="ShopController and ProfileController updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="ShopController and ProfileController updated" />
+    <MESSAGE value="Fix some bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix some bugs" />
   </component>
 </project>

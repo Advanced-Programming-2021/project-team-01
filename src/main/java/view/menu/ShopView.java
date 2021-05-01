@@ -21,7 +21,7 @@ class ShopView {
             showCurrentMenu();
         } else if (ConsoleCommands.getMatcher(ConsoleCommands.MENU_EXIT, input) != null) {
             exitMenu();
-        } else if (ConsoleCommands.getMatcher(ConsoleCommands.SHOW_ALL_CARDS, input) != null){
+        } else if (ConsoleCommands.getMatcher(ConsoleCommands.SHOW_ALL_CARDS, input) != null) {
             showAllCards();
         } else {
             System.err.println("invalid command");
@@ -39,7 +39,7 @@ class ShopView {
     }
 
     private void showAllCards() {
-        TreeMap<String, Card> shopCards = new TreeMap<>(Card.getAllCards());
+        TreeMap<String, Card> shopCards = Card.getAllCards();
         shopCards.forEach((key, value) -> System.out.println(key + ":" + value.getDescription()));
     }
 

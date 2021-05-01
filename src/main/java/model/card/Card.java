@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 public class Card {
-    private static HashMap<String, Card> allCards = new HashMap<>();
+    private static TreeMap<String, Card> allCards = new TreeMap<>();
     private String name;
     private String description;
     private int price;
@@ -26,7 +26,7 @@ public class Card {
         return price;
     }
 
-    public static HashMap<String, Card> getAllCards() {
+    public static TreeMap<String, Card> getAllCards() {
         return allCards;
     }
 
