@@ -1,9 +1,10 @@
 package model.card;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Card {
-    private static ArrayList<Card> allCards = new ArrayList<>();
+    private static HashMap<String, Card> allCards = new HashMap<>();
     private String name;
     private String description;
     private int price;
@@ -15,16 +16,14 @@ public class Card {
     }
 
     public static Card getCardByName(String name) {
-        for (Card card : allCards) {
-            if (card.name.equals(name)) {
-                return card;
-            }
+        if (allCards.containsKey(name)){
+            return allCards.get(name);
         }
         return null;
     }
 
     public static void addCardToDatabase(Card card){
-        allCards.add(card);
+        allCards.put(card.getName(),card);
     }
 
     public String getName() {

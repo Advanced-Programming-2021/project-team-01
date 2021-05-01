@@ -1,7 +1,6 @@
 package controller;
 
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonWriter;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import model.Deck;
@@ -135,7 +134,23 @@ public class DatabaseController {
             e.printStackTrace();
         }
     }
+    public static boolean doesNicknameExist(String nickname){
+        File folder = new File("src" + File.separator + "resources" + File.separator + "users");
+        File[] files = folder.listFiles();
+
+        assert files != null;
+        for (File file:files)
+        {
+            if (file.isFile() && file.getAbsolutePath().endsWith(".json"))
+            {
+                if (getUserByName(file.getName().substring(0,file.getName().length() - 5)).getNickname().equals(nickname)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public static void main(String[] args) throws IOException, CsvValidationException {
-        loadGameCards();
+        doesNicknameExist("mo");
     }
 }

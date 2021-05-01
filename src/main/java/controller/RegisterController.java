@@ -1,5 +1,6 @@
 package controller;
 
+import controller.exceptions.NicknameExists;
 import controller.exceptions.UsernameExists;
 import controller.exceptions.UsernameNotExists;
 import controller.exceptions.WrongUsernamePassword;
@@ -22,7 +23,9 @@ public class RegisterController {
         if (DatabaseController.doesUserExists(username)){
             throw new UsernameExists(username);
         }
-        //TODO: HANDLE NICKNAME IN DATABASE!
+        if (DatabaseController.doesNicknameExist(nickname)){
+            throw new NicknameExists(nickname);
+        }
         DatabaseController.updatePlayer(new Player(username,password,nickname));
     }
 
@@ -39,6 +42,7 @@ public class RegisterController {
     }
 
     public void logout() {
+        DatabaseController.updatePlayer(onlineUser);
         onlineUser = null;
         HandleRequestType.currentMenu = Menu.REGISTER_MENU;
     }
