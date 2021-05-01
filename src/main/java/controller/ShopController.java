@@ -1,6 +1,13 @@
 package controller;
 
+import controller.exceptions.CardNameNotExists;
+import controller.exceptions.NotEnoughMoney;
+import model.card.Card;
+
 import java.util.HashMap;
+
+
+import static controller.RegisterController.onlineUser;
 
 public class ShopController {
     private static ShopController instance = null;
@@ -12,15 +19,14 @@ public class ShopController {
         return instance;
     }
 
-    public void buyCard(String name) {
-
+    public void buyCard(String name) throws Exception {
+        Card card = Card.getCardByName(name);
+        if (card == null)
+            throw new CardNameNotExists(name);
+        if (card.getPrice() > onlineUser.getMoney())
+            throw new NotEnoughMoney();
+        onlineUser.decreaseMoney(card.getPrice());
+        onlineUser.addCardToPlayerCards(card.getName());
     }
 
-    public void shopShowAll(String name) {
-
-    }
-
-    public HashMap<String, Integer> getCards() {
-        return null;
-    }
 }

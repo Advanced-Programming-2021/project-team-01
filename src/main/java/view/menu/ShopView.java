@@ -1,10 +1,12 @@
 package view.menu;
 
 import controller.ShopController;
+import model.card.Card;
 import view.ConsoleCommands;
 import view.Menu;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 
 class ShopView {
@@ -37,8 +39,8 @@ class ShopView {
     }
 
     private void showAllCards() {
-        HashMap<String, Integer> shopCards = ShopController.getInstance().getCards();
-        shopCards.forEach((key, value) -> System.out.println(key + " : " + value));
+        TreeMap<String, Card> shopCards = new TreeMap<>(Card.getAllCards());
+        shopCards.forEach((key, value) -> System.out.println(key + ":" + value.getDescription()));
     }
 
     private void enterMenu(Matcher matcher) {

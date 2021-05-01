@@ -65,6 +65,10 @@ public class Player {
         }
     }
 
+    public void decreaseMoney(int amount) {
+        this.money = money - amount;
+    }
+
     public void setActiveDeck(String deckName) {
         activeDeck = deckName;
     }
@@ -75,5 +79,9 @@ public class Player {
 
     public Deck getDeckByName(String name) {
         return null;
+    }
+
+    public void addCardToPlayerCards(String cardName){
+        playerCards.add(cardName);
     }
 }

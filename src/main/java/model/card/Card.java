@@ -1,7 +1,7 @@
 package model.card;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class Card {
     private static HashMap<String, Card> allCards = new HashMap<>();
@@ -20,6 +20,14 @@ public class Card {
             return allCards.get(name);
         }
         return null;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public static HashMap<String, Card> getAllCards() {
+        return allCards;
     }
 
     public static void addCardToDatabase(Card card){
