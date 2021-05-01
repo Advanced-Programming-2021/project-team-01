@@ -7,8 +7,6 @@ import view.ConsoleCommands;
 import view.Menu;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 
 public class ScoreBoardView {
@@ -33,8 +31,10 @@ public class ScoreBoardView {
     private void showScoreBoard() {
         ArrayList<Player> players = ScoreBoardController.getInstance().sortedScoreBoard();
         int index = 1;
-        for (Player player : players)
+        for (Player player : players) {
             System.out.println(index + "- " + player.getUsername() + ": " + player.getScore());
+            index++;
+        }
     }
 
     private void enterMenu(Matcher matcher) throws InvalidMenuNavigation {
