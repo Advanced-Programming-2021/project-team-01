@@ -1,5 +1,7 @@
 package controller;
 
+import controller.exceptions.NicknameExists;
+
 public class ProfileController {
     private static ProfileController instance = null;
 
@@ -10,8 +12,10 @@ public class ProfileController {
         return instance;
     }
 
-    public void changeNickname(String nickname) {
-        System.out.println("EOOOOOO");
+    public void changeNickname(String nickname) throws Exception {
+        if (DatabaseController.doesNicknameExist(nickname))
+            throw new NicknameExists(nickname);
+        RegisterController.getInstance().onlineUser.setNickname(nickname);
     }
 
     public void changePassword(String currentPassword, String newPassword) {
