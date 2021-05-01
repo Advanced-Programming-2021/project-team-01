@@ -16,7 +16,7 @@ public class Card {
 
     public static Card getCardByName(String name) {
         for (Card card : allCards) {
-            if (card.getName().equals(name)) {
+            if (card.name.equals(name)) {
                 return card;
             }
         }

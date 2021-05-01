@@ -73,6 +73,11 @@ public class DatabaseController {
         return null;
     }
 
+    public static void deleteDeckFile(String name) {
+        File file = new File(getDeckDirectory(name));
+        file.delete();
+    }
+
     public static Player getUserByName(String username){
         String directory = getUserDirectory(username);
         try {
@@ -97,7 +102,7 @@ public class DatabaseController {
         return file.exists();
     }
 
-    public Deck getDeckByName(String deck) {
+    public static Deck getDeckByName(String deck) {
         String directory = getDeckDirectory(deck);
         try {
             FileReader fileReader = new FileReader(directory);
@@ -111,7 +116,7 @@ public class DatabaseController {
     public static void updateDeck(Deck deck){
         String deckName = deck.getDeckName();
         try {
-            FileWriter fileWriter = new FileWriter(getUserDirectory(deckName));
+            FileWriter fileWriter = new FileWriter(getDeckDirectory(deckName));
             Gson gson = new Gson();
             gson.toJson(deck, fileWriter);
             fileWriter.close();
