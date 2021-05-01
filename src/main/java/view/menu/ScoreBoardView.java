@@ -2,9 +2,11 @@ package view.menu;
 
 import controller.ScoreBoardController;
 import controller.exceptions.InvalidMenuNavigation;
+import model.Player;
 import view.ConsoleCommands;
 import view.Menu;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -29,13 +31,10 @@ public class ScoreBoardView {
     }
 
     private void showScoreBoard() {
-        HashMap<String, Integer> ranks = ScoreBoardController.getInstance().showScoreBoard();
-        int counter = 1;
-
-        for (Map.Entry<String, Integer> set : ranks.entrySet()) {
-            System.out.println(counter + "- " + set.getKey() + ": " + set.getValue());
-            counter++;
-        }
+        ArrayList<Player> players = ScoreBoardController.getInstance().sortedScoreBoard();
+        int index = 1;
+        for (Player player : players)
+            System.out.println(index + "- " + player.getUsername() + ": " + player.getScore());
     }
 
     private void enterMenu(Matcher matcher) throws InvalidMenuNavigation {

@@ -5,6 +5,7 @@ import model.card.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Player {
     private String username;
@@ -81,7 +82,16 @@ public class Player {
         return null;
     }
 
-    public void addCardToPlayerCards(String cardName){
+    public void addCardToPlayerCards(String cardName) {
         playerCards.add(cardName);
+    }
+
+    public static class SortByScore implements Comparator<Player> {
+        public int compare(Player player1, Player player2) {
+            if (player1.getScore() != player2.getScore())
+                return player1.getScore() - player2.getScore();
+            else
+                return player1.getUsername().compareTo(player2.getUsername());
+        }
     }
 }

@@ -9,6 +9,7 @@ import model.card.*;
 
 
 import java.io.*;
+import java.util.ArrayList;
 
 
 public class DatabaseController {
@@ -150,6 +151,22 @@ public class DatabaseController {
         }
         return false;
     }
+
+    public static ArrayList<Player> getAllPlayers(){
+        ArrayList<Player> players = new ArrayList<>();
+        File folder = new File("src" + File.separator + "resources" + File.separator + "users");
+        File[] files = folder.listFiles();
+        assert files != null;
+        for (File file:files)
+        {
+            if (file.isFile() && file.getAbsolutePath().endsWith(".json"))
+            {
+                players.add(getUserByName(file.getName().substring(0,file.getName().length() - 5)));
+            }
+        }
+        return players;
+    }
+
     public static void main(String[] args) throws IOException, CsvValidationException {
         doesNicknameExist("mo");
     }

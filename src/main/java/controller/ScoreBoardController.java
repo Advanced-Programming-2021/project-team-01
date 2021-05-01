@@ -1,6 +1,8 @@
 package controller;
 
-import java.util.HashMap;
+import model.Player;
+
+import java.util.ArrayList;
 
 public class ScoreBoardController {
     private static ScoreBoardController instance = null;
@@ -12,7 +14,9 @@ public class ScoreBoardController {
         return instance;
     }
 
-    public HashMap<String, Integer> showScoreBoard() {
-        return null;
+    public ArrayList<Player> sortedScoreBoard() {
+        ArrayList<Player> players = DatabaseController.getAllPlayers();
+        players.sort(new Player.SortByScore());
+        return players;
     }
 }
