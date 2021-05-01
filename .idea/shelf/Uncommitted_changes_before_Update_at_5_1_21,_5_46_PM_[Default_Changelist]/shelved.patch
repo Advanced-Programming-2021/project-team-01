@@ -1,0 +1,19 @@
+Index: src/main/java/controller/ProfileController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\n\npublic class ProfileController\n{\n    private static ProfileController instance = null;\n    \n    public static ProfileController getInstance()\n    {\n        if (instance == null){\n            instance = new ProfileController();\n        }\n        return instance;\n    }\t\t\n\n    public void changeNickname(String nickname) \t\t\n    {\n        \n    }\t\t\n    \n    public void changePassword(String currentPassword, String newPassword) \t\t\n    {\n        \n    }\t\t\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/controller/ProfileController.java b/src/main/java/controller/ProfileController.java
+--- a/src/main/java/controller/ProfileController.java	(revision c5ba1b2cda6cff23bca8aa15b4b6b5e73a8e3f31)
++++ b/src/main/java/controller/ProfileController.java	(date 1619873293242)
+@@ -14,7 +14,7 @@
+ 
+     public void changeNickname(String nickname) 		
+     {
+-        
++        RegisterController.getInstance().onlineUser.
+     }		
+     
+     public void changePassword(String currentPassword, String newPassword) 		
