@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static controller.RegisterController.onlineUser;
+
 public class DeckController {
     private static DeckController instance = null;
 
@@ -22,7 +24,7 @@ public class DeckController {
         if (!DatabaseController.doesDeckExists(name)) {
             Deck deck = new Deck(name);
             DatabaseController.updateDeck(deck);
-            RegisterController.getInstance().onlineUser.addDeck(name);
+            onlineUser.addDeck(name);
         } else
             throw new DeckExists(name);
     }
@@ -30,14 +32,14 @@ public class DeckController {
     public void deleteDeck(String name) throws DeckNotExists {
         if (DatabaseController.doesDeckExists(name)) {
             DatabaseController.deleteDeckFile(name);
-            RegisterController.getInstance().onlineUser.deleteDeck(name);
+            onlineUser.deleteDeck(name);
         } else
             throw new DeckNotExists(name);
     }
 
     public void activateDeck(String name) throws DeckNotExists {
         if (DatabaseController.doesDeckExists(name)) {
-            RegisterController.getInstance().onlineUser.setActiveDeck(name);
+            onlineUser.setActiveDeck(name);
         } else
             throw new DeckNotExists(name);
     }
@@ -69,7 +71,7 @@ public class DeckController {
     }
 
     public ArrayList<Card> showPlayersAllCards() {
-        ArrayList<String> cardsName = RegisterController.getInstance().onlineUser.getPlayerCards();
+        ArrayList<String> cardsName = onlineUser.getPlayerCards();
         Collections.sort(cardsName);
         ArrayList<Card> cards = new ArrayList<>();
         for (String name : cardsName) {
