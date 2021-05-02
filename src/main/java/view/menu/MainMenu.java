@@ -22,7 +22,7 @@ class MainMenu {
     private void newDuelWithAI(Matcher matcher) {
         try {
             int roundNumber = Integer.parseInt(matcher.group("roundNumber"));
-            GameController.getInstance().startGame("ai", roundNumber);
+            GameController.getInstance().startGame("AI", roundNumber);
         } catch (Exception expt) {
             System.out.println(expt.getMessage());
         }

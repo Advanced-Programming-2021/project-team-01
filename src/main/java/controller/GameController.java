@@ -77,7 +77,7 @@ public class GameController {
         playerOneLp = 8000;
         playerTwoLp = 8000;
         gameBoard = new Board();
-        isAI = false;
+        isAI = username.equals("AI");
         playerOneHand = new ArrayList<>();
         playerTwoHand = new ArrayList<>();
     }
