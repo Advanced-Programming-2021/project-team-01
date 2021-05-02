@@ -53,22 +53,22 @@ public class GameController {
     public void startGame(String username, int numberOfRounds) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber {
         Player playerTwo = DatabaseController.getUserByName(username);
         Player playerOne = RegisterController.onlineUser;
-        if (playerTwo == null){
+        if (playerTwo == null) {
             throw new UsernameNotExists();
-        }else if (playerOne.getActiveDeck() == null){
+        } else if (playerOne.getActiveDeck() == null) {
             throw new NoActiveDeck(playerOne.getUsername());
-        }else if (playerTwo.getActiveDeck() == null){
+        } else if (playerTwo.getActiveDeck() == null) {
             throw new NoActiveDeck(playerTwo.getUsername());
         }
         currentPlayer = tossCoin() == 1 ? playerOne : playerTwo;
         Deck playerOneDeck = DatabaseController.getDeckByName(playerOne.getActiveDeck());
         Deck playerTwoDeck = DatabaseController.getDeckByName(playerTwo.getActiveDeck());
-        if (!playerOneDeck.isDeckValid()){
+        if (!playerOneDeck.isDeckValid()) {
             throw new InvalidDeck(playerOne.getUsername());
-        }else if (!playerTwoDeck.isDeckValid()){
+        } else if (!playerTwoDeck.isDeckValid()) {
             throw new InvalidDeck(playerTwo.getUsername());
         }
-        if (numberOfRounds != 1 && numberOfRounds != 3){
+        if (numberOfRounds != 1 && numberOfRounds != 3) {
             throw new InvalidRoundNumber();
         }
         Collections.shuffle((List<?>) playerOneDeck);
@@ -80,42 +80,74 @@ public class GameController {
         isAI = false;
     }
 
-    private int tossCoin(){
+    private int tossCoin() {
         return new Random().nextInt() % 2 + 1;
     }
 
-    public void selectPlayerCard(String fieldType) {
-
+    public void selectPlayerCard(String fieldType) throws CardNotInPosition {
+        if (gameBoard.getCard(fieldType, currentPlayer == playerOne ? 1 : 2) == null)
+            throw new CardNotInPosition();
+        selectedCard = gameBoard.getCard(fieldType, currentPlayer == playerOne ? 1 : 2);
     }
 
     public void selectPlayerCard(String fieldType, int fieldNumber) throws InvalidSelection, CardNotInPosition {
-        if (fieldType.equals("monster")) {
-            if (fieldNumber > 5 || fieldNumber < 1) {
-                throw new InvalidSelection();
-            } else if (gameBoard.getCard("monster", currentPlayer == playerOne ? 1 : 2, fieldNumber) == null) {
-                throw new CardNotInPosition();
-            }
-            selectedCard = gameBoard.getCard("monster", currentPlayer == playerOne ? 1 : 2, fieldNumber);
-        } else if (fieldType.equals("spell")) {
-            if (fieldNumber > 5 || fieldNumber < 1) {
-                throw new InvalidSelection();
-            } else if (gameBoard.getCard("spell", currentPlayer == playerOne ? 1 : 2, fieldNumber) == null) {
-                throw new CardNotInPosition();
-            }
-            selectedCard = gameBoard.getCard("spell", currentPlayer == playerOne ? 1 : 2, fieldNumber);
-
-        } else if (fieldType.equals("hand")) {
-
-
+        switch (fieldType) {
+            case "monster":
+                if (fieldNumber > 5 || fieldNumber < 1) {
+                    throw new InvalidSelection();
+                } else if (gameBoard.getCard("monster", currentPlayer == playerOne ? 1 : 2, fieldNumber) == null) {
+                    throw new CardNotInPosition();
+                }
+                selectedCard = gameBoard.getCard("monster", currentPlayer == playerOne ? 1 : 2, fieldNumber);
+                break;
+            case "spell":
+                if (fieldNumber > 5 || fieldNumber < 1) {
+                    throw new InvalidSelection();
+                } else if (gameBoard.getCard("spell", currentPlayer == playerOne ? 1 : 2, fieldNumber) == null) {
+                    throw new CardNotInPosition();
+                }
+                selectedCard = gameBoard.getCard("spell", currentPlayer == playerOne ? 1 : 2, fieldNumber);
+                break;
+            case "hand":
+                fieldNumber--;
+                if (currentPlayer == playerOne) {
+                    if (fieldNumber > playerOneHand.size())
+                        throw new InvalidSelection();
+                    selectedCard = playerOneHand.get(fieldNumber);
+                } else if (currentPlayer == playerTwo) {
+                    if (fieldNumber > playerTwoHand.size())
+                        throw new InvalidSelection();
+                    selectedCard = playerTwoHand.get(fieldNumber);
+                }
+                break;
         }
     }
 
-    public void selectOpponentCard(String fieldType) {
-
+    public void selectOpponentCard(String fieldType) throws CardNotInPosition {
+        if (gameBoard.getCard(fieldType, currentPlayer == playerOne ? 2 : 1) == null)
+            throw new CardNotInPosition();
+        selectedCard = gameBoard.getCard(fieldType, currentPlayer == playerOne ? 2 : 1);
     }
 
-    public void selectOpponentCard(String fieldType, int fieldNumber) {
-
+    public void selectOpponentCard(String fieldType, int fieldNumber) throws InvalidSelection, CardNotInPosition {
+        switch (fieldType) {
+            case "monster":
+                if (fieldNumber > 5 || fieldNumber < 1) {
+                    throw new InvalidSelection();
+                } else if (gameBoard.getCard("monster", currentPlayer == playerOne ? 2 : 1, fieldNumber) == null) {
+                    throw new CardNotInPosition();
+                }
+                selectedCard = gameBoard.getCard("monster", currentPlayer == playerOne ? 2 : 1, fieldNumber);
+                break;
+            case "spell":
+                if (fieldNumber > 5 || fieldNumber < 1) {
+                    throw new InvalidSelection();
+                } else if (gameBoard.getCard("spell", currentPlayer == playerOne ? 2 : 1, fieldNumber) == null) {
+                    throw new CardNotInPosition();
+                }
+                selectedCard = gameBoard.getCard("spell", currentPlayer == playerOne ? 2 : 1, fieldNumber);
+                break;
+        }
     }
 
     public void deselect() {
