@@ -72,32 +72,48 @@ public class Board {
     }
 
     public Card getCard(String field, int number, int player) {
-        if (field.equals("monster")) {
-            if (player == 1) {
-                return playerOneMonsterZone[number].getCard();
-            } else if (player == 2) {
-                return playerTwoMonsterZone[number].getCard();
-            }
-        } else {
-            if (player == 1) {
-                return playerOneSpellZone[number].getCard();
-            } else if (player == 2) {
-                return playerTwoSpellZone[number].getCard();
-            }
+        switch (field) {
+            case "monster":
+                if (player == 1)
+                    return playerOneMonsterZone[number].getCard();
+                else if (player == 2)
+                    return playerTwoMonsterZone[number].getCard();
+
+                break;
+            case "spell":
+                if (player == 1)
+                    return playerOneSpellZone[number].getCard();
+                else if (player == 2)
+                    return playerTwoSpellZone[number].getCard();
+
+                break;
+            case "hand":
+                number--;
+                if (player == 1)
+                    return playerOneHand.get(number);
+                else if (player == 2)
+                    return playerTwoHand.get(number);
+                break;
         }
         return null;
     }
 
     public Card getCard(String field, int player) {
         if (field.equals("field")) {
-            if (player == 1) {
+            if (player == 1)
                 return playerOneFieldZone.getCard();
-            } else if (player == 2) {
+            else if (player == 2)
                 return playerTwoFieldZone.getCard();
-            }
         }
         return null;
     }
 
+    public int getNumberOfCardsInHand(int player) {
+        if (player == 1)
+            return playerOneHand.size();
+        else if (player == 2)
+            return playerTwoHand.size();
+        return -1;
+    }
 
 }

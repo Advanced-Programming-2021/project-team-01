@@ -72,7 +72,7 @@ public class GameController {
         rounds = numberOfRounds;
         playerOneLp = 8000;
         playerTwoLp = 8000;
-        gameBoard = new Board(playerOneDeck,playerTwoDeck);
+        gameBoard = new Board(playerOneDeck, playerTwoDeck, playerOne, playerTwo);
         isAI = username.equals("AI");
     }
 
@@ -105,16 +105,9 @@ public class GameController {
                 selectedCard = gameBoard.getCard("spell", currentPlayer == playerOne ? 1 : 2, fieldNumber);
                 break;
             case "hand":
-                fieldNumber--;
-                if (currentPlayer == playerOne) {
-                    if (fieldNumber > playerOneHand.size())
-                        throw new InvalidSelection();
-                    selectedCard = playerOneHand.get(fieldNumber);
-                } else if (currentPlayer == playerTwo) {
-                    if (fieldNumber > playerTwoHand.size())
-                        throw new InvalidSelection();
-                    selectedCard = playerTwoHand.get(fieldNumber);
-                }
+                if (fieldNumber > gameBoard.getNumberOfCardsInHand(currentPlayer == playerOne ? 1 : 2))
+                    throw new InvalidSelection();
+                selectedCard = gameBoard.getCard(fieldType,fieldNumber,currentPlayer == playerOne ? 1 : 2);
                 break;
         }
     }
@@ -206,22 +199,22 @@ public class GameController {
 
     }
 
-    public int getOpponentLp(){
-        if (getOpponent() == playerOne){
+    public int getOpponentLp() {
+        if (getOpponent() == playerOne) {
             return playerOneLp;
         }
         return playerTwoLp;
     }
 
-    public int getCurrentLp(){
-        if (getCurrentPlayer() == playerTwo){
+    public int getCurrentLp() {
+        if (getCurrentPlayer() == playerTwo) {
             return playerTwoLp;
         }
         return playerOneLp;
     }
 
-    public int getCurrentPlayerNumber(){
-        if (getCurrentPlayer() == playerOne){
+    public int getCurrentPlayerNumber() {
+        if (getCurrentPlayer() == playerOne) {
             return 1;
         }
         return 2;
