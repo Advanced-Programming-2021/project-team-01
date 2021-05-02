@@ -1,7 +1,6 @@
 package controller;
 
-import controller.exceptions.DeckExists;
-import controller.exceptions.DeckNotExists;
+import controller.exceptions.*;
 import model.Deck;
 import model.card.Card;
 import java.util.ArrayList;
@@ -44,16 +43,71 @@ public class DeckController {
             throw new DeckNotExists(name);
     }
 
-    public void addCardToDeck(String cardName, String deckName, boolean isMainDeck) {
-
+    public void addCardToDeck(String cardName, String deckName, boolean isMainDeck) throws CardNameNotExists,
+            DeckNotExists, MainDeckIsFull, SideDeckIsFull, CardNumberLimit {
+        Card card = Card.getCardByName(cardName);
+        if (card != null) {
+            if (DatabaseController.doesDeckExists(deckName)) {
+                Deck deck = DatabaseController.getDeckByName(deckName);
+                if (isMainDeck) {
+                    if (deck.getMainDeck().size() < 60) {
+                        if (deck.checkCardsLimit(card)) {
+                            deck.addCardToMainDeck(card);
+                        } else
+                            throw new CardNumberLimit(cardName, deckName);
+                    } else
+                        throw new MainDeckIsFull();
+                } else {
+                    if (deck.getSideDeck().size() < 15) {
+                        if (deck.checkCardsLimit(card)) {
+                            deck.addCardToSideDeck(card);
+                        } else
+                            throw new CardNumberLimit(cardName, deckName);
+                    } else
+                        throw new SideDeckIsFull();
+                }
+            } else
+                throw new DeckNotExists(deckName);
+        } else
+            throw new CardNameNotExists(cardName);
     }
 
-    public void removeCardFromDeck(String cardName, String deckName, boolean isMainDeck) {
-
+    public void removeCardFromDeck(String cardName, String deckName, boolean isMainDeck) throws CardNameNotExists,
+            DeckNotExists, CardNotInDeck {
+        Card card = Card.getCardByName(cardName);
+        if (card != null) {
+            if (DatabaseController.doesDeckExists(deckName)) {
+                Deck deck = DatabaseController.getDeckByName(deckName);
+                if (isMainDeck) {
+                    if (deck.getMainDeck().contains(card))
+                        deck.removeCardFromMainDeck(card);
+                    else
+                        throw new CardNotInDeck(cardName, "main");
+                } else {
+                    if (deck.getSideDeck().contains(card))
+                        deck.removeCardFromSideDeck(card);
+                    else
+                        throw new CardNotInDeck(cardName, "side");
+                }
+            } else
+                throw new DeckNotExists(deckName);
+        } else
+            throw new CardNameNotExists(cardName);
     }
 
     public ArrayList<Deck> showAllDecks() {
-        return null;
+        ArrayList<Deck> decks = new ArrayList<>();
+        ArrayList<Deck> activeDeck = new ArrayList<>();
+        if (RegisterController.onlineUser.getActiveDeck() == null) {
+            activeDeck.add(null);
+        } else
+            activeDeck.add(DatabaseController.getDeckByName(RegisterController.onlineUser.getActiveDeck()));
+        for (String deck : RegisterController.onlineUser.getPlayerDecks()) {
+            decks.add(DatabaseController.getDeckByName(deck));
+        }
+        decks.sort(new deckSort());
+        activeDeck.addAll(decks);
+        return activeDeck;
     }
 
     public ArrayList<Card> showDeckByName(String name ,boolean isMainDeck) throws DeckNotExists {
@@ -83,6 +137,12 @@ public class DeckController {
     static class cardSort implements Comparator<Card> {
         public int compare(Card card1, Card card2) {
             return card1.getName().compareTo(card2.getName());
+        }
+    }
+
+    static class deckSort implements Comparator<Deck> {
+        public int compare(Deck deck1, Deck deck2) {
+            return deck1.getDeckName().compareTo(deck2.getDeckName());
         }
     }
 }
