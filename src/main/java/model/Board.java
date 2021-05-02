@@ -23,9 +23,14 @@ public class Board
         playerOneBanishedZone = new ArrayList<>();
         playerOneSpellZone = new ZoneSlot[6];
         playerTwoMonsterZone = new ZoneSlot[6];
-        playerTwoBanishedZone = new ArrayList<>();
+        playerTwoBanishedZone = new ArrayList<>();  //TODO: 1 start index
         playerTwoSpellZone = new ZoneSlot[6];
         playerOneGraveYard = new ArrayList<>();
         playerTwoGraveYard = new ArrayList<>();
     }
+
+    public String toString(){
+        return null;
+    }
+
 }

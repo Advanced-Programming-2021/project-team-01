@@ -7,11 +7,7 @@ import model.card.Card;
 
 public class GameController {
     private static GameController instance = null;
-    private Card selectedCard;
     private Battle battle;
-    private Board board;
-    private boolean isAI;
-
 
     public static GameController getInstance() {
         if (instance == null) {
@@ -25,7 +21,7 @@ public class GameController {
     }
 
     public void startGame(String username, int numberOfRounds) {
-
+        //TODO: IMPORTANT
     }
 
     public void selectPlayerCard(String fieldType) {
@@ -33,7 +29,13 @@ public class GameController {
     }
 
     public void selectPlayerCard(String fieldType, int fieldNumber) {
+        if (fieldType.equals("monster")){
 
+        }else if (fieldType.equals("spell")){
+
+        }else if (fieldType.equals("hand")){
+
+        }
     }
 
     public void selectOpponentCard(String fieldType) {

@@ -2,19 +2,16 @@ package model;
 
 import model.card.Card;
 
-public class ZoneSlot
-{
+public class ZoneSlot {
     private Card card;
-    private boolean isSet;		
+    private boolean isSet;
 
-    
-    public void setCard(Card card) 		
-    {
-        
-    }		
-    
-    public void setIsSet(boolean value) 		
-    {
-        
-    }		
+    public void setCard(Card card) {
+
+    }
+
+    public void setIsSet(boolean value) {
+
+    }
+
 }
