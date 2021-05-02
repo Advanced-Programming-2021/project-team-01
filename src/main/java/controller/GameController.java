@@ -47,8 +47,8 @@ public class GameController {
     }
 
     public void startGame(String username, int numberOfRounds) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber {
-        Player playerTwo = DatabaseController.getUserByName(username);
-        Player playerOne = RegisterController.onlineUser;
+        playerTwo = DatabaseController.getUserByName(username);
+        playerOne = RegisterController.onlineUser;
         if (playerTwo == null) {
             throw new UsernameNotExists();
         } else if (playerOne.getActiveDeck() == null) {
@@ -67,13 +67,14 @@ public class GameController {
         if (numberOfRounds != 1 && numberOfRounds != 3) {
             throw new InvalidRoundNumber();
         }
-        Collections.shuffle((List<?>) playerOneDeck);
-        Collections.shuffle((List<?>) playerTwoDeck);
+       // Collections.shuffle(Collections.singletonList(playerOneDeck));
+       // Collections.shuffle(Collections.singletonList(playerTwoDeck));
         rounds = numberOfRounds;
         playerOneLp = 8000;
         playerTwoLp = 8000;
         gameBoard = new Board(playerOneDeck, playerTwoDeck);
         isAI = username.equals("AI");
+        gameBoard.showBoard();
     }
 
     private int tossCoin() {

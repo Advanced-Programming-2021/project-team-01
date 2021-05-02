@@ -62,7 +62,7 @@ public class Board {
             opponentHandSize = playerTwoHand.size();
             playerDrawZoneCards = playerOneDrawZone.size();
             opponentDrawZoneCards = playerTwoDrawZone.size();
-            playerGraveyardCards = playerOneDrawZone.size();
+            playerGraveyardCards = playerOneGraveYard.size();
             opponentGraveyardCards = playerTwoGraveYard.size();
         } else {
             playerHandSize = playerTwoHand.size();
@@ -100,21 +100,20 @@ public class Board {
                                ZoneSlot[] playerOneMonsterZone, ZoneSlot playerOneFieldZone,
                                ZoneSlot playerTwoFieldZone, ZoneSlot[] playerTwoMonsterZone,
                                ZoneSlot[] playerTwoSpellZone) {
-        for (int i = 1; i <= playerOneSpellZone.length; i++){
+        showUserBoard(playerOneSpellZone, playerOneMonsterZone);
+        System.out.println("\n"+opponentGraveyardCards+"\t\t\t\t\t\t"+ playerOneFieldZone.toString());
+        System.out.println("--------------------------");
+        System.out.println(playerTwoFieldZone.toString()+"\t\t\t\t\t\t"+playerGraveyardCards);
+        showUserBoard(playerTwoMonsterZone, playerTwoSpellZone);
+    }
+
+    private void showUserBoard(ZoneSlot[] playerOneSpellZone, ZoneSlot[] playerOneMonsterZone) {
+        for (int i = 1; i < 6; i++){
             System.out.print("\t" + playerOneSpellZone[i].toString());
         }
-        for (int i = 1; i <= playerOneMonsterZone.length; i++){
-            System.out.print("\t" + playerOneMonsterZone[i].toSting());
-        }
-        System.out.println("\n"+opponentGraveyardCards+"\t\t\t\t\t\t"+ playerOneFieldZone.toSting());
-        System.out.println("--------------------------");
-        System.out.println(playerTwoFieldZone.toSting()+"\t\t\t\t\t\t"+playerGraveyardCards);
-        for (int i = 1; i <= playerTwoMonsterZone.length; i++){
-            System.out.print("\t" + playerTwoMonsterZone[i].toSting());
-        }
         System.out.println();
-        for (int i = 1; i <= playerTwoSpellZone.length; i++){
-            System.out.print("\t" + playerTwoSpellZone[i].toString());
+        for (int i = 1; i < 6; i++){
+            System.out.print("\t" + playerOneMonsterZone[i].toString());
         }
     }
 

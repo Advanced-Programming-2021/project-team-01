@@ -20,7 +20,7 @@ public class ZoneSlot {
         return card;
     }
 
-    public String toSting(){
+    public String toString(){
         if (card == null){
             return "E";
         }
