@@ -28,6 +28,12 @@ public class Board
         playerTwoSpellZone = new ZoneSlot[6];
         playerOneGraveYard = new ArrayList<>();
         playerTwoGraveYard = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            playerOneMonsterZone[i] = new ZoneSlot();
+            playerOneSpellZone[i] = new ZoneSlot();
+            playerTwoMonsterZone[i] = new ZoneSlot();
+            playerTwoSpellZone[i] = new ZoneSlot();
+        }
     }
 
     public String toString(){
