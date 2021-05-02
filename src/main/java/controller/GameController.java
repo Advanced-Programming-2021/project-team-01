@@ -7,6 +7,8 @@ import model.Player;
 import model.card.Card;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class GameController {
@@ -24,6 +26,7 @@ public class GameController {
     private Board gameBoard;
     private String gamePhase;
     private boolean isAI;
+    private int rounds;
 
     private GameController() {
 
@@ -68,6 +71,13 @@ public class GameController {
         if (numberOfRounds != 1 && numberOfRounds != 3) {
             throw new InvalidRoundNumber();
         }
+        Collections.shuffle((List<?>) playerOneDeck);
+        Collections.shuffle((List<?>) playerTwoDeck);
+        rounds = numberOfRounds;
+        playerOneLp = 8000;
+        playerTwoLp = 8000;
+        gameBoard = new Board();
+        isAI = false;
         playerOneHand = new ArrayList<>();
         playerTwoHand = new ArrayList<>();
     }
@@ -143,7 +153,7 @@ public class GameController {
     }
 
     public void deselect() {
-
+        selectedCard = null;
     }
 
     public void setCard() {
