@@ -86,10 +86,6 @@ public class Player {
         return playerCards;
     }
 
-    public Deck getDeckByName(String name) {
-        return null;
-    }
-
     public void addCardToPlayerCards(String cardName) {
         playerCards.add(cardName);
     }

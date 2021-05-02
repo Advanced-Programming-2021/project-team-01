@@ -28,7 +28,7 @@ public class Board
         playerTwoSpellZone = new ZoneSlot[6];
         playerOneGraveYard = new ArrayList<>();
         playerTwoGraveYard = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 1; i < 6; i++) {
             playerOneMonsterZone[i] = new ZoneSlot();
             playerOneSpellZone[i] = new ZoneSlot();
             playerTwoMonsterZone[i] = new ZoneSlot();
@@ -38,35 +38,6 @@ public class Board
 
     public String toString(){
         return null;
-    }
-
-    public boolean isEmpty(int player, String field,int number){
-        if (field.equals("monster")){
-            if (player == 1){
-                return playerOneMonsterZone[number] == null;
-            }else if (player == 2){
-                return playerTwoMonsterZone[number] == null;
-            }
-        }
-        else {
-            if (player == 1){
-                return playerOneSpellZone[number] == null;
-            }else if (player == 2){
-                return playerTwoSpellZone[number] == null;
-            }
-        }
-        return false;
-    }
-
-    public boolean isEmpty(int player, String field){
-        if (field.equals("field")){
-            if (player == 1){
-                return playerOneFieldZone == null;
-            }else if (player == 2){
-                return playerTwoFieldZone == null;
-            }
-        }
-        return false;
     }
 
     public Card getCard(String field, int number,int player){
@@ -82,6 +53,17 @@ public class Board
                 return playerOneSpellZone[number].getCard();
             }else if (player == 2){
                 return playerTwoSpellZone[number].getCard();
+            }
+        }
+        return null;
+    }
+
+    public Card getCard(String field, int player){
+        if (field.equals("field")){
+            if (player == 1){
+                return playerOneFieldZone.getCard();
+            }else if (player == 2){
+                return playerTwoFieldZone.getCard();
             }
         }
         return null;
