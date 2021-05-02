@@ -19,10 +19,6 @@ public class GameController {
     private Card selectedCard;
     private int playerOneLp;
     private int playerTwoLp;
-    private ArrayList<Card> playerOneDeck;
-    private ArrayList<Card> playerTwoDeck;
-    private ArrayList<Card> playerOneHand;
-    private ArrayList<Card> playerTwoHand;
     private Board gameBoard;
     private String gamePhase;
     private boolean isAI;
@@ -76,10 +72,8 @@ public class GameController {
         rounds = numberOfRounds;
         playerOneLp = 8000;
         playerTwoLp = 8000;
-        gameBoard = new Board();
+        gameBoard = new Board(playerOneDeck,playerTwoDeck);
         isAI = username.equals("AI");
-        playerOneHand = new ArrayList<>();
-        playerTwoHand = new ArrayList<>();
     }
 
     private int tossCoin() {
@@ -211,5 +205,27 @@ public class GameController {
     public void surrender() {
 
     }
+
+    public int getOpponentLp(){
+        if (getOpponent() == playerOne){
+            return playerOneLp;
+        }
+        return playerTwoLp;
+    }
+
+    public int getCurrentLp(){
+        if (getCurrentPlayer() == playerTwo){
+            return playerTwoLp;
+        }
+        return playerOneLp;
+    }
+
+    public int getCurrentPlayerNumber(){
+        if (getCurrentPlayer() == playerOne){
+            return 1;
+        }
+        return 2;
+    }
+
 
 }

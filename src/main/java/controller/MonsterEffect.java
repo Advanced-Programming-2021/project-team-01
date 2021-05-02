@@ -1,6 +1,6 @@
 package controller;
 
- interface MonsterEffect
+interface MonsterEffect
 {
     void runMonster(String name);		
     void commandKnight();		
@@ -11,7 +11,7 @@ package controller;
     void scanner();		
     void marshmallon();		
     void beastKingBarbaros();		
-    void texChanger();		
+    void texChanger();
     void calculator();		
     void mirageDragon();		
     void heraldOfCreation();		
