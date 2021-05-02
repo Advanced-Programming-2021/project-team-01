@@ -14,10 +14,11 @@ public class Board
     private ArrayList<Card> playerTwoGraveYard;
     private ArrayList<Card> playerOneBanishedZone;		
     private ArrayList<Card> playerTwoBanishedZone;		
-    private Player playerOne;		
-    private Player playerTwo;		
-    private ArrayList<Card> playerOneDrawZone;		
+    private ArrayList<Card> playerOneDrawZone;
     private ArrayList<Card> playerTwoDrawZone;
+    private ZoneSlot playerOneFieldZone;
+    private ZoneSlot playerTwoFieldZone;
+
     {
         playerOneMonsterZone = new ZoneSlot[6];
         playerOneBanishedZone = new ArrayList<>();
@@ -32,5 +33,54 @@ public class Board
     public String toString(){
         return null;
     }
+
+    public boolean isEmpty(int player, String field,int number){
+        if (field.equals("monster")){
+            if (player == 1){
+                return playerOneMonsterZone[number] == null;
+            }else if (player == 2){
+                return playerTwoMonsterZone[number] == null;
+            }
+        }
+        else {
+            if (player == 1){
+                return playerOneSpellZone[number] == null;
+            }else if (player == 2){
+                return playerTwoSpellZone[number] == null;
+            }
+        }
+        return false;
+    }
+
+    public boolean isEmpty(int player, String field){
+        if (field.equals("field")){
+            if (player == 1){
+                return playerOneFieldZone == null;
+            }else if (player == 2){
+                return playerTwoFieldZone == null;
+            }
+        }
+        return false;
+    }
+
+    public Card getCard(String field, int number,int player){
+        if (field.equals("monster")){
+            if (player == 1){
+                return playerOneMonsterZone[number].getCard();
+            }else if (player == 2){
+                return playerTwoMonsterZone[number].getCard();
+            }
+        }
+        else {
+            if (player == 1){
+                return playerOneSpellZone[number].getCard();
+            }else if (player == 2){
+                return playerTwoSpellZone[number].getCard();
+            }
+        }
+        return null;
+    }
+
+
 
 }

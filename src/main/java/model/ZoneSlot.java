@@ -14,4 +14,7 @@ public class ZoneSlot {
 
     }
 
+    public Card getCard() {
+        return card;
+    }
 }
