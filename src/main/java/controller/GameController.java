@@ -139,7 +139,9 @@ public class GameController {
         }
     }
 
-    public void deselect() {
+    public void deselect() throws CardNotSelected{
+        if (selectedCard == null)
+            throw new CardNotSelected();
         selectedCard = null;
     }
 
