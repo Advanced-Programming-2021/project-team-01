@@ -68,6 +68,8 @@ public class GameController {
         if (numberOfRounds != 1 && numberOfRounds != 3) {
             throw new InvalidRoundNumber();
         }
+        playerOneHand = new ArrayList<>();
+        playerTwoHand = new ArrayList<>();
     }
 
     private int tossCoin() {
