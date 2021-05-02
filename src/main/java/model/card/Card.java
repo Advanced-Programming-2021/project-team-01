@@ -3,11 +3,12 @@ package model.card;
 import java.util.HashMap;
 import java.util.TreeMap;
 
-public class Card {
+public abstract class Card {
     private static TreeMap<String, Card> allCards = new TreeMap<>();
     private String name;
     private String description;
     private int price;
+    protected String type = "type";
 
     public Card(String name, String description, int price) {
         this.name = name;

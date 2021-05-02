@@ -1,6 +1,11 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import model.Deck;
@@ -106,8 +111,13 @@ public class DatabaseController {
         String directory = getDeckDirectory(deck);
         try {
             FileReader fileReader = new FileReader(directory);
-            Gson gson = new Gson();
-            return gson.fromJson(fileReader,Deck.class);
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
+                    .of(Card.class,"type").
+                            registerSubtype(MonsterCard.class,"monster").
+                            registerSubtype(SpellCard.class,"spell").
+                            registerSubtype(TrapCard.class,"trap");
+            return gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(fileReader,Deck.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

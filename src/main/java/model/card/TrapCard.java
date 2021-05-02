@@ -7,6 +7,7 @@ public class TrapCard extends Card{
 
     public TrapCard(String name, String description, int price, Property property) {
         super(name, description, price);
+        super.type = "trap";
         this.property = property;
     }
 }

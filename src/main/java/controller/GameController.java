@@ -72,7 +72,7 @@ public class GameController {
         rounds = numberOfRounds;
         playerOneLp = 8000;
         playerTwoLp = 8000;
-        gameBoard = new Board(playerOneDeck, playerTwoDeck, playerOne, playerTwo);
+        gameBoard = new Board(playerOneDeck, playerTwoDeck);
         isAI = username.equals("AI");
     }
 

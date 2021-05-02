@@ -13,6 +13,7 @@ public class MonsterCard extends Card {
     public MonsterCard(String name, String description, int price, int attack, int defense,
                        CardType cardType, ArrayList<MonsterType> monsterTypes, Attribute attribute, int level) {
         super(name, description, price);
+        super.type = "monster";
         this.attack = attack;
         this.defense = defense;
         this.cardType = cardType;

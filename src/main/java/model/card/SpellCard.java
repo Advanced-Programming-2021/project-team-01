@@ -7,6 +7,7 @@ public class SpellCard extends Card{
 
     public SpellCard(String name, String description, int price, Property property) {
         super(name, description, price);
+        super.type = "spell";
         this.property = property;
     }
 }

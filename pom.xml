@@ -23,6 +23,12 @@
             <artifactId>junit-jupiter</artifactId>
             <version>RELEASE</version>
             <scope>test</scope>
+
+        </dependency>
+        <dependency>
+            <groupId>org.danilopianini</groupId>
+            <artifactId>gson-extras</artifactId>
+            <version>0.2.2-dev1n+f8657bfc</version>
         </dependency>
     </dependencies>
     <properties>
