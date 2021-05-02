@@ -67,7 +67,7 @@ public class GameController {
         if (numberOfRounds != 1 && numberOfRounds != 3) {
             throw new InvalidRoundNumber();
         }
-       // Collections.shuffle(Collections.singletonList(playerOneDeck));
+       // Collections.shuffle(Collections.singletonList(playerOneDeck)); //fixme: how to shuffle arraylist
        // Collections.shuffle(Collections.singletonList(playerTwoDeck));
         rounds = numberOfRounds;
         playerOneLp = 8000;

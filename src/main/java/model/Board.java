@@ -33,6 +33,8 @@ public class Board {
         playerTwoGraveYard = new ArrayList<>();
         playerOneHand = new ArrayList<>();
         playerTwoHand = new ArrayList<>();
+        playerOneFieldZone = new ZoneSlot();
+        playerTwoFieldZone = new ZoneSlot();
         for (int i = 1; i < 6; i++) {
             playerOneMonsterZone[i] = new ZoneSlot();
             playerOneSpellZone[i] = new ZoneSlot();
@@ -44,8 +46,25 @@ public class Board {
     public Board(Deck deck1, Deck deck2) {
         playerOneDrawZone = deck1.getMainDeck();
         playerTwoDrawZone = deck2.getMainDeck();
+        for (int i = 0; i < 4; i++){
+            addCardFromDeckToHand(1);
+        }
+        for (int i = 0; i < 6; i++){
+            addCardFromDeckToHand(2);
+        }
     }
 
+    public void addCardFromDeckToHand(int playerNumber){
+        if (playerNumber == 1){
+            Card card = playerOneDrawZone.get(0);
+            playerOneDrawZone.remove(0);
+            playerOneHand.add(card);
+        }else {
+            Card card = playerTwoDrawZone.get(0);
+            playerTwoDrawZone.remove(0);
+            playerTwoHand.add(card);
+        }
+    }
     public void showBoard() {
         String opponentNickname = GameController.getOpponent().getNickname();
         String playerNickname = GameController.getCurrentPlayer().getNickname();
@@ -69,7 +88,7 @@ public class Board {
             opponentHandSize = playerOneHand.size();
             playerDrawZoneCards = playerTwoDrawZone.size();
             opponentDrawZoneCards = playerOneDrawZone.size();
-            playerGraveyardCards = playerTwoDrawZone.size();
+            playerGraveyardCards = playerTwoGraveYard.size();
             opponentGraveyardCards = playerOneGraveYard.size();
         }
         System.out.println(opponentNickname +" : "+ opponentLp);
@@ -84,11 +103,11 @@ public class Board {
             showGameBoard(playerGraveyardCards, opponentGraveyardCards, playerOneSpellZone, playerOneMonsterZone,
                     playerOneFieldZone, playerTwoFieldZone, playerTwoMonsterZone, playerTwoSpellZone);
         }
-        System.out.println("\t\t\t\t\t" +"*" +playerDrawZoneCards +"*");
+        System.out.println("\n\t\t\t\t\t\t*" +playerDrawZoneCards +"*");
         for (int i = 0; i < playerHandSize; i++){
             System.out.print("\tc");
         }
-        System.out.println(playerNickname + ":" + playerLp);
+        System.out.println("\n"+playerNickname + " : " + playerLp);
     }
 
     public static void main(String[] args) {
