@@ -55,6 +55,14 @@ public class Player {
         return money;
     }
 
+    public String getActiveDeck() {
+        return activeDeck;
+    }
+
+    public ArrayList<String> getPlayerDecks() {
+        return playerDecks;
+    }
+
     public void addDeck(String deckName) {
         playerDecks.add(deckName);
     }

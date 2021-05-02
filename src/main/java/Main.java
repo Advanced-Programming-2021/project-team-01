@@ -9,5 +9,6 @@ public class Main{
         DatabaseController.loadGameCards();
         HandleRequestType handleRequestType = new HandleRequestType();
         handleRequestType.start();
+        System.out.println();
     }
 }
