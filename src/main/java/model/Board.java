@@ -368,4 +368,25 @@ public class Board {
             }
         }
     }
+
+    public String showGraveyard(int player){
+        StringBuilder result = new StringBuilder();
+        if (player==1){
+            getGraveyardList(result, playerOneGraveYard);
+        }else if (player ==2){
+            getGraveyardList(result, playerTwoGraveYard);
+        }
+        return result.toString();
+    }
+
+    private void getGraveyardList(StringBuilder result, ArrayList<Card> playerGraveYard) {
+        if (playerGraveYard.size() == 0)
+            result.append("graveyard empty");
+        else {
+            for (int i = 0; i < playerGraveYard.size(); i++) {
+                result.append(i + 1).append(". ").append(playerGraveYard.get(i).getName()).append(':')
+                        .append(playerGraveYard.get(i).getDescription()).append('\n');
+            }
+        }
+    }
 }

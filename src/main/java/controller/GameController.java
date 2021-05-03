@@ -164,18 +164,18 @@ public class GameController {
         if (selectedCard instanceof MonsterCard)
             setMonster();
         else if (selectedCard instanceof SpellCard)
-            gameBoard.setSpell(currentPlayer == playerOne ? 1 : 2, (SpellCard) selectedCard);
+            gameBoard.setSpell(getCurrentPlayerNumber(), (SpellCard) selectedCard);
         else
-            gameBoard.setTrap(currentPlayer == playerOne ? 1 : 2, (TrapCard) selectedCard);
+            gameBoard.setTrap(getCurrentPlayerNumber(), (TrapCard) selectedCard);
         selectedCard = null;
     }
 
     public void setMonster() throws MonsterZoneFull, AlreadySummonedError {
-        if (gameBoard.numberOfMonsterCards(currentPlayer == playerOne ? 1 : 2) == 5)
+        if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) == 5)
             throw new MonsterZoneFull();
         if (isSummoned)
             throw new AlreadySummonedError();
-        gameBoard.setMonster(currentPlayer == playerOne ? 1 : 2, (MonsterCard) selectedCard);
+        gameBoard.setMonster(getCurrentPlayerNumber(), (MonsterCard) selectedCard);
     }
 
     public void goNextPhase() {
@@ -269,7 +269,7 @@ public class GameController {
     }
 
     public void showGraveyard() {
-
+        gameBoard.showGraveyard(getCurrentPlayerNumber());
     }
 
     public void showSelectedCard() {
