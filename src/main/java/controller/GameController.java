@@ -68,14 +68,14 @@ public class GameController {
         if (numberOfRounds != 1 && numberOfRounds != 3) {
             throw new InvalidRoundNumber();
         }
-       // Collections.shuffle(Collections.singletonList(playerOneDeck)); //fixme: how to shuffle arraylist
-       // Collections.shuffle(Collections.singletonList(playerTwoDeck));
         rounds = numberOfRounds;
         playerOneLp = 8000;
         playerTwoLp = 8000;
         gameBoard = new Board(playerOneDeck, playerTwoDeck);
         isAI = username.equals("AI");
         gameBoard.showBoard();
+        gamePhase = GamePhase.DRAW_PHASE;
+        nextPhase();
     }
 
     private int tossCoin() {
@@ -224,10 +224,13 @@ public class GameController {
         return 2;
     }
 
-    public void nextPhase(){
+    public String nextPhase(){
+        String result = "";
         switch (gamePhase) {
             case DRAW_PHASE:
+                Card card = gameBoard.drawCard(currentPlayer == playerOne ? 1 : 2);
                 gamePhase = GamePhase.STANDBY_PHASE;
+                result = String.format("phase: draw phase\nnew card added to the hand : %s", card.getName());
                 break;
             case STANDBY_PHASE:
                 gamePhase = GamePhase.MAIN_PHASE1;
@@ -242,12 +245,12 @@ public class GameController {
                 gamePhase = GamePhase.END_PHASE;
                 break;
             case END_PHASE:
-                //TODO: FILL ME
+                gamePhase = GamePhase.DRAW_PHASE;
+                currentPlayer = getOpponent();
                 break;
         }
 
-
+        return result;
     }
-
 
 }

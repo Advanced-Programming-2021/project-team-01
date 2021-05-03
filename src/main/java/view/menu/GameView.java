@@ -37,6 +37,8 @@ class GameView {
             directAttack(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SURRENDER, input)) != null) {
             surrender();
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.NEXT_PHASE, input)) != null){
+            System.out.println(GameController.getInstance().nextPhase());
         } else {
             System.out.println("invalid command");
         }
@@ -78,18 +80,6 @@ class GameView {
     private void standByPhase(Matcher matcher) {
         System.out.println("phase: ");
         //fixme kari bayad kar mge?! :|
-    }
-
-    private void drawPhase(Matcher matcher) {
-
-    }
-
-    private void mainPhase(Matcher matcher) {
-
-    }
-
-    private void endPhase(Matcher matcher) {
-
     }
 
     private void summonCard() {
