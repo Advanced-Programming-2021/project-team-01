@@ -169,7 +169,7 @@ public class GameController {
 
     }
 
-    public void summon() throws CardNotSelected, NotSummonCard, ActivationPhaseError, MonsterZoneFull, AlreadySummonedError {
+    public void summon() throws CardNotSelected, NotSummonCard, ActivationPhaseError, MonsterZoneFull, AlreadySummonedError, NotEnoughTribute {
         if (selectedCard == null) {
             throw new CardNotSelected();
         }
@@ -185,7 +185,15 @@ public class GameController {
             gameBoard.summonCard((MonsterCard) selectedCard,getCurrentPlayerNumber());
             isSummoned = true;
             selectedCard = null;
-        }//TODO: TRIBUTE SUMMON **EXCEPTION HANDLING ULTRA**
+        }else if (((MonsterCard) selectedCard).getLevel() == 5 ||
+                ((MonsterCard) selectedCard).getLevel() == 6){//TODO: TRIBUTE SUMMON **EXCEPTION HANDLING ULTRA**
+            if (gameBoard.getNumberOfCardsInHand(getCurrentPlayerNumber()) == 0)
+                throw new NotEnoughTribute();
+
+
+
+
+        }
 
 
     }

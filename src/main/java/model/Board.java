@@ -239,5 +239,21 @@ public class Board {
         throw new MonsterZoneFull();
     }
 
+    public int numberOfMonsterCards(int player) {
+        int number = 0;
+        if (player == 1) {
+            for (int i = 1; i < 6; i++) {
+                if (playerOneMonsterZone[i].getCard() != null)
+                    number++;
+            }
+        } else if (player == 2) {
+            for (int i = 1; i < 6; i++) {
+                if (playerTwoMonsterZone[i].getCard() != null)
+                    number++;
+            }
+        }
+        return number;
+    }
+
 
 }

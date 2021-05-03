@@ -1,6 +1,5 @@
 package model.card;
 
-import java.util.HashMap;
 import java.util.TreeMap;
 
 public abstract class Card {
