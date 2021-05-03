@@ -53,6 +53,7 @@ public class DeckController {
                     if (deck.getMainDeck().size() < 60) {
                         if (deck.checkCardsLimit(card)) {
                             deck.addCardToMainDeck(card);
+                            DatabaseController.updateDeck(deck);
                         } else
                             throw new CardNumberLimit(cardName, deckName);
                     } else
@@ -61,6 +62,7 @@ public class DeckController {
                     if (deck.getSideDeck().size() < 15) {
                         if (deck.checkCardsLimit(card)) {
                             deck.addCardToSideDeck(card);
+                            DatabaseController.updateDeck(deck);
                         } else
                             throw new CardNumberLimit(cardName, deckName);
                     } else
@@ -79,13 +81,17 @@ public class DeckController {
             if (DatabaseController.doesDeckExists(deckName)) {
                 Deck deck = DatabaseController.getDeckByName(deckName);
                 if (isMainDeck) {
-                    if (deck.getMainDeck().contains(card))
+                    if (deck.getMainDeck().contains(card)) {
                         deck.removeCardFromMainDeck(card);
+                        DatabaseController.updateDeck(deck);
+                    }
                     else
                         throw new CardNotInDeck(cardName, "main");
                 } else {
-                    if (deck.getSideDeck().contains(card))
+                    if (deck.getSideDeck().contains(card)) {
                         deck.removeCardFromSideDeck(card);
+                        DatabaseController.updateDeck(deck);
+                    }
                     else
                         throw new CardNotInDeck(cardName, "side");
                 }
