@@ -2,7 +2,10 @@ package model;
 
 import controller.DatabaseController;
 import controller.GameController;
+import controller.exceptions.AlreadySummonedError;
+import controller.exceptions.MonsterZoneFull;
 import model.card.Card;
+import model.card.MonsterCard;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -125,11 +128,11 @@ public class Board {
     }
 
     private void showUserBoard(ZoneSlot[] playerOneSpellZone, ZoneSlot[] playerOneMonsterZone) {
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 6; i++){
             System.out.print("\t" + playerOneSpellZone[i].toString());
         }
         System.out.println();
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 6; i++){
             System.out.print("\t" + playerOneMonsterZone[i].toString());
         }
     }
@@ -213,20 +216,27 @@ public class Board {
         return false;
     }
 
-    public int numberOfMonsterInZone(int player) {
-        int number = 0;
-        if (player == 1) {
+    public void summonCard(MonsterCard monsterCard, int player) throws MonsterZoneFull, AlreadySummonedError {
+        if (GameController.getInstance().isSummoned()){
+            throw new AlreadySummonedError();
+        }
+        if (player == 1){
             for (ZoneSlot zoneSlot : playerOneMonsterZone) {
-                if (zoneSlot.getCard() != null)
-                    number++;
+                if (zoneSlot.getCard() == null){
+                    zoneSlot.setCard(monsterCard);
+                    return;
+                }
             }
-        } else if (player == 2) {
+        }else {
             for (ZoneSlot zoneSlot : playerTwoMonsterZone) {
-                if (zoneSlot.getCard() != null)
-                    number++;
+                if (zoneSlot.getCard() == null){
+                    zoneSlot.setCard(monsterCard);
+                    return;
+                }
             }
         }
-        return number;
+        throw new MonsterZoneFull();
     }
+
 
 }

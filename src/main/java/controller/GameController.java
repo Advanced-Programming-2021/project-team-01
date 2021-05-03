@@ -180,13 +180,16 @@ public class GameController {
         if (phaseController.getGamePhase() == GamePhase.MAIN_PHASE1 ||
                 phaseController.getGamePhase() == GamePhase.MAIN_PHASE2)
             throw new ActivationPhaseError();
-        if (gameBoard.numberOfMonsterInZone(getCurrentPlayerNumber()) == 5)
-            throw new MonsterZoneFull();
-        if (isSummoned)
-            throw new AlreadySummonedError();
+        if (((MonsterCard) selectedCard).getLevel() <= 4){
+            isSummoned = true;
+            gameBoard.summonCard((MonsterCard) selectedCard,getCurrentPlayerNumber());
+        }//TODO: TRIBUTE SUMMON **EXCEPTION HANDLING ULTRA**
 
 
+    }
 
+    public boolean isSummoned() {
+        return isSummoned;
     }
 
     public void changeCardPosition(String newPosition) {

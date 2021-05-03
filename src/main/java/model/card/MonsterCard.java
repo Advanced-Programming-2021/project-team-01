@@ -25,4 +25,8 @@ public class MonsterCard extends Card {
     public CardType getCardType() {
         return cardType;
     }
+
+    public int getLevel() {
+        return level;
+    }
 }

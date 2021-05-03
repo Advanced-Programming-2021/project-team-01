@@ -14,13 +14,13 @@ class GameView {
             selectPlayerCard(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.DESELECT_CARD, input)) != null) {
             deselectCard(matcher);
-        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SUMMON_MONSTER, input)) != null) {
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SUMMON_MONSTER, input)) != null) {
             summonCard();
-        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SET_CARD, input)) != null) {
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SET_CARD, input)) != null) {
             setCard();
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.CHANGE_MONSTER_POSITION, input)) != null) {
             changeCardPosition(matcher);
-        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.FLIP_SUMMON, input)) != null) {
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.FLIP_SUMMON, input)) != null) {
             flipSummonCard();
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.ATTACK, input)) != null) {
             attackOpponentsMonster(matcher);
@@ -28,17 +28,17 @@ class GameView {
             directAttack(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.ACTIVATE_EFFECT, input)) != null) {
             activateSpellCard(matcher);
-        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
             showGraveyard();
-        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SHOW_SELECTED_CARD, input)) != null) {
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SHOW_SELECTED_CARD, input)) != null) {
             showCard();
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
             directAttack(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
             directAttack(matcher);
-        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SURRENDER, input)) != null) {
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SURRENDER, input)) != null) {
             surrender();
-        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.NEXT_PHASE, input)) != null){
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.NEXT_PHASE, input)) != null){
             System.out.println(GameController.getInstance().nextPhase());
         } else {
             System.out.println("invalid command");
