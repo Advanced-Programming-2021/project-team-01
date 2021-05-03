@@ -81,7 +81,7 @@ public enum ConsoleCommands {
             "select (?<opponent>opponent)( (?<type>monster|spell))*( (?<number>\\d+))*",
             "select (?<type>field)( (?<opponent>opponent))*",
             "select (?<opponent>opponent) (?<type>field)",
-            "select (?<type>hand) (?<number>\\d+)(?<opponent>)"),
+            "select (?<type>hand) (?<number>\\d+)(?<opponent>)*"),
     DESELECT_CARD("select -d"),
     NEXT_PHASE("next phase"),
     REMOVE_SELECTION,

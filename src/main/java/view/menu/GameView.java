@@ -52,7 +52,7 @@ class GameView {
     private void selectPlayerCard(Matcher matcher) {
         String type = matcher.group("type");
         try {
-            if (matcher.group("opponent").equals("")) {
+            if (matcher.group("opponent") == null) {
                 if ("field".equals(type)) {
                     GameController.getInstance().selectPlayerCard(type);
                 } else {
