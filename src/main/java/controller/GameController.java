@@ -5,9 +5,7 @@ import model.Board;
 import model.Deck;
 import model.GamePhase;
 import model.Player;
-import model.card.Card;
-import model.card.CardType;
-import model.card.MonsterCard;
+import model.card.*;
 import view.menu.HandleRequestType;
 
 import java.util.Random;
@@ -154,16 +152,28 @@ public class GameController {
         selectedCard = null;
     }
 
-    public void setCard() {
-
+    public void setCard() throws CardNotSelected, CardNotInHand, ActivationPhaseError, MonsterZoneFull, AlreadySummonedError, SpellZoneFullError {
+        if (selectedCard == null)
+            throw new CardNotSelected();
+        if (gameBoard.isCardInHand(selectedCard, currentPlayer == playerOne ? 1 : 2))
+            throw new CardNotInHand();
+        if (phaseController.getGamePhase() != GamePhase.MAIN_PHASE1 &&
+                phaseController.getGamePhase() != GamePhase.MAIN_PHASE2)
+            throw new ActivationPhaseError();
+        if (selectedCard instanceof MonsterCard)
+            setMonster();
+        else if (selectedCard instanceof SpellCard)
+            gameBoard.setSpell(currentPlayer == playerOne ? 1 : 2, (SpellCard) selectedCard);
+        else
+            gameBoard.setTrap(currentPlayer == playerOne ? 1 : 2, (TrapCard) selectedCard);
     }
 
-    public void setMonster() {
-
-    }
-
-    public void setSpell() {
-
+    public void setMonster() throws MonsterZoneFull, AlreadySummonedError {
+        if (gameBoard.numberOfMonsterCards(currentPlayer == playerOne ? 1 : 2) == 5)
+            throw new MonsterZoneFull();
+        if (isSummoned)
+            throw new AlreadySummonedError();
+        gameBoard.setMonster(currentPlayer == playerOne ? 1 : 2, (MonsterCard) selectedCard);
     }
 
     public void goNextPhase() {

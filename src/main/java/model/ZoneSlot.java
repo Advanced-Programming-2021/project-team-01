@@ -16,6 +16,14 @@ public class ZoneSlot {
 
     }
 
+    public void setHidden(boolean hidden) {
+        isHidden = hidden;
+    }
+
+    public void setDefending(boolean defending) {
+        isDefending = defending;
+    }
+
     public Card getCard() {
         return card;
     }
