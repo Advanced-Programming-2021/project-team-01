@@ -47,26 +47,27 @@ public class Board {
     public Board(Deck deck1, Deck deck2) {
         playerOneDrawZone = deck1.getMainDeck();
         playerTwoDrawZone = deck2.getMainDeck();
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             addCardFromDeckToHand(1);
         }
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             addCardFromDeckToHand(2);
         }
         shuffleDecks();
     }
 
-    public void addCardFromDeckToHand(int playerNumber){
-        if (playerNumber == 1){
+    public void addCardFromDeckToHand(int playerNumber) {
+        if (playerNumber == 1) {
             Card card = playerOneDrawZone.get(0);
             playerOneDrawZone.remove(0);
             playerOneHand.add(card);
-        }else {
+        } else {
             Card card = playerTwoDrawZone.get(0);
             playerTwoDrawZone.remove(0);
             playerTwoHand.add(card);
         }
     }
+
     public void showBoard() {
         String opponentNickname = GameController.getOpponent().getNickname();
         String playerNickname = GameController.getCurrentPlayer().getNickname();
@@ -93,23 +94,23 @@ public class Board {
             playerGraveyardCards = playerTwoGraveYard.size();
             opponentGraveyardCards = playerOneGraveYard.size();
         }
-        System.out.println(opponentNickname +" : "+ opponentLp);
-        for (int i = 0; i < opponentHandSize; i++){
+        System.out.println(opponentNickname + " : " + opponentLp);
+        for (int i = 0; i < opponentHandSize; i++) {
             System.out.print("\tc");
         }
         System.out.println("\n*" + opponentDrawZoneCards + "*");
-        if (GameController.getInstance().getCurrentPlayerNumber() == 1){
+        if (GameController.getInstance().getCurrentPlayerNumber() == 1) {
             showGameBoard(playerGraveyardCards, opponentGraveyardCards, playerTwoSpellZone, playerTwoMonsterZone,
                     playerTwoFieldZone, playerOneFieldZone, playerOneMonsterZone, playerOneSpellZone);
-        }else {
+        } else {
             showGameBoard(playerGraveyardCards, opponentGraveyardCards, playerOneSpellZone, playerOneMonsterZone,
                     playerOneFieldZone, playerTwoFieldZone, playerTwoMonsterZone, playerTwoSpellZone);
         }
-        System.out.println("\n\t\t\t\t\t\t*" +playerDrawZoneCards +"*");
-        for (int i = 0; i < playerHandSize; i++){
+        System.out.println("\n\t\t\t\t\t\t*" + playerDrawZoneCards + "*");
+        for (int i = 0; i < playerHandSize; i++) {
             System.out.print("\tc");
         }
-        System.out.println("\n"+playerNickname + " : " + playerLp);
+        System.out.println("\n" + playerNickname + " : " + playerLp);
     }
 
     private void showGameBoard(int playerGraveyardCards, int opponentGraveyardCards, ZoneSlot[] playerOneSpellZone,
@@ -117,18 +118,18 @@ public class Board {
                                ZoneSlot playerTwoFieldZone, ZoneSlot[] playerTwoMonsterZone,
                                ZoneSlot[] playerTwoSpellZone) {
         showUserBoard(playerOneSpellZone, playerOneMonsterZone);
-        System.out.println("\n"+opponentGraveyardCards+"\t\t\t\t\t\t"+ playerOneFieldZone.toString());
+        System.out.println("\n" + opponentGraveyardCards + "\t\t\t\t\t\t" + playerOneFieldZone.toString());
         System.out.println("--------------------------");
-        System.out.println(playerTwoFieldZone.toString()+"\t\t\t\t\t\t"+playerGraveyardCards);
+        System.out.println(playerTwoFieldZone.toString() + "\t\t\t\t\t\t" + playerGraveyardCards);
         showUserBoard(playerTwoMonsterZone, playerTwoSpellZone);
     }
 
     private void showUserBoard(ZoneSlot[] playerOneSpellZone, ZoneSlot[] playerOneMonsterZone) {
-        for (int i = 1; i < 6; i++){
+        for (int i = 1; i < 6; i++) {
             System.out.print("\t" + playerOneSpellZone[i].toString());
         }
         System.out.println();
-        for (int i = 1; i < 6; i++){
+        for (int i = 1; i < 6; i++) {
             System.out.print("\t" + playerOneMonsterZone[i].toString());
         }
     }
@@ -195,6 +196,37 @@ public class Board {
     public void shuffleDecks() {
         Collections.shuffle(playerOneDrawZone);
         Collections.shuffle(playerTwoDrawZone);
+    }
+
+    public boolean isCardInHand(Card selectedCard, int player) {
+        if (player == 1) {
+            for (Card card : playerOneHand) {
+                if (card == selectedCard)
+                    return true;
+            }
+        } else if (player == 2) {
+            for (Card card : playerTwoHand) {
+                if (card == selectedCard)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public int numberOfMonsterInZone(int player) {
+        int number = 0;
+        if (player == 1) {
+            for (ZoneSlot zoneSlot : playerOneMonsterZone) {
+                if (zoneSlot.getCard() != null)
+                    number++;
+            }
+        } else if (player == 2) {
+            for (ZoneSlot zoneSlot : playerTwoMonsterZone) {
+                if (zoneSlot.getCard() != null)
+                    number++;
+            }
+        }
+        return number;
     }
 
 }

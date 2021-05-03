@@ -21,4 +21,8 @@ public class MonsterCard extends Card {
         this.attribute = attribute;
         this.level = level;
     }
+
+    public CardType getCardType() {
+        return cardType;
+    }
 }

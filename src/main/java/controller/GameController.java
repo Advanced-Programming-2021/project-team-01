@@ -6,6 +6,8 @@ import model.Deck;
 import model.GamePhase;
 import model.Player;
 import model.card.Card;
+import model.card.CardType;
+import model.card.MonsterCard;
 
 import java.util.Random;
 
@@ -14,12 +16,11 @@ public class GameController {
     protected static Player playerOne;
     protected static Player playerTwo;
     protected static Player currentPlayer;
-    protected final controller.phaseController phaseController = new phaseController(this);
+    protected final PhaseController phaseController = new PhaseController(this);
     protected Card selectedCard;
     protected int playerOneLp;
     protected int playerTwoLp;
     protected Board gameBoard;
-    protected GamePhase gamePhase;
     protected boolean isAI;
     protected int rounds;
     protected boolean isSummoned;
@@ -28,9 +29,6 @@ public class GameController {
 
     }
 
-    public GamePhase getGamePhase() {
-        return gamePhase;
-    }
 
     public Board getGameBoard() {
         return gameBoard;
@@ -81,7 +79,7 @@ public class GameController {
         gameBoard = new Board(playerOneDeck, playerTwoDeck);
         isAI = username.equals("AI");
         gameBoard.showBoard();
-        gamePhase = GamePhase.DRAW_PHASE;
+        phaseController.setGamePhase(GamePhase.DRAW_PHASE);
         isSummoned = false;
     }
 
@@ -90,9 +88,9 @@ public class GameController {
     }
 
     public void selectPlayerCard(String fieldType) throws CardNotInPosition {
-        if (gameBoard.getCard(fieldType, currentPlayer == playerOne ? 1 : 2) == null)
+        if (gameBoard.getCard(fieldType, getCurrentPlayerNumber()) == null)
             throw new CardNotInPosition();
-        selectedCard = gameBoard.getCard(fieldType, currentPlayer == playerOne ? 1 : 2);
+        selectedCard = gameBoard.getCard(fieldType, getCurrentPlayerNumber());
     }
 
     public void selectPlayerCard(String fieldType, int fieldNumber) throws InvalidSelection, CardNotInPosition {
@@ -100,23 +98,23 @@ public class GameController {
             case "monster":
                 if (fieldNumber > 5 || fieldNumber < 1) {
                     throw new InvalidSelection();
-                } else if (gameBoard.getCard("monster", currentPlayer == playerOne ? 1 : 2, fieldNumber) == null) {
+                } else if (gameBoard.getCard("monster", getCurrentPlayerNumber(), fieldNumber) == null) {
                     throw new CardNotInPosition();
                 }
-                selectedCard = gameBoard.getCard("monster", currentPlayer == playerOne ? 1 : 2, fieldNumber);
+                selectedCard = gameBoard.getCard("monster", getCurrentPlayerNumber(), fieldNumber);
                 break;
             case "spell":
                 if (fieldNumber > 5 || fieldNumber < 1) {
                     throw new InvalidSelection();
-                } else if (gameBoard.getCard("spell", currentPlayer == playerOne ? 1 : 2, fieldNumber) == null) {
+                } else if (gameBoard.getCard("spell", getCurrentPlayerNumber(), fieldNumber) == null) {
                     throw new CardNotInPosition();
                 }
-                selectedCard = gameBoard.getCard("spell", currentPlayer == playerOne ? 1 : 2, fieldNumber);
+                selectedCard = gameBoard.getCard("spell", getCurrentPlayerNumber(), fieldNumber);
                 break;
             case "hand":
-                if (fieldNumber > gameBoard.getNumberOfCardsInHand(currentPlayer == playerOne ? 1 : 2))
+                if (fieldNumber > gameBoard.getNumberOfCardsInHand(getCurrentPlayerNumber()))
                     throw new InvalidSelection();
-                selectedCard = gameBoard.getCard(fieldType,fieldNumber,currentPlayer == playerOne ? 1 : 2);
+                selectedCard = gameBoard.getCard(fieldType, fieldNumber, getCurrentPlayerNumber());
                 break;
         }
     }
@@ -148,7 +146,7 @@ public class GameController {
         }
     }
 
-    public void deselect() throws CardNotSelected{
+    public void deselect() throws CardNotSelected {
         if (selectedCard == null)
             throw new CardNotSelected();
         selectedCard = null;
@@ -170,13 +168,25 @@ public class GameController {
 
     }
 
-    public void summon() throws CardNotSelected {
+    public void summon() throws CardNotSelected, NotSummonCard, ActivationPhaseError, MonsterZoneFull, AlreadySummonedError {
         if (selectedCard == null) {
             throw new CardNotSelected();
         }
-        if () {
-
+        if ((!gameBoard.isCardInHand(selectedCard, getCurrentPlayerNumber())) ||
+                !(selectedCard instanceof MonsterCard) ||
+                ((MonsterCard) selectedCard).getCardType() == CardType.RITUAL) {
+            throw new NotSummonCard();
         }
+        if (phaseController.getGamePhase() == GamePhase.MAIN_PHASE1 ||
+                phaseController.getGamePhase() == GamePhase.MAIN_PHASE2)
+            throw new ActivationPhaseError();
+        if (gameBoard.numberOfMonsterInZone(getCurrentPlayerNumber()) == 5)
+            throw new MonsterZoneFull();
+        if (isSummoned)
+            throw new AlreadySummonedError();
+
+
+
     }
 
     public void changeCardPosition(String newPosition) {
@@ -229,22 +239,15 @@ public class GameController {
         return playerOneLp;
     }
 
-    public int getCurrentPlayerNumber() {
-        if (getCurrentPlayer() == playerOne) {
-            return 1;
-        }
-        return 2;
-    }
-
-    protected void setGamePhase(GamePhase gamePhase) {
-        this.gamePhase = gamePhase;
-    }
-
     public void setSummoned(boolean summoned) {
         isSummoned = summoned;
     }
 
-    public String nextPhase(){
+    public String nextPhase() {
         return phaseController.nextPhase();
+    }
+
+    public int getCurrentPlayerNumber() {
+        return currentPlayer == playerOne ? 1 : 2;
     }
 }
