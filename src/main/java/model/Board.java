@@ -195,4 +195,5 @@ public class Board {
         Collections.shuffle(playerOneDrawZone);
         Collections.shuffle(playerTwoDrawZone);
     }
+
 }
