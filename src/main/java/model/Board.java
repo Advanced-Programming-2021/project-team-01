@@ -53,6 +53,7 @@ public class Board {
         for (int i = 0; i < 4; i++){
             addCardFromDeckToHand(2);
         }
+        shuffleDecks();
     }
 
     public void addCardFromDeckToHand(int playerNumber){

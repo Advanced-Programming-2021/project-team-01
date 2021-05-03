@@ -7,23 +7,22 @@ import model.GamePhase;
 import model.Player;
 import model.card.Card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 public class GameController {
-    private static GameController instance = null;
-    private static Player playerOne;
-    private static Player playerTwo;
-    private static Player currentPlayer;
-    private Card selectedCard;
-    private int playerOneLp;
-    private int playerTwoLp;
-    private Board gameBoard;
-    private GamePhase gamePhase;
-    private boolean isAI;
-    private int rounds;
+    protected static GameController instance = null;
+    protected static Player playerOne;
+    protected static Player playerTwo;
+    protected static Player currentPlayer;
+    protected final controller.phaseController phaseController = new phaseController(this);
+    protected Card selectedCard;
+    protected int playerOneLp;
+    protected int playerTwoLp;
+    protected Board gameBoard;
+    protected GamePhase gamePhase;
+    protected boolean isAI;
+    protected int rounds;
+    protected boolean isSummoned;
 
     private GameController() {
 
@@ -83,6 +82,7 @@ public class GameController {
         isAI = username.equals("AI");
         gameBoard.showBoard();
         gamePhase = GamePhase.DRAW_PHASE;
+        isSummoned = false;
     }
 
     private int tossCoin() {
@@ -170,8 +170,13 @@ public class GameController {
 
     }
 
-    public void summon() {
+    public void summon() throws CardNotSelected {
+        if (selectedCard == null) {
+            throw new CardNotSelected();
+        }
+        if () {
 
+        }
     }
 
     public void changeCardPosition(String newPosition) {
@@ -231,38 +236,15 @@ public class GameController {
         return 2;
     }
 
-    public String nextPhase(){
-        String result = "";
-        switch (gamePhase) {
-            case DRAW_PHASE:
-                Card card = gameBoard.drawCard(currentPlayer == playerOne ? 1 : 2);
-                gamePhase = GamePhase.STANDBY_PHASE;
-                result = String.format("phase: draw phase\nnew card added to the hand : %s", card.getName());
-                break;
-            case STANDBY_PHASE:
-                gamePhase = GamePhase.MAIN_PHASE1;
-                result = "phase: standby phase";
-                break;
-            case MAIN_PHASE1:
-                gamePhase = GamePhase.BATTLE_PHASE;
-                result = "phase: main 1 phase";
-                break;
-            case BATTLE_PHASE:
-                gamePhase = GamePhase.MAIN_PHASE2;
-                result = "phase: battle phase";
-                break;
-            case MAIN_PHASE2:
-                gamePhase = GamePhase.END_PHASE;
-                result = "phase: main 2 phase";
-                break;
-            case END_PHASE:
-                gamePhase = GamePhase.DRAW_PHASE;
-                currentPlayer = getOpponent();
-                result = String.format("phase: end phase\nits %s’s turn", currentPlayer.getNickname());
-                break;
-        }
-
-        return result;
+    protected void setGamePhase(GamePhase gamePhase) {
+        this.gamePhase = gamePhase;
     }
 
+    public void setSummoned(boolean summoned) {
+        isSummoned = summoned;
+    }
+
+    public String nextPhase(){
+        return phaseController.nextPhase();
+    }
 }
