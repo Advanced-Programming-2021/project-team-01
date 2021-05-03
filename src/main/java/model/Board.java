@@ -3,8 +3,11 @@ package model;
 import controller.GameController;
 import controller.exceptions.AlreadySummonedError;
 import controller.exceptions.MonsterZoneFull;
+import controller.exceptions.SpellZoneFullError;
 import model.card.Card;
 import model.card.MonsterCard;
+import model.card.SpellCard;
+import model.card.TrapCard;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -275,7 +278,94 @@ public class Board {
         }
     }
 
+    public void setMonster(int playerNum, MonsterCard card) {
+        if (playerNum == 1) {
+            for (int i = 1; i < 6; i++) {
+                if (playerOneMonsterZone[i] == null) {
+                    playerOneMonsterZone[i].setCard(card);
+                    playerOneMonsterZone[i].setDefending(true);
+                    playerOneMonsterZone[i].setHidden(true);
+                    playerOneHand.remove(card);
+                    break;
+                }
+            }
+        } else {
+            for (int i = 1; i < 6; i++) {
+                if (playerTwoMonsterZone[i] == null) {
+                    playerTwoMonsterZone[i].setCard(card);
+                    playerTwoMonsterZone[i].setDefending(true);
+                    playerTwoMonsterZone[i].setHidden(true);
+                    playerTwoHand.remove(card);
+                }
+            }
+        }
+    }
 
 
 
+    public void setSpell(int playerNum, SpellCard card) throws SpellZoneFullError {
+        int counter = 0;
+        if (playerNum == 1) {
+            for (int i = 1; i < 6; i++) {
+                if (playerOneSpellZone[i].getCard() != null)
+                    counter++;
+            }
+            if (counter == 5)
+                throw new SpellZoneFullError();
+            for (int i = 1; i < 6; i++) {
+                if (playerOneSpellZone[i] == null) {
+                    playerOneSpellZone[i].setCard(card);
+                    playerOneSpellZone[i].setHidden(true);
+                    playerOneHand.remove(card);
+                }
+            }
+        } else {
+            for (int i = 1; i < 6; i++) {
+                if (playerTwoSpellZone[i].getCard() != null)
+                    counter++;
+            }
+            if (counter == 5)
+                throw new SpellZoneFullError();
+            for (int i = 1; i < 6; i++) {
+                if (playerTwoSpellZone[i] == null) {
+                    playerTwoSpellZone[i].setCard(card);
+                    playerTwoSpellZone[i].setHidden(true);
+                    playerTwoHand.remove(card);
+                }
+            }
+        }
+    }
+
+    public void setTrap(int playerNum, TrapCard card) throws SpellZoneFullError {
+        int counter = 0;
+        if (playerNum == 1) {
+            for (int i = 1; i < 6; i++) {
+                if (playerOneSpellZone[i].getCard() != null)
+                    counter++;
+            }
+            if (counter == 5)
+                throw new SpellZoneFullError();
+            for (int i = 1; i < 6; i++) {
+                if (playerOneSpellZone[i] == null) {
+                    playerOneSpellZone[i].setCard(card);
+                    playerOneSpellZone[i].setHidden(true);
+                    playerOneHand.remove(card);
+                }
+            }
+        } else {
+            for (int i = 1; i < 6; i++) {
+                if (playerTwoSpellZone[i].getCard() != null)
+                    counter++;
+            }
+            if (counter == 5)
+                throw new SpellZoneFullError();
+            for (int i = 1; i < 6; i++) {
+                if (playerTwoSpellZone[i] == null) {
+                    playerTwoSpellZone[i].setCard(card);
+                    playerTwoSpellZone[i].setHidden(true);
+                    playerTwoHand.remove(card);
+                }
+            }
+        }
+    }
 }
