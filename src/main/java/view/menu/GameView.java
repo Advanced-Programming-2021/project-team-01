@@ -98,6 +98,7 @@ class GameView {
             int index = Integer.parseInt(HandleRequestType.scanner.nextLine());
             try {
                 GameController.getInstance().tributeSummonLevel5(index);
+                System.out.println("summoned successfully");
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -106,6 +107,7 @@ class GameView {
             int index2 = Integer.parseInt(HandleRequestType.scanner.nextLine());
             try {
                 GameController.getInstance().tributeSummonLevel7(index1,index2);
+                System.out.println("summoned successfully");
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
