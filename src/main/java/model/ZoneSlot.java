@@ -9,7 +9,7 @@ public class ZoneSlot {
     private boolean isHidden;
     private boolean isDefending;
     public void setCard(Card card) {
-
+        this.card = card;
     }
 
     public void isHidden(boolean value) {

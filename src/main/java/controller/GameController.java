@@ -112,7 +112,8 @@ public class GameController {
                 selectedCard = gameBoard.getCard("spell", getCurrentPlayerNumber(), fieldNumber);
                 break;
             case "hand":
-                if (fieldNumber > gameBoard.getNumberOfCardsInHand(getCurrentPlayerNumber()))
+                if (fieldNumber > gameBoard.getNumberOfCardsInHand(getCurrentPlayerNumber())||
+                fieldNumber <= 0)
                     throw new InvalidSelection();
                 selectedCard = gameBoard.getCard(fieldType, fieldNumber, getCurrentPlayerNumber());
                 break;
@@ -177,12 +178,13 @@ public class GameController {
                 ((MonsterCard) selectedCard).getCardType() == CardType.RITUAL) {
             throw new NotSummonCard();
         }
-        if (phaseController.getGamePhase() == GamePhase.MAIN_PHASE1 ||
-                phaseController.getGamePhase() == GamePhase.MAIN_PHASE2)
+        if (phaseController.getGamePhase() != GamePhase.MAIN_PHASE1 &&
+                phaseController.getGamePhase() != GamePhase.MAIN_PHASE2)
             throw new ActivationPhaseError();
         if (((MonsterCard) selectedCard).getLevel() <= 4){
-            isSummoned = true;
             gameBoard.summonCard((MonsterCard) selectedCard,getCurrentPlayerNumber());
+            isSummoned = true;
+            selectedCard = null;
         }//TODO: TRIBUTE SUMMON **EXCEPTION HANDLING ULTRA**
 
 
@@ -257,4 +259,5 @@ public class GameController {
     public int getCurrentPlayerNumber() {
         return currentPlayer == playerOne ? 1 : 2;
     }
+
 }
