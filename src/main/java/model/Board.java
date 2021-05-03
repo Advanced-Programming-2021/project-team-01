@@ -5,6 +5,7 @@ import controller.GameController;
 import model.card.Card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Board {
     private ZoneSlot[] playerOneMonsterZone;
@@ -110,11 +111,6 @@ public class Board {
         System.out.println("\n"+playerNickname + " : " + playerLp);
     }
 
-    public static void main(String[] args) {
-        Deck deck = DatabaseController.getDeckByName("test");
-        new Board(deck,deck).showBoard();
-    }
-
     private void showGameBoard(int playerGraveyardCards, int opponentGraveyardCards, ZoneSlot[] playerOneSpellZone,
                                ZoneSlot[] playerOneMonsterZone, ZoneSlot playerOneFieldZone,
                                ZoneSlot playerTwoFieldZone, ZoneSlot[] playerTwoMonsterZone,
@@ -195,4 +191,8 @@ public class Board {
         return card;
     }
 
+    public void shuffleDecks() {
+        Collections.shuffle(playerOneDrawZone);
+        Collections.shuffle(playerTwoDrawZone);
+    }
 }
