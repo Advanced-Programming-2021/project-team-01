@@ -206,24 +206,29 @@ public class GameController {
             selectedCard = null;
         } else if (((MonsterCard) selectedCard).getLevel() == 5 ||
                 ((MonsterCard) selectedCard).getLevel() == 6) {
-            if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) == 0)
-                throw new NotEnoughTribute();
-            int indexOfCard = Integer.parseInt(HandleRequestType.prompt());
-            if (gameBoard.getCardFromMonsterZone(indexOfCard, getCurrentPlayerNumber()) == null)
-                throw new NoMonsterInPosition();
-            tribute(indexOfCard);
+            throw new LevelFiveException();
         } else if (((MonsterCard) selectedCard).getLevel() == 7 ||
                 ((MonsterCard) selectedCard).getLevel() == 8) {
-            if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) < 2)
-                throw new NotEnoughTribute();
-            int indexOfCard1 = Integer.parseInt(HandleRequestType.prompt());
-            int indexOfCard2 = Integer.parseInt(HandleRequestType.prompt());
-            if (gameBoard.getCardFromMonsterZone(indexOfCard1, getCurrentPlayerNumber()) == null ||
-                    gameBoard.getCardFromMonsterZone(indexOfCard2, getCurrentPlayerNumber()) == null)
-                throw new NoMonsterInMultiplePositions();
-            tribute(indexOfCard1,indexOfCard2);
+            throw new LevelSevenException();
         }
 
+    }
+
+    public void tributeSummonLevel7(int indexOfCard1, int indexOfCard2) throws Exception {
+        if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) < 2)
+            throw new NotEnoughTribute();
+        if (gameBoard.getCardFromMonsterZone(indexOfCard1, getCurrentPlayerNumber()) == null ||
+                gameBoard.getCardFromMonsterZone(indexOfCard2, getCurrentPlayerNumber()) == null)
+            throw new NoMonsterInMultiplePositions();
+        tribute(indexOfCard1,indexOfCard2);
+    }
+
+    public void tributeSummonLevel5(int indexOfCard) throws Exception {
+        if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) == 0)
+            throw new NotEnoughTribute();
+        if (gameBoard.getCardFromMonsterZone(indexOfCard, getCurrentPlayerNumber()) == null)
+            throw new NoMonsterInPosition();
+        tribute(indexOfCard);
     }
 
     public void tribute(int indexOfCard) throws Exception {
