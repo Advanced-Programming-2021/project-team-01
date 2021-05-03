@@ -235,6 +235,10 @@ public class GameController {
         return playerTwoLp;
     }
 
+    public GamePhase getGamePhase() {
+        return phaseController.getGamePhase();
+    }
+
     public int getCurrentLp() {
         if (getCurrentPlayer() == playerTwo) {
             return playerTwoLp;
