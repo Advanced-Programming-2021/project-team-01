@@ -280,31 +280,27 @@ public class Board {
 
     public void setMonster(int playerNum, MonsterCard card) {
         if (playerNum == 1) {
-            for (int i = 1; i < 6; i++) {
-                if (playerOneMonsterZone[i] == null) {
-                    playerOneMonsterZone[i].setCard(card);
-                    playerOneMonsterZone[i].setDefending(true);
-                    playerOneMonsterZone[i].setHidden(true);
-                    playerOneHand.remove(card);
-                    break;
-                }
-            }
+            setMonsterInBord(card, playerOneMonsterZone, playerOneHand);
         } else {
-            for (int i = 1; i < 6; i++) {
-                if (playerTwoMonsterZone[i] == null) {
-                    playerTwoMonsterZone[i].setCard(card);
-                    playerTwoMonsterZone[i].setDefending(true);
-                    playerTwoMonsterZone[i].setHidden(true);
-                    playerTwoHand.remove(card);
-                }
+            setMonsterInBord(card, playerTwoMonsterZone, playerTwoHand);
+        }
+    }
+
+    private void setMonsterInBord(MonsterCard card, ZoneSlot[] playerOneMonsterZone, ArrayList<Card> playerOneHand) {
+        for (int i = 1; i < 6; i++) {
+            if (playerOneMonsterZone[i].getCard() == null) {
+                playerOneMonsterZone[i].setCard(card);
+                playerOneMonsterZone[i].setDefending(true);
+                playerOneMonsterZone[i].setHidden(true);
+                playerOneHand.remove(card);
+                break;
             }
         }
     }
 
 
-
     public void setSpell(int playerNum, SpellCard card) throws SpellZoneFullError {
-        int counter = 0;
+        int counter = 0; //TODO if it is a field spell put it in field zone
         if (playerNum == 1) {
             for (int i = 1; i < 6; i++) {
                 if (playerOneSpellZone[i].getCard() != null)
@@ -313,10 +309,11 @@ public class Board {
             if (counter == 5)
                 throw new SpellZoneFullError();
             for (int i = 1; i < 6; i++) {
-                if (playerOneSpellZone[i] == null) {
+                if (playerOneSpellZone[i].getCard() == null) {
                     playerOneSpellZone[i].setCard(card);
                     playerOneSpellZone[i].setHidden(true);
                     playerOneHand.remove(card);
+                    break;
                 }
             }
         } else {
@@ -327,10 +324,11 @@ public class Board {
             if (counter == 5)
                 throw new SpellZoneFullError();
             for (int i = 1; i < 6; i++) {
-                if (playerTwoSpellZone[i] == null) {
+                if (playerTwoSpellZone[i].getCard() == null) {
                     playerTwoSpellZone[i].setCard(card);
                     playerTwoSpellZone[i].setHidden(true);
                     playerTwoHand.remove(card);
+                    break;
                 }
             }
         }
@@ -346,10 +344,11 @@ public class Board {
             if (counter == 5)
                 throw new SpellZoneFullError();
             for (int i = 1; i < 6; i++) {
-                if (playerOneSpellZone[i] == null) {
+                if (playerOneSpellZone[i].getCard() == null) {
                     playerOneSpellZone[i].setCard(card);
                     playerOneSpellZone[i].setHidden(true);
                     playerOneHand.remove(card);
+                    break;
                 }
             }
         } else {
@@ -360,10 +359,11 @@ public class Board {
             if (counter == 5)
                 throw new SpellZoneFullError();
             for (int i = 1; i < 6; i++) {
-                if (playerTwoSpellZone[i] == null) {
+                if (playerTwoSpellZone[i].getCard() == null) {
                     playerTwoSpellZone[i].setCard(card);
                     playerTwoSpellZone[i].setHidden(true);
                     playerTwoHand.remove(card);
+                    break;
                 }
             }
         }

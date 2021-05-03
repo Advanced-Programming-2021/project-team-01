@@ -61,7 +61,8 @@ public class GameController {
         } else if (playerTwo.getActiveDeck() == null) {
             throw new NoActiveDeck(playerTwo.getUsername());
         }
-        currentPlayer = tossCoin() == 1 ? playerOne : playerTwo;
+        currentPlayer = playerOne;//TODO: SHASMAGHZ NABASHIM DAR SHAFEL
+        //currentPlayer = tossCoin() == 1 ? playerOne : playerTwo;
         Deck playerOneDeck = DatabaseController.getDeckByName(playerOne.getActiveDeck());
         Deck playerTwoDeck = DatabaseController.getDeckByName(playerTwo.getActiveDeck());
         if (!playerOneDeck.isDeckValid()) {
@@ -155,7 +156,7 @@ public class GameController {
     public void setCard() throws CardNotSelected, CardNotInHand, ActivationPhaseError, MonsterZoneFull, AlreadySummonedError, SpellZoneFullError {
         if (selectedCard == null)
             throw new CardNotSelected();
-        if (gameBoard.isCardInHand(selectedCard, currentPlayer == playerOne ? 1 : 2))
+        if (!gameBoard.isCardInHand(selectedCard, currentPlayer == playerOne ? 1 : 2))
             throw new CardNotInHand();
         if (phaseController.getGamePhase() != GamePhase.MAIN_PHASE1 &&
                 phaseController.getGamePhase() != GamePhase.MAIN_PHASE2)
