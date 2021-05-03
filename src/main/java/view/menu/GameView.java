@@ -4,6 +4,7 @@ import controller.GameController;
 import model.GamePhase;
 import view.ConsoleCommands;
 
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
 class GameView {

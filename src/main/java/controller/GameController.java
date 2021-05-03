@@ -182,6 +182,12 @@ public class GameController {
         if (phaseController.getGamePhase() != GamePhase.MAIN_PHASE1 &&
                 phaseController.getGamePhase() != GamePhase.MAIN_PHASE2)
             throw new ActivationPhaseError();
+        if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) == 5){
+            throw new MonsterZoneFull();
+        }
+        if (isSummoned()){
+            throw new AlreadySummonedError();
+        }
         if (((MonsterCard) selectedCard).getLevel() <= 4) {
             gameBoard.summonCard((MonsterCard) selectedCard, getCurrentPlayerNumber());
             setSummoned(true);

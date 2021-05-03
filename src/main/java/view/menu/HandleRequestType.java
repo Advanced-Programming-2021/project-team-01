@@ -43,5 +43,6 @@ public class HandleRequestType {
     public static String prompt(){
         return scanner.nextLine();
     }
+
 }
 
