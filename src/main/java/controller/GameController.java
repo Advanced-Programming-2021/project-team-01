@@ -166,6 +166,7 @@ public class GameController {
             gameBoard.setSpell(currentPlayer == playerOne ? 1 : 2, (SpellCard) selectedCard);
         else
             gameBoard.setTrap(currentPlayer == playerOne ? 1 : 2, (TrapCard) selectedCard);
+        selectedCard = null;
     }
 
     public void setMonster() throws MonsterZoneFull, AlreadySummonedError {
