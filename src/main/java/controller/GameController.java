@@ -29,6 +29,14 @@ public class GameController {
 
     }
 
+    public GamePhase getGamePhase() {
+        return gamePhase;
+    }
+
+    public Board getGameBoard() {
+        return gameBoard;
+    }
+
     public static GameController getInstance() {
         if (instance == null) {
             instance = new GameController();
@@ -75,7 +83,6 @@ public class GameController {
         isAI = username.equals("AI");
         gameBoard.showBoard();
         gamePhase = GamePhase.DRAW_PHASE;
-        nextPhase();
     }
 
     private int tossCoin() {

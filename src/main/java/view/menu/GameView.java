@@ -1,6 +1,7 @@
 package view.menu;
 
 import controller.GameController;
+import model.GamePhase;
 import view.ConsoleCommands;
 
 import java.util.regex.Matcher;
@@ -41,6 +42,10 @@ class GameView {
             System.out.println(GameController.getInstance().nextPhase());
         } else {
             System.out.println("invalid command");
+            return;
+        }
+        if (GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE1){
+            GameController.getInstance().getGameBoard().showBoard();
         }
     }
 

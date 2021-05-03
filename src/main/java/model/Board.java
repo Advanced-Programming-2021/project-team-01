@@ -182,17 +182,17 @@ public class Board {
     }
 
     public Card drawCard(int playerNum) {
+        Card card;
         if (playerNum == 1) {
-            Card card = playerOneDrawZone.get(0);
+            card = playerOneDrawZone.get(0);
             playerOneHand.add(card);
             playerOneDrawZone.remove(0);
-            return card;
         } else {
-            Card card = playerTwoDrawZone.get(0);
-            playerOneHand.add(card);
+            card = playerTwoDrawZone.get(0);
+            playerTwoHand.add(card);
             playerTwoDrawZone.remove(0);
-            return card;
         }
+        return card;
     }
 
 }
