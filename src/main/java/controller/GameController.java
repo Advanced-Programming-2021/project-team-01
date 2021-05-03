@@ -8,6 +8,7 @@ import model.Player;
 import model.card.Card;
 import model.card.CardType;
 import model.card.MonsterCard;
+import view.menu.HandleRequestType;
 
 import java.util.Random;
 
@@ -112,8 +113,8 @@ public class GameController {
                 selectedCard = gameBoard.getCard("spell", getCurrentPlayerNumber(), fieldNumber);
                 break;
             case "hand":
-                if (fieldNumber > gameBoard.getNumberOfCardsInHand(getCurrentPlayerNumber())||
-                fieldNumber <= 0)
+                if (fieldNumber > gameBoard.getNumberOfCardsInHand(getCurrentPlayerNumber()) ||
+                        fieldNumber <= 0)
                     throw new InvalidSelection();
                 selectedCard = gameBoard.getCard(fieldType, fieldNumber, getCurrentPlayerNumber());
                 break;
@@ -169,7 +170,7 @@ public class GameController {
 
     }
 
-    public void summon() throws CardNotSelected, NotSummonCard, ActivationPhaseError, MonsterZoneFull, AlreadySummonedError, NotEnoughTribute {
+    public void summon() throws Exception {
         if (selectedCard == null) {
             throw new CardNotSelected();
         }
@@ -181,21 +182,44 @@ public class GameController {
         if (phaseController.getGamePhase() != GamePhase.MAIN_PHASE1 &&
                 phaseController.getGamePhase() != GamePhase.MAIN_PHASE2)
             throw new ActivationPhaseError();
-        if (((MonsterCard) selectedCard).getLevel() <= 4){
-            gameBoard.summonCard((MonsterCard) selectedCard,getCurrentPlayerNumber());
-            isSummoned = true;
+        if (((MonsterCard) selectedCard).getLevel() <= 4) {
+            gameBoard.summonCard((MonsterCard) selectedCard, getCurrentPlayerNumber());
+            setSummoned(true);
             selectedCard = null;
-        }else if (((MonsterCard) selectedCard).getLevel() == 5 ||
-                ((MonsterCard) selectedCard).getLevel() == 6){//TODO: TRIBUTE SUMMON **EXCEPTION HANDLING ULTRA**
-            if (gameBoard.getNumberOfCardsInHand(getCurrentPlayerNumber()) == 0)
+        } else if (((MonsterCard) selectedCard).getLevel() == 5 ||
+                ((MonsterCard) selectedCard).getLevel() == 6) {
+            if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) == 0)
                 throw new NotEnoughTribute();
-
-
-
-
+            int indexOfCard = Integer.parseInt(HandleRequestType.prompt());
+            if (gameBoard.getCardFromMonsterZone(indexOfCard, getCurrentPlayerNumber()) == null)
+                throw new NoMonsterInPosition();
+            tribute(indexOfCard);
+        } else if (((MonsterCard) selectedCard).getLevel() == 7 ||
+                ((MonsterCard) selectedCard).getLevel() == 8) {
+            if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) < 2)
+                throw new NotEnoughTribute();
+            int indexOfCard1 = Integer.parseInt(HandleRequestType.prompt());
+            int indexOfCard2 = Integer.parseInt(HandleRequestType.prompt());
+            if (gameBoard.getCardFromMonsterZone(indexOfCard1, getCurrentPlayerNumber()) == null ||
+                    gameBoard.getCardFromMonsterZone(indexOfCard2, getCurrentPlayerNumber()) == null)
+                throw new NoMonsterInMultiplePositions();
+            tribute(indexOfCard1,indexOfCard2);
         }
 
+    }
 
+    public void tribute(int indexOfCard) throws Exception {
+        gameBoard.sendCardFromMonsterZoneToGraveyard(indexOfCard, getCurrentPlayerNumber());
+        gameBoard.summonCard((MonsterCard) selectedCard, getCurrentPlayerNumber());
+        setSummoned(true);
+        selectedCard = null;
+    }
+    public void tribute(int indexOfCard1 , int indexOfCard2) throws Exception {
+        gameBoard.sendCardFromMonsterZoneToGraveyard(indexOfCard1, getCurrentPlayerNumber());
+        gameBoard.sendCardFromMonsterZoneToGraveyard(indexOfCard2, getCurrentPlayerNumber());
+        gameBoard.summonCard((MonsterCard) selectedCard, getCurrentPlayerNumber());
+        setSummoned(true);
+        selectedCard = null;
     }
 
     public boolean isSummoned() {
@@ -267,5 +291,6 @@ public class GameController {
     public int getCurrentPlayerNumber() {
         return currentPlayer == playerOne ? 1 : 2;
     }
+
 
 }

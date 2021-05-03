@@ -39,7 +39,9 @@ public class HandleRequestType {
                 throw new RuntimeException();
             }
         }
-
+    }
+    public static String prompt(){
+        return scanner.nextLine();
     }
 }
 

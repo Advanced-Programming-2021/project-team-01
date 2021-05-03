@@ -255,5 +255,27 @@ public class Board {
         return number;
     }
 
+    public Card getCardFromMonsterZone(int indexOfCard, int player) {
+        if (player == 1)
+            return playerOneMonsterZone[indexOfCard].getCard();
+        else if (player == 2)
+            return playerTwoMonsterZone[indexOfCard].getCard();
+        return null;
+    }
+
+    public void sendCardFromMonsterZoneToGraveyard(int indexOfCard,int player){
+        if (player == 1) {
+            Card card = playerOneMonsterZone[indexOfCard].getCard();
+            playerOneGraveYard.add(card);
+            playerOneMonsterZone[indexOfCard].setCard(null);
+        } else if (player == 2) {
+            Card card = playerOneMonsterZone[indexOfCard].getCard();
+            playerOneGraveYard.add(card);
+            playerOneMonsterZone[indexOfCard].setCard(null);
+        }
+    }
+
+
+
 
 }
