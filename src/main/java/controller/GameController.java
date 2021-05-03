@@ -3,6 +3,7 @@ package controller;
 import controller.exceptions.*;
 import model.Board;
 import model.Deck;
+import model.GamePhase;
 import model.Player;
 import model.card.Card;
 
@@ -20,7 +21,7 @@ public class GameController {
     private int playerOneLp;
     private int playerTwoLp;
     private Board gameBoard;
-    private String gamePhase;
+    private GamePhase gamePhase;
     private boolean isAI;
     private int rounds;
 
@@ -221,6 +222,31 @@ public class GameController {
             return 1;
         }
         return 2;
+    }
+
+    public void nextPhase(){
+        switch (gamePhase) {
+            case DRAW_PHASE:
+                gamePhase = GamePhase.STANDBY_PHASE;
+                break;
+            case STANDBY_PHASE:
+                gamePhase = GamePhase.MAIN_PHASE1;
+                break;
+            case MAIN_PHASE1:
+                gamePhase = GamePhase.BATTLE_PHASE;
+                break;
+            case BATTLE_PHASE:
+                gamePhase = GamePhase.MAIN_PHASE2;
+                break;
+            case MAIN_PHASE2:
+                gamePhase = GamePhase.END_PHASE;
+                break;
+            case END_PHASE:
+                //TODO: FILL ME
+                break;
+        }
+
+
     }
 
 
