@@ -49,7 +49,7 @@ public class Board {
         for (int i = 0; i < 4; i++){
             addCardFromDeckToHand(1);
         }
-        for (int i = 0; i < 6; i++){
+        for (int i = 0; i < 4; i++){
             addCardFromDeckToHand(2);
         }
     }
