@@ -241,19 +241,24 @@ public class GameController {
                 break;
             case STANDBY_PHASE:
                 gamePhase = GamePhase.MAIN_PHASE1;
+                result = "phase: standby phase";
                 break;
             case MAIN_PHASE1:
                 gamePhase = GamePhase.BATTLE_PHASE;
+                result = "phase: main 1 phase";
                 break;
             case BATTLE_PHASE:
                 gamePhase = GamePhase.MAIN_PHASE2;
+                result = "phase: battle phase";
                 break;
             case MAIN_PHASE2:
                 gamePhase = GamePhase.END_PHASE;
+                result = "phase: main 2 phase";
                 break;
             case END_PHASE:
                 gamePhase = GamePhase.DRAW_PHASE;
                 currentPlayer = getOpponent();
+                result = String.format("phase: end phase\nits %s’s turn", currentPlayer.getNickname());
                 break;
         }
 
