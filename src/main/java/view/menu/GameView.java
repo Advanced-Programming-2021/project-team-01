@@ -16,7 +16,7 @@ class GameView {
         if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SELECT_PLAYER_CARD, input)) != null) {
             selectPlayerCard(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.DESELECT_CARD, input)) != null) {
-            deselectCard(matcher);
+            deselectCard();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SUMMON_MONSTER, input)) != null) {
             summonCard();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SET_CARD, input)) != null) {
@@ -28,26 +28,26 @@ class GameView {
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.ATTACK, input)) != null) {
             attackOpponentsMonster(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.DIRECT_ATTACK, input)) != null) {
-            directAttack(matcher);
+            directAttack();
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.ACTIVATE_EFFECT, input)) != null) {
-            activateSpellCard(matcher);
+            activateSpellCard();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
             showGraveyard();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SHOW_SELECTED_CARD, input)) != null) {
             showCard();
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
-            directAttack(matcher);
+            directAttack();
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
-            directAttack(matcher);
+            directAttack();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SURRENDER, input)) != null) {
             surrender();
-        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.NEXT_PHASE, input)) != null){
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.NEXT_PHASE, input)) != null) {
             System.out.println(GameController.getInstance().nextPhase());
         } else {
             System.out.println("invalid command");
             return;
         }
-        if (GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE1){
+        if (GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE1) {
             GameController.getInstance().getGameBoard().showBoard();
         }
     }
@@ -76,7 +76,7 @@ class GameView {
         }
     }
 
-    private void deselectCard(Matcher matcher) {
+    private void deselectCard() {
         try {
             GameController.getInstance().deselect();
             System.out.println("card selected");
@@ -85,30 +85,25 @@ class GameView {
         }
     }
 
-    private void standByPhase(Matcher matcher) {
-        System.out.println("phase: ");
-        //fixme kari bayad kar mge?! :|
-    }
-
-    private void summonCard(){
+    private void summonCard() {
         try {
             GameController.getInstance().summon();
             System.out.println("summoned successfully");
-        }catch (LevelFiveException exception){
+        } catch (LevelFiveException exception) {
             int index = Integer.parseInt(HandleRequestType.scanner.nextLine());
             try {
                 GameController.getInstance().tributeSummonLevel5(index);
                 System.out.println("summoned successfully");
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-        }catch (LevelSevenException levelSevenException){
+        } catch (LevelSevenException levelSevenException) {
             int index1 = Integer.parseInt(HandleRequestType.scanner.nextLine());
             int index2 = Integer.parseInt(HandleRequestType.scanner.nextLine());
             try {
-                GameController.getInstance().tributeSummonLevel7(index1,index2);
+                GameController.getInstance().tributeSummonLevel7(index1, index2);
                 System.out.println("summoned successfully");
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         } catch (Exception exp) {
@@ -154,7 +149,7 @@ class GameView {
         }
     }
 
-    private void directAttack(Matcher matcher) {
+    private void directAttack() {
         try {
             GameController.getInstance().directAttack();
             //TODO: print success message
@@ -163,7 +158,7 @@ class GameView {
         }
     }
 
-    private void activateSpellCard(Matcher matcher) {
+    private void activateSpellCard() {
         try {
             GameController.getInstance().activateEffect();
             System.out.println("spell activated");
@@ -175,13 +170,21 @@ class GameView {
     private void showGraveyard() {
         try {
             GameController.getInstance().showGraveyard();
+            back();
         } catch (Exception exp) {
             System.err.println(exp.getMessage());
         }
     }
 
-    private void back(Matcher matcher) {
-
+    private void back() {
+        String command;
+        while (true) {
+            command = HandleRequestType.scanner.nextLine();
+            if (command.equals("back"))
+                break;
+            else
+                System.out.println("invalid command!");
+        }
     }
 
     private void showCard() {
