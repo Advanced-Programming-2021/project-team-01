@@ -283,6 +283,8 @@ public class GameController {
             throw new AlreadyInWantedPosition();
         if (isCardChangedBefore(selectedCard.getCard()))
             throw new AlreadyChangedPosition();
+
+        changedPositionCards.add(selectedCard.getCard());
         if (newPosition.equals("defense")){
             getZoneSlotSelectedCard().setDefending(true);
         }else if (newPosition.equals("attack")){
@@ -303,7 +305,6 @@ public class GameController {
             throw new NotFlippSummon();
         getZoneSlotSelectedCard().setDefending(false);
         getZoneSlotSelectedCard().setHidden(false);
-        summonedCard = selectedCard.getCard();
         selectedCard.reset();
     }
 
@@ -392,5 +393,6 @@ public class GameController {
 
     public void resetChangedCard() {
         changedPositionCards.clear();
+        attackController.attackedCards.clear();
     }
 }

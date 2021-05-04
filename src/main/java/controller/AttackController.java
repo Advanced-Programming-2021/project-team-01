@@ -50,7 +50,7 @@ public class AttackController {
                 return "both you and your opponent received no damage and both cards are destroyed";
             }
             else{
-                gameController.increasePlayerLp(-damage);
+                gameController.increasePlayerLp(damage);
                 gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(gameController.selectedCard.getIndex(), gameController.getCurrentPlayerNumber());
                 return String.format("your monster card is destroyed and you receive %d damage",-damage);
             }
