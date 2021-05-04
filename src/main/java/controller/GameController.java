@@ -177,7 +177,7 @@ public class GameController {
     public void setMonster() throws MonsterZoneFull, AlreadySummonedError {
         if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) == 5)
             throw new MonsterZoneFull();
-        if (getSummonedCard())
+        if (isSummoned())
             throw new AlreadySummonedError();
         gameBoard.setMonster(getCurrentPlayerNumber(), (MonsterCard) selectedCard.getCard());
         setSummonedCard(selectedCard.getCard());
@@ -198,7 +198,7 @@ public class GameController {
         if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) == 5) {
             throw new MonsterZoneFull();
         }
-        if (getSummonedCard()) {
+        if (isSummoned()) {
             throw new AlreadySummonedError();
         }
         if (((MonsterCard) selectedCard.getCard()).getLevel() <= 4) {
@@ -247,7 +247,7 @@ public class GameController {
         selectedCard.reset();
     }
 
-    public boolean getSummonedCard() {
+    public boolean isSummoned() {
         return summonedCard != null;
     }
 

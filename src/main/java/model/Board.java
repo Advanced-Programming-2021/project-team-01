@@ -216,7 +216,7 @@ public class Board {
     }
 
     public void summonCard(MonsterCard monsterCard, int player) throws MonsterZoneFull, AlreadySummonedError {
-        if (GameController.getInstance().getSummonedCard()) {
+        if (GameController.getInstance().isSummoned()) {
             throw new AlreadySummonedError();
         }
         if (player == 1) {
