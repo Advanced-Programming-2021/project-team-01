@@ -109,7 +109,7 @@ class GameView {
             try {
                 GameController.getInstance().tributeSummonLevel7(index1,index2);
                 System.out.println("summoned successfully");
-            }catch (Exception e){
+            } catch (Exception e){
                 System.out.println(e.getMessage());
             }
         } catch (Exception exp) {
@@ -175,7 +175,8 @@ class GameView {
 
     private void showGraveyard() {
         try {
-            GameController.getInstance().showGraveyard();
+            System.out.print(GameController.getInstance().showGraveyard());
+            back();
         } catch (Exception exp) {
             System.err.println(exp.getMessage());
         }

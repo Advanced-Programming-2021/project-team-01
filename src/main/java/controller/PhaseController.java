@@ -17,7 +17,7 @@ public class PhaseController {
             case END_PHASE:
                 Card card = gameController.getGameBoard().drawCard(GameController.currentPlayer == GameController.playerOne ? 1 : 2);
                 setGamePhase(GamePhase.DRAW_PHASE);
-                gameController.selectedCard = null;
+                gameController.selectedCard.reset();
                 result = String.format("phase: draw phase\nnew card added to the hand : %s", card.getName());
                 break;
             case DRAW_PHASE:

@@ -136,7 +136,7 @@ public class Board {
         }
     }
 
-    public Card getCard(String field, int number, int player) {
+    public Card getCard(String field, int player, int number) {
         switch (field) {
             case "monster":
                 if (player == 1)
@@ -277,13 +277,13 @@ public class Board {
 
     public void setMonster(int playerNum, MonsterCard card) {
         if (playerNum == 1) {
-            setMonsterInBord(card, playerOneMonsterZone, playerOneHand);
+            setMonsterInBoard(card, playerOneMonsterZone, playerOneHand);
         } else {
-            setMonsterInBord(card, playerTwoMonsterZone, playerTwoHand);
+            setMonsterInBoard(card, playerTwoMonsterZone, playerTwoHand);
         }
     }
 
-    private void setMonsterInBord(MonsterCard card, ZoneSlot[] playerOneMonsterZone, ArrayList<Card> playerOneHand) {
+    private void setMonsterInBoard(MonsterCard card, ZoneSlot[] playerOneMonsterZone, ArrayList<Card> playerOneHand) {
         for (int i = 1; i < 6; i++) {
             if (playerOneMonsterZone[i].getCard() == null) {
                 playerOneMonsterZone[i].setCard(card);
