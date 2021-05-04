@@ -41,7 +41,7 @@ public class ZoneSlot {
         }else {
             if (isDefending && isHidden){
                 return "DH";
-            }else if (isDefending && !isHidden){
+            }else if (isDefending){
                 return "DO";
             }
             return "OO";

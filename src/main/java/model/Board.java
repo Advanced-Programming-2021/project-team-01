@@ -216,7 +216,7 @@ public class Board {
     }
 
     public void summonCard(MonsterCard monsterCard, int player) throws MonsterZoneFull, AlreadySummonedError {
-        if (GameController.getInstance().isSummoned()) {
+        if (GameController.getInstance().getSummonedCard()) {
             throw new AlreadySummonedError();
         }
         if (player == 1) {
@@ -263,7 +263,7 @@ public class Board {
         return null;
     }
 
-    public void sendCardFromMonsterZoneToGraveyard(int indexOfCard,int player){
+    public void sendCardFromMonsterZoneToGraveyard(int indexOfCard, int player) {
         if (player == 1) {
             Card card = playerOneMonsterZone[indexOfCard].getCard();
             playerOneGraveYard.add(card);
@@ -379,13 +379,13 @@ public class Board {
         }
     }
 
-    public String showGraveyard(int player){
+    public String showGraveyard(int player) {
         StringBuilder result = new StringBuilder();
-        if (player==1){
+        if (player == 1)
             getGraveyardList(result, playerOneGraveYard);
-        }else if (player ==2){
+        else if (player == 2)
             getGraveyardList(result, playerTwoGraveYard);
-        }
+
         return result.toString();
     }
 
@@ -416,21 +416,44 @@ public class Board {
                 }
             }
         } else {
-            if (card instanceof MonsterCard)
-                if (card instanceof MonsterCard) {
-                    for (int i = 1; i < 6; i++) {
-                        if (playerTwoMonsterZone[i].getCard() == card) {
-                            return playerTwoMonsterZone[i].isHidden();
-                        }
+            if (card instanceof MonsterCard) {
+                for (int i = 1; i < 6; i++) {
+                    if (playerTwoMonsterZone[i].getCard() == card) {
+                        return playerTwoMonsterZone[i].isHidden();
                     }
-                } else {
-                    for (int i = 1; i < 6; i++) {
-                        if (playerTwoSpellZone[i].getCard() == card) {
-                            return playerTwoSpellZone[i].isHidden();
-                        }
+                }
+            } else {
+                for (int i = 1; i < 6; i++) {
+                    if (playerTwoSpellZone[i].getCard() == card) {
+                        return playerTwoSpellZone[i].isHidden();
                     }
                 }
             }
+        }
         return true;
     }
+
+    public ZoneSlot getZoneSlotByLocation(CardLocation cardLocation, int index, int player) {
+        if (player == 1) {
+            switch (cardLocation) {
+                case FIELD:
+                    return playerOneFieldZone;
+                case SPELL:
+                    return playerOneSpellZone[index];
+                case MONSTER:
+                    return playerOneMonsterZone[index];
+            }
+        } else if (player == 2){
+            switch (cardLocation) {
+                case FIELD:
+                    return playerTwoFieldZone;
+                case SPELL:
+                    return playerTwoSpellZone[index];
+                case MONSTER:
+                    return playerTwoMonsterZone[index];
+            }
+        }
+        return null;
+    }
+
 }

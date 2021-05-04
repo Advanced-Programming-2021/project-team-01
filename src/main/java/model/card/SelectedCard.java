@@ -1,6 +1,7 @@
 package model.card;
 
 import model.Player;
+import model.ZoneSlot;
 
 
 public class SelectedCard {
@@ -47,6 +48,7 @@ public class SelectedCard {
         player = null;
         index = -1;
     }
+
 
     public void set(Card card, Player player,int index, CardLocation location){
         setCard(card);

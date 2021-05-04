@@ -7,6 +7,7 @@ public class PhaseController {
     private final GameController gameController;
     private GamePhase gamePhase;
 
+
     public PhaseController(GameController gameController) {
         this.gameController = gameController;
     }
@@ -40,7 +41,7 @@ public class PhaseController {
                 setGamePhase(GamePhase.END_PHASE);
                 GameController.currentPlayer = GameController.getOpponent();
                 result = String.format("phase: end phase\nits %s’s turn", GameController.currentPlayer.getNickname());
-                gameController.setSummoned(false);
+                gameController.setSummonedCard(null);
                 break;
         }
         return result;
