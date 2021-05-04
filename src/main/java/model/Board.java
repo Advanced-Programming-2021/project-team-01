@@ -399,4 +399,38 @@ public class Board {
             }
         }
     }
+
+    public boolean isOpponentCardHidden(Card card, int playerNum) {
+        if (playerNum == 1) {
+            if (card instanceof MonsterCard) {
+                for (int i = 1; i < 6; i++) {
+                    if (playerOneMonsterZone[i].getCard() == card) {
+                        return playerOneMonsterZone[i].isHidden();
+                    }
+                }
+            } else {
+                for (int i = 1; i < 6; i++) {
+                    if (playerOneSpellZone[i].getCard() == card) {
+                        return playerOneSpellZone[i].isHidden();
+                    }
+                }
+            }
+        } else {
+            if (card instanceof MonsterCard)
+                if (card instanceof MonsterCard) {
+                    for (int i = 1; i < 6; i++) {
+                        if (playerTwoMonsterZone[i].getCard() == card) {
+                            return playerTwoMonsterZone[i].isHidden();
+                        }
+                    }
+                } else {
+                    for (int i = 1; i < 6; i++) {
+                        if (playerTwoSpellZone[i].getCard() == card) {
+                            return playerTwoSpellZone[i].isHidden();
+                        }
+                    }
+                }
+            }
+        return true;
+    }
 }

@@ -21,8 +21,9 @@ public class GameController {
     protected int playerTwoLp;
     protected Board gameBoard;
     protected boolean isAI;
-    protected int rounds;
+    protected boolean isSelectedCardForOpponent;
     protected boolean isSummoned;
+    protected int rounds;
 
     private GameController() {
 
@@ -118,12 +119,14 @@ public class GameController {
                 selectedCard = gameBoard.getCard(fieldType, fieldNumber, getCurrentPlayerNumber());
                 break;
         }
+        isSelectedCardForOpponent = false;
     }
 
     public void selectOpponentCard(String fieldType) throws CardNotInPosition {
         if (gameBoard.getCard(fieldType, currentPlayer == playerOne ? 2 : 1) == null)
             throw new CardNotInPosition();
         selectedCard = gameBoard.getCard(fieldType, currentPlayer == playerOne ? 2 : 1);
+        isSelectedCardForOpponent = true;
     }
 
     public void selectOpponentCard(String fieldType, int fieldNumber) throws InvalidSelection, CardNotInPosition {
@@ -145,6 +148,7 @@ public class GameController {
                 selectedCard = gameBoard.getCard("spell", currentPlayer == playerOne ? 2 : 1, fieldNumber);
                 break;
         }
+        isSelectedCardForOpponent = true;
     }
 
     public void deselect() throws CardNotSelected {
@@ -277,12 +281,21 @@ public class GameController {
         gameBoard.showGraveyard(getCurrentPlayerNumber());
     }
 
-    public void showSelectedCard() {
-
+    public String showSelectedCard() throws CardNotSelected, HiddenCardError {
+        if (selectedCard == null)
+            throw new CardNotSelected();
+        if (isSelectedCardForOpponent) {
+            if (gameBoard.isOpponentCardHidden(selectedCard, currentPlayer == playerOne ? 2 : 1))
+                throw new HiddenCardError();
+            else
+                return selectedCard.getName() + ":" + selectedCard.getDescription();
+        } else {
+            return selectedCard.getName() + ":" + selectedCard.getDescription();
+        }
     }
 
     public void surrender() {
-
+        currentPlayer.increaseLoseRate();
     }
 
     public int getOpponentLp() {

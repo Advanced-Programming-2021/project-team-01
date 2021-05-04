@@ -5,6 +5,7 @@ import controller.exceptions.LevelFiveException;
 import controller.exceptions.LevelSevenException;
 import model.GamePhase;
 import view.ConsoleCommands;
+import view.Menu;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -28,7 +29,7 @@ class GameView {
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.ATTACK, input)) != null) {
             attackOpponentsMonster(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.DIRECT_ATTACK, input)) != null) {
-            directAttack(matcher);
+            directAttack();
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.ACTIVATE_EFFECT, input)) != null) {
             activateSpellCard();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
@@ -41,7 +42,8 @@ class GameView {
             directAttack();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SURRENDER, input)) != null) {
             surrender();
-        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.NEXT_PHASE, input)) != null) {
+            HandleRequestType.currentMenu = Menu.MAIN_MENU;
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.NEXT_PHASE, input)) != null){
             System.out.println(GameController.getInstance().nextPhase());
         } else {
             System.out.println("invalid command");
@@ -192,7 +194,8 @@ class GameView {
 
     private void showCard() {
         try {
-            GameController.getInstance().showSelectedCard();
+            String message = GameController.getInstance().showSelectedCard();
+            System.out.println(message);
         } catch (Exception exp) {
             System.err.println(exp.getMessage());
         }
