@@ -4,10 +4,7 @@ import controller.GameController;
 import controller.exceptions.AlreadySummonedError;
 import controller.exceptions.MonsterZoneFull;
 import controller.exceptions.SpellZoneFullError;
-import model.card.Card;
-import model.card.MonsterCard;
-import model.card.SpellCard;
-import model.card.TrapCard;
+import model.card.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -300,7 +297,20 @@ public class Board {
 
 
     public void setSpell(int playerNum, SpellCard card) throws SpellZoneFullError {
-        int counter = 0; //TODO if it is a field spell put it in field zone
+        if (card.getProperty() == Property.FIELD) {
+            if (playerNum == 1 && playerOneFieldZone.getCard() == null) {
+                playerOneFieldZone.setCard(card);
+                playerOneFieldZone.setHidden(true);
+                playerOneHand.remove(card);
+            } else if (playerTwoFieldZone.getCard() == null) {
+                playerTwoFieldZone.setCard(card);
+                playerTwoFieldZone.setHidden(true);
+                playerTwoHand.remove(card);
+            } else
+                throw new SpellZoneFullError();
+            return;
+        }
+        int counter = 0;
         if (playerNum == 1) {
             for (int i = 1; i < 6; i++) {
                 if (playerOneSpellZone[i].getCard() != null)
