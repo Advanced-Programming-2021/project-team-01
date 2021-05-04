@@ -36,12 +36,9 @@ public class HandleRequestType {
             } else if (currentMenu == Menu.SCOREBOARD) {
                 scoreBoardView.run(command);
             } else {
-                throw new RuntimeException();
+                throw new RuntimeException("core adaption failed!");
             }
         }
-    }
-    public static String prompt(){
-        return scanner.nextLine();
     }
 
 }

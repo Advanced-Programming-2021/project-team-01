@@ -28,7 +28,7 @@ class GameView {
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.ATTACK, input)) != null) {
             attackOpponentsMonster(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.DIRECT_ATTACK, input)) != null) {
-            directAttack();
+            directAttack(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.ACTIVATE_EFFECT, input)) != null) {
             activateSpellCard();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
@@ -47,7 +47,7 @@ class GameView {
             System.out.println("invalid command");
             return;
         }
-        if (GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE1) {
+        if (GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE1){
             GameController.getInstance().getGameBoard().showBoard();
         }
     }
@@ -89,21 +89,25 @@ class GameView {
         try {
             GameController.getInstance().summon();
             System.out.println("summoned successfully");
-        } catch (LevelFiveException exception) {
-            int index = Integer.parseInt(HandleRequestType.scanner.nextLine());
+        }catch (LevelFiveException exception){
+            String input = HandleRequestType.scanner.nextLine();
+            if (input.equals("cancel")) return;
+            int index = Integer.parseInt(input);
             try {
                 GameController.getInstance().tributeSummonLevel5(index);
                 System.out.println("summoned successfully");
-            } catch (Exception e) {
+            }catch (Exception e){
                 System.out.println(e.getMessage());
             }
-        } catch (LevelSevenException levelSevenException) {
-            int index1 = Integer.parseInt(HandleRequestType.scanner.nextLine());
+        }catch (LevelSevenException levelSevenException){
+            String input = HandleRequestType.scanner.nextLine();
+            if (input.equals("cancel")) return;
+            int index1 = Integer.parseInt(input);
             int index2 = Integer.parseInt(HandleRequestType.scanner.nextLine());
             try {
-                GameController.getInstance().tributeSummonLevel7(index1, index2);
+                GameController.getInstance().tributeSummonLevel7(index1,index2);
                 System.out.println("summoned successfully");
-            } catch (Exception e) {
+            }catch (Exception e){
                 System.out.println(e.getMessage());
             }
         } catch (Exception exp) {
@@ -170,7 +174,6 @@ class GameView {
     private void showGraveyard() {
         try {
             GameController.getInstance().showGraveyard();
-            back();
         } catch (Exception exp) {
             System.err.println(exp.getMessage());
         }
