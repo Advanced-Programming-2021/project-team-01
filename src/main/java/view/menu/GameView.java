@@ -45,11 +45,16 @@ class GameView {
             HandleRequestType.currentMenu = Menu.MAIN_MENU;
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.NEXT_PHASE, input)) != null){
             System.out.println(GameController.getInstance().nextPhase());
-        } else {
+        } else if (input.equals("css")) {
+            showCard();
+        } else if (input.equals("sb")) {
+            GameController.getInstance().getGameBoard().showBoard();
+        }else {
             System.out.println("invalid command");
             return;
         }
-        if (GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE1){
+        if (GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE1 ||
+                GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE2){
             GameController.getInstance().getGameBoard().showBoard();
         }
     }
@@ -157,8 +162,8 @@ class GameView {
 
     private void directAttack() {
         try {
-            GameController.getInstance().directAttack();
-            //TODO: print success message
+            String message = GameController.getInstance().directAttack();
+            System.out.println(message);
         } catch (Exception exp) {
             System.err.println(exp.getMessage());
         }

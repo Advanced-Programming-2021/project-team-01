@@ -55,7 +55,7 @@ public class Board {
         for (int i = 0; i < 4; i++) {
             addCardFromDeckToHand(2);
         }
-        shuffleDecks();
+//        shuffleDecks(); TODO : narinid
     }
 
     public void addCardFromDeckToHand(int playerNumber) {
@@ -269,9 +269,9 @@ public class Board {
             playerOneGraveYard.add(card);
             playerOneMonsterZone[indexOfCard].setCard(null);
         } else if (player == 2) {
-            Card card = playerOneMonsterZone[indexOfCard].getCard();
-            playerOneGraveYard.add(card);
-            playerOneMonsterZone[indexOfCard].setCard(null);
+            Card card = playerTwoMonsterZone[indexOfCard].getCard();
+            playerTwoGraveYard.add(card);
+            playerTwoMonsterZone[indexOfCard].setCard(null);
         }
     }
 
@@ -456,4 +456,16 @@ public class Board {
         return null;
     }
 
+    public boolean isMonsterZoneEmpty(int playerNum) {
+        if (playerNum == 1) {
+            for (int i = 1; i < 6; i++)
+                if (playerOneMonsterZone[i].getCard() != null)
+                    return false;
+        } else {
+            for (int i = 1; i < 6; i++)
+                if (playerTwoMonsterZone[i].getCard() != null)
+                    return false;
+        }
+        return true;
+    }
 }

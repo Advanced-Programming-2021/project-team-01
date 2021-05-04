@@ -283,6 +283,8 @@ public class GameController {
             throw new AlreadyInWantedPosition();
         if (isCardChangedBefore(selectedCard.getCard()))
             throw new AlreadyChangedPosition();
+
+        changedPositionCards.add(selectedCard.getCard());
         if (newPosition.equals("defense")){
             getZoneSlotSelectedCard().setDefending(true);
         }else if (newPosition.equals("attack")){
@@ -303,7 +305,6 @@ public class GameController {
             throw new NotFlippSummon();
         getZoneSlotSelectedCard().setDefending(false);
         getZoneSlotSelectedCard().setHidden(false);
-        summonedCard = selectedCard.getCard();
         selectedCard.reset();
     }
 
@@ -311,8 +312,8 @@ public class GameController {
         return attackController.attack(number);
     }
 
-    public void directAttack() {
-
+    public String directAttack() throws AlreadyAttacked, CardNotSelected, NotAllowedAction, NotMonsterCard, DirectAttackError {
+        return attackController.directAttack();
     }
 
     public void activateEffect() {
@@ -390,7 +391,16 @@ public class GameController {
         return false;
     }
 
+    public void decreasePlayerLP(int playerNum, int amount) {
+        if (playerNum == 1) {
+            playerOneLp -= amount;
+        } else {
+            playerTwoLp -= amount;
+        }
+    }
+
     public void resetChangedCard() {
         changedPositionCards.clear();
+        attackController.attackedCards.clear();
     }
 }
