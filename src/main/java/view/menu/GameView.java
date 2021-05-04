@@ -95,7 +95,9 @@ class GameView {
             GameController.getInstance().summon();
             System.out.println("summoned successfully");
         }catch (LevelFiveException exception){
-            int index = Integer.parseInt(HandleRequestType.scanner.nextLine());
+            String input = HandleRequestType.scanner.nextLine();
+            if (input.equals("cancel")) return;
+            int index = Integer.parseInt(input);
             try {
                 GameController.getInstance().tributeSummonLevel5(index);
                 System.out.println("summoned successfully");
@@ -103,7 +105,9 @@ class GameView {
                 System.out.println(e.getMessage());
             }
         }catch (LevelSevenException levelSevenException){
-            int index1 = Integer.parseInt(HandleRequestType.scanner.nextLine());
+            String input = HandleRequestType.scanner.nextLine();
+            if (input.equals("cancel")) return;
+            int index1 = Integer.parseInt(input);
             int index2 = Integer.parseInt(HandleRequestType.scanner.nextLine());
             try {
                 GameController.getInstance().tributeSummonLevel7(index1,index2);
