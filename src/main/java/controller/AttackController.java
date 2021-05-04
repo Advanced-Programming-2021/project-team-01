@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class AttackController {
     GameController gameController;
-    ArrayList<Card> attackedCards = new ArrayList<>();
+    ArrayList<Card> attackedCards = new ArrayList<>();//TODO: clear in battle phase
 
     public AttackController(GameController gameController) {
         this.gameController = gameController;
@@ -37,26 +37,71 @@ public class AttackController {
         }
         if (gameController.gameBoard.getZoneSlotByLocation(CardLocation.MONSTER,number,
                 gameController.getOpponentPlayerNumber()).toString().equals("OO")){
-            int damage = attacker.getAttack() - target.getAttack();
-            if (damage > 0){
-                gameController.increaseOpponentLp(-damage);
-                gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
-                attackedCards.add(attacker);
-                return String.format("opponent monster destroyed and opponent received %d damage",damage);
-            }
-            else if (damage == 0){
-                gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
-                gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(gameController.selectedCard.getIndex(), gameController.getCurrentPlayerNumber());
-                return "both you and your opponent received no damage and both cards are destroyed";
-            }
-            else{
-                gameController.increasePlayerLp(-damage);
-                gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(gameController.selectedCard.getIndex(), gameController.getCurrentPlayerNumber());
-                return String.format("your monster card is destroyed and you receive %d damage",-damage);
-            }
-
+            return attackInFaceUpPosition(number, target, attacker);
+        } else if (gameController.gameBoard.getZoneSlotByLocation(CardLocation.MONSTER,number,
+                gameController.getOpponentPlayerNumber()).toString().equals("DO")){
+            return attackFaceUpDefencePosition(number, target, attacker);
+        } else {
+            return attackFaceDownDefencePosition(number, target, attacker);
         }
-        return "yohohohohoho";
 
+
+    }
+
+    private String attackFaceDownDefencePosition(int number, MonsterCard target, MonsterCard attacker) {
+        int damage = attacker.getAttack() - target.getDefense();
+        gameController.gameBoard.getZoneSlotByLocation(CardLocation.MONSTER, number, gameController.getOpponentPlayerNumber()).setHidden(false);
+        if (damage > 0){
+            gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
+            attackedCards.add(attacker);
+            return String.format("the defense position monster %s was destroyed", target.getName());
+        }
+        if (damage == 0){
+            attackedCards.add(attacker);
+            return String.format("defense position monster was %s and no card is destroyed", target.getName());
+        }
+        else {
+            gameController.increasePlayerLp(damage);
+            attackedCards.add(attacker);
+            return String.format("defense position monster was %s and no card is destroyed and you receive %d damage", target.getName(),-damage);
+        }
+    }
+
+    private String attackFaceUpDefencePosition(int number, MonsterCard target, MonsterCard attacker) {
+        int damage = attacker.getAttack() - target.getDefense();
+        if (damage > 0){
+            gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
+            attackedCards.add(attacker);
+            return "the defense position monster was destroyed";
+        }
+        if (damage == 0){
+            attackedCards.add(attacker);
+            return "no card is destroyed";
+        }
+        else {
+            gameController.increasePlayerLp(damage);
+            attackedCards.add(attacker);
+            return String.format("no card is destroyed and you receive %d damage",-damage);
+        }
+    }
+
+    private String attackInFaceUpPosition(int number, MonsterCard target, MonsterCard attacker) {
+        int damage = attacker.getAttack() - target.getAttack();
+        if (damage > 0){
+            gameController.increaseOpponentLp(-damage);
+            gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
+            attackedCards.add(attacker);
+            return String.format("opponent monster destroyed and opponent received %d damage",damage);
+        }
+        else if (damage == 0){
+            gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
+            gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(gameController.selectedCard.getIndex(), gameController.getCurrentPlayerNumber());
+            return "both you and your opponent received no damage and both cards are destroyed";
+        }
+        else{
+            gameController.increasePlayerLp(-damage);
+            gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(gameController.selectedCard.getIndex(), gameController.getCurrentPlayerNumber());
+            return String.format("your monster card is destroyed and you receive %d damage",-damage);
+        }
     }
 }
