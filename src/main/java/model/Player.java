@@ -17,14 +17,14 @@ public class Player {
     private ArrayList<String> playerDecks = new ArrayList<>();
     private ArrayList<String> playerCards = new ArrayList<>();  //TODO: string or card
     private int winRate;
-    private int looseRate;
+    private int loseRate;
 
     public Player(String username, String password, String nickname) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.winRate = 0;
-        this.looseRate = 0;
+        this.loseRate = 0;
     }
 
     public String getNickname() {
@@ -88,6 +88,14 @@ public class Player {
 
     public void addCardToPlayerCards(String cardName) {
         playerCards.add(cardName);
+    }
+
+    public void increaseLoseRate() {
+        loseRate++;
+    }
+
+    public void increaseWinRate() {
+        winRate++;
     }
 
     public static class SortByScore implements Comparator<Player> {
