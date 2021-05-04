@@ -4,6 +4,7 @@ import controller.exceptions.*;
 import model.*;
 import model.card.*;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GameController {
@@ -19,6 +20,7 @@ public class GameController {
     protected Card summonedCard;
     protected int rounds;
     protected SelectedCard selectedCard;
+    protected ArrayList<Card> changedPositionCards = new ArrayList<>();
 
     private GameController() {
 
@@ -251,8 +253,25 @@ public class GameController {
         return summonedCard != null;
     }
 
-    public void changeCardPosition(String newPosition) {
-
+    public void changeCardPosition(String newPosition) throws Exception {
+        if (selectedCard.getCard() == null)
+            throw new CardNotSelected();
+        if (selectedCard.getCardLocation() != CardLocation.MONSTER)
+            throw new NotChangablePosition();
+        if (phaseController.getGamePhase() != GamePhase.MAIN_PHASE1 &&
+                phaseController.getGamePhase() != GamePhase.MAIN_PHASE2)
+            throw new ActivationPhaseError();
+        if ((!getZoneSlotSelectedCard().toString().equals("OO") && newPosition.equals("defense")) ||
+                (!getZoneSlotSelectedCard().toString().equals("DO") && newPosition.equals("attack")))
+            throw new AlreadyInWantedPosition();
+        if (isCardChangedBefore(selectedCard.getCard()))
+            throw new AlreadyChangedPosition();
+        if (newPosition.equals("defense")){
+            getZoneSlotSelectedCard().setDefending(true);
+        }else if (newPosition.equals("attack")){
+            getZoneSlotSelectedCard().setDefending(false);
+            getZoneSlotSelectedCard().setHidden(false);
+        }
     }
 
     public void flipSummon() throws Exception {
@@ -342,8 +361,19 @@ public class GameController {
         return currentPlayer == playerOne ? 2 : 1;
     }
 
-    public ZoneSlot getZoneSlotSelectedCard(){
-        return gameBoard.getZoneSlotByLocation(selectedCard.getCardLocation(),selectedCard.getIndex(),getCurrentPlayerNumber());
+    public ZoneSlot getZoneSlotSelectedCard() {
+        return gameBoard.getZoneSlotByLocation(selectedCard.getCardLocation(), selectedCard.getIndex(), getCurrentPlayerNumber());
     }
 
+    public boolean isCardChangedBefore(Card card) {
+        for (Card changedPositionCard : changedPositionCards) {
+            if (changedPositionCard == card)
+                return true;
+        }
+        return false;
+    }
+
+    public void resetChangedCard() {
+        changedPositionCards.clear();
+    }
 }

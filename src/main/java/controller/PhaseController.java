@@ -42,6 +42,7 @@ public class PhaseController {
                 GameController.currentPlayer = GameController.getOpponent();
                 result = String.format("phase: end phase\nits %s’s turn", GameController.currentPlayer.getNickname());
                 gameController.setSummonedCard(null);
+                gameController.resetChangedCard();
                 break;
         }
         return result;
