@@ -148,8 +148,8 @@ class GameView {
     private void attackOpponentsMonster(Matcher matcher) {
         try {
             int number = Integer.parseInt(matcher.group("number"));
-            GameController.getInstance().attack(number);
-            System.out.println("flip summoned successfully");
+            String response = GameController.getInstance().attack(number);
+            System.out.println(response);
         } catch (Exception exp) {
             System.err.println(exp.getMessage());
         }

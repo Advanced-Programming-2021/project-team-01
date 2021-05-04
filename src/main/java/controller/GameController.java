@@ -12,6 +12,7 @@ public class GameController {
     protected static Player playerTwo;
     protected static Player currentPlayer;
     protected final PhaseController phaseController = new PhaseController(this);
+    protected final AttackController attackController = new AttackController(this);
     protected int playerOneLp;
     protected int playerTwoLp;
     protected Board gameBoard;
@@ -45,6 +46,22 @@ public class GameController {
             return playerTwo;
         }
         return playerOne;
+    }
+
+    protected void increaseOpponentLp(int amount){
+        if (currentPlayer == playerOne){
+            playerTwoLp += amount;
+            return;
+        }
+        playerOneLp += amount;
+    }
+
+    protected void increasePlayerLp(int amount){
+        if (currentPlayer == playerOne){
+            playerOneLp += amount;
+            return;
+        }
+        playerTwoLp += amount;
     }
 
     public void startGame(String username, int numberOfRounds) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber {
@@ -81,7 +98,7 @@ public class GameController {
     }
 
     private int tossCoin() {
-        return new Random().nextInt() % 2 + 1;
+        return new Random().nextInt(2) + 1;
     }
 
     public void selectPlayerCard(String fieldType) throws CardNotInPosition {
@@ -271,8 +288,8 @@ public class GameController {
         selectedCard.reset();
     }
 
-    public void attack(int number) {
-
+    public String attack(int number) throws CardNotSelected, NotMonsterCard, NotAllowedAction, AlreadyAttacked, NoCardToAttack {
+        return attackController.attack(number);
     }
 
     public void directAttack() {
