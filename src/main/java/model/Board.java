@@ -456,4 +456,16 @@ public class Board {
         return null;
     }
 
+    public boolean isMonsterZoneEmpty(int playerNum) {
+        if (playerNum == 1) {
+            for (int i = 1; i < 6; i++)
+                if (playerOneMonsterZone[i].getCard() != null)
+                    return false;
+        } else {
+            for (int i = 1; i < 6; i++)
+                if (playerTwoMonsterZone[i].getCard() != null)
+                    return false;
+        }
+        return true;
+    }
 }

@@ -311,8 +311,8 @@ public class GameController {
         return attackController.attack(number);
     }
 
-    public void directAttack() {
-
+    public String directAttack() throws AlreadyAttacked, CardNotSelected, NotAllowedAction, NotMonsterCard, DirectAttackError {
+        return attackController.directAttack();
     }
 
     public void activateEffect() {
@@ -388,6 +388,14 @@ public class GameController {
                 return true;
         }
         return false;
+    }
+
+    public void decreasePlayerLP(int playerNum, int amount) {
+        if (playerNum == 1) {
+            playerOneLp -= amount;
+        } else {
+            playerTwoLp -= amount;
+        }
     }
 
     public void resetChangedCard() {

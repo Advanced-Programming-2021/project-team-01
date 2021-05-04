@@ -157,8 +157,8 @@ class GameView {
 
     private void directAttack() {
         try {
-            GameController.getInstance().directAttack();
-            //TODO: print success message
+            String message = GameController.getInstance().directAttack();
+            System.out.println(message);
         } catch (Exception exp) {
             System.err.println(exp.getMessage());
         }
