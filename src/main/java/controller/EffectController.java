@@ -20,6 +20,12 @@ public class EffectController {
     protected void run(Spell spell) throws Exception {
         if (spell == Spell.MONSTER_REBORN){
             monsterReborn();
+        }else if (spell == Spell.POT_OF_GREED){
+            potOfGreed();
+        }else if (spell == Spell.RAIGEKI){
+            raigeki();
+        }else if (spell == Spell.TERRAFORMING){
+            terraforming();
         }
 
     }
@@ -49,6 +55,11 @@ public class EffectController {
         board.addCardFromGraveYardToField(gameController.getCurrentPlayerNumber(), card);
         graveYard.remove(card);
         board.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+    }
+
+    protected void potOfGreed(){
+        int playerNumber = gameController.getCurrentPlayerNumber();
+        board.addCardFromDeckToHand(playerNumber);
     }
 }
 
