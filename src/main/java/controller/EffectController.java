@@ -35,21 +35,50 @@ public class EffectController {
         else if (spell == Spell.UMIIRUKA)
             activeUmiiruka();
         else if (spell == Spell.BLACK_PENDANT){
-            blackPendant();
+            equipNormal();
         }
         else if (spell == Spell.UNITED_WE_STAND){
-            unitedWeStand();
+            equipNormal();
+        }
+        else if (spell == Spell.MAGNUM_SHIELD){
+            equipWarrior();
+        }
+        else if (spell == Spell.SWORD_OF_DESTRUCTION){
+            equipFiend();
         }
 
+    }
+
+    private void equipFiend() throws Exception {
+        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0){
+            throw new Exception("no monster card");
+        }
+        int indexOfMonster = Integer.parseInt(GameView.prompt("please choose a monster!"));
+        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER,indexOfMonster, gameController.getCurrentPlayerNumber());
+        if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
+        if (!((MonsterCard)zoneSlot.getCard()).getMonsterTypes().contains(MonsterType.FIEND)){
+            throw new Exception("only Fiend type monsters are allowed!");
+        }
+        zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
+        board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
 
     }
 
-    private void unitedWeStand() {
-
-
+    private void equipWarrior() throws Exception {
+        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0){
+            throw new Exception("no monster card");
+        }
+        int indexOfMonster = Integer.parseInt(GameView.prompt("please choose a monster!"));
+        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER,indexOfMonster, gameController.getCurrentPlayerNumber());
+        if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
+        if (!((MonsterCard)zoneSlot.getCard()).getMonsterTypes().contains(MonsterType.WARRIOR)){
+            throw new Exception("only warrior type monsters are allowed");
+        }
+        zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
+        board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
 
-    private void blackPendant() throws Exception {
+    private void equipNormal() throws Exception {
         if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0){
             throw new Exception("no monster card");
         }
@@ -58,7 +87,6 @@ public class EffectController {
         if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
         zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
         board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
-
     }
 
     protected void monsterReborn() throws InvalidCommandException, MonsterZoneFull {

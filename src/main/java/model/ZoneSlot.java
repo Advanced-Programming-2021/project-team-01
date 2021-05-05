@@ -1,5 +1,6 @@
 package model;
 
+import controller.GameController;
 import controller.Spell;
 import model.card.Card;
 import model.card.MonsterCard;
@@ -39,6 +40,17 @@ public class ZoneSlot {
     private int equipAttackBooster() {
         if (Spell.getSpellByName(equippedCard.getName()) == Spell.BLACK_PENDANT){
             return 500;
+        }
+        else if (Spell.getSpellByName(equippedCard.getName()) == Spell.SWORD_OF_DESTRUCTION){
+            return 400;
+        }
+        else if (Spell.getSpellByName(equippedCard.getName()) == Spell.MAGNUM_SHIELD){
+            if (!isDefending){
+                return ((MonsterCard) card).getAttack();
+            }
+        }
+        else if (Spell.getSpellByName(equippedCard.getName()) == Spell.UNITED_WE_STAND){
+            return GameController.getInstance().getEffectController();
         }
         return 0;
     }

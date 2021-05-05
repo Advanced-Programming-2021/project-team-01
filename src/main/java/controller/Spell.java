@@ -7,7 +7,9 @@ public enum Spell {
     RAIGEKI("Raigeki"),
     UMIIRUKA("Umiiruka"),
     BLACK_PENDANT("Black Pendant"),
-    UNITED_WE_STAND("United We Stand");
+    UNITED_WE_STAND("United We Stand"),
+    MAGNUM_SHIELD("Magnum Shield"),
+    SWORD_OF_DESTRUCTION("Sword of dark destruction");
     String value;
     Spell(String value) {
         this.value = value;
