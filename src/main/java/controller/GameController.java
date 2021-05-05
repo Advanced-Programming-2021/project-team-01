@@ -322,7 +322,7 @@ public class GameController {
     }
 
     public void activateEffect() throws PromptException, Exception {
-
+        effectController.run(Spell.getSpellByName(selectedCard.getCard().getName()));
     }
 
     public void ritualSummon() {

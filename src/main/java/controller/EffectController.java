@@ -17,6 +17,13 @@ public class EffectController {
         board = gameController.gameBoard;
     }
 
+    protected void run(Spell spell) throws Exception {
+        if (spell == Spell.MONSTER_REBORN){
+            monsterReborn();
+        }
+
+    }
+
 
     protected void monsterReborn() throws InvalidCommandException, MonsterZoneFull {
         String grave = GameView.prompt("player/opponent");
