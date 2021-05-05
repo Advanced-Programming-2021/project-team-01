@@ -69,6 +69,9 @@ public class GameController {
     }
 
     public void startGame(String username, int numberOfRounds) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber {
+        phaseController = new PhaseController(this);
+        effectController = new EffectController(this);
+        attackController = new AttackController(this);
         playerTwo = DatabaseController.getUserByName(username);
         playerOne = RegisterController.onlineUser;
         if (playerTwo == null) {
@@ -99,9 +102,6 @@ public class GameController {
         phaseController.setGamePhase(GamePhase.DRAW_PHASE);
         setSummonedCard(null);
         selectedCard = new SelectedCard();
-        phaseController = new PhaseController(this);
-        effectController = new EffectController(this);
-        attackController = new AttackController(this);
     }
 
     private int tossCoin() {

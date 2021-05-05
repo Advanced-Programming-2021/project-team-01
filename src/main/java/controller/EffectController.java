@@ -40,7 +40,7 @@ public class EffectController {
         Card card = graveYard.get(cardIndex);
         graveYard.remove(card);
         board.addCardFromGraveYardToField(gameController.getCurrentPlayerNumber(), card);
-            }
+    }
 }
 
 /*

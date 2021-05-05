@@ -48,7 +48,7 @@ public class GameView {
             showCard();
         } else if (input.equals("sb")) {
             GameController.getInstance().getGameBoard().showBoard();
-        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.CHEAT, input) != null)) {
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.CHEAT, input)) != null) {
             GameController.getInstance().cheater(matcher.group(1));
         } else {
             System.out.println("invalid command");
