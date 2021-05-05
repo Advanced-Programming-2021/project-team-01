@@ -5,10 +5,7 @@ import controller.exceptions.MonsterZoneFull;
 import controller.exceptions.NoFieldSpellInDeck;
 import model.Board;
 import model.ZoneSlot;
-import model.card.Card;
-import model.card.MonsterType;
-import model.card.Property;
-import model.card.SpellCard;
+import model.card.*;
 import view.menu.GameView;
 
 import java.util.ArrayList;
@@ -37,8 +34,28 @@ public class EffectController {
             terraforming();
         else if (spell == Spell.UMIIRUKA)
             activeUmiiruka();
+        else if (spell == Spell.BLACK_PENDANT){
+            blackPendant();
+        }
+
 
     }
+
+    private void blackPendant() throws Exception {
+        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0){
+            throw new Exception("no monster card");
+        }
+        int indexOfMonster = Integer.parseInt(GameView.prompt("please choose a monster!"));
+        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER,indexOfMonster, gameController.getCurrentPlayerNumber());
+        if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
+        zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
+
+
+
+
+
+    }
+
     protected void monsterReborn() throws InvalidCommandException, MonsterZoneFull {
         String grave = GameView.prompt("player/opponent");
         ArrayList<Card> graveYard;

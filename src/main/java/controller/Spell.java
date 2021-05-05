@@ -5,7 +5,8 @@ public enum Spell {
     POT_OF_GREED("Pot of Greed"),
     TERRAFORMING("Terraforming"),
     RAIGEKI("Raigeki"),
-    UMIIRUKA("Umiiruka");
+    UMIIRUKA("Umiiruka"),
+    BLACK_PENDANT("Black Pendant");
     String value;
     Spell(String value) {
         this.value = value;
