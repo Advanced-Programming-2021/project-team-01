@@ -322,7 +322,6 @@ public class GameController {
     }
 
     public void activateEffect() throws PromptException, Exception {
-        sendCardFromHandToSpellZone();
         effectController.run(Spell.getSpellByName(selectedCard.getCard().getName()));
     }
 
