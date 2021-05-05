@@ -10,11 +10,10 @@ public enum Spell {
         this.value = value;
     }
 
-    public String toString(){
-        return value;
+    static Spell getSpellByName(String name){
+        for (Spell spell : Spell.values())
+            if (spell.value.equals(name))
+                return spell;
+        return null;
     }
-    static Spell getSpellByName(String name) {
-        return Spell.valueOf(name);
-    }
-
 }
