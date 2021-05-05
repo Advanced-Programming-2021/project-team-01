@@ -578,4 +578,62 @@ public class Board {
         else
             return playerTwoDrawZone;
     }
+
+    public ZoneSlot getZoneSlotByCard(Card card) {
+        if (card == playerOneFieldZone.getCard())
+            return playerOneFieldZone;
+        if (card == playerTwoFieldZone.getCard())
+            return playerTwoFieldZone;
+        for (int i = 1; i < 6; i++) {
+            if (card == playerOneSpellZone[i].getCard())
+                return playerOneSpellZone[i];
+            if (card == playerTwoSpellZone[i].getCard())
+                return playerOneSpellZone[i];
+            if (card == playerOneMonsterZone[i].getCard())
+                return playerOneMonsterZone[i];
+            if (card == playerTwoMonsterZone[i].getCard())
+                return playerTwoMonsterZone[i];
+        }
+        return null;
+    }
+
+    public void changePowerMonster(int attack, int defense, MonsterType... monsterTypes) {
+        for (int j = 1; j < 6; j++) {
+            for (MonsterType monsterType : monsterTypes) {
+                MonsterCard monsterCard = ((MonsterCard) playerOneMonsterZone[j].getCard());
+                if (monsterCard == null)
+                    continue;
+                if (monsterCard.getMonsterTypes().contains(monsterType)) {
+                    monsterCard.increaseAttack(attack);
+                    monsterCard.increaseDefense(defense);
+                    break;
+                }
+            }
+        }
+    }
+
+    public ZoneSlot getPlayerOneFieldZone() {
+        return playerOneFieldZone;
+    }
+
+    public ZoneSlot getPlayerTwoFieldZone() {
+        return playerTwoFieldZone;
+    }
+
+    public ZoneSlot getPlayerFieldZone(int player) {
+        if (player == 1) return playerOneFieldZone;
+        if (player == 2) return playerTwoFieldZone;
+        return null;
+    }
+
+    public void setCardFromHandToFieldZone(int player,Card card) {
+        if (player == 1) {
+            playerOneFieldZone.setCard(card);
+            playerOneHand.remove(card);
+        }
+        if (player == 2) {
+            playerTwoFieldZone.setCard(card);
+            playerTwoHand.remove(card);
+        }
+    }
 }

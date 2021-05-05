@@ -9,6 +9,7 @@ public class MonsterCard extends Card {
     private CardType cardType;
     private ArrayList<MonsterType> monsterTypes;
     private Attribute attribute;
+
     public MonsterCard(String name, String description, int price, int attack, int defense,
                        CardType cardType, ArrayList<MonsterType> monsterTypes, Attribute attribute, int level) {
         super(name, description, price);
@@ -39,6 +40,13 @@ public class MonsterCard extends Card {
 
     public CardType getCardType() {
         return cardType;
+    }
+
+    public void increaseAttack(int amount) {
+        attack += amount;
+    }
+    public void increaseDefense(int amount) {
+        defense += amount;
     }
 
     public int getLevel() {

@@ -333,16 +333,24 @@ public class GameController {
         return gameBoard.showGraveyard(getCurrentPlayerNumber());
     }
 
-    public String showSelectedCard() throws CardNotSelected, HiddenCardError {
+    public String showSelectedCard() throws CardNotSelected, HiddenCardError {//TODO : Ino dorost konid attack o def neshon nade
         if (selectedCard.getCard() == null)
             throw new CardNotSelected();
         if (selectedCard.getPlayer() == getOpponent()) {
             if (gameBoard.isOpponentCardHidden(selectedCard.getCard(), getOpponentPlayerNumber()))
                 throw new HiddenCardError();
+            else if (selectedCard.getCard() instanceof MonsterCard)
+                return selectedCard.getCard().getName() + "- attack = " + ((MonsterCard) selectedCard.getCard()).getAttack() + " defense = " +
+                        ((MonsterCard) selectedCard.getCard()).getDefense() + " : " + selectedCard.getCard().getDescription();
             else
                 return selectedCard.getCard().getName() + ":" + selectedCard.getCard().getDescription();
         } else {
-            return selectedCard.getCard().getName() + ":" + selectedCard.getCard().getDescription();
+            if (selectedCard.getCard() instanceof MonsterCard)
+                return selectedCard.getCard().getName() + "- attack = " + ((MonsterCard) selectedCard.getCard()).getAttack() + " defense = " +
+                        ((MonsterCard) selectedCard.getCard()).getDefense() + " : " + selectedCard.getCard().getDescription();
+            else
+                return selectedCard.getCard().getName() + ":" + selectedCard.getCard().getDescription();
+
         }
     }
 
@@ -354,7 +362,7 @@ public class GameController {
         if (selectedCard.getCardLocation() == CardLocation.HAND) {
             SpellCard card = (SpellCard) selectedCard.getCard();
             gameBoard.setSpell(getCurrentPlayerNumber(), card);
-            getZoneSlotSelectedCard().setHidden(false);
+            gameBoard.getZoneSlotByCard(card).setHidden(false);
         }
     }
 
