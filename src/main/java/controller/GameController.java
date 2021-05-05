@@ -4,6 +4,7 @@ import controller.exceptions.*;
 import model.*;
 import model.card.*;
 
+import javax.swing.tree.ExpandVetoException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -410,6 +411,7 @@ public class GameController {
 
     public void cheater(String cardName) {
         Card card = Card.getCardByName(cardName);
+        if (card == null) throw new RuntimeException();
         gameBoard.addCardCheatToHand(card,getCurrentPlayerNumber());
     }
 
