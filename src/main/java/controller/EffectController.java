@@ -16,37 +16,38 @@ import java.util.HashMap;
 public class EffectController {
     GameController gameController;
     Board board;
+
     public EffectController(GameController gameController) {
         this.gameController = gameController;
         board = gameController.gameBoard;
     }
+
     HashMap<Card, Integer> changeOfCards = new HashMap<>();
     ArrayList<Card> effectedCards = new ArrayList<>();
 
     protected void run(Spell spell) throws Exception {
-        if (spell == Spell.MONSTER_REBORN){
+        if (spell == Spell.MONSTER_REBORN)
             monsterReborn();
-        }else if (spell == Spell.POT_OF_GREED){
+        else if (spell == Spell.POT_OF_GREED)
             potOfGreed();
-        }else if (spell == Spell.RAIGEKI){
+        else if (spell == Spell.RAIGEKI)
             raigeki();
-        }else if (spell == Spell.TERRAFORMING){
+        else if (spell == Spell.TERRAFORMING)
             terraforming();
-        }
+        else if (spell == Spell.UMIIRUKA)
+            umiiruka();
 
     }
-
-
     protected void monsterReborn() throws InvalidCommandException, MonsterZoneFull {
         String grave = GameView.prompt("player/opponent");
         ArrayList<Card> graveYard;
-        if (grave.equals("player")){
+        if (grave.equals("player")) {
             if (gameController.getCurrentPlayerNumber() == 1) graveYard = board.getPlayerOneGraveYard();
             else graveYard = board.getPlayerTwoGraveYard();
-        }else if (grave.equals("opponent")){
+        } else if (grave.equals("opponent")) {
             if (gameController.getCurrentPlayerNumber() == 1) graveYard = board.getPlayerTwoGraveYard();
             else graveYard = board.getPlayerOneGraveYard();
-        }else {
+        } else {
             throw new InvalidCommandException();
         }
         int index = 0;
@@ -63,7 +64,7 @@ public class EffectController {
         board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
 
-    protected void potOfGreed(){
+    protected void potOfGreed() {
         int playerNumber = gameController.getCurrentPlayerNumber();
         board.addCardFromDeckToHand(playerNumber);
         board.addCardFromDeckToHand(playerNumber);
@@ -73,7 +74,7 @@ public class EffectController {
     protected void raigeki() {
         if (gameController.getCurrentPlayerNumber() == 1) {
             ZoneSlot[] zoneSlot = gameController.gameBoard.getPlayerTwoMonsterZone();
-            for(int i = 1; i < 6; i++) {
+            for (int i = 1; i < 6; i++) {
                 if (zoneSlot[i].getCard() != null) {
                     gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(i, gameController.getOpponentPlayerNumber());
                     zoneSlot[i].setCard(null);
@@ -84,7 +85,7 @@ public class EffectController {
             gameController.gameBoard.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
         } else {
             ZoneSlot[] zoneSlot = gameController.gameBoard.getPlayerOneMonsterZone();
-            for(int i = 1; i < 6; i++) {
+            for (int i = 1; i < 6; i++) {
                 if (zoneSlot[i].getCard() != null) {
                     gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(i, gameController.getOpponentPlayerNumber());
                     zoneSlot[i].setCard(null);
@@ -112,12 +113,16 @@ public class EffectController {
         int index;
         try {
             index = Integer.parseInt(indexString);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new NumberFormatException();
         }
         Card card = fieldSpells.get(index);
-        board.addCardFromDeckToHand(gameController.getCurrentPlayerNumber(),card);
-        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(),gameController.selectedCard.getCard());
+        board.addCardFromDeckToHand(gameController.getCurrentPlayerNumber(), card);
+        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+    }
+
+    protected void umiiruka() {
+        
     }
 }
 

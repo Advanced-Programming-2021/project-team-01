@@ -4,7 +4,8 @@ public enum Spell {
     MONSTER_REBORN("Monster Reborn"),
     POT_OF_GREED("Pot of Greed"),
     TERRAFORMING("Terraforming"),
-    RAIGEKI("Raigeki");
+    RAIGEKI("Raigeki"),
+    UMIIRUKA("Umiruka");
     String value;
     Spell(String value) {
         this.value = value;

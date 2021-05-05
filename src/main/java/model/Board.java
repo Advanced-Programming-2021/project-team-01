@@ -579,4 +579,18 @@ public class Board {
         }
         return null;
     }
+
+    public void changePowerMonster(int attack, int defense, MonsterType... monsterTypes) {
+        for (int j = 1; j < 6; j++) {
+            for (MonsterType monsterType : monsterTypes) {
+                MonsterCard monsterCard = ((MonsterCard) playerOneMonsterZone[j].getCard());
+                if (monsterCard.getMonsterTypes().contains(monsterType)) {
+                    monsterCard.increaseAttack(attack);
+                    monsterCard.increaseDefense(defense);
+                    break;
+                }
+            }
+        }
+    }
+
 }
