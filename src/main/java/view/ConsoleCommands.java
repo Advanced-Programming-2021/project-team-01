@@ -102,7 +102,8 @@ public enum ConsoleCommands {
     SET_WINNER,
     NewEnumerationItem41,
     IMPORT_CARD("^import card (?<cardName>\\w+)$"),
-    EXPORT_CARD("^export card (?<cardName>\\w+)$");
+    EXPORT_CARD("^export card (?<cardName>\\w+)$"),
+    CHEAT("^gc (\\w+)$");
     private String[] strings;
 
     ConsoleCommands(String... string) {

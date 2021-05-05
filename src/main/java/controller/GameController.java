@@ -4,6 +4,7 @@ import controller.exceptions.*;
 import model.*;
 import model.card.*;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,8 +13,9 @@ public class GameController {
     protected static Player playerOne;
     protected static Player playerTwo;
     protected static Player currentPlayer;
-    protected final PhaseController phaseController = new PhaseController(this);
-    protected final AttackController attackController = new AttackController(this);
+    protected PhaseController phaseController;
+    protected AttackController attackController;
+    protected EffectController effectController;
     protected int playerOneLp;
     protected int playerTwoLp;
     protected Board gameBoard;
@@ -97,6 +99,9 @@ public class GameController {
         phaseController.setGamePhase(GamePhase.DRAW_PHASE);
         setSummonedCard(null);
         selectedCard = new SelectedCard();
+        phaseController = new PhaseController(this);
+        effectController = new EffectController(this);
+        attackController = new AttackController(this);
     }
 
     private int tossCoin() {
@@ -316,7 +321,7 @@ public class GameController {
         return attackController.directAttack();
     }
 
-    public void activateEffect() {
+    public void activateEffect() throws PromptException, Exception {
 
     }
 
@@ -402,5 +407,10 @@ public class GameController {
     public void resetChangedCard() {
         changedPositionCards.clear();
         attackController.attackedCards.clear();
+    }
+
+    public void cheater(String cardName) {
+        Card card = Card.getCardByName(cardName);
+        gameBoard.addCardCheatToHand(card,getCurrentPlayerNumber());
     }
 }

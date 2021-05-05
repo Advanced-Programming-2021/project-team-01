@@ -58,6 +58,28 @@ public class Board {
 //        shuffleDecks(); TODO : narinid
     }
 
+    public void addCardFromGraveYardToField(int player, Card card) throws MonsterZoneFull {
+        if (player == 1) {
+            if (numberOfMonsterCards(1) == 5) {
+                throw new MonsterZoneFull();
+            }
+            for (int i = 1; i <= 5; i++) {
+                if (playerOneMonsterZone[i].getCard() == null) {
+                    playerOneMonsterZone[i].setCard(card);
+                }
+            }
+            return;
+        }
+        if (numberOfMonsterCards(2) == 5) {
+            throw new MonsterZoneFull();
+        }
+        for (int i = 1; i <= 5; i++) {
+            if (playerTwoMonsterZone[i].getCard() == null) {
+                playerTwoMonsterZone[i].setCard(card);
+            }
+        }
+    }
+
     public void addCardFromDeckToHand(int playerNumber) {
         if (playerNumber == 1) {
             Card card = playerOneDrawZone.get(0);
@@ -255,6 +277,14 @@ public class Board {
         return number;
     }
 
+    public void addCardCheatToHand(Card card, int player) {
+        if (player == 1) {
+            playerOneHand.add(card);
+            return;
+        }
+        playerTwoHand.add(card);
+    }
+
     public Card getCardFromMonsterZone(int indexOfCard, int player) {
         if (player == 1)
             return playerOneMonsterZone[indexOfCard].getCard();
@@ -443,7 +473,7 @@ public class Board {
                 case MONSTER:
                     return playerOneMonsterZone[index];
             }
-        } else if (player == 2){
+        } else if (player == 2) {
             switch (cardLocation) {
                 case FIELD:
                     return playerTwoFieldZone;
@@ -467,5 +497,13 @@ public class Board {
                     return false;
         }
         return true;
+    }
+
+    public ArrayList<Card> getPlayerOneGraveYard() {
+        return playerOneGraveYard;
+    }
+
+    public ArrayList<Card> getPlayerTwoGraveYard() {
+        return playerTwoGraveYard;
     }
 }

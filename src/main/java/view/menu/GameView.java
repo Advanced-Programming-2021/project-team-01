@@ -7,10 +7,9 @@ import model.GamePhase;
 import view.ConsoleCommands;
 import view.Menu;
 
-import java.util.Scanner;
 import java.util.regex.Matcher;
 
-class GameView {
+public class GameView {
 
     public void run(String input) {
         Matcher matcher;
@@ -43,18 +42,20 @@ class GameView {
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SURRENDER, input)) != null) {
             surrender();
             HandleRequestType.currentMenu = Menu.MAIN_MENU;
-        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.NEXT_PHASE, input)) != null){
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.NEXT_PHASE, input)) != null) {
             System.out.println(GameController.getInstance().nextPhase());
         } else if (input.equals("css")) {
             showCard();
         } else if (input.equals("sb")) {
             GameController.getInstance().getGameBoard().showBoard();
-        }else {
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.CHEAT, input) != null)) {
+            GameController.getInstance().cheater(matcher.group(1));
+        } else {
             System.out.println("invalid command");
             return;
         }
         if (GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE1 ||
-                GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE2){
+                GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE2) {
             GameController.getInstance().getGameBoard().showBoard();
         }
     }
@@ -96,25 +97,25 @@ class GameView {
         try {
             GameController.getInstance().summon();
             System.out.println("summoned successfully");
-        }catch (LevelFiveException exception){
+        } catch (LevelFiveException exception) {
             String input = HandleRequestType.scanner.nextLine();
             if (input.equals("cancel")) return;
             int index = Integer.parseInt(input);
             try {
                 GameController.getInstance().tributeSummonLevel5(index);
                 System.out.println("summoned successfully");
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-        }catch (LevelSevenException levelSevenException){
+        } catch (LevelSevenException levelSevenException) {
             String input = HandleRequestType.scanner.nextLine();
             if (input.equals("cancel")) return;
             int index1 = Integer.parseInt(input);
             int index2 = Integer.parseInt(HandleRequestType.scanner.nextLine());
             try {
-                GameController.getInstance().tributeSummonLevel7(index1,index2);
+                GameController.getInstance().tributeSummonLevel7(index1, index2);
                 System.out.println("summoned successfully");
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         } catch (Exception exp) {
@@ -173,9 +174,10 @@ class GameView {
         try {
             GameController.getInstance().activateEffect();
             System.out.println("spell activated");
-        } catch (Exception exp) {
-            System.err.println(exp.getMessage());
+        } catch (Exception error) {
+            System.err.println(error.getMessage());
         }
+
     }
 
     private void showGraveyard() {
@@ -213,5 +215,10 @@ class GameView {
         } catch (Exception exp) {
             System.err.println(exp.getMessage());
         }
+    }
+
+    public static String prompt(String message){
+        System.out.println(message);
+        return HandleRequestType.scanner.nextLine();
     }
 }
