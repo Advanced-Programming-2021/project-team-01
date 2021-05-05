@@ -11,6 +11,7 @@ import model.card.SpellCard;
 import view.menu.GameView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class EffectController {
     GameController gameController;
@@ -19,6 +20,8 @@ public class EffectController {
         this.gameController = gameController;
         board = gameController.gameBoard;
     }
+    HashMap<Card, Integer> changeOfCards = new HashMap<>();
+    ArrayList<Card> effectedCards = new ArrayList<>();
 
     protected void run(Spell spell) throws Exception {
         if (spell == Spell.MONSTER_REBORN){
