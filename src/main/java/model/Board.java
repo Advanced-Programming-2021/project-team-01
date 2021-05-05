@@ -258,19 +258,8 @@ public class Board {
         Collections.shuffle(playerTwoDrawZone);
     }
 
-    public boolean isCardInHand(Card selectedCard, int player) {
-        if (player == 1) {
-            for (Card card : playerOneHand) {
-                if (card == selectedCard)
-                    return true;
-            }
-        } else if (player == 2) {
-            for (Card card : playerTwoHand) {
-                if (card == selectedCard)
-                    return true;
-            }
-        }
-        return false;
+    public boolean isCardInHand(Card card) {
+        return playerOneHand.contains(card) || playerTwoHand.contains(card);
     }
 
     public void summonCard(MonsterCard monsterCard, int player) throws MonsterZoneFull, AlreadySummonedError {

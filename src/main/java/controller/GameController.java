@@ -347,14 +347,22 @@ public class GameController {
             if (gameBoard.isOpponentCardHidden(selectedCard.getCard(), getOpponentPlayerNumber()))
                 throw new HiddenCardError();
             else if (selectedCard.getCard() instanceof MonsterCard)
-                return selectedCard.getCard().getName() + "- attack = " + getZoneSlotSelectedCard().getAttack() + " defense = " +
-                        ((MonsterCard) selectedCard.getCard()).getDefense() + " : " + selectedCard.getCard().getDescription();
+                if (gameBoard.isCardInHand(selectedCard.getCard()))
+                    return selectedCard.getCard().getName() + "- attack = " + ((MonsterCard) selectedCard.getCard()).getAttack() + " defense = " +
+                            ((MonsterCard) selectedCard.getCard()).getDefense() + " : " + selectedCard.getCard().getDescription();
+                else
+                    return selectedCard.getCard().getName() + "- attack = " + getZoneSlotSelectedCard().getAttack() + " defense = " +
+                            getZoneSlotSelectedCard().getDefence() + " : " + selectedCard.getCard().getDescription();
             else
                 return selectedCard.getCard().getName() + ":" + selectedCard.getCard().getDescription();
         } else {
             if (selectedCard.getCard() instanceof MonsterCard)
-                return selectedCard.getCard().getName() + "- attack = " + getZoneSlotSelectedCard().getAttack() + " defense = " +
-                        ((MonsterCard) selectedCard.getCard()).getDefense() + " : " + selectedCard.getCard().getDescription();
+                if (gameBoard.isCardInHand(selectedCard.getCard()))
+                    return selectedCard.getCard().getName() + "- attack = " + ((MonsterCard) selectedCard.getCard()).getAttack() + " defense = " +
+                            ((MonsterCard) selectedCard.getCard()).getDefense() + " : " + selectedCard.getCard().getDescription();
+                else
+                    return selectedCard.getCard().getName() + "- attack = " + getZoneSlotSelectedCard().getAttack() + " defense = " +
+                            getZoneSlotSelectedCard().getDefence() + " : " + selectedCard.getCard().getDescription();
             else
                 return selectedCard.getCard().getName() + ":" + selectedCard.getCard().getDescription();
 
@@ -408,7 +416,7 @@ public class GameController {
     }
 
     public ZoneSlot getZoneSlotSelectedCard() {
-        return gameBoard.getZoneSlotByLocation(selectedCard.getCardLocation(), selectedCard.getIndex(), getCurrentPlayerNumber());
+        return gameBoard.getZoneSlotByCard(selectedCard.getCard());
     }
 
     public boolean isCardChangedBefore(Card card) {
