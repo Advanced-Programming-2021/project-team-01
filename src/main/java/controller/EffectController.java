@@ -42,11 +42,13 @@ public class EffectController {
             System.out.print(index + "|" + card.getName() + " : " + card.getDescription());
             index++;
         }
+        System.out.println();
         int cardIndex = Integer.parseInt(GameView.prompt("chose specified index"));
         if (cardIndex > index) throw new InvalidCommandException();
         Card card = graveYard.get(cardIndex);
-        graveYard.remove(card);
         board.addCardFromGraveYardToField(gameController.getCurrentPlayerNumber(), card);
+        graveYard.remove(card);
+        board.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
 }
 

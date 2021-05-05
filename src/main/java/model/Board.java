@@ -92,6 +92,16 @@ public class Board {
         }
     }
 
+    public void sendCardFromHandToGraveYard(int player,Card card){
+        if (player == 1){
+            playerOneGraveYard.add(card);
+            playerOneHand.remove(card);
+        }else {
+            playerTwoGraveYard.add(card);
+            playerTwoHand.remove(card);
+        }
+    }
+
     public void showBoard() {
         String opponentNickname = GameController.getOpponent().getNickname();
         String playerNickname = GameController.getCurrentPlayer().getNickname();
