@@ -2,9 +2,12 @@ package controller;
 
 import controller.exceptions.InvalidCommandException;
 import controller.exceptions.MonsterZoneFull;
+import controller.exceptions.NoFieldSpellInDeck;
 import model.Board;
 import model.ZoneSlot;
 import model.card.Card;
+import model.card.Property;
+import model.card.SpellCard;
 import view.menu.GameView;
 
 import java.util.ArrayList;
@@ -54,14 +57,14 @@ public class EffectController {
         Card card = graveYard.get(cardIndex);
         board.addCardFromGraveYardToField(gameController.getCurrentPlayerNumber(), card);
         graveYard.remove(card);
-        board.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
 
     protected void potOfGreed(){
         int playerNumber = gameController.getCurrentPlayerNumber();
         board.addCardFromDeckToHand(playerNumber);
         board.addCardFromDeckToHand(playerNumber);
-        board.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
 
     protected void raigeki() {
@@ -75,7 +78,7 @@ public class EffectController {
                     zoneSlot[i].setDefending(false);
                 }
             }
-            gameController.gameBoard.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+            gameController.gameBoard.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
         } else {
             ZoneSlot[] zoneSlot = gameController.gameBoard.getPlayerOneMonsterZone();
             for(int i = 1; i < 6; i++) {
@@ -86,8 +89,32 @@ public class EffectController {
                     zoneSlot[i].setDefending(false);
                 }
             }
-            gameController.gameBoard.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+            gameController.gameBoard.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
         }
+    }
+
+    protected void terraforming() throws NoFieldSpellInDeck {
+        ArrayList<Card> cardsInDeck = board.getPlayerDrawZone(gameController.getCurrentPlayerNumber());
+        ArrayList<Card> fieldSpells = new ArrayList<>();
+        for (Card card : cardsInDeck) {
+            if (!(card instanceof SpellCard))
+                continue;
+            if (((SpellCard) card).getProperty() == Property.FIELD)
+                fieldSpells.add(card);
+        }
+        if (fieldSpells.size() == 0)
+            throw new NoFieldSpellInDeck();
+        GameView.printListOfCard(fieldSpells);
+        String indexString = GameView.prompt("enter a number");
+        int index;
+        try {
+            index = Integer.parseInt(indexString);
+        }catch (NumberFormatException e){
+            throw new NumberFormatException();
+        }
+        Card card = fieldSpells.get(index);
+        board.addCardFromDeckToHand(gameController.getCurrentPlayerNumber(),card);
+        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(),card);
     }
 }
 

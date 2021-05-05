@@ -52,16 +52,16 @@ public class GameController {
         return playerOne;
     }
 
-    protected void increaseOpponentLp(int amount){
-        if (currentPlayer == playerOne){
+    protected void increaseOpponentLp(int amount) {
+        if (currentPlayer == playerOne) {
             playerTwoLp += amount;
             return;
         }
         playerOneLp += amount;
     }
 
-    protected void increasePlayerLp(int amount){
-        if (currentPlayer == playerOne){
+    protected void increasePlayerLp(int amount) {
+        if (currentPlayer == playerOne) {
             playerOneLp += amount;
             return;
         }
@@ -290,9 +290,9 @@ public class GameController {
             throw new AlreadyChangedPosition();
 
         changedPositionCards.add(selectedCard.getCard());
-        if (newPosition.equals("defense")){
+        if (newPosition.equals("defense")) {
             getZoneSlotSelectedCard().setDefending(true);
-        }else if (newPosition.equals("attack")){
+        } else if (newPosition.equals("attack")) {
             getZoneSlotSelectedCard().setDefending(false);
             getZoneSlotSelectedCard().setHidden(false);
         }
@@ -348,6 +348,14 @@ public class GameController {
 
     public void surrender() {
         currentPlayer.increaseLoseRate();
+    }
+
+    public void sendCardFromHandToSpellZone() throws SpellZoneFullError {
+        if (selectedCard.getCardLocation() == CardLocation.HAND) {
+            selectedCard.setCardLocation(CardLocation.SPELL);
+            gameBoard.setSpell(getCurrentPlayerNumber(), (SpellCard) selectedCard.getCard());
+//todo : fill it
+        }
     }
 
     public int getOpponentLp() {
@@ -412,7 +420,7 @@ public class GameController {
     public void cheater(String cardName) {
         Card card = Card.getCardByName(cardName);
         if (card == null) throw new RuntimeException();
-        gameBoard.addCardCheatToHand(card,getCurrentPlayerNumber());
+        gameBoard.addCardCheatToHand(card, getCurrentPlayerNumber());
     }
 
     public boolean isGameFinished() {
@@ -420,11 +428,11 @@ public class GameController {
     }
 
     public void finishGame() {
-        if (playerOneLp <= 0){
+        if (playerOneLp <= 0) {
             playerOne.increaseLoseRate();
             playerTwo.increaseWinRate();
             //TODO: if game is 3 taei bayad game jadid start kone
-        }else{
+        } else {
             playerTwo.increaseLoseRate();
             playerOne.increaseWinRate();
         }

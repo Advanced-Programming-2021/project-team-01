@@ -4,9 +4,11 @@ import controller.GameController;
 import controller.exceptions.LevelFiveException;
 import controller.exceptions.LevelSevenException;
 import model.GamePhase;
+import model.card.Card;
 import view.ConsoleCommands;
 import view.Menu;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class GameView {
@@ -58,7 +60,7 @@ public class GameView {
                 GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE2) {
             GameController.getInstance().getGameBoard().showBoard();
         }
-        if(GameController.getInstance().isGameFinished()){
+        if (GameController.getInstance().isGameFinished()) {
             GameController.getInstance().finishGame();
         }
     }
@@ -220,12 +222,23 @@ public class GameView {
         }
     }
 
-    public static String prompt(String message){
+    public static String prompt(String message) {
         System.out.println(message);
         return HandleRequestType.scanner.nextLine();
     }
 
-    public static void showConsole(String input){
+    public static void showConsole(String input) {
         System.out.println(input);
+    }
+
+    public static void printListOfCard(ArrayList<Card> cards) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int index = 0;
+        for (Card card : cards) {
+            stringBuilder.append(index).append(card.getName()).append(':');
+            stringBuilder.append(card.getDescription()).append('\n');
+            index++;
+        }
+        System.out.print(stringBuilder);
     }
 }

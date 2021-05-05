@@ -92,13 +92,39 @@ public class Board {
         }
     }
 
-    public void sendCardFromHandToGraveYard(int player,Card card){
-        if (player == 1){
+    public void addCardFromDeckToHand(int playerNumber, Card card) {
+        if (playerNumber == 1) {
+            playerOneDrawZone.remove(card);
+            playerOneHand.add(card);
+        } else {
+            playerTwoDrawZone.remove(card);
+            playerTwoHand.add(card);
+        }
+    }
+
+    public void sendCardFromHandToGraveYard(int player, Card card) {
+        if (player == 1) {
             playerOneGraveYard.add(card);
             playerOneHand.remove(card);
-        }else {
+        } else {
             playerTwoGraveYard.add(card);
             playerTwoHand.remove(card);
+        }
+    }
+
+    public void sendCardFromSpellZoneToGraveyard(int player, Card card) {
+        if (player == 1) {
+            playerOneGraveYard.add(card);
+            for (int i = 1; i < 6; i++) {
+                if (playerOneSpellZone[i].getCard() == card)
+                    playerOneSpellZone[i].setCard(null);
+            }
+        } else {
+            playerTwoGraveYard.add(card);
+            for (int i = 1; i < 6; i++) {
+                if (playerTwoSpellZone[i].getCard() == card)
+                    playerTwoSpellZone[i].setCard(null);
+            }
         }
     }
 
@@ -527,5 +553,12 @@ public class Board {
 
     public ZoneSlot[] getPlayerTwoMonsterZone() {
         return playerTwoMonsterZone;
+    }
+
+    public ArrayList<Card> getPlayerDrawZone(int player) {
+        if (player == 1)
+            return playerOneDrawZone;
+        else
+            return playerTwoDrawZone;
     }
 }

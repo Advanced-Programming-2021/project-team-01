@@ -44,8 +44,6 @@ public class AttackController {
         } else {
             return attackFaceDownDefencePosition(number, target, attacker);
         }
-
-
     }
 
     private String attackFaceDownDefencePosition(int number, MonsterCard target, MonsterCard attacker) {
