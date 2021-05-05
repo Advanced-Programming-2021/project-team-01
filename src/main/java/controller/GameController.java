@@ -322,6 +322,7 @@ public class GameController {
     }
 
     public void activateEffect() throws PromptException, Exception {
+        sendCardFromHandToSpellZone();
         effectController.run(Spell.getSpellByName(selectedCard.getCard().getName()));
     }
 
@@ -352,9 +353,9 @@ public class GameController {
 
     public void sendCardFromHandToSpellZone() throws SpellZoneFullError {
         if (selectedCard.getCardLocation() == CardLocation.HAND) {
-            selectedCard.setCardLocation(CardLocation.SPELL);
-            gameBoard.setSpell(getCurrentPlayerNumber(), (SpellCard) selectedCard.getCard());
-//todo : fill it
+            SpellCard card = (SpellCard) selectedCard.getCard();
+            gameBoard.setSpell(getCurrentPlayerNumber(), card);
+            getZoneSlotSelectedCard().setHidden(false);
         }
     }
 
