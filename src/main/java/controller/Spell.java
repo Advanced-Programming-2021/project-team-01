@@ -2,7 +2,7 @@ package controller;
 
 public enum Spell {
     MONSTER_REBORN("Monster Reborn"),
-    POT_OF_GREED("Pot Of Greed"),
+    POT_OF_GREED("Pot of Greed"),
     TERRAFORMING("Terraforming"),
     RAIGEKI("Raigeki");
     String value;
