@@ -516,4 +516,12 @@ public class Board {
     public ArrayList<Card> getPlayerTwoGraveYard() {
         return playerTwoGraveYard;
     }
+
+    public ZoneSlot[] getPlayerOneMonsterZone() {
+        return playerOneMonsterZone;
+    }
+
+    public ZoneSlot[] getPlayerTwoMonsterZone() {
+        return playerTwoMonsterZone;
+    }
 }

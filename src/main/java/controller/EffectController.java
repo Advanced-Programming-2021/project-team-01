@@ -3,6 +3,7 @@ package controller;
 import controller.exceptions.InvalidCommandException;
 import controller.exceptions.MonsterZoneFull;
 import model.Board;
+import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
 import view.menu.GameView;
@@ -60,6 +61,28 @@ public class EffectController {
     protected void potOfGreed(){
         int playerNumber = gameController.getCurrentPlayerNumber();
         board.addCardFromDeckToHand(playerNumber);
+    }
+
+    protected void Raigeki() {
+        if (gameController.getCurrentPlayerNumber() == 1) {
+            ZoneSlot[] zoneSlot = gameController.gameBoard.getPlayerTwoMonsterZone();
+            for(int i = 1; i < 6; i++) {
+                gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(i, gameController.getOpponentPlayerNumber());
+                zoneSlot[i].setCard(null);
+                zoneSlot[i].setHidden(false);
+                zoneSlot[i].setDefending(false);
+            }
+            gameController.gameBoard.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+        } else {
+            ZoneSlot[] zoneSlot = gameController.gameBoard.getPlayerOneMonsterZone();
+            for(int i = 1; i < 6; i++) {
+                gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(i, gameController.getOpponentPlayerNumber());
+                zoneSlot[i].setCard(null);
+                zoneSlot[i].setHidden(false);
+                zoneSlot[i].setDefending(false);
+            }
+            gameController.gameBoard.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+        }
     }
 }
 
