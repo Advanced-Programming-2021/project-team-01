@@ -37,6 +37,14 @@ public class EffectController {
         else if (spell == Spell.BLACK_PENDANT){
             blackPendant();
         }
+        else if (spell == Spell.UNITED_WE_STAND){
+            unitedWeStand();
+        }
+
+
+    }
+
+    private void unitedWeStand() {
 
 
     }
@@ -49,10 +57,7 @@ public class EffectController {
         ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER,indexOfMonster, gameController.getCurrentPlayerNumber());
         if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
         zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
-
-
-
-
+        board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
 
     }
 

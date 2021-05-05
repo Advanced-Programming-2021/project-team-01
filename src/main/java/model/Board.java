@@ -449,6 +449,12 @@ public class Board {
         }
     }
 
+    public void setSpellFaceUp(int player, Card card) throws SpellZoneFullError {
+        setSpell(player,(SpellCard)card);
+        ZoneSlot zoneSlot = getZoneSlotByCard(card);
+        zoneSlot.setHidden(false);
+    }
+
     public String showGraveyard(int player) {
         StringBuilder result = new StringBuilder();
         if (player == 1)

@@ -1,5 +1,6 @@
 package model;
 
+import controller.Spell;
 import model.card.Card;
 import model.card.MonsterCard;
 import model.card.SpellCard;
@@ -27,7 +28,17 @@ public class ZoneSlot {
 
     public int getAttack(){
         if (card instanceof MonsterCard){
-            return ((MonsterCard) card).getAttack();
+            int baseAttack =  ((MonsterCard) card).getAttack();
+            if (equippedCard != null){
+                baseAttack += equipAttackBooster();
+            }
+        }
+        return 0;
+    }
+
+    private int equipAttackBooster() {
+        if (Spell.getSpellByName(equippedCard.getName()) == Spell.BLACK_PENDANT){
+            return 500;
         }
         return 0;
     }
@@ -77,4 +88,6 @@ public class ZoneSlot {
             return "OO";
         }
     }
+
+
 }

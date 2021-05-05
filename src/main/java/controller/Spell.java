@@ -6,13 +6,14 @@ public enum Spell {
     TERRAFORMING("Terraforming"),
     RAIGEKI("Raigeki"),
     UMIIRUKA("Umiiruka"),
-    BLACK_PENDANT("Black Pendant");
+    BLACK_PENDANT("Black Pendant"),
+    UNITED_WE_STAND("United We Stand");
     String value;
     Spell(String value) {
         this.value = value;
     }
 
-    static Spell getSpellByName(String name){
+    public static Spell getSpellByName(String name){
         for (Spell spell : Spell.values())
             if (spell.value.equals(name))
                 return spell;
