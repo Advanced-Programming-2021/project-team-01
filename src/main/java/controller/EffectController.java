@@ -6,6 +6,7 @@ import controller.exceptions.NoFieldSpellInDeck;
 import model.Board;
 import model.ZoneSlot;
 import model.card.Card;
+import model.card.MonsterType;
 import model.card.Property;
 import model.card.SpellCard;
 import view.menu.GameView;
@@ -35,7 +36,7 @@ public class EffectController {
         else if (spell == Spell.TERRAFORMING)
             terraforming();
         else if (spell == Spell.UMIIRUKA)
-            umiiruka();
+            activeUmiiruka();
 
     }
     protected void monsterReborn() throws InvalidCommandException, MonsterZoneFull {
@@ -121,9 +122,13 @@ public class EffectController {
         board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
 
-    protected void umiiruka() {
-        
+    protected void activeUmiiruka() {
+        board.setCardFromHandToFieldZone(gameController.getCurrentPlayerNumber(),gameController.selectedCard.getCard());
     }
+    protected void deActivateUmiiruka() {
+
+    }
+
 }
 
 /*

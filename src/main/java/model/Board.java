@@ -584,6 +584,8 @@ public class Board {
         for (int j = 1; j < 6; j++) {
             for (MonsterType monsterType : monsterTypes) {
                 MonsterCard monsterCard = ((MonsterCard) playerOneMonsterZone[j].getCard());
+                if (monsterCard == null)
+                    continue;
                 if (monsterCard.getMonsterTypes().contains(monsterType)) {
                     monsterCard.increaseAttack(attack);
                     monsterCard.increaseDefense(defense);
@@ -593,4 +595,28 @@ public class Board {
         }
     }
 
+    public ZoneSlot getPlayerOneFieldZone() {
+        return playerOneFieldZone;
+    }
+
+    public ZoneSlot getPlayerTwoFieldZone() {
+        return playerTwoFieldZone;
+    }
+
+    public ZoneSlot getPlayerFieldZone(int player) {
+        if (player == 1) return playerOneFieldZone;
+        if (player == 2) return playerTwoFieldZone;
+        return null;
+    }
+
+    public void setCardFromHandToFieldZone(int player,Card card) {
+        if (player == 1) {
+            playerOneFieldZone.setCard(card);
+            playerOneHand.remove(card);
+        }
+        if (player == 2) {
+            playerTwoFieldZone.setCard(card);
+            playerTwoHand.remove(card);
+        }
+    }
 }
