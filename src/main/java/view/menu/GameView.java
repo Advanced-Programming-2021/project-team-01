@@ -235,7 +235,7 @@ public class GameView {
         StringBuilder stringBuilder = new StringBuilder();
         int index = 0;
         for (Card card : cards) {
-            stringBuilder.append(index).append(card.getName()).append(':');
+            stringBuilder.append(index).append("- ").append(card.getName()).append(':');
             stringBuilder.append(card.getDescription()).append('\n');
             index++;
         }

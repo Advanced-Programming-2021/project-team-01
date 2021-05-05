@@ -28,7 +28,7 @@ public class EffectController {
         }else if (spell == Spell.RAIGEKI){
             raigeki();
         }else if (spell == Spell.TERRAFORMING){
-
+            terraforming();
         }
 
     }
@@ -105,7 +105,7 @@ public class EffectController {
         if (fieldSpells.size() == 0)
             throw new NoFieldSpellInDeck();
         GameView.printListOfCard(fieldSpells);
-        String indexString = GameView.prompt("enter a number");
+        String indexString = GameView.prompt("Enter a number :");
         int index;
         try {
             index = Integer.parseInt(indexString);
@@ -114,7 +114,7 @@ public class EffectController {
         }
         Card card = fieldSpells.get(index);
         board.addCardFromDeckToHand(gameController.getCurrentPlayerNumber(),card);
-        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(),card);
+        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(),gameController.selectedCard.getCard());
     }
 }
 

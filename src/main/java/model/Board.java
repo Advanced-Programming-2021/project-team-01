@@ -561,4 +561,22 @@ public class Board {
         else
             return playerTwoDrawZone;
     }
+
+    public ZoneSlot getZoneSlotByCard(Card card) {
+        if (card == playerOneFieldZone.getCard())
+            return playerOneFieldZone;
+        if (card == playerTwoFieldZone.getCard())
+            return playerTwoFieldZone;
+        for (int i = 1; i < 6; i++) {
+            if (card == playerOneSpellZone[i].getCard())
+                return playerOneSpellZone[i];
+            if (card == playerTwoSpellZone[i].getCard())
+                return playerOneSpellZone[i];
+            if (card == playerOneMonsterZone[i].getCard())
+                return playerOneMonsterZone[i];
+            if (card == playerTwoMonsterZone[i].getCard())
+                return playerTwoMonsterZone[i];
+        }
+        return null;
+    }
 }

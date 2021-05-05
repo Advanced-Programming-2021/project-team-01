@@ -355,7 +355,7 @@ public class GameController {
         if (selectedCard.getCardLocation() == CardLocation.HAND) {
             SpellCard card = (SpellCard) selectedCard.getCard();
             gameBoard.setSpell(getCurrentPlayerNumber(), card);
-            getZoneSlotSelectedCard().setHidden(false);
+            gameBoard.getZoneSlotByCard(card).setHidden(false);
         }
     }
 
