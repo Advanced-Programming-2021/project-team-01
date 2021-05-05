@@ -175,6 +175,8 @@ public class EffectController {
     }
 
     public int fieldAttackBooster(MonsterCard monsterCard) {
+        if (!board.isCardInMonsterZone(monsterCard))
+            return 0;
         ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(gameController.getCurrentPlayerNumber());
         SpellCard card = (SpellCard) zoneSlot.getCard();
         if (card == null)
@@ -210,6 +212,8 @@ public class EffectController {
     }
 
     public int fieldDefenceBooster(MonsterCard monsterCard) {
+        if (!board.isCardInMonsterZone(monsterCard))
+            return 0;
         ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(gameController.getCurrentPlayerNumber());
         SpellCard card = (SpellCard) zoneSlot.getCard();
         if (card == null)

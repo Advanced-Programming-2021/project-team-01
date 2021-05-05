@@ -258,6 +258,15 @@ public class Board {
         Collections.shuffle(playerTwoDrawZone);
     }
 
+    public boolean isCardInMonsterZone(MonsterCard monsterCard) {
+        for (int i = 1; i < 6; i++) {
+            if (monsterCard == playerOneMonsterZone[i].getCard() ||
+                    monsterCard == playerTwoMonsterZone[i].getCard())
+                return true;
+        }
+        return false;
+    }
+
     public boolean isCardInHand(Card card) {
         return playerOneHand.contains(card) || playerTwoHand.contains(card);
     }
