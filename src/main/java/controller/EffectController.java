@@ -33,11 +33,10 @@ public class EffectController {
         else if (spell == Spell.TERRAFORMING)
             terraforming();
         else if (spell == Spell.UMIIRUKA)
-            activeUmiiruka();
-        else if (spell == Spell.BLACK_PENDANT){
+            umiiruka();
+        else if (spell == Spell.BLACK_PENDANT) {
             equipNormal();
-        }
-        else if (spell == Spell.UNITED_WE_STAND){
+        } else if (spell == Spell.UNITED_WE_STAND) {
             equipNormal();
         }
         else if (spell == Spell.MAGNUM_SHIELD){
@@ -50,7 +49,7 @@ public class EffectController {
     }
 
     private void equipFiend() throws Exception {
-        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0){
+        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0) {
             throw new Exception("no monster card");
         }
         int indexOfMonster = Integer.parseInt(GameView.prompt("please choose a monster!"));
@@ -83,7 +82,7 @@ public class EffectController {
             throw new Exception("no monster card");
         }
         int indexOfMonster = Integer.parseInt(GameView.prompt("please choose a monster!"));
-        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER,indexOfMonster, gameController.getCurrentPlayerNumber());
+        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER, indexOfMonster, gameController.getCurrentPlayerNumber());
         if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
         zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
         board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
@@ -172,12 +171,34 @@ public class EffectController {
         board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
 
-    protected void activeUmiiruka() {
-        board.setCardFromHandToFieldZone(gameController.getCurrentPlayerNumber(),gameController.selectedCard.getCard());
+    protected void umiiruka() {
+        board.setCardFromHandToFieldZone(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
-    protected void deActivateUmiiruka() {
-        board.deactivateFieldSpell(gameController.getCurrentPlayerNumber());//Todo : age toye battle phase nabood she bayad handle she
+
+    public int fieldAttackBooster() {
+        ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(gameController.getCurrentPlayerNumber());
+        Card card = zoneSlot.getCard();
+        if (card == null)
+            return 0;
+        Spell spell = Spell.getSpellByName(card.getName());
+        if (spell == Spell.UMIIRUKA && ((MonsterCard) card).getMonsterTypes().contains(MonsterType.AQUA))
+            return 500;
+
+        return 0;
     }
+
+    public int fieldDefenceBooster() {
+        ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(gameController.getCurrentPlayerNumber());
+        Card card = zoneSlot.getCard();
+        if (card == null)
+            return 0;
+        Spell spell = Spell.getSpellByName(card.getName());
+        if (spell == Spell.UMIIRUKA && ((MonsterCard) card).getMonsterTypes().contains(MonsterType.AQUA))
+            return -400;
+
+        return 0;
+    }
+
 
 }
 

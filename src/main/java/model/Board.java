@@ -450,7 +450,7 @@ public class Board {
     }
 
     public void setSpellFaceUp(int player, Card card) throws SpellZoneFullError {
-        setSpell(player,(SpellCard)card);
+        setSpell(player, (SpellCard) card);
         ZoneSlot zoneSlot = getZoneSlotByCard(card);
         zoneSlot.setHidden(false);
     }
@@ -545,16 +545,16 @@ public class Board {
         return true;
     }
 
-    public void deactivateFieldSpell(int playerNumber){
-        if (playerNumber == 1){
+    public void deactivateFieldSpell(int playerNumber) {
+        if (playerNumber == 1) {
             Card card = playerOneFieldZone.getCard();
-            if (card != null){
+            if (card != null) {
                 playerOneFieldZone.setCard(null);
                 playerOneGraveYard.add(card);
             }
-        }else {
+        } else {
             Card card = playerTwoFieldZone.getCard();
-            if (card != null){
+            if (card != null) {
                 playerTwoFieldZone.setCard(null);
                 playerTwoGraveYard.add(card);
             }
@@ -632,12 +632,16 @@ public class Board {
         return null;
     }
 
-    public void setCardFromHandToFieldZone(int player,Card card) {
+    public void setCardFromHandToFieldZone(int player, Card card) {
         if (player == 1) {
+            if (playerOneFieldZone.getCard() != null)
+                playerOneGraveYard.add(playerOneFieldZone.getCard());
             playerOneFieldZone.setCard(card);
             playerOneHand.remove(card);
         }
         if (player == 2) {
+            if (playerTwoFieldZone.getCard() != null)
+                playerTwoGraveYard.add(playerTwoFieldZone.getCard());
             playerTwoFieldZone.setCard(card);
             playerTwoHand.remove(card);
         }
