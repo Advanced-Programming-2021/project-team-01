@@ -4,7 +4,6 @@ import controller.exceptions.*;
 import model.*;
 import model.card.*;
 
-import javax.swing.tree.ExpandVetoException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -317,13 +316,16 @@ public class GameController {
         return effectController;
     }
 
-
     public String attack(int number) throws CardNotSelected, NotMonsterCard, NotAllowedAction, AlreadyAttacked, NoCardToAttack {
-        return attackController.attack(number);
+        String result = attackController.attack(number);
+        selectedCard.reset();
+        return result;
     }
 
     public String directAttack() throws AlreadyAttacked, CardNotSelected, NotAllowedAction, NotMonsterCard, DirectAttackError {
-        return attackController.directAttack();
+        String result = attackController.directAttack();
+        selectedCard.reset();
+        return result;
     }
 
     public void activateEffect() throws PromptException, Exception {
@@ -345,13 +347,13 @@ public class GameController {
             if (gameBoard.isOpponentCardHidden(selectedCard.getCard(), getOpponentPlayerNumber()))
                 throw new HiddenCardError();
             else if (selectedCard.getCard() instanceof MonsterCard)
-                return selectedCard.getCard().getName() + "- attack = " + ((MonsterCard) selectedCard.getCard()).getAttack() + " defense = " +
+                return selectedCard.getCard().getName() + "- attack = " + getZoneSlotSelectedCard().getAttack() + " defense = " +
                         ((MonsterCard) selectedCard.getCard()).getDefense() + " : " + selectedCard.getCard().getDescription();
             else
                 return selectedCard.getCard().getName() + ":" + selectedCard.getCard().getDescription();
         } else {
             if (selectedCard.getCard() instanceof MonsterCard)
-                return selectedCard.getCard().getName() + "- attack = " + ((MonsterCard) selectedCard.getCard()).getAttack() + " defense = " +
+                return selectedCard.getCard().getName() + "- attack = " + getZoneSlotSelectedCard().getAttack() + " defense = " +
                         ((MonsterCard) selectedCard.getCard()).getDefense() + " : " + selectedCard.getCard().getDescription();
             else
                 return selectedCard.getCard().getName() + ":" + selectedCard.getCard().getDescription();

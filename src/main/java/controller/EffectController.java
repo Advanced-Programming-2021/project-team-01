@@ -32,30 +32,29 @@ public class EffectController {
             raigeki();
         else if (spell == Spell.TERRAFORMING)
             terraforming();
-        else if (spell == Spell.UMIIRUKA)
-            umiiruka();
+        else if (spell == Spell.UMIIRUKA || spell == Spell.CLOSED_FOREST ||
+                spell == Spell.FOREST || spell == Spell.YAMI)
+            fieldCard();
         else if (spell == Spell.BLACK_PENDANT) {
             equipNormal();
         } else if (spell == Spell.UNITED_WE_STAND) {
             equipNormal();
-        }
-        else if (spell == Spell.MAGNUM_SHIELD){
+        } else if (spell == Spell.MAGNUM_SHIELD) {
             equipWarrior();
-        }
-        else if (spell == Spell.SWORD_OF_DESTRUCTION){
+        } else if (spell == Spell.SWORD_OF_DESTRUCTION) {
             equipFiend();
         }
 
     }
 
     private void equipFiend() throws Exception {
-        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0){
+        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0) {
             throw new Exception("no monster card");
         }
         int indexOfMonster = Integer.parseInt(GameView.prompt("please choose a monster!"));
-        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER,indexOfMonster, gameController.getCurrentPlayerNumber());
+        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER, indexOfMonster, gameController.getCurrentPlayerNumber());
         if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
-        if (!((MonsterCard)zoneSlot.getCard()).getMonsterTypes().contains(MonsterType.FIEND)){
+        if (!((MonsterCard) zoneSlot.getCard()).getMonsterTypes().contains(MonsterType.FIEND)) {
             throw new Exception("only Fiend type monsters are allowed!");
         }
         zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
@@ -64,13 +63,13 @@ public class EffectController {
     }
 
     private void equipWarrior() throws Exception {
-        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0){
+        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0) {
             throw new Exception("no monster card");
         }
         int indexOfMonster = Integer.parseInt(GameView.prompt("please choose a monster!"));
-        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER,indexOfMonster, gameController.getCurrentPlayerNumber());
+        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER, indexOfMonster, gameController.getCurrentPlayerNumber());
         if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
-        if (!((MonsterCard)zoneSlot.getCard()).getMonsterTypes().contains(MonsterType.WARRIOR)){
+        if (!((MonsterCard) zoneSlot.getCard()).getMonsterTypes().contains(MonsterType.WARRIOR)) {
             throw new Exception("only warrior type monsters are allowed");
         }
         zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
@@ -78,11 +77,11 @@ public class EffectController {
     }
 
     private void equipNormal() throws Exception {
-        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0){
+        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0) {
             throw new Exception("no monster card");
         }
         int indexOfMonster = Integer.parseInt(GameView.prompt("please choose a monster!"));
-        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER,indexOfMonster, gameController.getCurrentPlayerNumber());
+        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER, indexOfMonster, gameController.getCurrentPlayerNumber());
         if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
         zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
         board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
@@ -171,38 +170,70 @@ public class EffectController {
         board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
 
-    protected void umiiruka() {
+    protected void fieldCard() {
         board.setCardFromHandToFieldZone(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
 
-    public int fieldAttackBooster() {
+    public int fieldAttackBooster(MonsterCard monsterCard) {
         ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(gameController.getCurrentPlayerNumber());
-        Card card = zoneSlot.getCard();
+        SpellCard card = (SpellCard) zoneSlot.getCard();
         if (card == null)
             return 0;
         Spell spell = Spell.getSpellByName(card.getName());
-        if (spell == Spell.UMIIRUKA && ((MonsterCard) card).getMonsterTypes().contains(MonsterType.AQUA))
+        if (spell == Spell.UMIIRUKA && monsterCard.getMonsterTypes().contains(MonsterType.AQUA))
             return 500;
-
+        if (spell == Spell.FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.INSECT) ||
+                monsterCard.getMonsterTypes().contains(MonsterType.BEAST) || monsterCard.getMonsterTypes().contains(MonsterType.BEAST_WARRIOR)))
+            return 200;
+        if (spell == Spell.CLOSED_FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.BEAST) ||
+                monsterCard.getMonsterTypes().contains(MonsterType.BEAST_WARRIOR))) {
+            if (gameController.getCurrentPlayerNumber() == 1) {
+                if (board.getOwnerOfCard(monsterCard) == 1) {
+                    return 100*board.getPlayerOneGraveYard().size();
+                } else
+                    return 0;
+            } else {
+                if (board.getOwnerOfCard(monsterCard) == 2) {
+                    return 100*board.getPlayerTwoGraveYard().size();
+                } else
+                    return 0;
+            }
+        }
+        if (spell == Spell.YAMI) {
+            if (monsterCard.getMonsterTypes().contains(MonsterType.FIEND) ||
+                    monsterCard.getMonsterTypes().contains(MonsterType.SPELLCASTER))
+                return 200;
+            if (monsterCard.getMonsterTypes().contains(MonsterType.FAIRY))
+                return -200;
+        }
         return 0;
     }
 
-    public int fieldDefenceBooster() {
+    public int fieldDefenceBooster(MonsterCard monsterCard) {
         ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(gameController.getCurrentPlayerNumber());
-        Card card = zoneSlot.getCard();
+        SpellCard card = (SpellCard) zoneSlot.getCard();
         if (card == null)
             return 0;
         Spell spell = Spell.getSpellByName(card.getName());
-        if (spell == Spell.UMIIRUKA && ((MonsterCard) card).getMonsterTypes().contains(MonsterType.AQUA))
+        if (spell == Spell.UMIIRUKA && monsterCard.getMonsterTypes().contains(MonsterType.AQUA))
             return -400;
-
+        if (spell == Spell.FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.INSECT) ||
+                monsterCard.getMonsterTypes().contains(MonsterType.BEAST) || monsterCard.getMonsterTypes().contains(MonsterType.BEAST_WARRIOR)))
+            return 200;
+        if (spell == Spell.YAMI) {
+            if (monsterCard.getMonsterTypes().contains(MonsterType.FIEND) ||
+                    monsterCard.getMonsterTypes().contains(MonsterType.SPELLCASTER))
+                return 200;
+            if (monsterCard.getMonsterTypes().contains(MonsterType.FAIRY))
+                return -200;
+        }
         return 0;
     }
 
-    public int unitedWeStand(){
+    public int unitedWeStand() {
         int counter = 0;
-        for (int i = 1; i <= 5; i++){
-            if (!board.getZoneSlotByLocation(CardLocation.MONSTER,i, gameController.getCurrentPlayerNumber()).isHidden()){
+        for (int i = 1; i <= 5; i++) {
+            if (!board.getZoneSlotByLocation(CardLocation.MONSTER, i, gameController.getCurrentPlayerNumber()).isHidden()) {
                 counter++;
             }
         }

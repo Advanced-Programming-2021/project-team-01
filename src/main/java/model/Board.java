@@ -594,7 +594,7 @@ public class Board {
             if (card == playerOneSpellZone[i].getCard())
                 return playerOneSpellZone[i];
             if (card == playerTwoSpellZone[i].getCard())
-                return playerOneSpellZone[i];
+                return playerTwoSpellZone[i];
             if (card == playerOneMonsterZone[i].getCard())
                 return playerOneMonsterZone[i];
             if (card == playerTwoMonsterZone[i].getCard())
@@ -630,6 +630,24 @@ public class Board {
         if (player == 1) return playerOneFieldZone;
         if (player == 2) return playerTwoFieldZone;
         return null;
+    }
+
+    public int getOwnerOfCard(Card card){
+        if (card == playerOneFieldZone.getCard())
+            return 1;
+        if (card == playerTwoFieldZone.getCard())
+            return 2;
+        for (int i = 1; i < 6; i++) {
+            if (card == playerOneSpellZone[i].getCard())
+                return 1;
+            if (card == playerTwoSpellZone[i].getCard())
+                return 2;
+            if (card == playerOneMonsterZone[i].getCard())
+                return 1;
+            if (card == playerTwoMonsterZone[i].getCard())
+                return 2;
+        }
+        return 0;
     }
 
     public void setCardFromHandToFieldZone(int player, Card card) {

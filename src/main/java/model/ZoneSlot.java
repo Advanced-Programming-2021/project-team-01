@@ -33,10 +33,11 @@ public class ZoneSlot {
             if (equippedCard != null) {
                 baseAttack += equipAttackBooster();
             }
-            return baseAttack + GameController.getInstance().getEffectController().fieldAttackBooster();
+            return baseAttack + GameController.getInstance().getEffectController().fieldAttackBooster((MonsterCard) card);
         }
         return 0;
     }
+
 
 
     private int equipAttackBooster() {
@@ -73,7 +74,7 @@ public class ZoneSlot {
             if (equippedCard != null) {
                 baseDefence += equipDefenceBooster();
             }
-            return baseDefence + GameController.getInstance().getEffectController().fieldDefenceBooster();
+            return baseDefence + GameController.getInstance().getEffectController().fieldDefenceBooster((MonsterCard) card);
         }
         return 0;
     }

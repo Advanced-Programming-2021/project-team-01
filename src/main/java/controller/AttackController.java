@@ -2,6 +2,7 @@ package controller;
 
 import controller.exceptions.*;
 import model.GamePhase;
+import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
 import model.card.MonsterCard;
@@ -47,7 +48,9 @@ public class AttackController {
     }
 
     private String attackFaceDownDefencePosition(int number, MonsterCard target, MonsterCard attacker) {
-        int damage = attacker.getAttack() - target.getDefense();
+        ZoneSlot zoneSlotAttacker = gameController.gameBoard.getZoneSlotByCard(attacker);
+        ZoneSlot zoneSlotTarget = gameController.gameBoard.getZoneSlotByCard(target);
+        int damage = zoneSlotAttacker.getAttack() - zoneSlotTarget.getDefence();
         gameController.gameBoard.getZoneSlotByLocation(CardLocation.MONSTER, number, gameController.getOpponentPlayerNumber()).setHidden(false);
         if (damage > 0){
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
@@ -66,7 +69,9 @@ public class AttackController {
     }
 
     private String attackFaceUpDefencePosition(int number, MonsterCard target, MonsterCard attacker) {
-        int damage = attacker.getAttack() - target.getDefense();
+        ZoneSlot zoneSlotAttacker = gameController.gameBoard.getZoneSlotByCard(attacker);
+        ZoneSlot zoneSlotTarget = gameController.gameBoard.getZoneSlotByCard(target);
+        int damage = zoneSlotAttacker.getAttack() - zoneSlotTarget.getDefence();
         if (damage > 0){
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
             attackedCards.add(attacker);
@@ -84,7 +89,9 @@ public class AttackController {
     }
 
     private String attackInFaceUpPosition(int number, MonsterCard target, MonsterCard attacker) {
-        int damage = attacker.getAttack() - target.getAttack();
+        ZoneSlot zoneSlotAttacker = gameController.gameBoard.getZoneSlotByCard(attacker);
+        ZoneSlot zoneSlotTarget = gameController.gameBoard.getZoneSlotByCard(target);
+        int damage = zoneSlotAttacker.getAttack() - zoneSlotTarget.getAttack();
         if (damage > 0){
             gameController.increaseOpponentLp(-damage);
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
@@ -121,8 +128,9 @@ public class AttackController {
             throw new DirectAttackError();
         }
         MonsterCard attackingCard = (MonsterCard) gameController.selectedCard.getCard();
-        gameController.decreasePlayerLP(gameController.getOpponentLp(), attackingCard.getAttack());
+        ZoneSlot zoneSlotAttacker = gameController.gameBoard.getZoneSlotByCard(attackingCard);
+        gameController.decreasePlayerLP(gameController.getOpponentLp(), zoneSlotAttacker.getAttack());
         attackedCards.add(attackingCard);
-        return String.format("you opponent receives %d battle damage", attackingCard.getAttack());
+        return String.format("you opponent receives %d battle damage", zoneSlotAttacker.getAttack());
     }
 }
