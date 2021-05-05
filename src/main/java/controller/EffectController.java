@@ -126,7 +126,7 @@ public class EffectController {
         board.setCardFromHandToFieldZone(gameController.getCurrentPlayerNumber(),gameController.selectedCard.getCard());
     }
     protected void deActivateUmiiruka() {
-
+        board.deactivateFieldSpell(gameController.getCurrentPlayerNumber());//Todo : age toye battle phase nabood she bayad handle she
     }
 
 }
