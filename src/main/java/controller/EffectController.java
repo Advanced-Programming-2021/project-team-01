@@ -38,7 +38,7 @@ public class EffectController {
             throw new InvalidCommandException();
         }
         int index = 0;
-        for (Card card : graveYard) {
+        for (Card card : graveYard) { //fixme : mvc bam
             System.out.print(index + "|" + card.getName() + " : " + card.getDescription());
             index++;
         }

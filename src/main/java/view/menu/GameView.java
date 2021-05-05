@@ -224,4 +224,8 @@ public class GameView {
         System.out.println(message);
         return HandleRequestType.scanner.nextLine();
     }
+
+    public static void showConsole(String input){
+        System.out.println(input);
+    }
 }
