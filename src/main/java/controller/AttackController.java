@@ -104,4 +104,27 @@ public class AttackController {
             return String.format("your monster card is destroyed and you receive %d damage",-damage);
         }
     }
+
+    protected String directAttack() throws CardNotSelected, NotMonsterCard, NotAllowedAction, AlreadyAttacked, DirectAttackError {
+        if (gameController.selectedCard.getCard() == null) {
+            throw new CardNotSelected();
+        }
+        if (gameController.selectedCard.getCardLocation() != CardLocation.MONSTER ||
+                !gameController.getZoneSlotSelectedCard().toString().equals("OO")) {
+            throw new NotMonsterCard();
+        }
+        if (gameController.phaseController.getGamePhase() != GamePhase.BATTLE_PHASE) {
+            throw new NotAllowedAction();
+        }
+        if (attackedCards.contains(gameController.selectedCard.getCard())){
+            throw new AlreadyAttacked();
+        }
+        if (!gameController.getGameBoard().isMonsterZoneEmpty(gameController.getOpponentPlayerNumber())) {
+            throw new DirectAttackError();
+        }
+        MonsterCard attackingCard = (MonsterCard) gameController.selectedCard.getCard();
+        gameController.decreasePlayerLP(gameController.getOpponentLp(), attackingCard.getAttack());
+        attackedCards.add(attackingCard);
+        return String.format("you opponent receives %d battle damage", attackingCard.getAttack());
+    }
 }
