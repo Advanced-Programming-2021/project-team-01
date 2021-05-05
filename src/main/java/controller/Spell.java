@@ -5,7 +5,7 @@ public enum Spell {
 
 
     static Spell getSpellByName(String name) {
-        if (name.equals("MonsterReborn")) {
+        if (name.equals("Monster Reborn")) {
             return MONSTER_REBORN;
         }
         return null;

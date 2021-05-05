@@ -58,6 +58,9 @@ public class GameView {
                 GameController.getInstance().getGamePhase() == GamePhase.MAIN_PHASE2) {
             GameController.getInstance().getGameBoard().showBoard();
         }
+        if(GameController.getInstance().isGameFinished()){
+            GameController.getInstance().finishGame();
+        }
     }
 
     private void selectPlayerCard(Matcher matcher) {

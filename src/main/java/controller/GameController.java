@@ -4,7 +4,6 @@ import controller.exceptions.*;
 import model.*;
 import model.card.*;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -412,5 +411,20 @@ public class GameController {
     public void cheater(String cardName) {
         Card card = Card.getCardByName(cardName);
         gameBoard.addCardCheatToHand(card,getCurrentPlayerNumber());
+    }
+
+    public boolean isGameFinished() {
+        return playerOneLp <= 0 || playerTwoLp <= 0;
+    }
+
+    public void finishGame() {
+        if (playerOneLp <= 0){
+            playerOne.increaseLoseRate();
+            playerTwo.increaseWinRate();
+            //TODO: if game is 3 taei bayad game jadid start kone
+        }else{
+            playerTwo.increaseLoseRate();
+            playerOne.increaseWinRate();
+        }
     }
 }
