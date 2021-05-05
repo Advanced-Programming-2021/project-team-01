@@ -27,14 +27,14 @@ public class ZoneSlot {
 
     public int getAttack(){
         if (card instanceof MonsterCard){
-            return getAttack();
+            return ((MonsterCard) card).getAttack();
         }
         return 0;
     }
 
     public int getDefence(){
         if (card instanceof MonsterCard){
-            return getDefence();
+            return ((MonsterCard) card).getDefense();
         }
         return 0;
     }
