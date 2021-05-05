@@ -49,7 +49,7 @@ public class EffectController {
     }
 
     private void equipFiend() throws Exception {
-        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0) {
+        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0){
             throw new Exception("no monster card");
         }
         int indexOfMonster = Integer.parseInt(GameView.prompt("please choose a monster!"));
@@ -82,7 +82,7 @@ public class EffectController {
             throw new Exception("no monster card");
         }
         int indexOfMonster = Integer.parseInt(GameView.prompt("please choose a monster!"));
-        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER, indexOfMonster, gameController.getCurrentPlayerNumber());
+        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER,indexOfMonster, gameController.getCurrentPlayerNumber());
         if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
         zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
         board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
@@ -197,6 +197,16 @@ public class EffectController {
             return -400;
 
         return 0;
+    }
+
+    public int unitedWeStand(){
+        int counter = 0;
+        for (int i = 1; i <= 5; i++){
+            if (!board.getZoneSlotByLocation(CardLocation.MONSTER,i, gameController.getCurrentPlayerNumber()).isHidden()){
+                counter++;
+            }
+        }
+        return 800 * counter;
     }
 
 

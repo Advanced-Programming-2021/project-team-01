@@ -317,6 +317,7 @@ public class GameController {
         return effectController;
     }
 
+
     public String attack(int number) throws CardNotSelected, NotMonsterCard, NotAllowedAction, AlreadyAttacked, NoCardToAttack {
         return attackController.attack(number);
     }

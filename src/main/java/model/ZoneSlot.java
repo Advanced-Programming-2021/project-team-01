@@ -33,11 +33,11 @@ public class ZoneSlot {
             if (equippedCard != null) {
                 baseAttack += equipAttackBooster();
             }
-
             return baseAttack + GameController.getInstance().getEffectController().fieldAttackBooster();
         }
         return 0;
     }
+
 
     private int equipAttackBooster() {
         if (Spell.getSpellByName(equippedCard.getName()) == Spell.BLACK_PENDANT) {
@@ -46,10 +46,23 @@ public class ZoneSlot {
             return 400;
         } else if (Spell.getSpellByName(equippedCard.getName()) == Spell.MAGNUM_SHIELD) {
             if (!isDefending) {
-                return ((MonsterCard) card).getAttack();
+                return ((MonsterCard) card).getDefense();
             }
         } else if (Spell.getSpellByName(equippedCard.getName()) == Spell.UNITED_WE_STAND) {
-            return GameController.getInstance().getEffectController();
+            return GameController.getInstance().getEffectController().unitedWeStand();
+        }
+        return 0;
+    }
+
+    private int equipDefenceBooster() {
+        if (Spell.getSpellByName(equippedCard.getName()) == Spell.UNITED_WE_STAND) {
+            return GameController.getInstance().getEffectController().unitedWeStand();
+        } else if (Spell.getSpellByName(equippedCard.getName()) == Spell.MAGNUM_SHIELD) {
+            if (isDefending) {
+                return ((MonsterCard) card).getAttack();
+            }
+        } else if (Spell.getSpellByName(equippedCard.getName()) == Spell.SWORD_OF_DESTRUCTION) {
+            return -200;
         }
         return 0;
     }
@@ -57,7 +70,10 @@ public class ZoneSlot {
     public int getDefence() {
         if (card instanceof MonsterCard) {
             int baseDefence = ((MonsterCard) card).getDefense();
-            return baseDefence+GameController.getInstance().getEffectController().fieldDefenceBooster();
+            if (equippedCard != null) {
+                baseDefence += equipDefenceBooster();
+            }
+            return baseDefence + GameController.getInstance().getEffectController().fieldDefenceBooster();
         }
         return 0;
     }
