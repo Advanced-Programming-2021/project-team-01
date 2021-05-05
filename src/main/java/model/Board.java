@@ -255,6 +255,8 @@ public class Board {
             for (int i = 1; i <= 5; i++) {
                 if (playerOneMonsterZone[i].getCard() == null) {
                     playerOneMonsterZone[i].setCard(monsterCard);
+                    playerOneMonsterZone[i].setHidden(false);
+                    playerOneMonsterZone[i].setDefending(false);
                     playerOneHand.remove(monsterCard);
                     return;
                 }
@@ -263,6 +265,8 @@ public class Board {
             for (int i = 1; i <= 5; i++) {
                 if (playerTwoMonsterZone[i].getCard() == null) {
                     playerTwoMonsterZone[i].setCard(monsterCard);
+                    playerTwoMonsterZone[i].setHidden(false);
+                    playerTwoMonsterZone[i].setDefending(false);
                     playerTwoHand.remove(monsterCard);
                     return;
                 }

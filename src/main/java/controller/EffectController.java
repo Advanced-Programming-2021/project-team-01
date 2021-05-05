@@ -5,7 +5,6 @@ import controller.exceptions.MonsterZoneFull;
 import model.Board;
 import model.ZoneSlot;
 import model.card.Card;
-import model.card.CardLocation;
 import view.menu.GameView;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class EffectController {
         }else if (spell == Spell.RAIGEKI){
             raigeki();
         }else if (spell == Spell.TERRAFORMING){
-            terraforming();
+
         }
 
     }
@@ -63,7 +62,7 @@ public class EffectController {
         board.addCardFromDeckToHand(playerNumber);
     }
 
-    protected void Raigeki() {
+    protected void raigeki() {
         if (gameController.getCurrentPlayerNumber() == 1) {
             ZoneSlot[] zoneSlot = gameController.gameBoard.getPlayerTwoMonsterZone();
             for(int i = 1; i < 6; i++) {
