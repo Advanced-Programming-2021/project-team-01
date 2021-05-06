@@ -129,7 +129,7 @@ public class AttackController {
         }
         MonsterCard attackingCard = (MonsterCard) gameController.selectedCard.getCard();
         ZoneSlot zoneSlotAttacker = gameController.gameBoard.getZoneSlotByCard(attackingCard);
-        gameController.decreasePlayerLP(gameController.getOpponentLp(), zoneSlotAttacker.getAttack());
+        gameController.decreasePlayerLP(gameController.getOpponentPlayerNumber(), zoneSlotAttacker.getAttack());
         attackedCards.add(attackingCard);
         return String.format("you opponent receives %d battle damage", zoneSlotAttacker.getAttack());
     }
