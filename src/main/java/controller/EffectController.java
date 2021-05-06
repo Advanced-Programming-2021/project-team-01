@@ -47,6 +47,10 @@ public class EffectController {
             darkHole();
         } else if (spell == Spell.HARPIES_FEATHER_DUSTER) {
             harpiesFeatherDuster();
+        } else if (spell == Spell.MYSTICAL_SPACE_TYPHOON) {
+            mysticalSpaceTyphoon();
+        } else if (spell == Spell.TWIN_TWISTERS) {
+            twinTwisters();
         }
 
     }
@@ -286,20 +290,24 @@ public class EffectController {
     }
 
     public void darkHole() {
-        ZoneSlot[] zoneSlot = board.getPlayerTwoMonsterZone();
-        for (int i = 1; i < 6; i++) {
-            if (zoneSlot[i].getCard() != null) {
-                board.sendCardFromMonsterZoneToGraveyard(i, 2);
-                zoneSlot[i].setHidden(false);
-                zoneSlot[i].setDefending(false);
+        ZoneSlot[] zoneSlot;
+        if (gameController.getCurrentPlayerNumber() == 1) {
+            zoneSlot = board.getPlayerTwoMonsterZone();
+            for (int i = 1; i < 6; i++) {
+                if (zoneSlot[i].getCard() != null) {
+                    board.sendCardFromMonsterZoneToGraveyard(i, 2);
+                    zoneSlot[i].setHidden(false);
+                    zoneSlot[i].setDefending(false);
+                }
             }
-        }
-        zoneSlot = board.getPlayerOneMonsterZone();
-        for (int i = 1; i < 6; i++) {
-            if (zoneSlot[i].getCard() != null) {
-                board.sendCardFromMonsterZoneToGraveyard(i, 1);
-                zoneSlot[i].setHidden(false);
-                zoneSlot[i].setDefending(false);
+        } else {
+            zoneSlot = board.getPlayerOneMonsterZone();
+            for (int i = 1; i < 6; i++) {
+                if (zoneSlot[i].getCard() != null) {
+                    board.sendCardFromMonsterZoneToGraveyard(i, 1);
+                    zoneSlot[i].setHidden(false);
+                    zoneSlot[i].setDefending(false);
+                }
             }
         }
         board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
@@ -315,9 +323,51 @@ public class EffectController {
         }
         board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
-}
 
-//Harpies feather dust, twin twister, mystical space typhoon
+    public void twinTwisters() throws Exception {
+        String discardCard = GameView.prompt("Choose a card number from your hand to discard : ");
+        if (Integer.parseInt(discardCard) < 1 ||
+                Integer.parseInt(discardCard) > board.getNumberOfCardsInHand(gameController.getCurrentPlayerNumber()))
+            throw new Exception("Invalid card number");
+        ZoneSlot[] zoneSlots = board.getPlayerSpellZone(gameController.getOpponentPlayerNumber());
+        ArrayList<Card> cards = new ArrayList<>();
+        for (int i = 1; i < 6; i++) {
+            if (zoneSlots[i].getCard() != null)
+                cards.add(zoneSlots[i].getCard());
+        }
+        GameView.printListOfCard(cards);
+        String firstCardNum = GameView.prompt("Choose one valid spell or trap card : ");
+        if (!(firstCardNum.equals("1") || firstCardNum.equals("2") ||
+            firstCardNum.equals("3") || firstCardNum.equals("4") || firstCardNum.equals("5")))
+            throw new Exception("Not valid number");
+        if (zoneSlots[Integer.parseInt(firstCardNum)].getCard() == null)
+            throw new Exception("Empty zone");
+        String response = GameView.prompt("Do you want to choose the second card? (yes/no)");
+        if (!response.equals("no") && !response.equals("yes"))
+            throw new Exception("Invalid answer");
+        if (response.equals("yes")) {
+            cards.remove(Integer.parseInt(firstCardNum));
+            GameView.printListOfCard(cards);
+            String secondCardNum = GameView.prompt("Choose second card : ");
+            if (!(firstCardNum.equals("1") || firstCardNum.equals("2") ||
+                    firstCardNum.equals("3") || firstCardNum.equals("4") || firstCardNum.equals("5")))
+                throw new Exception("Not valid number");
+            if (zoneSlots[Integer.parseInt(firstCardNum)].getCard() == null)
+                throw new Exception("Empty zone");
+            board.sendCardFromSpellZoneToGraveyard(gameController.getOpponentPlayerNumber(), zoneSlots[Integer.parseInt(firstCardNum)].getCard());
+            board.sendCardFromSpellZoneToGraveyard(gameController.getOpponentPlayerNumber(), zoneSlots[Integer.parseInt(secondCardNum)].getCard());
+        } else {
+            board.sendCardFromSpellZoneToGraveyard(gameController.getOpponentPlayerNumber(), zoneSlots[Integer.parseInt(firstCardNum)].getCard());
+        }
+        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+        board.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(),
+                board.getCard("hand", gameController.getCurrentPlayerNumber(), Integer.parseInt(discardCard)));
+    }
+
+    public void mysticalSpaceTyphoon() {
+
+    }
+}
 
 /*
     1- battle ox

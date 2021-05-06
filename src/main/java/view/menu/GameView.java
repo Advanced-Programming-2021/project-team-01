@@ -92,7 +92,7 @@ public class GameView {
     private void deselectCard() {
         try {
             GameController.getInstance().deselect();
-            System.out.println("card selected");
+            System.out.println("card deselected");
         } catch (Exception exp) {
             System.err.println(exp.getMessage());
         }

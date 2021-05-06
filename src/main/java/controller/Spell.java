@@ -14,7 +14,9 @@ public enum Spell {
     MAGNUM_SHIELD("Magnum Shield"),
     SWORD_OF_DESTRUCTION("Sword of dark destruction"),
     DARK_HOLE("Dark Hole"),
-    HARPIES_FEATHER_DUSTER("Harpie's Feather Duster");
+    HARPIES_FEATHER_DUSTER("Harpie's Feather Duster"),
+    MYSTICAL_SPACE_TYPHOON("Mystical space typhoon"),
+    TWIN_TWISTERS("Twin Twisters");
     String value;
 
     Spell(String value) {
