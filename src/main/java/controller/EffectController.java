@@ -11,6 +11,8 @@ import view.menu.GameView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//DarkHole,Harpies feather dust, twin twister, mystical space typhoon
+
 public class EffectController {
     GameController gameController;
     Board board;
@@ -43,6 +45,8 @@ public class EffectController {
             equipWarrior();
         } else if (spell == Spell.SWORD_OF_DESTRUCTION) {
             equipFiend();
+        } else if (spell == Spell.DARK_HOLE) {
+            darkHole();
         }
 
     }
@@ -122,27 +126,25 @@ public class EffectController {
 
     protected void raigeki() {
         if (gameController.getCurrentPlayerNumber() == 1) {
-            ZoneSlot[] zoneSlot = gameController.gameBoard.getPlayerTwoMonsterZone();
+            ZoneSlot[] zoneSlot = board.getPlayerTwoMonsterZone();
             for (int i = 1; i < 6; i++) {
                 if (zoneSlot[i].getCard() != null) {
-                    gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(i, gameController.getOpponentPlayerNumber());
-                    zoneSlot[i].setCard(null);
+                    board.sendCardFromMonsterZoneToGraveyard(i, gameController.getOpponentPlayerNumber());
                     zoneSlot[i].setHidden(false);
                     zoneSlot[i].setDefending(false);
                 }
             }
-            gameController.gameBoard.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+            board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
         } else {
-            ZoneSlot[] zoneSlot = gameController.gameBoard.getPlayerOneMonsterZone();
+            ZoneSlot[] zoneSlot = board.getPlayerOneMonsterZone();
             for (int i = 1; i < 6; i++) {
                 if (zoneSlot[i].getCard() != null) {
-                    gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(i, gameController.getOpponentPlayerNumber());
-                    zoneSlot[i].setCard(null);
+                    board.sendCardFromMonsterZoneToGraveyard(i, gameController.getOpponentPlayerNumber());
                     zoneSlot[i].setHidden(false);
                     zoneSlot[i].setDefending(false);
                 }
             }
-            gameController.gameBoard.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+            board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
         }
     }
 
@@ -283,7 +285,25 @@ public class EffectController {
         return 800 * counter;
     }
 
-
+    public void darkHole() {
+        ZoneSlot[] zoneSlot = board.getPlayerTwoMonsterZone();
+        for (int i = 1; i < 6; i++) {
+            if (zoneSlot[i].getCard() != null) {
+                board.sendCardFromMonsterZoneToGraveyard(i, 2);
+                zoneSlot[i].setHidden(false);
+                zoneSlot[i].setDefending(false);
+            }
+        }
+        zoneSlot = board.getPlayerOneMonsterZone();
+        for (int i = 1; i < 6; i++) {
+            if (zoneSlot[i].getCard() != null) {
+                board.sendCardFromMonsterZoneToGraveyard(i, 1);
+                zoneSlot[i].setHidden(false);
+                zoneSlot[i].setDefending(false);
+            }
+        }
+        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+    }
 }
 
 /*

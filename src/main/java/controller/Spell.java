@@ -12,7 +12,8 @@ public enum Spell {
     BLACK_PENDANT("Black Pendant"),
     UNITED_WE_STAND("United We Stand"),
     MAGNUM_SHIELD("Magnum Shield"),
-    SWORD_OF_DESTRUCTION("Sword of dark destruction");
+    SWORD_OF_DESTRUCTION("Sword of dark destruction"),
+    DARK_HOLE("Dark Hole");
     String value;
 
     Spell(String value) {
