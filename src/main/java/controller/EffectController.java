@@ -383,6 +383,7 @@ public class EffectController {
         if (zoneSlots[number].getCard() == null)
             throw new Exception("Empty zone");
         board.sendCardFromSpellZoneToGraveyard(gameController.getOpponentPlayerNumber(), zoneSlots[number].getCard());
+        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
 }
 
