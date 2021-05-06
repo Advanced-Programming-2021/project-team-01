@@ -13,7 +13,8 @@ public enum Spell {
     UNITED_WE_STAND("United We Stand"),
     MAGNUM_SHIELD("Magnum Shield"),
     SWORD_OF_DESTRUCTION("Sword of dark destruction"),
-    DARK_HOLE("Dark Hole");
+    DARK_HOLE("Dark Hole"),
+    HARPIES_FEATHER_DUSTER("Harpie's Feather Duster");
     String value;
 
     Spell(String value) {

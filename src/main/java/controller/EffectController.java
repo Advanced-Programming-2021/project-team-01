@@ -11,8 +11,6 @@ import view.menu.GameView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//DarkHole,Harpies feather dust, twin twister, mystical space typhoon
-
 public class EffectController {
     GameController gameController;
     Board board;
@@ -47,6 +45,8 @@ public class EffectController {
             equipFiend();
         } else if (spell == Spell.DARK_HOLE) {
             darkHole();
+        } else if (spell == Spell.HARPIES_FEATHER_DUSTER) {
+            harpiesFeatherDuster();
         }
 
     }
@@ -304,7 +304,20 @@ public class EffectController {
         }
         board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
     }
+
+    public void harpiesFeatherDuster() {
+        ZoneSlot[] zoneSlot = board.getPlayerSpellZone(gameController.getOpponentPlayerNumber());
+        for (int i = 1; i < 6; i++) {
+            if (zoneSlot[i].getCard() != null) {
+                board.sendCardFromSpellZoneToGraveyard(i, zoneSlot[i].getCard());
+                zoneSlot[i].setHidden(false);
+            }
+        }
+        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+    }
 }
+
+//Harpies feather dust, twin twister, mystical space typhoon
 
 /*
     1- battle ox

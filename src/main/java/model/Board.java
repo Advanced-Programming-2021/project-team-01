@@ -616,12 +616,8 @@ public class Board {
         }
     }
 
-    public ZoneSlot getPlayerOneFieldZone() {
-        return playerOneFieldZone;
-    }
-
-    public ZoneSlot getPlayerTwoFieldZone() {
-        return playerTwoFieldZone;
+    public ZoneSlot[] getPlayerSpellZone(int playerNum) {
+        return playerNum == 1 ? playerOneSpellZone : playerTwoSpellZone;
     }
 
     public ZoneSlot getPlayerFieldZone(int player) {
