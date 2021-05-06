@@ -196,9 +196,11 @@ public class EffectController {
         if (spell == Spell.CLOSED_FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.BEAST) ||
                 monsterCard.getMonsterTypes().contains(MonsterType.BEAST_WARRIOR))) {
             if (gameController.getCurrentPlayerNumber() == 1) {
-                return 100 * board.getPlayerOneGraveYard().size();
+                if (board.getOwnerOfCard(monsterCard) == 1)
+                    return 100 * board.getPlayerOneGraveYard().size();
             } else {
-                return 100 * board.getPlayerTwoGraveYard().size();
+                if (board.getOwnerOfCard(monsterCard) == 2)
+                    return 100 * board.getPlayerTwoGraveYard().size();
             }
         }
         if (spell == Spell.YAMI) {
