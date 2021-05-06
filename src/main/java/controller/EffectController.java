@@ -282,7 +282,8 @@ public class EffectController {
     public int unitedWeStand() {
         int counter = 0;
         for (int i = 1; i <= 5; i++) {
-            if (!board.getZoneSlotByLocation(CardLocation.MONSTER, i, gameController.getCurrentPlayerNumber()).isHidden()) {
+            if (!board.getZoneSlotByLocation(CardLocation.MONSTER, i, gameController.getCurrentPlayerNumber()).isHidden() &&
+            board.getZoneSlotByLocation(CardLocation.MONSTER, i , gameController.getCurrentPlayerNumber()).getCard() == null) {
                 counter++;
             }
         }
@@ -337,8 +338,9 @@ public class EffectController {
         }
         GameView.printListOfCard(cards);
         String firstCardNum = GameView.prompt("Choose one valid spell or trap card : ");
-        if (!(firstCardNum.equals("1") || firstCardNum.equals("2") ||
-            firstCardNum.equals("3") || firstCardNum.equals("4") || firstCardNum.equals("5")))
+        boolean condition = !(firstCardNum.equals("1") || firstCardNum.equals("2") ||
+                firstCardNum.equals("3") || firstCardNum.equals("4") || firstCardNum.equals("5"));
+        if (condition)
             throw new Exception("Not valid number");
         if (zoneSlots[Integer.parseInt(firstCardNum)].getCard() == null)
             throw new Exception("Empty zone");
@@ -349,8 +351,8 @@ public class EffectController {
             cards.remove(Integer.parseInt(firstCardNum));
             GameView.printListOfCard(cards);
             String secondCardNum = GameView.prompt("Choose second card : ");
-            if (!(firstCardNum.equals("1") || firstCardNum.equals("2") ||
-                    firstCardNum.equals("3") || firstCardNum.equals("4") || firstCardNum.equals("5")))
+            if (!(secondCardNum.equals("1") || secondCardNum.equals("2") ||
+                    secondCardNum.equals("3") || secondCardNum.equals("4") || secondCardNum.equals("5")))
                 throw new Exception("Not valid number");
             if (zoneSlots[Integer.parseInt(firstCardNum)].getCard() == null)
                 throw new Exception("Empty zone");
