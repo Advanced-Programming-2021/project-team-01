@@ -329,6 +329,12 @@ public class GameController {
     }
 
     public void activateEffect() throws PromptException, Exception {
+        if (selectedCard.getCard() instanceof SpellCard) {
+            SpellCard card = (SpellCard) selectedCard.getCard();
+            if (!(card.getProperty() == Property.FIELD || card.getProperty() == Property.EQUIP) && selectedCard.getCardLocation() == CardLocation.HAND) {
+                gameBoard.setSpellFaceUp(getCurrentPlayerNumber(), selectedCard.getCard());
+            }
+        }
         effectController.run(Spell.getSpellByName(selectedCard.getCard().getName()));
     }
 
