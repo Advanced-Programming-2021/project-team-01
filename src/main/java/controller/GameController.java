@@ -3,6 +3,7 @@ package controller;
 import controller.exceptions.*;
 import model.*;
 import model.card.*;
+import model.commands.PotOfGreed;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,6 +29,45 @@ public class GameController {
 
     }
 
+    public static Player getPlayerOne() {
+        return playerOne;
+    }
+
+    public static Player getPlayerTwo() {
+        return playerTwo;
+    }
+
+    public PhaseController getPhaseController() {
+        return phaseController;
+    }
+
+    public AttackController getAttackController() {
+        return attackController;
+    }
+
+    public int getPlayerOneLp() {
+        return playerOneLp;
+    }
+
+    public int getPlayerTwoLp() {
+        return playerTwoLp;
+    }
+
+    public boolean isAI() {
+        return isAI;
+    }
+
+    public int getRounds() {
+        return rounds;
+    }
+
+    public SelectedCard getSelectedCard() {
+        return selectedCard;
+    }
+
+    public ArrayList<Card> getChangedPositionCards() {
+        return changedPositionCards;
+    }
 
     public Board getGameBoard() {
         return gameBoard;
@@ -101,6 +141,14 @@ public class GameController {
         effectController = new EffectController(this);
         attackController = new AttackController(this);
         phaseController.setGamePhase(GamePhase.DRAW_PHASE);
+        setup(playerOneDeck);
+        setup(playerTwoDeck);
+    }
+
+    private void setup(Deck deck){
+        for (Card card : deck.getMainDeck()) {
+            card.addCommandsToCard();
+        }
     }
 
     private int tossCoin() {
@@ -335,7 +383,7 @@ public class GameController {
                 gameBoard.setSpellFaceUp(getCurrentPlayerNumber(), selectedCard.getCard());
             }
         }
-        effectController.run(Spell.getSpellByName(selectedCard.getCard().getName()));
+        selectedCard.getCard().doActions();
     }
 
     public void ritualSummon() {
@@ -449,6 +497,7 @@ public class GameController {
     public void cheater(String cardName) {
         Card card = Card.getCardByName(cardName);
         if (card == null) throw new RuntimeException();
+        card.addCommandsToCard();
         gameBoard.addCardCheatToHand(card, getCurrentPlayerNumber());
     }
 

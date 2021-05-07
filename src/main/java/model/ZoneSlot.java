@@ -39,8 +39,6 @@ public class ZoneSlot {
         return 0;
     }
 
-
-
     private int equipAttackBooster() {
         if (Spell.getSpellByName(equippedCard.getName()) == Spell.BLACK_PENDANT) {
             return 500;
