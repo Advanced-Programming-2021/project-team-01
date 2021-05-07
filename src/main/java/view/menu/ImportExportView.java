@@ -1,14 +1,18 @@
 package view.menu;
 
 import com.google.gson.Gson;
+import controller.ImportExportController;
+import controller.exceptions.CardNameNotExists;
 import controller.exceptions.InvalidMenuNavigation;
 import view.ConsoleCommands;
 import view.Menu;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.regex.Matcher;
 
 public class ImportExportView {
-    public void run(String input) {
+    public void run(String input) throws CardNameNotExists, IOException {
         Matcher matcher;
         if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.MENU_ENTER, input)) != null) {
             try {
@@ -28,12 +32,12 @@ public class ImportExportView {
             System.out.println("invalid command");
     }
 
-    private void importCard(Matcher matcher) {
-
+    private void importCard(Matcher matcher) throws IOException {
+        ImportExportController.importCard(matcher.group("cardName"));
     }
 
-    private void exportCard(Matcher matcher) {
-
+    private void exportCard(Matcher matcher) throws CardNameNotExists, IOException {
+        ImportExportController.exportCard(matcher.group("cardName"));
     }
 
     private void enterMenu(Matcher matcher) throws InvalidMenuNavigation {
@@ -50,9 +54,5 @@ public class ImportExportView {
 
     private void showCurrentMenu() {
         System.out.println("Import/Export Menu");
-    }
-
-    private Gson gsonBuilder(Matcher matcher) {
-        return null;
     }
 }

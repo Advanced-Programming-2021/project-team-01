@@ -1,14 +1,16 @@
 package view.menu;
 
+import controller.exceptions.CardNameNotExists;
 import view.Menu;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class HandleRequestType {
     public static Scanner scanner = new Scanner(System.in);
     public static Menu currentMenu = Menu.REGISTER_MENU;
 
-    public void start() {
+    public void start() throws IOException, CardNameNotExists {
         RegisterView registerView = new RegisterView();
         ProfileView profileView = new ProfileView();
         ScoreBoardView scoreBoardView = new ScoreBoardView();
