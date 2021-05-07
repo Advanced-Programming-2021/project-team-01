@@ -10,4 +10,8 @@ public class FieldCard extends Command implements Activate{
         board = gameController.getGameBoard();
         board.setCardFromHandToFieldZone(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
     }
+    @Override
+    public void runContinuous() throws Exception {
+
+    }
 }

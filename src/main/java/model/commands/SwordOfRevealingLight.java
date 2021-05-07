@@ -6,5 +6,8 @@ public class SwordOfRevealingLight implements Activate{
     public void run() {
 
     }
+    @Override
+    public void runContinuous() throws Exception {
 
+    }
 }

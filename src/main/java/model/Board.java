@@ -271,7 +271,7 @@ public class Board {
         return playerOneHand.contains(card) || playerTwoHand.contains(card);
     }
 
-    public void summonCard(MonsterCard monsterCard, int player) throws MonsterZoneFull, AlreadySummonedError {
+    public void summonCard(MonsterCard monsterCard, int player) throws Exception {
         if (GameController.getInstance().isSummoned()) {
             throw new AlreadySummonedError();
         }
@@ -645,8 +645,6 @@ public class Board {
     }
 
     public void setCardFromHandToFieldZone(int player, Card card) {
-//        if (card == playerOneFieldZone.getCard() || playerTwoFieldZone.getCard() == card) //TODO : inaro pak konid,clone bznid
-//            return;
         if (player == 1) {
             if (playerOneFieldZone.getCard() != null)
                 playerOneGraveYard.add(playerOneFieldZone.getCard());
@@ -659,4 +657,66 @@ public class Board {
             playerTwoHand.remove(card);
         }
     }
+
+    public ArrayList<SpellCard> faceUpSpells() {
+        ArrayList<SpellCard> spellCards = new ArrayList<>();
+        for (int i = 1; i < 6; i++) {
+            if (!playerOneSpellZone[i].isHidden())
+                spellCards.add((SpellCard) playerOneSpellZone[i].getCard());
+            if (!playerTwoSpellZone[i].isHidden())
+                spellCards.add((SpellCard) playerTwoSpellZone[i].getCard());
+        }
+        return spellCards;
+    }
+
+    public ArrayList<Card> getCardInMonsterZone(int player) {
+        ArrayList<Card> monsterCards = new ArrayList<>();
+        if (player == 1) {
+            for (int i = 1; i < 6; i++) {
+                if (playerOneMonsterZone[i].getCard() != null)
+                    monsterCards.add(playerOneMonsterZone[i].getCard());
+            }
+        } else if (player == 2) {
+            for (int i = 1; i < 6; i++) {
+                if (playerTwoMonsterZone[i].getCard() != null)
+                    monsterCards.add(playerTwoMonsterZone[i].getCard());
+            }
+        }
+        return monsterCards;
+    }
+
+    public void sendCardFromMonsterZoneToAnother(Card card, int fromPlayer, int toPlayer) {
+        if (fromPlayer == 1) {
+            for (int i = 1; i < 6; i++) {
+                if (playerOneMonsterZone[i].getCard() == card) {
+                    playerOneMonsterZone[i].setCard(null);
+                    for (int j = 1; j < 6; j++) {
+                        if (playerTwoMonsterZone[i].getCard() == null) {
+                            playerTwoMonsterZone[i].setCard(card);
+                            playerTwoMonsterZone[i].setHidden(false);
+                            playerTwoMonsterZone[i].setDefending(false);
+                            return;
+                        }
+                    }
+                }
+            }
+        } else if (fromPlayer == 2) {
+            for (int i = 1; i < 6; i++) {
+                if (playerTwoMonsterZone[i].getCard() == card) {
+                    playerTwoMonsterZone[i].setCard(null);
+                    for (int j = 1; j < 6; j++) {
+                        if (playerOneMonsterZone[i].getCard() == null) {
+                            playerOneMonsterZone[i].setCard(card);
+                            playerOneMonsterZone[i].setHidden(false);
+                            playerOneMonsterZone[i].setDefending(false);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
 }

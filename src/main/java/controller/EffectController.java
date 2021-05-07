@@ -30,8 +30,6 @@ public class EffectController {
             potOfGreed();
         else if (spell == Spell.RAIGEKI)
             raigeki();
-        else if (spell == Spell.TERRAFORMING)
-            terraforming();
         else if (spell == Spell.UMIIRUKA || spell == Spell.CLOSED_FOREST ||
                 spell == Spell.FOREST || spell == Spell.YAMI)
             fieldCard();
@@ -152,7 +150,11 @@ public class EffectController {
         }
     }
 
-    protected void terraforming() throws NoFieldSpellInDeck {
+    public void doEffects() throws Exception {
+        ArrayList<SpellCard> spellCards = board.faceUpSpells();
+        for (SpellCard spellCard : spellCards) {
+            spellCard.doContinuousActions();
+        }
 
     }
 

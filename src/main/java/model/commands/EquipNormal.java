@@ -19,4 +19,8 @@ public class EquipNormal extends Command implements Activate {
         zoneSlot.setEquippedCard(gameController.getSelectedCard().getCard());
         board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
     }
+    @Override
+    public void runContinuous() throws Exception {
+
+    }
 }

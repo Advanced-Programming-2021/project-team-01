@@ -19,6 +19,7 @@ public class ZoneSlot {
         equippedCard = null;
     }
 
+
     public void setEquippedCard(Card card) {
         this.equippedCard = card;
     }

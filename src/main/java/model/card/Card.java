@@ -28,6 +28,12 @@ public abstract class Card {
         }
     }
 
+    public void doContinuousActions() throws Exception {
+        for (Command command : commands) {
+            command.runContinuous();
+        }
+    }
+
     public void addCommands(Command command) {
         if (commands == null){
             commands = new ArrayList<>();
