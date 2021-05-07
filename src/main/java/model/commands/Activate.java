@@ -1,6 +1,7 @@
 package model.commands;
 
-import controller.exceptions.NoFieldSpellInDeck;
+import controller.exceptions.InvalidCommandException;
+import controller.exceptions.MonsterZoneFull;
 
 public interface Activate {
     void run() throws Exception;
