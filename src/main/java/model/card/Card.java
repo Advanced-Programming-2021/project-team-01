@@ -1,6 +1,7 @@
 package model.card;
 
 import com.google.gson.annotations.Expose;
+import controller.Spell;
 import model.commands.Command;
 import model.commands.PotOfGreed;
 
@@ -63,7 +64,7 @@ public abstract class Card {
     }
 
     public void addCommandsToCard(){
-        if (this.getName().equals("Pot of Greed")){
+        if (this.getName().equals(Spell.POT_OF_GREED.toString())){
             addCommands(new PotOfGreed());
         }
     }
