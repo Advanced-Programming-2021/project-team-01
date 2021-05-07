@@ -626,7 +626,7 @@ public class Board {
         return null;
     }
 
-    public int getOwnerOfCard(Card card){
+    public int getOwnerOfCard(Card card) {
         if (card == playerOneFieldZone.getCard())
             return 1;
         if (card == playerTwoFieldZone.getCard())
@@ -645,13 +645,14 @@ public class Board {
     }
 
     public void setCardFromHandToFieldZone(int player, Card card) {
+//        if (card == playerOneFieldZone.getCard() || playerTwoFieldZone.getCard() == card) //TODO : inaro pak konid,clone bznid
+//            return;
         if (player == 1) {
             if (playerOneFieldZone.getCard() != null)
                 playerOneGraveYard.add(playerOneFieldZone.getCard());
             playerOneFieldZone.setCard(card);
             playerOneHand.remove(card);
-        }
-        if (player == 2) {
+        } else if (player == 2) {
             if (playerTwoFieldZone.getCard() != null)
                 playerTwoGraveYard.add(playerTwoFieldZone.getCard());
             playerTwoFieldZone.setCard(card);

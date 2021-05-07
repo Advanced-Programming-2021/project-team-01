@@ -1,6 +1,6 @@
 package model.card;
 
-public class SpellCard extends Card{
+public class SpellCard extends Card {
     Property property;
     //fixme: status is unclear
 
@@ -13,5 +13,14 @@ public class SpellCard extends Card{
         super(name, description, price);
         super.type = "spell";
         this.property = property;
+    }
+
+    //    @Override
+//    public Object clone() throws CloneNotSupportedException {
+//        SpellCard spellCard =  new SpellCard(this.getName(), this.getDescription(), this.getPrice(), this.property);
+//        spellCard.set
+//    }
+    public Object clone() throws CloneNotSupportedException {
+        return new SpellCard(this.getName(), this.getDescription(), this.getPrice(), this.property);
     }
 }

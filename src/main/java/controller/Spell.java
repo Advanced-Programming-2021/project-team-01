@@ -29,4 +29,9 @@ public enum Spell {
                 return spell;
         return null;
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

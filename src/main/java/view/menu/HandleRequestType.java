@@ -10,7 +10,7 @@ public class HandleRequestType {
     public static Scanner scanner = new Scanner(System.in);
     public static Menu currentMenu = Menu.REGISTER_MENU;
 
-    public void start() throws IOException, CardNameNotExists {
+    public void start() throws Exception {
         RegisterView registerView = new RegisterView();
         ProfileView profileView = new ProfileView();
         ScoreBoardView scoreBoardView = new ScoreBoardView();

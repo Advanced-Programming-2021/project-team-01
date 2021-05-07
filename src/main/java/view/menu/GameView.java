@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 
 public class GameView {
 
-    public void run(String input) {
+    public void run(String input) throws Exception {
         Matcher matcher;
         if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SELECT_PLAYER_CARD, input)) != null) {
             selectPlayerCard(matcher);

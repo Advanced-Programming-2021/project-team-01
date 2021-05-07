@@ -52,4 +52,11 @@ public class MonsterCard extends Card {
     public int getLevel() {
         return level;
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return new MonsterCard(getName(),getDescription(),getPrice(),getAttack(),getDefense(),getCardType(),
+                getMonsterTypes(),getAttribute(),getLevel());
+    }
 }
+

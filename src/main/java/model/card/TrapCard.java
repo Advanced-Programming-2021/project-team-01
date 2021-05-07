@@ -10,4 +10,9 @@ public class TrapCard extends Card{
         super.type = "trap";
         this.property = property;
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return new TrapCard(this.getName(), this.getDescription(), this.getPrice(), this.property);
+    }
 }

@@ -145,7 +145,7 @@ public class GameController {
         setup(playerTwoDeck);
     }
 
-    private void setup(Deck deck){
+    private void setup(Deck deck) {
         for (Card card : deck.getMainDeck()) {
             card.addCommandsToCard();
         }
@@ -494,11 +494,20 @@ public class GameController {
         attackController.attackedCards.clear();
     }
 
-    public void cheater(String cardName) {
+    public void cheater(String cardName) throws Exception {
         Card card = Card.getCardByName(cardName);
         if (card == null) throw new RuntimeException();
-        card.addCommandsToCard();
-        gameBoard.addCardCheatToHand(card, getCurrentPlayerNumber());
+        Card newCard;
+        if (card instanceof MonsterCard) {
+            newCard = (Card) ((MonsterCard) card).clone();
+        } else if (card instanceof SpellCard)
+            newCard = (Card) ((SpellCard) card).clone();
+        else if (card instanceof TrapCard)
+            newCard = (Card) ((TrapCard) card).clone();
+        else
+            throw new Exception("HAHAHA");
+        newCard.addCommandsToCard();
+        gameBoard.addCardCheatToHand(newCard, getCurrentPlayerNumber());
     }
 
     public boolean isGameFinished() {

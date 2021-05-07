@@ -1,5 +1,7 @@
 package model.commands;
 
+import controller.exceptions.NoFieldSpellInDeck;
+
 public interface Activate {
-    void run();
+    void run() throws Exception;
 }
