@@ -2,7 +2,10 @@ package model.card;
 
 import com.google.gson.annotations.Expose;
 import controller.Spell;
+import controller.exceptions.InvalidCommandException;
+import controller.exceptions.MonsterZoneFull;
 import model.commands.Command;
+import model.commands.MonsterReborn;
 import model.commands.PotOfGreed;
 
 import java.util.ArrayList;
@@ -23,7 +26,7 @@ public abstract class Card {
         this.price = price;
     }
 
-    public void doActions(){
+    public void doActions() throws Exception{
         for (Command command : commands) {
             command.run();
         }
@@ -66,6 +69,8 @@ public abstract class Card {
     public void addCommandsToCard(){
         if (this.getName().equals(Spell.POT_OF_GREED.toString())){
             addCommands(new PotOfGreed());
+        }else if (this.getName().equals(Spell.MONSTER_REBORN.toString())){
+            addCommands(new MonsterReborn());
         }
     }
 }
