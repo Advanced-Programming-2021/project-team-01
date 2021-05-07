@@ -73,9 +73,9 @@ public abstract class Card {
             addCommands(new MonsterReborn());
         } else if (this.getName().equals(Spell.TWIN_TWISTERS.toString())) {
             addCommands(new TwinTwisters());
-        } else if (this.getName().equals(Spell.HARPIES_FEATHER_DUSTER)) {
+        } else if (this.getName().equals(Spell.HARPIES_FEATHER_DUSTER.toString())) {
             addCommands(new HarpiesFeatherDuster());
-        } else if (this.getName().equals(Spell.DARK_HOLE)) {
+        } else if (this.getName().equals(Spell.DARK_HOLE.toString())) {
             addCommands(new DarkHole());
         } else if (this.getName().equals(Spell.BLACK_PENDANT.toString())) {
             addCommands(new EquipNormal());
