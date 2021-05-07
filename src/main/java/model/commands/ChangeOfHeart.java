@@ -31,7 +31,11 @@ public class ChangeOfHeart extends Command implements Activate {
         } catch (NumberFormatException e) {
             throw new NumberFormatException();
         }
-        target = monsterCards.get(index);
+        try {
+            target = monsterCards.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            throw new Exception("invalid number");
+        }
         board.sendCardFromMonsterZoneToAnother(target, gameController.getOpponentPlayerNumber()
                 , gameController.getCurrentPlayerNumber());
     }
@@ -40,9 +44,9 @@ public class ChangeOfHeart extends Command implements Activate {
         GamePhase gamePhase = gameController.getGamePhase();
         if (gamePhase == GamePhase.END_PHASE) {
             if (board.isCardInMonsterZone((MonsterCard) target))
-                board.sendCardFromMonsterZoneToAnother(target, gameController.getCurrentPlayerNumber(),
-                        gameController.getOpponentPlayerNumber());
-            board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), myCard);
+                board.sendCardFromMonsterZoneToAnother(target, gameController.getOpponentPlayerNumber(),
+                        gameController.getCurrentPlayerNumber());
+            board.sendCardFromSpellZoneToGraveyard(gameController.getOpponentPlayerNumber(), myCard);
         }
     }
 }

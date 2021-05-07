@@ -12,7 +12,8 @@ public class PhaseController {
         this.gameController = gameController;
     }
 
-    public String nextPhase() {
+    public String nextPhase() throws Exception {
+        gameController.effectController.doEffects();
         String result = "";
         switch (getGamePhase()) {
             case END_PHASE:

@@ -3,7 +3,6 @@ package controller;
 import controller.exceptions.*;
 import model.*;
 import model.card.*;
-import model.commands.PotOfGreed;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -380,10 +379,12 @@ public class GameController {
         if (selectedCard.getCard() instanceof SpellCard) {
             SpellCard card = (SpellCard) selectedCard.getCard();
             if (!(card.getProperty() == Property.FIELD || card.getProperty() == Property.EQUIP) && selectedCard.getCardLocation() == CardLocation.HAND) {
+                selectedCard.getCard().doActions();
                 gameBoard.setSpellFaceUp(getCurrentPlayerNumber(), selectedCard.getCard());
-            }
-        }
-        selectedCard.getCard().doActions();
+            } else
+                selectedCard.getCard().doActions();
+        } else
+            selectedCard.getCard().doActions();
     }
 
     public void ritualSummon() {
@@ -457,7 +458,7 @@ public class GameController {
         summonedCard = card;
     }
 
-    public String nextPhase() {
+    public String nextPhase() throws Exception {
         return phaseController.nextPhase();
     }
 

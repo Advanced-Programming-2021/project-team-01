@@ -661,9 +661,9 @@ public class Board {
     public ArrayList<SpellCard> faceUpSpells() {
         ArrayList<SpellCard> spellCards = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
-            if (!playerOneSpellZone[i].isHidden())
+            if ((!playerOneSpellZone[i].isHidden()) && playerOneSpellZone[i].getCard() != null)
                 spellCards.add((SpellCard) playerOneSpellZone[i].getCard());
-            if (!playerTwoSpellZone[i].isHidden())
+            if ((!playerTwoSpellZone[i].isHidden()) && playerTwoSpellZone[i].getCard() != null)
                 spellCards.add((SpellCard) playerTwoSpellZone[i].getCard());
         }
         return spellCards;
@@ -691,10 +691,10 @@ public class Board {
                 if (playerOneMonsterZone[i].getCard() == card) {
                     playerOneMonsterZone[i].setCard(null);
                     for (int j = 1; j < 6; j++) {
-                        if (playerTwoMonsterZone[i].getCard() == null) {
-                            playerTwoMonsterZone[i].setCard(card);
-                            playerTwoMonsterZone[i].setHidden(false);
-                            playerTwoMonsterZone[i].setDefending(false);
+                        if (playerTwoMonsterZone[j].getCard() == null) {
+                            playerTwoMonsterZone[j].setCard(card);
+                            playerTwoMonsterZone[j].setHidden(false);
+                            playerTwoMonsterZone[j].setDefending(false);
                             return;
                         }
                     }
@@ -705,10 +705,10 @@ public class Board {
                 if (playerTwoMonsterZone[i].getCard() == card) {
                     playerTwoMonsterZone[i].setCard(null);
                     for (int j = 1; j < 6; j++) {
-                        if (playerOneMonsterZone[i].getCard() == null) {
-                            playerOneMonsterZone[i].setCard(card);
-                            playerOneMonsterZone[i].setHidden(false);
-                            playerOneMonsterZone[i].setDefending(false);
+                        if (playerOneMonsterZone[j].getCard() == null) {
+                            playerOneMonsterZone[j].setCard(card);
+                            playerOneMonsterZone[j].setHidden(false);
+                            playerOneMonsterZone[j].setDefending(false);
                             return;
                         }
                     }

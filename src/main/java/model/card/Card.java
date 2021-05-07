@@ -98,6 +98,8 @@ public abstract class Card {
                 this.getName().equals(Spell.YAMI.toString()) || this.getName().equals(Spell.FOREST.toString()) ||
                 this.getName().equals(Spell.CLOSED_FOREST.toString()))
             addCommands(new FieldCard());
+        else if (this.getName().equals(Spell.CHANGE_OF_HEART.toString()))
+            addCommands(new ChangeOfHeart());
     }
 
 }
