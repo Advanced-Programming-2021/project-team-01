@@ -17,7 +17,8 @@ public enum Spell {
     HARPIES_FEATHER_DUSTER("Harpie's Feather Duster"),
     MYSTICAL_SPACE_TYPHOON("Mystical space typhoon"),
     TWIN_TWISTERS("Twin Twisters"),
-    CHANGE_OF_HEART("Change of Heart");
+    CHANGE_OF_HEART("Change of Heart"),
+    SUPPLY_SQUAD("Supply Squad");
     String value;
 
     Spell(String value) {

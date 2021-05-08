@@ -227,6 +227,21 @@ public class GameView {
         return HandleRequestType.scanner.nextLine();
     }
 
+    public static int getValidNumber(int start, int end) {
+        while (true) {
+            String input = prompt("Enter a Number :");
+            try {
+                Integer.parseInt(input);
+            }catch (Exception e){
+                continue;
+            }
+            if (Integer.parseInt(input) < start || Integer.parseInt(input) > end) {
+                System.out.println("Invalid number");
+            }else
+                return Integer.parseInt(input);
+        }
+    }
+
     public static void showConsole(String input) {
         System.out.println(input);
     }

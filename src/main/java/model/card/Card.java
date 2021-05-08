@@ -100,6 +100,8 @@ public abstract class Card {
             addCommands(new FieldCard());
         else if (this.getName().equals(Spell.CHANGE_OF_HEART.toString()))
             addCommands(new ChangeOfHeart());
+        else if (this.getName().equals(Spell.SUPPLY_SQUAD.toString()))
+            addCommands(new SupplySquad());
     }
 
 }

@@ -17,7 +17,7 @@ public class EquipNormal extends Command implements Activate {
         ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER, indexOfMonster, gameController.getCurrentPlayerNumber());
         if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
         zoneSlot.setEquippedCard(gameController.getSelectedCard().getCard());
-        board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
+        board.setSpellFaceUp(gameController.getSelectedCard().getCard());
     }
     @Override
     public void runContinuous() throws Exception {

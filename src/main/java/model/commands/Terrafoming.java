@@ -25,13 +25,7 @@ public class Terrafoming extends Command implements Activate{
         if (fieldSpells.size() == 0)
             throw new NoFieldSpellInDeck();
         GameView.printListOfCard(fieldSpells);
-        String indexString = GameView.prompt("Enter a number :");
-        int index;
-        try {
-            index = Integer.parseInt(indexString);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException();
-        }
+        int index = GameView.getValidNumber(0,fieldSpells.size()-1);
         Card card = fieldSpells.get(index);
         board.addCardFromDeckToHand(gameController.getCurrentPlayerNumber(), card);
         board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());

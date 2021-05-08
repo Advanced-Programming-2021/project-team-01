@@ -21,7 +21,7 @@ public class EquipFiend extends Command implements Activate{
             throw new Exception("only Fiend type monsters are allowed!");
         }
         zoneSlot.setEquippedCard(gameController.getSelectedCard().getCard());
-        board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
+        board.setSpellFaceUp(gameController.getSelectedCard().getCard());
     }
     @Override
     public void runContinuous() throws Exception {

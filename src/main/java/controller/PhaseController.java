@@ -17,6 +17,9 @@ public class PhaseController {
         String result = "";
         switch (getGamePhase()) {
             case END_PHASE:
+                gameController.setSummonedCard(null);
+                gameController.resetChangedCard();
+                GameController.currentPlayer = GameController.getOpponent();
                 Card card = gameController.getGameBoard().drawCard(GameController.currentPlayer == GameController.playerOne ? 1 : 2);
                 setGamePhase(GamePhase.DRAW_PHASE);
                 gameController.selectedCard.reset();
@@ -40,10 +43,7 @@ public class PhaseController {
                 break;
             case MAIN_PHASE2:
                 setGamePhase(GamePhase.END_PHASE);
-                GameController.currentPlayer = GameController.getOpponent();
                 result = String.format("phase: end phase\nits %s’s turn", GameController.currentPlayer.getNickname());
-                gameController.setSummonedCard(null);
-                gameController.resetChangedCard();
                 break;
         }
         return result;

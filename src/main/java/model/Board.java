@@ -106,9 +106,11 @@ public class Board {
         if (player == 1) {
             playerOneGraveYard.add(card);
             playerOneHand.remove(card);
+            GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
         } else {
             playerTwoGraveYard.add(card);
             playerTwoHand.remove(card);
+            GameController.getInstance().getDestroyedCardsForPlayerTwo().add(card);
         }
     }
 
@@ -119,12 +121,14 @@ public class Board {
                 if (playerOneSpellZone[i].getCard() == card)
                     playerOneSpellZone[i].setCard(null);
             }
+            GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
         } else {
             playerTwoGraveYard.add(card);
             for (int i = 1; i < 6; i++) {
                 if (playerTwoSpellZone[i].getCard() == card)
                     playerTwoSpellZone[i].setCard(null);
             }
+            GameController.getInstance().getDestroyedCardsForPlayerTwo().add(card);
         }
     }
 
@@ -336,10 +340,12 @@ public class Board {
             Card card = playerOneMonsterZone[indexOfCard].getCard();
             playerOneGraveYard.add(card);
             playerOneMonsterZone[indexOfCard].setCard(null);
+            GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
         } else if (player == 2) {
             Card card = playerTwoMonsterZone[indexOfCard].getCard();
             playerTwoGraveYard.add(card);
             playerTwoMonsterZone[indexOfCard].setCard(null);
+            GameController.getInstance().getDestroyedCardsForPlayerTwo().add(card);
         }
     }
 
@@ -447,8 +453,7 @@ public class Board {
         }
     }
 
-    public void setSpellFaceUp(int player, Card card) throws SpellZoneFullError {
-        setSpell(player, (SpellCard) card);
+    public void setSpellFaceUp(Card card) throws SpellZoneFullError {
         ZoneSlot zoneSlot = getZoneSlotByCard(card);
         zoneSlot.setHidden(false);
     }

@@ -23,10 +23,29 @@ public class GameController {
     protected int rounds;
     protected SelectedCard selectedCard;
     protected ArrayList<Card> changedPositionCards = new ArrayList<>();
+    protected ArrayList<Card> destroyedCardsForPlayerOne = new ArrayList<>();
+    protected ArrayList<Card> destroyedCardsForPlayerTwo = new ArrayList<>();
 
     private GameController() {
 
     }
+
+    public ArrayList<Card> getDestroyedCardsForPlayerOne() {
+        return destroyedCardsForPlayerOne;
+    }
+
+    public ArrayList<Card> getDestroyedCardsForPlayerTwo() {
+        return destroyedCardsForPlayerTwo;
+    }
+
+    public ArrayList<Card> getDestroyedCardsPlayer(int player) {
+        if (player == 1)
+            return destroyedCardsForPlayerOne;
+        if (player == 2)
+            return destroyedCardsForPlayerTwo;
+        return null;
+    }
+
 
     public static Player getPlayerOne() {
         return playerOne;
@@ -378,13 +397,12 @@ public class GameController {
     public void activateEffect() throws PromptException, Exception {
         if (selectedCard.getCard() instanceof SpellCard) {
             SpellCard card = (SpellCard) selectedCard.getCard();
-            if (!(card.getProperty() == Property.FIELD || card.getProperty() == Property.EQUIP) && selectedCard.getCardLocation() == CardLocation.HAND) {
-                selectedCard.getCard().doActions();
-                gameBoard.setSpellFaceUp(getCurrentPlayerNumber(), selectedCard.getCard());
-            } else
-                selectedCard.getCard().doActions();
-        } else
-            selectedCard.getCard().doActions();
+            if (!(card.getProperty() == Property.FIELD) && selectedCard.getCardLocation() == CardLocation.HAND) {
+                gameBoard.setSpell(getCurrentPlayerNumber(), card);
+                gameBoard.setSpellFaceUp(selectedCard.getCard());
+            }
+        }
+        selectedCard.getCard().doActions();
     }
 
     public void ritualSummon() {
@@ -493,6 +511,8 @@ public class GameController {
     public void resetChangedCard() {
         changedPositionCards.clear();
         attackController.attackedCards.clear();
+        destroyedCardsForPlayerOne.clear();
+        destroyedCardsForPlayerTwo.clear();
     }
 
     public void cheater(String cardName) throws Exception {

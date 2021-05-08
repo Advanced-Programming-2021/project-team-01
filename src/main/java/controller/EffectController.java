@@ -64,7 +64,7 @@ public class EffectController {
             throw new Exception("only Fiend type monsters are allowed!");
         }
         zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
-        board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+        board.setSpellFaceUp(gameController.selectedCard.getCard());
 
     }
 
@@ -79,7 +79,7 @@ public class EffectController {
             throw new Exception("only warrior type monsters are allowed");
         }
         zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
-        board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+        board.setSpellFaceUp(gameController.selectedCard.getCard());
     }
 
     private void equipNormal() throws Exception {
@@ -90,7 +90,7 @@ public class EffectController {
         ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER, indexOfMonster, gameController.getCurrentPlayerNumber());
         if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
         zoneSlot.setEquippedCard(gameController.selectedCard.getCard());
-        board.setSpellFaceUp(gameController.getCurrentPlayerNumber(), gameController.selectedCard.getCard());
+        board.setSpellFaceUp( gameController.selectedCard.getCard());
     }
 
     protected void monsterReborn() throws InvalidCommandException, MonsterZoneFull {

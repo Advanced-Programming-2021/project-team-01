@@ -24,18 +24,8 @@ public class ChangeOfHeart extends Command implements Activate {
             throw new Exception("Monster Zone of your opponent is Empty");
         ArrayList<Card> monsterCards = board.getCardInMonsterZone(gameController.getOpponentPlayerNumber());
         GameView.printListOfCard(monsterCards);
-        String indexString = GameView.prompt("Enter a number :");
-        int index;
-        try {
-            index = Integer.parseInt(indexString);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException();
-        }
-        try {
-            target = monsterCards.get(index);
-        } catch (IndexOutOfBoundsException e) {
-            throw new Exception("invalid number");
-        }
+        int index = GameView.getValidNumber(0, monsterCards.size() - 1);
+        target = monsterCards.get(index);
         board.sendCardFromMonsterZoneToAnother(target, gameController.getOpponentPlayerNumber()
                 , gameController.getCurrentPlayerNumber());
     }
@@ -44,9 +34,9 @@ public class ChangeOfHeart extends Command implements Activate {
         GamePhase gamePhase = gameController.getGamePhase();
         if (gamePhase == GamePhase.END_PHASE) {
             if (board.isCardInMonsterZone((MonsterCard) target))
-                board.sendCardFromMonsterZoneToAnother(target, gameController.getOpponentPlayerNumber(),
-                        gameController.getCurrentPlayerNumber());
-            board.sendCardFromSpellZoneToGraveyard(gameController.getOpponentPlayerNumber(), myCard);
+                board.sendCardFromMonsterZoneToAnother(target, gameController.getCurrentPlayerNumber(),
+                        gameController.getOpponentPlayerNumber());
+            board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), myCard);
         }
     }
 }
