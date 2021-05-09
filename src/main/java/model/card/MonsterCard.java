@@ -6,9 +6,9 @@ public class MonsterCard extends Card {
     int level;
     private int attack;
     private int defense;
-    private CardType cardType;
-    private ArrayList<MonsterType> monsterTypes;
-    private Attribute attribute;
+    private final CardType cardType;
+    private final ArrayList<MonsterType> monsterTypes;
+    private final Attribute attribute;
 
     public MonsterCard(String name, String description, int price, int attack, int defense,
                        CardType cardType, ArrayList<MonsterType> monsterTypes, Attribute attribute, int level) {
@@ -45,6 +45,7 @@ public class MonsterCard extends Card {
     public void increaseAttack(int amount) {
         attack += amount;
     }
+
     public void increaseDefense(int amount) {
         defense += amount;
     }
@@ -55,8 +56,8 @@ public class MonsterCard extends Card {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return new MonsterCard(getName(),getDescription(),getPrice(),getAttack(),getDefense(),getCardType(),
-                getMonsterTypes(),getAttribute(),getLevel());
+        return new MonsterCard(getName(), getDescription(), getPrice(), getAttack(), getDefense(), getCardType(),
+                getMonsterTypes(), getAttribute(), getLevel());
     }
 }
 

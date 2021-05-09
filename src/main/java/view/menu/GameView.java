@@ -242,6 +242,19 @@ public class GameView {
         }
     }
 
+    public static boolean getValidResponse() {
+        while (true) {
+            String input = prompt("y/n");
+            if (input.equals("y")){
+                return true;
+            }else if (input.equals("n")){
+                return false;
+            }else {
+                System.out.println("Invalid Command!");
+            }
+        }
+    }
+
     public static void showConsole(String input) {
         System.out.println(input);
     }

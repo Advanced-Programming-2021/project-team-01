@@ -3,6 +3,7 @@ package controller;
 import controller.exceptions.*;
 import model.Deck;
 import model.card.Card;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -84,15 +85,13 @@ public class DeckController {
                     if (deck.getMainDeck().contains(card)) {
                         deck.removeCardFromMainDeck(card);
                         DatabaseController.updateDeck(deck);
-                    }
-                    else
+                    } else
                         throw new CardNotInDeck(cardName, "main");
                 } else {
                     if (deck.getSideDeck().contains(card)) {
                         deck.removeCardFromSideDeck(card);
                         DatabaseController.updateDeck(deck);
-                    }
-                    else
+                    } else
                         throw new CardNotInDeck(cardName, "side");
                 }
             } else
@@ -116,7 +115,7 @@ public class DeckController {
         return activeDeck;
     }
 
-    public ArrayList<Card> showDeckByName(String name ,boolean isMainDeck) throws DeckNotExists {
+    public ArrayList<Card> showDeckByName(String name, boolean isMainDeck) throws DeckNotExists {
         if (DatabaseController.doesDeckExists(name)) {
             Deck deck = DatabaseController.getDeckByName(name);
             ArrayList<Card> cards = new ArrayList<>();

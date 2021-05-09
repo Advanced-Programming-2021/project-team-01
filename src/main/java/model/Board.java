@@ -10,20 +10,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Board {
-    private ZoneSlot[] playerOneMonsterZone;
-    private ZoneSlot[] playerTwoMonsterZone;
-    private ZoneSlot[] playerOneSpellZone;
-    private ZoneSlot[] playerTwoSpellZone;
-    private ArrayList<Card> playerOneGraveYard;
-    private ArrayList<Card> playerTwoGraveYard;
-    private ArrayList<Card> playerOneBanishedZone;
-    private ArrayList<Card> playerTwoBanishedZone;
-    private ArrayList<Card> playerOneDrawZone;
-    private ArrayList<Card> playerTwoDrawZone;
-    private ZoneSlot playerOneFieldZone;
-    private ZoneSlot playerTwoFieldZone;
-    private ArrayList<Card> playerOneHand;
-    private ArrayList<Card> playerTwoHand;
+    private final ZoneSlot[] playerOneMonsterZone;
+    private final ZoneSlot[] playerTwoMonsterZone;
+    private final ZoneSlot[] playerOneSpellZone;
+    private final ZoneSlot[] playerTwoSpellZone;
+    private final ArrayList<Card> playerOneGraveYard;
+    private final ArrayList<Card> playerTwoGraveYard;
+    private final ArrayList<Card> playerOneBanishedZone;
+    private final ArrayList<Card> playerTwoBanishedZone;
+    private final ArrayList<Card> playerOneDrawZone;
+    private final ArrayList<Card> playerTwoDrawZone;
+    private final ZoneSlot playerOneFieldZone;
+    private final ZoneSlot playerTwoFieldZone;
+    private final ArrayList<Card> playerOneHand;
+    private final ArrayList<Card> playerTwoHand;
 
     {
         playerOneMonsterZone = new ZoneSlot[6];
@@ -690,6 +690,22 @@ public class Board {
         return monsterCards;
     }
 
+    public ArrayList<Card> getCardInSpellZone(int player) {
+        ArrayList<Card> arrayList = new ArrayList<>();
+        if (player == 1) {
+            for (int i = 1; i < 6; i++) {
+                if (playerOneSpellZone[i].getCard() != null)
+                    arrayList.add(playerOneSpellZone[i].getCard());
+            }
+        } else if (player == 2) {
+            for (int i = 1; i < 6; i++) {
+                if (playerTwoSpellZone[i].getCard() != null)
+                    arrayList.add(playerTwoSpellZone[i].getCard());
+            }
+        }
+        return arrayList;
+    }
+
     public void sendCardFromMonsterZoneToAnother(Card card, int fromPlayer, int toPlayer) {
         if (fromPlayer == 1) {
             for (int i = 1; i < 6; i++) {
@@ -723,5 +739,38 @@ public class Board {
     }
 
 
-
+    public Card getCounterTraps(int currentPlayerNumber) {
+        if (currentPlayerNumber == 1) {
+            for (int i = 1; i < 6; i++) {
+                Card card = playerOneSpellZone[i].getCard();
+                if (card instanceof TrapCard){
+                    Property property = ((TrapCard) card).getProperty();
+                    if (property == Property.QUICK_PLAY || property == Property.COUNTER){
+                        return card;
+                    }
+                } else if (card instanceof SpellCard){
+                    Property property = ((SpellCard) card).getProperty();
+                    if (property == Property.QUICK_PLAY || property == Property.COUNTER){
+                        return card;
+                    }
+                }
+            }
+        }else {
+            for (int i = 1; i < 6; i++) {
+                Card card = playerTwoSpellZone[i].getCard();
+                if (card instanceof TrapCard){
+                    Property property = ((TrapCard) card).getProperty();
+                    if (property == Property.QUICK_PLAY || property == Property.COUNTER){
+                        return card;
+                    }
+                } else if (card instanceof SpellCard){
+                    Property property = ((SpellCard) card).getProperty();
+                    if (property == Property.QUICK_PLAY || property == Property.COUNTER){
+                        return card;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }

@@ -1,21 +1,17 @@
 package model;
 
-import com.google.gson.Gson;
-import model.card.Card;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class Player {
-    private String username;
+    private final String username;
     private String password;
     private String nickname;
     private int money;
     private int score;
     private String activeDeck;
-    private ArrayList<String> playerDecks = new ArrayList<>();
-    private ArrayList<String> playerCards = new ArrayList<>();  //TODO: string or card
+    private final ArrayList<String> playerDecks = new ArrayList<>();
+    private final ArrayList<String> playerCards = new ArrayList<>();  //TODO: string or card
     private int winRate;
     private int loseRate;
 

@@ -1,6 +1,6 @@
 package model.card;
 
-public class TrapCard extends Card{
+public class TrapCard extends Card {
     Property property;
     //fixme : status is unclear
 
@@ -14,5 +14,9 @@ public class TrapCard extends Card{
     @Override
     public Object clone() throws CloneNotSupportedException {
         return new TrapCard(this.getName(), this.getDescription(), this.getPrice(), this.property);
+    }
+
+    public Property getProperty() {
+        return property;
     }
 }

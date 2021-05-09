@@ -1,18 +1,13 @@
 package model;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import model.card.Card;
-import model.card.MonsterCard;
-import model.card.Property;
-import model.card.TrapCard;
 
 import java.util.ArrayList;
 
 public class Deck {
-    private String deckName;
-    private ArrayList<Card> mainDeck = new ArrayList<>();
-    private ArrayList<Card> sideDeck = new ArrayList<>();
+    private final String deckName;
+    private final ArrayList<Card> mainDeck = new ArrayList<>();
+    private final ArrayList<Card> sideDeck = new ArrayList<>();
 
     public Deck(String name) {
         this.deckName = name;
@@ -34,7 +29,7 @@ public class Deck {
         sideDeck.remove(card);
     }
 
-    public boolean isDeckValid(){
+    public boolean isDeckValid() {
         return mainDeck.size() >= 40;
     }
 

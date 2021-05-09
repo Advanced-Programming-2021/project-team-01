@@ -20,21 +20,21 @@ public class RegisterController {
     }
 
     public void createUser(String username, String password, String nickname) throws Exception {
-        if (DatabaseController.doesUserExists(username)){
+        if (DatabaseController.doesUserExists(username)) {
             throw new UsernameExists(username);
         }
-        if (DatabaseController.doesNicknameExist(nickname)){
+        if (DatabaseController.doesNicknameExist(nickname)) {
             throw new NicknameExists(nickname);
         }
-        DatabaseController.updatePlayer(new Player(username,password,nickname));
+        DatabaseController.updatePlayer(new Player(username, password, nickname));
     }
 
-    public void loginUser(String username, String password) throws Exception{
-        if (!DatabaseController.doesUserExists(username)){
+    public void loginUser(String username, String password) throws Exception {
+        if (!DatabaseController.doesUserExists(username)) {
             throw new UsernameNotExists();
         }
         Player player = DatabaseController.getUserByName(username);
-        if (!player.getPassword().equals(password)){
+        if (!player.getPassword().equals(password)) {
             throw new WrongUsernamePassword();
         }
         onlineUser = player;

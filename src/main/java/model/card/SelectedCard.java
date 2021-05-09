@@ -1,7 +1,6 @@
 package model.card;
 
 import model.Player;
-import model.ZoneSlot;
 
 
 public class SelectedCard {
@@ -42,7 +41,7 @@ public class SelectedCard {
         this.card = card;
     }
 
-    public void reset(){
+    public void reset() {
         card = null;
         cardLocation = null;
         player = null;
@@ -50,7 +49,7 @@ public class SelectedCard {
     }
 
 
-    public void set(Card card, Player player,int index, CardLocation location){
+    public void set(Card card, Player player, int index, CardLocation location) {
         setCard(card);
         setCardLocation(location);
         setPlayer(player);

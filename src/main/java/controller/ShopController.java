@@ -4,9 +4,6 @@ import controller.exceptions.CardNameNotExists;
 import controller.exceptions.NotEnoughMoney;
 import model.card.Card;
 
-import java.util.HashMap;
-
-
 import static controller.RegisterController.onlineUser;
 
 public class ShopController {

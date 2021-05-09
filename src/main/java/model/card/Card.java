@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 public abstract class Card {
-    private static TreeMap<String, Card> allCards = new TreeMap<>();
-    private String name;
-    private String description;
-    private int price;
+    private static final TreeMap<String, Card> allCards = new TreeMap<>();
+    private final String name;
+    private final String description;
+    private final int price;
     protected String type = "type";
     @Expose(serialize = false, deserialize = false)
     protected ArrayList<Command> commands = new ArrayList<>();
@@ -20,6 +20,10 @@ public abstract class Card {
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public ArrayList<Command> getCommands() {
+        return commands;
     }
 
     public void doActions() throws Exception {
@@ -34,15 +38,23 @@ public abstract class Card {
         }
     }
 
+    public boolean canActivate() throws Exception {
+        for (Command command : commands) {
+            if (command.canActivate()){
+                return true;
+            }
+        }
+        return false;
+    }
     public void addCommands(Command command) {
-        if (commands == null){
+        if (commands == null) {
             commands = new ArrayList<>();
         }
         commands.add(command);
     }
 
     public static Card getCardByName(String name) {
-        if (allCards.containsKey(name)){
+        if (allCards.containsKey(name)) {
             return allCards.get(name);
         }
         return null;
@@ -56,8 +68,8 @@ public abstract class Card {
         return allCards;
     }
 
-    public static void addCardToDatabase(Card card){
-        allCards.put(card.getName(),card);
+    public static void addCardToDatabase(Card card) {
+        allCards.put(card.getName(), card);
     }
 
     public String getName() {
@@ -68,8 +80,8 @@ public abstract class Card {
         return description;
     }
 
-    public void addCommandsToCard(){
-        if (this.getName().equals(Spell.POT_OF_GREED.toString())){
+    public void addCommandsToCard() {
+        if (this.getName().equals(Spell.POT_OF_GREED.toString())) {
             addCommands(new PotOfGreed());
         } else if (this.getName().equals(Spell.RAIGEKI.toString())) {
             addCommands(new Raigeki());
@@ -85,14 +97,13 @@ public abstract class Card {
             addCommands(new DarkHole());
         } else if (this.getName().equals(Spell.BLACK_PENDANT.toString())) {
             addCommands(new EquipNormal());
-        } else if (this.getName().equals(Spell.MAGNUM_SHIELD.toString())){
+        } else if (this.getName().equals(Spell.MAGNUM_SHIELD.toString())) {
             addCommands(new EquipWarrior());
-        } else if (this.getName().equals(Spell.UNITED_WE_STAND.toString())){
+        } else if (this.getName().equals(Spell.UNITED_WE_STAND.toString())) {
             addCommands(new EquipNormal());
-        } else if (this.getName().equals(Spell.SWORD_OF_DESTRUCTION.toString())){
+        } else if (this.getName().equals(Spell.SWORD_OF_DESTRUCTION.toString())) {
             addCommands(new EquipFiend());
-        }
-        else if (this.getName().equals(Spell.TERRAFORMING.toString()))
+        } else if (this.getName().equals(Spell.TERRAFORMING.toString()))
             addCommands(new Terrafoming());
         else if (this.getName().equals(Spell.UMIIRUKA.toString()) ||
                 this.getName().equals(Spell.YAMI.toString()) || this.getName().equals(Spell.FOREST.toString()) ||

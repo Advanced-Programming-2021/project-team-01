@@ -2,6 +2,7 @@ package controller;
 
 import controller.exceptions.*;
 import model.GamePhase;
+import model.State;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
@@ -26,7 +27,7 @@ public class AttackController {
         return target;
     }
 
-    protected String attack(int number) throws CardNotSelected, NotMonsterCard, NotAllowedAction, AlreadyAttacked, NoCardToAttack {
+    protected String attack(int number) throws Exception {
         if (gameController.selectedCard.getCard() == null) {
             throw new CardNotSelected();
         }
@@ -44,6 +45,10 @@ public class AttackController {
         attacker = (MonsterCard) gameController.selectedCard.getCard();
         if (target == null){
             throw new NoCardToAttack();
+        }
+        gameController.createChain();
+        if (gameController.getState() != State.ATTACK){
+            return "battle negated";
         }
         if (gameController.gameBoard.getZoneSlotByLocation(CardLocation.MONSTER,number,
                 gameController.getOpponentPlayerNumber()).toString().equals("OO")){

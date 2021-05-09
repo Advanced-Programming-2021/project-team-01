@@ -2,7 +2,6 @@ package controller;
 
 import model.GamePhase;
 import model.card.Card;
-import model.card.MonsterType;
 
 public class PhaseController {
     private final GameController gameController;

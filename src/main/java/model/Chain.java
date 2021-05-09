@@ -1,23 +1,28 @@
 package model;
 
+import model.card.Card;
 import model.commands.Command;
 
 import java.util.ArrayList;
 
 public class Chain {
-    private ArrayList<Command> commands;
+    private ArrayList<Card> chainElements;
 
     public Chain() {
-        commands = new ArrayList<>();
+        chainElements = new ArrayList<>();
     }
 
     public void run() throws Exception {
-        for (Command command : commands) {
-            command.run();
+        for (Card card: chainElements) {
+            card.doActions();
         }
     }
 
-    public void setNext(Command command) {
-        commands.add(command);
+    public boolean doesExistInChain(Card card){
+        return chainElements.contains(card);
+    }
+
+    public void setNext(Card card) {
+        chainElements.add(card);
     }
 }

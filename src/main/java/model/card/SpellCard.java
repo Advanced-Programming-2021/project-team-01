@@ -23,4 +23,5 @@ public class SpellCard extends Card {
     public Object clone() throws CloneNotSupportedException {
         return new SpellCard(this.getName(), this.getDescription(), this.getPrice(), this.property);
     }
+
 }

@@ -2,16 +2,12 @@ package controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import model.Deck;
 import model.Player;
 import model.card.*;
-
 
 import java.io.*;
 import java.util.ArrayList;
@@ -62,7 +58,7 @@ public class DatabaseController {
     }
 
     private static String getDeckDirectory(String deck) {
-        return "src" + File.separator +"resources" + File.separator + "deck" + File.separator + deck + ".json";
+        return "src" + File.separator + "resources" + File.separator + "deck" + File.separator + deck + ".json";
     }
 
     public static String read(String directory) {
@@ -83,25 +79,25 @@ public class DatabaseController {
         file.delete();
     }
 
-    public static Player getUserByName(String username){
+    public static Player getUserByName(String username) {
         String directory = getUserDirectory(username);
         try {
             FileReader fileReader = new FileReader(directory);
             Gson gson = new Gson();
-            return gson.fromJson(fileReader,Player.class);
+            return gson.fromJson(fileReader, Player.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static boolean doesUserExists(String username){
+    public static boolean doesUserExists(String username) {
         String directory = getUserDirectory(username);
         File file = new File(directory);
         return file.exists();
     }
 
-    public static boolean doesDeckExists(String deckName){
+    public static boolean doesDeckExists(String deckName) {
         String directory = getDeckDirectory(deckName);
         File file = new File(directory);
         return file.exists();
@@ -113,17 +109,18 @@ public class DatabaseController {
             FileReader fileReader = new FileReader(directory);
             GsonBuilder gsonBuilder = new GsonBuilder();
             RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
-                    .of(Card.class,"type").
-                            registerSubtype(MonsterCard.class,"monster").
-                            registerSubtype(SpellCard.class,"spell").
-                            registerSubtype(TrapCard.class,"trap");
-            return gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(fileReader,Deck.class);
+                    .of(Card.class, "type").
+                            registerSubtype(MonsterCard.class, "monster").
+                            registerSubtype(SpellCard.class, "spell").
+                            registerSubtype(TrapCard.class, "trap");
+            return gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(fileReader, Deck.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return null;
     }
-    public static void updateDeck(Deck deck){
+
+    public static void updateDeck(Deck deck) {
         String deckName = deck.getDeckName();
         try {
             FileWriter fileWriter = new FileWriter(getDeckDirectory(deckName));
@@ -134,7 +131,8 @@ public class DatabaseController {
             e.printStackTrace();
         }
     }
-    public static void updatePlayer(Player player){
+
+    public static void updatePlayer(Player player) {
         String username = player.getUsername();
         try {
             FileWriter fileWriter = new FileWriter(getUserDirectory(username));
@@ -145,16 +143,15 @@ public class DatabaseController {
             e.printStackTrace();
         }
     }
-    public static boolean doesNicknameExist(String nickname){
+
+    public static boolean doesNicknameExist(String nickname) {
         File folder = new File("src" + File.separator + "resources" + File.separator + "users");
         File[] files = folder.listFiles();
 
         assert files != null;
-        for (File file:files)
-        {
-            if (file.isFile() && file.getAbsolutePath().endsWith(".json"))
-            {
-                if (getUserByName(file.getName().substring(0,file.getName().length() - 5)).getNickname().equals(nickname)){
+        for (File file : files) {
+            if (file.isFile() && file.getAbsolutePath().endsWith(".json")) {
+                if (getUserByName(file.getName().substring(0, file.getName().length() - 5)).getNickname().equals(nickname)) {
                     return true;
                 }
             }
@@ -162,16 +159,14 @@ public class DatabaseController {
         return false;
     }
 
-    public static ArrayList<Player> getAllPlayers(){
+    public static ArrayList<Player> getAllPlayers() {
         ArrayList<Player> players = new ArrayList<>();
         File folder = new File("src" + File.separator + "resources" + File.separator + "users");
         File[] files = folder.listFiles();
         assert files != null;
-        for (File file:files)
-        {
-            if (file.isFile() && file.getAbsolutePath().endsWith(".json"))
-            {
-                players.add(getUserByName(file.getName().substring(0,file.getName().length() - 5)));
+        for (File file : files) {
+            if (file.isFile() && file.getAbsolutePath().endsWith(".json")) {
+                players.add(getUserByName(file.getName().substring(0, file.getName().length() - 5)));
             }
         }
         return players;

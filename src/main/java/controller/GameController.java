@@ -3,6 +3,7 @@ package controller;
 import controller.exceptions.*;
 import model.*;
 import model.card.*;
+import view.menu.GameView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,9 +27,36 @@ public class GameController {
     protected ArrayList<Card> destroyedCardsForPlayerOne = new ArrayList<>();
     protected ArrayList<Card> destroyedCardsForPlayerTwo = new ArrayList<>();
     protected State state;
+    protected Chain chain;
 
     private GameController() {
 
+    }
+
+    public static Player getPlayerOne() {
+        return playerOne;
+    }
+
+    public static Player getPlayerTwo() {
+        return playerTwo;
+    }
+
+    public static GameController getInstance() {
+        if (instance == null) {
+            instance = new GameController();
+        }
+        return instance;
+    }
+
+    public static Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public static Player getOpponent() {
+        if (currentPlayer == playerOne) {
+            return playerTwo;
+        }
+        return playerOne;
     }
 
     public ArrayList<Card> getDestroyedCardsForPlayerOne() {
@@ -45,15 +73,6 @@ public class GameController {
         if (player == 2)
             return destroyedCardsForPlayerTwo;
         return null;
-    }
-
-
-    public static Player getPlayerOne() {
-        return playerOne;
-    }
-
-    public static Player getPlayerTwo() {
-        return playerTwo;
     }
 
     public PhaseController getPhaseController() {
@@ -94,24 +113,6 @@ public class GameController {
 
     public Board getGameBoard() {
         return gameBoard;
-    }
-
-    public static GameController getInstance() {
-        if (instance == null) {
-            instance = new GameController();
-        }
-        return instance;
-    }
-
-    public static Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public static Player getOpponent() {
-        if (currentPlayer == playerOne) {
-            return playerTwo;
-        }
-        return playerOne;
     }
 
     protected void increaseOpponentLp(int amount) {
@@ -388,7 +389,7 @@ public class GameController {
         return effectController;
     }
 
-    public String attack(int number) throws CardNotSelected, NotMonsterCard, NotAllowedAction, AlreadyAttacked, NoCardToAttack {
+    public String attack(int number) throws Exception {
         state = State.ATTACK;
         String result = attackController.attack(number);
         selectedCard.reset();
@@ -404,7 +405,7 @@ public class GameController {
         return result;
     }
 
-    public void activateEffect() throws PromptException, Exception {
+    public void activateEffect() throws Exception {
         state = State.ACTIVE_SPELL;
         if (selectedCard.getCard() instanceof SpellCard) {
             SpellCard card = (SpellCard) selectedCard.getCard();
@@ -557,4 +558,30 @@ public class GameController {
             playerOne.increaseWinRate();
         }
     }
+
+    public void createChain() throws Exception {
+        //fixme : test speed of instant traps
+        ArrayList<Card> opponentSpellZone = getGameBoard().getCardInSpellZone(getOpponentPlayerNumber());
+        chain = new Chain();
+        Card counterTrap;
+        GameView.showConsole("Its now " + getCurrentPlayer().getNickname() + "turn!");
+        for (Card card : opponentSpellZone) {
+            if (card.canActivate()) {
+                chain.setNext(card);
+                counterTrap = gameBoard.getCounterTraps(getCurrentPlayerNumber()); //TODO : MORE THAN 1 CARD
+                if (counterTrap != null && !chain.doesExistInChain(counterTrap)) {
+                    GameView.showConsole("do you want to activate" + counterTrap.getName());
+                    if (GameView.getValidResponse()) {
+                        GameView.showConsole("Its now " + getOpponent().getNickname() + "turn!");
+                        chain.setNext(counterTrap);
+                    }
+                }
+            }
+        }
+        // what a khafan system is implemented i am simply in shock and awe!!
+        // babaei mige ba ba!!!!
+
+
+    }
+
 }
