@@ -575,12 +575,11 @@ public class GameController {
                         GameView.showConsole("Its now " + getOpponent().getNickname() + "turn!");
                         chain.setNext(counterTrap);
                     }
+                    GameView.showConsole("Its now " + getCurrentPlayer().getNickname() + "turn!");
+                    gameBoard.showBoard();
                 }
             }
         }
-        // what a khafan system is implemented i am simply in shock and awe!!
-        // babaei mige ba ba!!!!
-
 
     }
 
