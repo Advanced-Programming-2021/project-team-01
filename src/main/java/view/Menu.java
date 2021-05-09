@@ -9,7 +9,8 @@ public enum Menu {
     IMPORT_EXPORT,
     GAME_MENU,
     DECK_MENU,
-    SCOREBOARD;
+    SCOREBOARD,
+    CHAIN;
 
     public static Menu getMenu(String menu) {
         switch (menu) {

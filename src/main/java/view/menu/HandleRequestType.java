@@ -1,9 +1,8 @@
 package view.menu;
 
-import controller.exceptions.CardNameNotExists;
+import view.ChainView;
 import view.Menu;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class HandleRequestType {
@@ -17,6 +16,7 @@ public class HandleRequestType {
         ShopView shopView = new ShopView();
         DeckView deckView = new DeckView();
         GameView gameView = new GameView();
+        ChainView chainView = new ChainView();
         ImportExportView importExportView = new ImportExportView();
         MainMenu mainMenu = new MainMenu();
         while (currentMenu != Menu.EXIT) {
@@ -37,6 +37,8 @@ public class HandleRequestType {
                 shopView.run(command);
             } else if (currentMenu == Menu.SCOREBOARD) {
                 scoreBoardView.run(command);
+            } else if (currentMenu == Menu.CHAIN) {
+                chainView.run(command);
             } else {
                 throw new RuntimeException("core adaption failed!");
             }

@@ -37,11 +37,7 @@ public class GameView {
             showGraveyard();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SHOW_SELECTED_CARD, input)) != null) {
             showCard();
-        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
-            directAttack();
-        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SHOW_GRAVEYARD, input)) != null) {
-            directAttack();
-        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SURRENDER, input)) != null) {
+        }else if ((ConsoleCommands.getMatcher(ConsoleCommands.SURRENDER, input)) != null) {
             surrender();
             HandleRequestType.currentMenu = Menu.MAIN_MENU;
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.NEXT_PHASE, input)) != null) {
@@ -182,7 +178,6 @@ public class GameView {
         } catch (Exception error) {
             System.err.println(error.getMessage());
         }
-
     }
 
     private void showGraveyard() {
@@ -244,7 +239,7 @@ public class GameView {
 
     public static boolean getValidResponse() {
         while (true) {
-            String input = prompt("y/n");
+            String input = prompt("y/n:");
             if (input.equals("y")){
                 return true;
             }else if (input.equals("n")){

@@ -3,7 +3,6 @@ package controller;
 import controller.exceptions.*;
 import model.*;
 import model.card.*;
-import view.menu.GameView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,9 +27,14 @@ public class GameController {
     protected ArrayList<Card> destroyedCardsForPlayerTwo = new ArrayList<>();
     protected State state;
     protected Chain chain;
+    protected ChainController chainController;
 
     private GameController() {
 
+    }
+
+    public ChainController getChainController() {
+        return chainController;
     }
 
     public static Player getPlayerOne() {
@@ -559,28 +563,35 @@ public class GameController {
         }
     }
 
-    public void createChain() throws Exception {
-        //fixme : test speed of instant traps
-        ArrayList<Card> opponentSpellZone = getGameBoard().getCardInSpellZone(getOpponentPlayerNumber());
+    public void createChain(){
         chain = new Chain();
-        Card counterTrap;
-        GameView.showConsole("Its now " + getCurrentPlayer().getNickname() + "turn!");
-        for (Card card : opponentSpellZone) {
-            if (card.canActivate()) {
-                chain.setNext(card);
-                counterTrap = gameBoard.getCounterTraps(getCurrentPlayerNumber()); //TODO : MORE THAN 1 CARD
-                if (counterTrap != null && !chain.doesExistInChain(counterTrap)) {
-                    GameView.showConsole("do you want to activate" + counterTrap.getName());
-                    if (GameView.getValidResponse()) {
-                        GameView.showConsole("Its now " + getOpponent().getNickname() + "turn!");
-                        chain.setNext(counterTrap);
-                    }
-                    GameView.showConsole("Its now " + getCurrentPlayer().getNickname() + "turn!");
-                    gameBoard.showBoard();
-                }
-            }
-        }
+        chainController = new ChainController(currentPlayer, getOpponent(), chain);
 
     }
-
 }
+//    backup
+//    public void createChain() throws Exception {
+//        //fixme : test speed of instant traps
+//        ArrayList<Card> opponentSpellZone = getGameBoard().getCardInSpellZone(getOpponentPlayerNumber());
+//        chain = new Chain();
+//        Card counterTrap;
+//        GameView.showConsole("Its now " + getCurrentPlayer().getNickname() + "turn!");
+//        for (Card card : opponentSpellZone) {
+//            if (card.canActivate()) {
+//                chain.setNext(card);
+//                counterTrap = gameBoard.getCounterTraps(getCurrentPlayerNumber()); //TODO : MORE THAN 1 CARD
+//                if (counterTrap != null && !chain.doesExistInChain(counterTrap)) {
+//                    GameView.showConsole("do you want to activate" + counterTrap.getName());
+//                    if (GameView.getValidResponse()) {
+//                        GameView.showConsole("Its now " + getOpponent().getNickname() + "turn!");
+//                        chain.setNext(counterTrap);
+//                    }
+//                    GameView.showConsole("Its now " + getCurrentPlayer().getNickname() + "turn!");
+//                    gameBoard.showBoard();
+//                }
+//            }
+//        }
+//
+//    }
+
+
