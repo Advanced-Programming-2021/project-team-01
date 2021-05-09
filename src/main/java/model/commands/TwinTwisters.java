@@ -53,8 +53,4 @@ public class TwinTwisters extends Command implements Activate{
         board.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(),
                 board.getCard("hand", gameController.getCurrentPlayerNumber(), Integer.parseInt(discardCard)));
     }
-    @Override
-    public void runContinuous() throws Exception {
-
-    }
 }

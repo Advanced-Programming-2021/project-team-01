@@ -23,8 +23,4 @@ public class EquipWarrior extends Command implements Activate{
         zoneSlot.setEquippedCard(gameController.getSelectedCard().getCard());
         board.setSpellFaceUp( gameController.getSelectedCard().getCard());
     }
-    @Override
-    public void runContinuous() throws Exception {
-
-    }
 }

@@ -1,6 +1,6 @@
 package model.commands;
 
-public class SwordOfRevealingLight implements Activate{
+public class SwordOfRevealingLight extends Command implements Activate{
     int counter = 0;
     @Override
     public void run() {

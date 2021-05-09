@@ -12,9 +12,18 @@ import java.util.ArrayList;
 public class AttackController {
     GameController gameController;
     ArrayList<Card> attackedCards = new ArrayList<>();//TODO: clear in battle phase
-
+    MonsterCard target;
+    MonsterCard attacker;
     public AttackController(GameController gameController) {
         this.gameController = gameController;
+    }
+
+    public MonsterCard getAttacker() {
+        return attacker;
+    }
+
+    public MonsterCard getTarget() {
+        return target;
     }
 
     protected String attack(int number) throws CardNotSelected, NotMonsterCard, NotAllowedAction, AlreadyAttacked, NoCardToAttack {
@@ -31,8 +40,8 @@ public class AttackController {
         if (attackedCards.contains(gameController.selectedCard.getCard())){
             throw new AlreadyAttacked();
         }
-        MonsterCard target = (MonsterCard) gameController.gameBoard.getCard("monster", gameController.getOpponentPlayerNumber(),number);
-        MonsterCard attacker = (MonsterCard) gameController.selectedCard.getCard();
+        target = (MonsterCard) gameController.gameBoard.getCard("monster", gameController.getOpponentPlayerNumber(),number);
+        attacker = (MonsterCard) gameController.selectedCard.getCard();
         if (target == null){
             throw new NoCardToAttack();
         }

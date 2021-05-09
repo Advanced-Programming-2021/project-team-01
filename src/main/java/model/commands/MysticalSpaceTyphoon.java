@@ -32,8 +32,4 @@ public class MysticalSpaceTyphoon extends Command implements Activate{
         board.sendCardFromSpellZoneToGraveyard(gameController.getOpponentPlayerNumber(), zoneSlots[number].getCard());
         board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
     }
-    @Override
-    public void runContinuous() throws Exception {
-
-    }
 }

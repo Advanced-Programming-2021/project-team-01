@@ -35,8 +35,4 @@ public class MonsterReborn extends Command implements Activate{
         board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
 
     }
-    @Override
-    public void runContinuous() throws Exception {
-
-    }
 }

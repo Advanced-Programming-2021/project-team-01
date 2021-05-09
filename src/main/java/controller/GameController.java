@@ -25,6 +25,7 @@ public class GameController {
     protected ArrayList<Card> changedPositionCards = new ArrayList<>();
     protected ArrayList<Card> destroyedCardsForPlayerOne = new ArrayList<>();
     protected ArrayList<Card> destroyedCardsForPlayerTwo = new ArrayList<>();
+    protected State state;
 
     private GameController() {
 
@@ -77,6 +78,10 @@ public class GameController {
 
     public int getRounds() {
         return rounds;
+    }
+
+    public State getState() {
+        return state;
     }
 
     public SelectedCard getSelectedCard() {
@@ -161,6 +166,7 @@ public class GameController {
         phaseController.setGamePhase(GamePhase.DRAW_PHASE);
         setup(playerOneDeck);
         setup(playerTwoDeck);
+        state = State.NONE;
     }
 
     private void setup(Deck deck) {
@@ -383,18 +389,23 @@ public class GameController {
     }
 
     public String attack(int number) throws CardNotSelected, NotMonsterCard, NotAllowedAction, AlreadyAttacked, NoCardToAttack {
+        state = State.ATTACK;
         String result = attackController.attack(number);
         selectedCard.reset();
+        state = State.NONE;
         return result;
     }
 
     public String directAttack() throws AlreadyAttacked, CardNotSelected, NotAllowedAction, NotMonsterCard, DirectAttackError {
+        state = State.ATTACK;
         String result = attackController.directAttack();
         selectedCard.reset();
+        state = State.NONE;
         return result;
     }
 
     public void activateEffect() throws PromptException, Exception {
+        state = State.ACTIVE_SPELL;
         if (selectedCard.getCard() instanceof SpellCard) {
             SpellCard card = (SpellCard) selectedCard.getCard();
             if (!(card.getProperty() == Property.FIELD) && selectedCard.getCardLocation() == CardLocation.HAND) {
@@ -403,6 +414,7 @@ public class GameController {
             }
         }
         selectedCard.getCard().doActions();
+        state = State.NONE;
     }
 
     public void ritualSummon() {
