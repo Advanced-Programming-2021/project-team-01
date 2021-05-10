@@ -1,7 +1,6 @@
 package model.card;
 
 import com.google.gson.annotations.Expose;
-import com.sun.org.apache.xpath.internal.operations.Neg;
 import controller.Effect;
 import model.commands.*;
 
@@ -23,6 +22,21 @@ public abstract class Card {
         this.price = price;
     }
 
+    public static Card getCardByName(String name) {
+        if (allCards.containsKey(name)) {
+            return allCards.get(name);
+        }
+        return null;
+    }
+
+    public static TreeMap<String, Card> getAllCards() {
+        return allCards;
+    }
+
+    public static void addCardToDatabase(Card card) {
+        allCards.put(card.getName(), card);
+    }
+
     public ArrayList<Command> getCommands() {
         return commands;
     }
@@ -41,12 +55,13 @@ public abstract class Card {
 
     public boolean canActivate() throws Exception {
         for (Command command : commands) {
-            if (command.canActivate()){
+            if (command.canActivate()) {
                 return true;
             }
         }
         return false;
     }
+
     public void addCommands(Command command) {
         if (commands == null) {
             commands = new ArrayList<>();
@@ -54,23 +69,8 @@ public abstract class Card {
         commands.add(command);
     }
 
-    public static Card getCardByName(String name) {
-        if (allCards.containsKey(name)) {
-            return allCards.get(name);
-        }
-        return null;
-    }
-
     public int getPrice() {
         return price;
-    }
-
-    public static TreeMap<String, Card> getAllCards() {
-        return allCards;
-    }
-
-    public static void addCardToDatabase(Card card) {
-        allCards.put(card.getName(), card);
     }
 
     public String getName() {
@@ -116,6 +116,10 @@ public abstract class Card {
             addCommands(new SupplySquad(this));
         else if (this.getName().equals(Effect.NEGATE_ATTACK.toString()))
             addCommands(new NegateAttack(this));
+        else if (this.getName().equals(Effect.MAGIC_CYLINDER.toString())) {
+            addCommands(new MagicCylinder(this));
+        }
+
     }
 
 }

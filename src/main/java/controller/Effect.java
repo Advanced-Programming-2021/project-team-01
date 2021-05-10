@@ -19,7 +19,8 @@ public enum Effect {
     TWIN_TWISTERS("Twin Twisters"),
     CHANGE_OF_HEART("Change of Heart"),
     SUPPLY_SQUAD("Supply Squad"),
-    NEGATE_ATTACK("Negate Attack");
+    NEGATE_ATTACK("Negate Attack"),
+    MAGIC_CYLINDER("Magic Cylinder");
     String value;
 
     Effect(String value) {

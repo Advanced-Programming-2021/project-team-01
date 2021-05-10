@@ -20,7 +20,6 @@ public class MagicCylinder extends Command implements Activate{
         gameController.decreasePlayerLP(gameController.getAttackController().getAttackerNumber(),
                 board.getZoneSlotByCard(target).getAttack());
         board.sendCardFromSpellZoneToGraveyard(myCard);
-
     }
 
     @Override
