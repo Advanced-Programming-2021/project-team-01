@@ -25,7 +25,7 @@ public class ChangeOfHeart extends Command implements Activate {
         if (board.numberOfMonsterCards(gameController.getOpponentPlayerNumber()) == 0)
             throw new Exception("Monster Zone of your opponent is Empty");
         ArrayList<Card> monsterCards = board.getCardInMonsterZone(gameController.getOpponentPlayerNumber());
-        GameView.printListOfCard(monsterCards);
+        GameView.printListOfCardOpponent(monsterCards);
         int index = GameView.getValidNumber(0, monsterCards.size() - 1);
         target = monsterCards.get(index);
         board.sendCardFromMonsterZoneToAnother(target, gameController.getOpponentPlayerNumber()

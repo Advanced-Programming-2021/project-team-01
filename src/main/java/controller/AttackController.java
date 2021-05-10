@@ -125,7 +125,7 @@ public class AttackController {
         }
     }
 
-    protected String directAttack() throws CardNotSelected, NotMonsterCard, NotAllowedAction, AlreadyAttacked, DirectAttackError {
+    protected String directAttack() throws Exception {
         if (gameController.selectedCard.getCard() == null) {
             throw new CardNotSelected();
         }
@@ -142,10 +142,15 @@ public class AttackController {
         if (!gameController.getGameBoard().isMonsterZoneEmpty(gameController.getOpponentPlayerNumber())) {
             throw new DirectAttackError();
         }
-        MonsterCard attackingCard = (MonsterCard) gameController.selectedCard.getCard();
-        ZoneSlot zoneSlotAttacker = gameController.gameBoard.getZoneSlotByCard(attackingCard);
+        attacker = (MonsterCard) gameController.selectedCard.getCard();
+        ZoneSlot zoneSlotAttacker = gameController.gameBoard.getZoneSlotByCard(attacker);
+        gameController.createChain();
+        gameController.chainController.chain.run();
+        if (gameController.getState() != State.ATTACK){
+            return "battle negated";
+        }
         gameController.decreasePlayerLP(gameController.getOpponentPlayerNumber(), zoneSlotAttacker.getAttack());
-        attackedCards.add(attackingCard);
+        attackedCards.add(attacker);
         return String.format("you opponent receives %d battle damage", zoneSlotAttacker.getAttack());
     }
 

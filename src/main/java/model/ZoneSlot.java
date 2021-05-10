@@ -19,6 +19,9 @@ public class ZoneSlot {
         equippedCard = null;
     }
 
+    public boolean isDefending() {
+        return isDefending;
+    }
 
     public void setEquippedCard(Card card) {
         this.equippedCard = card;

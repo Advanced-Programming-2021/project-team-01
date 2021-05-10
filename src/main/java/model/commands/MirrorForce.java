@@ -7,7 +7,6 @@ import model.card.Card;
 
 public class MirrorForce extends Command implements Activate {
     Board board;
-    Card myCard;
 
     public MirrorForce(Card card) {
         super(card);
@@ -25,8 +24,9 @@ public class MirrorForce extends Command implements Activate {
         else
             monsterCardsOpponent = board.getPlayerTwoMonsterZone();
         for (int i = 1; i < 6; i++) {
-            if (!monsterCardsOpponent[i].isHidden())
-                board.sendCardFromMonsterZoneToGraveyard(i,player);
+            if (!monsterCardsOpponent[i].isHidden() && monsterCardsOpponent[i].getCard() != null &&
+                    !monsterCardsOpponent[i].isDefending())
+                board.sendCardFromMonsterZoneToGraveyard(i, player);
         }
         board.sendCardFromSpellZoneToGraveyard(myCard);
     }

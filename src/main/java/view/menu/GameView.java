@@ -4,6 +4,7 @@ import controller.GameController;
 import controller.exceptions.LevelFiveException;
 import controller.exceptions.LevelSevenException;
 import model.GamePhase;
+import model.ZoneSlot;
 import model.card.Card;
 import view.ConsoleCommands;
 import view.Menu;
@@ -260,6 +261,21 @@ public class GameView {
         for (Card card : cards) {
             stringBuilder.append(index).append("- ").append(card.getName()).append(':');
             stringBuilder.append(card.getDescription()).append('\n');
+            index++;
+        }
+        System.out.print(stringBuilder);
+    }
+
+    public static void printListOfCardOpponent(ArrayList<Card> cards) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int index = 0;
+        for (Card card : cards) {
+            ZoneSlot zoneSlot = GameController.getInstance().getGameBoard().getZoneSlotByCard(card);
+            if (!zoneSlot.isHidden()) {
+                stringBuilder.append(index).append("- ").append(card.getName()).append(':');
+                stringBuilder.append(card.getDescription()).append('\n');
+            }else
+                stringBuilder.append(index).append("- ").append("Hidden Card");
             index++;
         }
         System.out.print(stringBuilder);
