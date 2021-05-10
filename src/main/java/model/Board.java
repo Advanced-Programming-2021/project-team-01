@@ -740,15 +740,12 @@ public class Board {
     }
 
 
-    public Card getCounterTraps(int currentPlayerNumber) {
-        if (currentPlayerNumber == 1) {
+    public Card getCounterTraps(int playerNumber) {
+        if (playerNumber == 1) {
             for (int i = 1; i < 6; i++) {
                 Card card = playerOneSpellZone[i].getCard();
                 if (card instanceof TrapCard){
-                    Property property = ((TrapCard) card).getProperty();
-                    if (property == Property.QUICK_PLAY || property == Property.COUNTER){
-                        return card;
-                    }
+                    return card;
                 } else if (card instanceof SpellCard){
                     Property property = ((SpellCard) card).getProperty();
                     if (property == Property.QUICK_PLAY || property == Property.COUNTER){
@@ -760,10 +757,7 @@ public class Board {
             for (int i = 1; i < 6; i++) {
                 Card card = playerTwoSpellZone[i].getCard();
                 if (card instanceof TrapCard){
-                    Property property = ((TrapCard) card).getProperty();
-                    if (property == Property.QUICK_PLAY || property == Property.COUNTER){
-                        return card;
-                    }
+                    return card; //fixme: speed
                 } else if (card instanceof SpellCard){
                     Property property = ((SpellCard) card).getProperty();
                     if (property == Property.QUICK_PLAY || property == Property.COUNTER){
