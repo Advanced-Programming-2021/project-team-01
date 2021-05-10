@@ -20,6 +20,7 @@ public enum Effect {
     CHANGE_OF_HEART("Change of Heart"),
     SUPPLY_SQUAD("Supply Squad"),
     NEGATE_ATTACK("Negate Attack"),
+    MIRROR_FORCE("Mirror Force"),
     MAGIC_CYLINDER("Magic Cylinder");
     String value;
 
