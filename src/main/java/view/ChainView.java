@@ -1,10 +1,12 @@
 package view;
 
+import controller.ChainController;
 import controller.GameController;
 import model.Player;
 import view.menu.GameView;
 import view.menu.HandleRequestType;
 
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ChainView {
@@ -40,10 +42,20 @@ public class ChainView {
             showCard();
         } else if (input.equals("sb")) {
             GameController.getInstance().getGameBoard().showBoard();
-        }else if (input.equals("back")) {
-            GameController.getInstance().getChainController().back();
         } else {
             System.out.println("invalid command");
+        }
+    }
+
+    public void start() throws Exception {
+        Scanner scanner = HandleRequestType.scanner;
+        while (true){
+            String input = scanner.nextLine();
+            if (input.equals("back")){
+                GameController.getInstance().getChainController().back();
+                break;
+            }
+            run(input);
         }
     }
 

@@ -4,6 +4,7 @@ import model.card.Card;
 import model.commands.Command;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Chain {
     private ArrayList<Card> chainElements;
@@ -13,8 +14,8 @@ public class Chain {
     }
 
     public void run() throws Exception {
-        for (Card card: chainElements) {
-            card.doActions();
+        for (int i = chainElements.size() - 1; i >= 0; i--) {
+            chainElements.get(i).doActions();
         }
     }
 

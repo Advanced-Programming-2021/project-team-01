@@ -1,7 +1,8 @@
 package model.card;
 
 import com.google.gson.annotations.Expose;
-import controller.Spell;
+import com.sun.org.apache.xpath.internal.operations.Neg;
+import controller.Effect;
 import model.commands.*;
 
 import java.util.ArrayList;
@@ -81,38 +82,40 @@ public abstract class Card {
     }
 
     public void addCommandsToCard() {
-        if (this.getName().equals(Spell.POT_OF_GREED.toString())) {
+        if (this.getName().equals(Effect.POT_OF_GREED.toString())) {
             addCommands(new PotOfGreed());
-        } else if (this.getName().equals(Spell.RAIGEKI.toString())) {
+        } else if (this.getName().equals(Effect.RAIGEKI.toString())) {
             addCommands(new Raigeki());
-        } else if (this.getName().equals(Spell.MYSTICAL_SPACE_TYPHOON.toString())) {
+        } else if (this.getName().equals(Effect.MYSTICAL_SPACE_TYPHOON.toString())) {
             addCommands(new MysticalSpaceTyphoon());
-        } else if (this.getName().equals(Spell.MONSTER_REBORN.toString())) {
+        } else if (this.getName().equals(Effect.MONSTER_REBORN.toString())) {
             addCommands(new MonsterReborn());
-        } else if (this.getName().equals(Spell.TWIN_TWISTERS.toString())) {
+        } else if (this.getName().equals(Effect.TWIN_TWISTERS.toString())) {
             addCommands(new TwinTwisters());
-        } else if (this.getName().equals(Spell.HARPIES_FEATHER_DUSTER.toString())) {
+        } else if (this.getName().equals(Effect.HARPIES_FEATHER_DUSTER.toString())) {
             addCommands(new HarpiesFeatherDuster());
-        } else if (this.getName().equals(Spell.DARK_HOLE.toString())) {
+        } else if (this.getName().equals(Effect.DARK_HOLE.toString())) {
             addCommands(new DarkHole());
-        } else if (this.getName().equals(Spell.BLACK_PENDANT.toString())) {
+        } else if (this.getName().equals(Effect.BLACK_PENDANT.toString())) {
             addCommands(new EquipNormal());
-        } else if (this.getName().equals(Spell.MAGNUM_SHIELD.toString())) {
+        } else if (this.getName().equals(Effect.MAGNUM_SHIELD.toString())) {
             addCommands(new EquipWarrior());
-        } else if (this.getName().equals(Spell.UNITED_WE_STAND.toString())) {
+        } else if (this.getName().equals(Effect.UNITED_WE_STAND.toString())) {
             addCommands(new EquipNormal());
-        } else if (this.getName().equals(Spell.SWORD_OF_DESTRUCTION.toString())) {
+        } else if (this.getName().equals(Effect.SWORD_OF_DESTRUCTION.toString())) {
             addCommands(new EquipFiend());
-        } else if (this.getName().equals(Spell.TERRAFORMING.toString()))
+        } else if (this.getName().equals(Effect.TERRAFORMING.toString()))
             addCommands(new Terrafoming());
-        else if (this.getName().equals(Spell.UMIIRUKA.toString()) ||
-                this.getName().equals(Spell.YAMI.toString()) || this.getName().equals(Spell.FOREST.toString()) ||
-                this.getName().equals(Spell.CLOSED_FOREST.toString()))
+        else if (this.getName().equals(Effect.UMIIRUKA.toString()) ||
+                this.getName().equals(Effect.YAMI.toString()) || this.getName().equals(Effect.FOREST.toString()) ||
+                this.getName().equals(Effect.CLOSED_FOREST.toString()))
             addCommands(new FieldCard());
-        else if (this.getName().equals(Spell.CHANGE_OF_HEART.toString()))
+        else if (this.getName().equals(Effect.CHANGE_OF_HEART.toString()))
             addCommands(new ChangeOfHeart());
-        else if (this.getName().equals(Spell.SUPPLY_SQUAD.toString()))
+        else if (this.getName().equals(Effect.SUPPLY_SQUAD.toString()))
             addCommands(new SupplySquad());
+        else if (this.getName().equals(Effect.NEGATE_ATTACK.toString()))
+            addCommands(new NegateAttack());
     }
 
 }

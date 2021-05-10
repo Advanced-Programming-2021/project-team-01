@@ -35,13 +35,13 @@ public class EffectController {
         SpellCard card = (SpellCard) zoneSlot.getCard();
         if (card == null)
             return 0;
-        Spell spell = Spell.getSpellByName(card.getName());
-        if (spell == Spell.UMIIRUKA && monsterCard.getMonsterTypes().contains(MonsterType.AQUA))
+        Effect effect = Effect.getSpellByName(card.getName());
+        if (effect == Effect.UMIIRUKA && monsterCard.getMonsterTypes().contains(MonsterType.AQUA))
             return 500;
-        if (spell == Spell.FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.INSECT) ||
+        if (effect == Effect.FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.INSECT) ||
                 monsterCard.getMonsterTypes().contains(MonsterType.BEAST) || monsterCard.getMonsterTypes().contains(MonsterType.BEAST_WARRIOR)))
             return 200;
-        if (spell == Spell.CLOSED_FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.BEAST) ||
+        if (effect == Effect.CLOSED_FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.BEAST) ||
                 monsterCard.getMonsterTypes().contains(MonsterType.BEAST_WARRIOR))) {
             if (gameController.getCurrentPlayerNumber() == 1) {
                 if (board.getOwnerOfCard(monsterCard) == 1)
@@ -51,7 +51,7 @@ public class EffectController {
                     return 100 * board.getPlayerTwoGraveYard().size();
             }
         }
-        if (spell == Spell.YAMI) {
+        if (effect == Effect.YAMI) {
             if (monsterCard.getMonsterTypes().contains(MonsterType.FIEND) ||
                     monsterCard.getMonsterTypes().contains(MonsterType.SPELLCASTER))
                 return 200;
@@ -68,13 +68,13 @@ public class EffectController {
         SpellCard card = (SpellCard) zoneSlot.getCard();
         if (card == null)
             return 0;
-        Spell spell = Spell.getSpellByName(card.getName());
-        if (spell == Spell.UMIIRUKA && monsterCard.getMonsterTypes().contains(MonsterType.AQUA))
+        Effect effect = Effect.getSpellByName(card.getName());
+        if (effect == Effect.UMIIRUKA && monsterCard.getMonsterTypes().contains(MonsterType.AQUA))
             return 500;
-        if (spell == Spell.FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.INSECT) ||
+        if (effect == Effect.FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.INSECT) ||
                 monsterCard.getMonsterTypes().contains(MonsterType.BEAST) || monsterCard.getMonsterTypes().contains(MonsterType.BEAST_WARRIOR)))
             return 200;
-        if (spell == Spell.YAMI) {
+        if (effect == Effect.YAMI) {
             if (monsterCard.getMonsterTypes().contains(MonsterType.FIEND) ||
                     monsterCard.getMonsterTypes().contains(MonsterType.SPELLCASTER))
                 return 200;
@@ -91,13 +91,13 @@ public class EffectController {
         SpellCard card = (SpellCard) zoneSlot.getCard();
         if (card == null)
             return 0;
-        Spell spell = Spell.getSpellByName(card.getName());
-        if (spell == Spell.UMIIRUKA && monsterCard.getMonsterTypes().contains(MonsterType.AQUA))
+        Effect effect = Effect.getSpellByName(card.getName());
+        if (effect == Effect.UMIIRUKA && monsterCard.getMonsterTypes().contains(MonsterType.AQUA))
             return -400;
-        if (spell == Spell.FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.INSECT) ||
+        if (effect == Effect.FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.INSECT) ||
                 monsterCard.getMonsterTypes().contains(MonsterType.BEAST) || monsterCard.getMonsterTypes().contains(MonsterType.BEAST_WARRIOR)))
             return 200;
-        if (spell == Spell.YAMI) {
+        if (effect == Effect.YAMI) {
             if (monsterCard.getMonsterTypes().contains(MonsterType.FIEND) ||
                     monsterCard.getMonsterTypes().contains(MonsterType.SPELLCASTER))
                 return 200;
@@ -114,13 +114,13 @@ public class EffectController {
         SpellCard card = (SpellCard) zoneSlot.getCard();
         if (card == null)
             return 0;
-        Spell spell = Spell.getSpellByName(card.getName());
-        if (spell == Spell.UMIIRUKA && monsterCard.getMonsterTypes().contains(MonsterType.AQUA))
+        Effect effect = Effect.getSpellByName(card.getName());
+        if (effect == Effect.UMIIRUKA && monsterCard.getMonsterTypes().contains(MonsterType.AQUA))
             return -400;
-        if (spell == Spell.FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.INSECT) ||
+        if (effect == Effect.FOREST && (monsterCard.getMonsterTypes().contains(MonsterType.INSECT) ||
                 monsterCard.getMonsterTypes().contains(MonsterType.BEAST) || monsterCard.getMonsterTypes().contains(MonsterType.BEAST_WARRIOR)))
             return 200;
-        if (spell == Spell.YAMI) {
+        if (effect == Effect.YAMI) {
             if (monsterCard.getMonsterTypes().contains(MonsterType.FIEND) ||
                     monsterCard.getMonsterTypes().contains(MonsterType.SPELLCASTER))
                 return 200;

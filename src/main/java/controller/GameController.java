@@ -67,6 +67,10 @@ public class GameController {
         return playerOne;
     }
 
+    public void changeTurn(){
+        currentPlayer = getOpponent();
+    }
+
     public ArrayList<Card> getDestroyedCardsForPlayerOne() {
         return destroyedCardsForPlayerOne;
     }
@@ -608,10 +612,15 @@ public class GameController {
         }
     }
 
-    public void createChain(){
+    public void createChain() throws Exception {
         chain = new Chain();
-        chainController = new ChainController(currentPlayer, getOpponent(), chain);
+        chainController = new ChainController(chain);
+        chainController.run();
 
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }
 //    backup

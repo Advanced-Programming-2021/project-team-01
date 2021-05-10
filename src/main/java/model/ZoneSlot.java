@@ -1,7 +1,7 @@
 package model;
 
 import controller.GameController;
-import controller.Spell;
+import controller.Effect;
 import model.card.Card;
 import model.card.MonsterCard;
 import model.card.SpellCard;
@@ -41,28 +41,28 @@ public class ZoneSlot {
     }
 
     private int equipAttackBooster() {
-        if (Spell.getSpellByName(equippedCard.getName()) == Spell.BLACK_PENDANT) {
+        if (Effect.getSpellByName(equippedCard.getName()) == Effect.BLACK_PENDANT) {
             return 500;
-        } else if (Spell.getSpellByName(equippedCard.getName()) == Spell.SWORD_OF_DESTRUCTION) {
+        } else if (Effect.getSpellByName(equippedCard.getName()) == Effect.SWORD_OF_DESTRUCTION) {
             return 400;
-        } else if (Spell.getSpellByName(equippedCard.getName()) == Spell.MAGNUM_SHIELD) {
+        } else if (Effect.getSpellByName(equippedCard.getName()) == Effect.MAGNUM_SHIELD) {
             if (!isDefending) {
                 return ((MonsterCard) card).getDefense();
             }
-        } else if (Spell.getSpellByName(equippedCard.getName()) == Spell.UNITED_WE_STAND) {
+        } else if (Effect.getSpellByName(equippedCard.getName()) == Effect.UNITED_WE_STAND) {
             return GameController.getInstance().getEffectController().unitedWeStand();
         }
         return 0;
     }
 
     private int equipDefenceBooster() {
-        if (Spell.getSpellByName(equippedCard.getName()) == Spell.UNITED_WE_STAND) {
+        if (Effect.getSpellByName(equippedCard.getName()) == Effect.UNITED_WE_STAND) {
             return GameController.getInstance().getEffectController().unitedWeStand();
-        } else if (Spell.getSpellByName(equippedCard.getName()) == Spell.MAGNUM_SHIELD) {
+        } else if (Effect.getSpellByName(equippedCard.getName()) == Effect.MAGNUM_SHIELD) {
             if (isDefending) {
                 return ((MonsterCard) card).getAttack();
             }
-        } else if (Spell.getSpellByName(equippedCard.getName()) == Spell.SWORD_OF_DESTRUCTION) {
+        } else if (Effect.getSpellByName(equippedCard.getName()) == Effect.SWORD_OF_DESTRUCTION) {
             return -200;
         }
         return 0;

@@ -1,5 +1,6 @@
 package model.commands;
 
+import controller.ChainController;
 import model.Board;
 import model.State;
 import model.card.Card;
@@ -12,7 +13,9 @@ public class NegateAttack extends Command implements Activate {
         board = gameController.getGameBoard();
         myCard = gameController.getSelectedCard().getCard();
         board.setSpellFaceUp(myCard);
-
+        gameController.setState(State.NONE);
+        board.sendCardFromSpellZoneToGraveyard(board.getOwnerOfCard(myCard),
+                myCard);
     }
 
     @Override

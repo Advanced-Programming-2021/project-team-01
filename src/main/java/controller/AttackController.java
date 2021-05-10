@@ -47,6 +47,7 @@ public class AttackController {
             throw new NoCardToAttack();
         }
         gameController.createChain();
+        gameController.chainController.chain.run();
         if (gameController.getState() != State.ATTACK){
             return "battle negated";
         }

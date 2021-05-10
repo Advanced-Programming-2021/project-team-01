@@ -1,6 +1,6 @@
 package controller;
 
-public enum Spell {
+public enum Effect {
     MONSTER_REBORN("Monster Reborn"),
     POT_OF_GREED("Pot of Greed"),
     TERRAFORMING("Terraforming"),
@@ -18,17 +18,18 @@ public enum Spell {
     MYSTICAL_SPACE_TYPHOON("Mystical space typhoon"),
     TWIN_TWISTERS("Twin Twisters"),
     CHANGE_OF_HEART("Change of Heart"),
-    SUPPLY_SQUAD("Supply Squad");
+    SUPPLY_SQUAD("Supply Squad"),
+    NEGATE_ATTACK("Negate Attack");
     String value;
 
-    Spell(String value) {
+    Effect(String value) {
         this.value = value;
     }
 
-    public static Spell getSpellByName(String name) {
-        for (Spell spell : Spell.values())
-            if (spell.value.equals(name))
-                return spell;
+    public static Effect getSpellByName(String name) {
+        for (Effect effect : Effect.values())
+            if (effect.value.equals(name))
+                return effect;
         return null;
     }
 
