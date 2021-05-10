@@ -1,6 +1,8 @@
 package model;
 
 import model.card.Card;
+import model.card.SpellCard;
+import model.card.TrapCard;
 
 import java.util.ArrayList;
 
@@ -54,6 +56,13 @@ public class Deck {
         for (Card iteratorCard : sideDeck) {
             if (iteratorCard.equals(card))
                 counter++;
+        }
+        if (card instanceof TrapCard) {
+            if (((TrapCard) card).getLimitationStatus().equals("Limited"))
+                return counter == 0;
+        } else if (card instanceof SpellCard) {
+            if (((SpellCard) card).getLimitationStatus().equals("Limited"))
+                return counter == 0;
         }
         return counter < 3;
     }
