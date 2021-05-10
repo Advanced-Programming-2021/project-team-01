@@ -2,12 +2,17 @@ package model.commands;
 
 import model.Board;
 import model.ZoneSlot;
+import model.card.Card;
 import model.card.CardLocation;
 import model.card.MonsterCard;
 import model.card.MonsterType;
 import view.menu.GameView;
 
 public class EquipFiend extends Command implements Activate{
+    public EquipFiend(Card card) {
+        super(card);
+    }
+
     @Override
     public void run() throws Exception {
         Board board = gameController.getGameBoard();

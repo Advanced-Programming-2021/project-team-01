@@ -11,6 +11,11 @@ import java.util.ArrayList;
 
 public class TwinTwisters extends Command implements Activate{
     Board board;
+
+    public TwinTwisters(Card card) {
+        super(card);
+    }
+
     @Override
     public void run() throws InvalidCommandException, MonsterZoneFull, Exception {
         board = gameController.getGameBoard();
@@ -44,12 +49,12 @@ public class TwinTwisters extends Command implements Activate{
                 throw new Exception("Not valid number");
             if (zoneSlots[Integer.parseInt(firstCardNum)].getCard() == null)
                 throw new Exception("Empty zone");
-            board.sendCardFromSpellZoneToGraveyard(gameController.getOpponentPlayerNumber(), zoneSlots[Integer.parseInt(firstCardNum)].getCard());
-            board.sendCardFromSpellZoneToGraveyard(gameController.getOpponentPlayerNumber(), zoneSlots[Integer.parseInt(secondCardNum)].getCard());
+            board.sendCardFromSpellZoneToGraveyard(zoneSlots[Integer.parseInt(firstCardNum)].getCard());
+            board.sendCardFromSpellZoneToGraveyard(zoneSlots[Integer.parseInt(secondCardNum)].getCard());
         } else {
-            board.sendCardFromSpellZoneToGraveyard(gameController.getOpponentPlayerNumber(), zoneSlots[Integer.parseInt(firstCardNum)].getCard());
+            board.sendCardFromSpellZoneToGraveyard(zoneSlots[Integer.parseInt(firstCardNum)].getCard());
         }
-        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
+        board.sendCardFromSpellZoneToGraveyard(myCard);
         board.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(),
                 board.getCard("hand", gameController.getCurrentPlayerNumber(), Integer.parseInt(discardCard)));
     }

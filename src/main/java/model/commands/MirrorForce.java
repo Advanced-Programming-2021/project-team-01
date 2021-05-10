@@ -8,6 +8,10 @@ public class MirrorForce extends Command implements Activate {
     Board board;
     Card myCard;
 
+    public MirrorForce(Card card) {
+        super(card);
+    }
+
     @Override
     public void run() throws Exception {
         board = gameController.getGameBoard();

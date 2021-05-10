@@ -114,7 +114,8 @@ public class Board {
         }
     }
 
-    public void sendCardFromSpellZoneToGraveyard(int player, Card card) {
+    public void sendCardFromSpellZoneToGraveyard(Card card) {
+        int player = getOwnerOfCard(card);
         if (player == 1) {
             playerOneGraveYard.add(card);
             for (int i = 1; i < 6; i++) {

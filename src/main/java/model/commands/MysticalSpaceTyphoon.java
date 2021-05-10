@@ -9,6 +9,11 @@ import java.util.ArrayList;
 
 public class MysticalSpaceTyphoon extends Command implements Activate{
     Board board;
+
+    public MysticalSpaceTyphoon(Card card) {
+        super(card);
+    }
+
     @Override
     public void run() throws Exception {
         board = gameController.getGameBoard();
@@ -29,7 +34,7 @@ public class MysticalSpaceTyphoon extends Command implements Activate{
             throw new Exception("Invalid number");
         if (zoneSlots[number].getCard() == null)
             throw new Exception("Empty zone");
-        board.sendCardFromSpellZoneToGraveyard(gameController.getOpponentPlayerNumber(), zoneSlots[number].getCard());
-        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
+        board.sendCardFromSpellZoneToGraveyard(zoneSlots[number].getCard());
+        board.sendCardFromSpellZoneToGraveyard(myCard);
     }
 }

@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 public class MonsterReborn extends Command implements Activate{
 
+    public MonsterReborn(Card card) {
+        super(card);
+    }
+
     @Override
     public void run() throws InvalidCommandException, MonsterZoneFull {
         Board board = gameController.getGameBoard();
@@ -32,7 +36,7 @@ public class MonsterReborn extends Command implements Activate{
         Card card = graveYard.get(cardIndex);
         board.addCardFromGraveYardToField(gameController.getCurrentPlayerNumber(), card);
         graveYard.remove(card);
-        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
+        board.sendCardFromSpellZoneToGraveyard(myCard);
 
     }
 }

@@ -2,9 +2,15 @@ package model.commands;
 
 import model.Board;
 import model.ZoneSlot;
+import model.card.Card;
 
 public class Raigeki extends Command implements Activate{
     Board board;
+
+    public Raigeki(Card card) {
+        super(card);
+    }
+
     @Override
     public void run() {
         board = gameController.getGameBoard();
@@ -17,7 +23,7 @@ public class Raigeki extends Command implements Activate{
                     zoneSlot[i].setDefending(false);
                 }
             }
-            board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
+            board.sendCardFromSpellZoneToGraveyard(myCard);
         } else {
             ZoneSlot[] zoneSlot = board.getPlayerOneMonsterZone();
             for (int i = 1; i < 6; i++) {
@@ -27,7 +33,7 @@ public class Raigeki extends Command implements Activate{
                     zoneSlot[i].setDefending(false);
                 }
             }
-            board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
+            board.sendCardFromSpellZoneToGraveyard(myCard);
         }
     }
 }

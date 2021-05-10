@@ -39,14 +39,16 @@ public class ChainController {
             if (property == Property.QUICK_PLAY || property == Property.COUNTER) {
                 if (chain.doesExistInChain(card))
                     throw new Exception("Card activated before");
-                else chain.setNext(card);
+                else if (card.canActivate())chain.setNext(card);
+                else throw new Exception("you cant activate this card");
             }
         } else if (card instanceof SpellCard) {
             Property property = ((SpellCard) card).getProperty();
             if (property == Property.QUICK_PLAY || property == Property.COUNTER) {
                 if (chain.doesExistInChain(card))
                     throw new Exception("Card activated before");
-                else chain.setNext(card);
+                else if (card.canActivate())chain.setNext(card);
+                else throw new Exception("you cant activate this card");
             }
         }else {
             throw new Exception("it’s not your turn to play this kind of moves");

@@ -2,6 +2,7 @@ package model.commands;
 
 import model.Board;
 import model.ZoneSlot;
+import model.card.Card;
 import model.card.CardLocation;
 import model.card.MonsterCard;
 import model.card.MonsterType;
@@ -9,6 +10,11 @@ import view.menu.GameView;
 
 public class EquipWarrior extends Command implements Activate{
     Board board = gameController.getGameBoard();
+
+    public EquipWarrior(Card card) {
+        super(card);
+    }
+
     @Override
     public void run() throws Exception {
         if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0) {

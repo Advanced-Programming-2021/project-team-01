@@ -2,9 +2,15 @@ package model.commands;
 
 import model.Board;
 import model.ZoneSlot;
+import model.card.Card;
 
 public class DarkHole extends Command implements Activate {
     Board board;
+
+    public DarkHole(Card card) {
+        super(card);
+    }
+
     @Override
     public void run() throws Exception {
         board = gameController.getGameBoard();
@@ -28,6 +34,6 @@ public class DarkHole extends Command implements Activate {
                 }
             }
         }
-        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
+        board.sendCardFromSpellZoneToGraveyard(myCard);
     }
 }

@@ -11,6 +11,11 @@ import java.util.ArrayList;
 
 public class Terrafoming extends Command implements Activate{
     Board board;
+
+    public Terrafoming(Card card) {
+        super(card);
+    }
+
     @Override
     public void run() throws NoFieldSpellInDeck {
         board = gameController.getGameBoard();
@@ -28,6 +33,6 @@ public class Terrafoming extends Command implements Activate{
         int index = GameView.getValidNumber(0,fieldSpells.size()-1);
         Card card = fieldSpells.get(index);
         board.addCardFromDeckToHand(gameController.getCurrentPlayerNumber(), card);
-        board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
+        board.sendCardFromSpellZoneToGraveyard(myCard);
     }
 }

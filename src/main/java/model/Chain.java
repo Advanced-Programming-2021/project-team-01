@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Chain {
-    private ArrayList<Card> chainElements;
+    private final ArrayList<Card> chainElements;
 
     public Chain() {
         chainElements = new ArrayList<>();

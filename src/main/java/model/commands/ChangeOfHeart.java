@@ -11,13 +11,15 @@ import java.util.ArrayList;
 
 public class ChangeOfHeart extends Command implements Activate {
     Card target;
-    Card myCard;
     Board board;
+
+    public ChangeOfHeart(Card card) {
+        super(card);
+    }
 
     @Override
     public void run() throws Exception {
         board = gameController.getGameBoard();
-        myCard = gameController.getSelectedCard().getCard();
         if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0)
             throw new MonsterZoneFull();
         if (board.numberOfMonsterCards(gameController.getOpponentPlayerNumber()) == 0)
@@ -30,13 +32,13 @@ public class ChangeOfHeart extends Command implements Activate {
                 , gameController.getCurrentPlayerNumber());
     }
 
-    public void runContinuous() throws Exception {
+    public void runContinuous() {
         GamePhase gamePhase = gameController.getGamePhase();
         if (gamePhase == GamePhase.END_PHASE) {
             if (board.isCardInMonsterZone((MonsterCard) target))
                 board.sendCardFromMonsterZoneToAnother(target, gameController.getCurrentPlayerNumber(),
                         gameController.getOpponentPlayerNumber());
-            board.sendCardFromSpellZoneToGraveyard(gameController.getCurrentPlayerNumber(), myCard);
+            board.sendCardFromSpellZoneToGraveyard(myCard);
         }
     }
 }

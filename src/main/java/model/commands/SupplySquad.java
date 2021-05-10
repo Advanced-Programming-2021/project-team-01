@@ -9,6 +9,11 @@ import java.util.ArrayList;
 public class SupplySquad extends Command implements Activate {
     Board board;
     Card myCard;
+
+    public SupplySquad(Card card) {
+        super(card);
+    }
+
     @Override
     public void run() throws Exception {
         board = gameController.getGameBoard();

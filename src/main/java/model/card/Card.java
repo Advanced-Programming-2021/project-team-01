@@ -83,39 +83,39 @@ public abstract class Card {
 
     public void addCommandsToCard() {
         if (this.getName().equals(Effect.POT_OF_GREED.toString())) {
-            addCommands(new PotOfGreed());
+            addCommands(new PotOfGreed(this));
         } else if (this.getName().equals(Effect.RAIGEKI.toString())) {
-            addCommands(new Raigeki());
+            addCommands(new Raigeki(this));
         } else if (this.getName().equals(Effect.MYSTICAL_SPACE_TYPHOON.toString())) {
-            addCommands(new MysticalSpaceTyphoon());
+            addCommands(new MysticalSpaceTyphoon(this));
         } else if (this.getName().equals(Effect.MONSTER_REBORN.toString())) {
-            addCommands(new MonsterReborn());
+            addCommands(new MonsterReborn(this));
         } else if (this.getName().equals(Effect.TWIN_TWISTERS.toString())) {
-            addCommands(new TwinTwisters());
+            addCommands(new TwinTwisters(this));
         } else if (this.getName().equals(Effect.HARPIES_FEATHER_DUSTER.toString())) {
-            addCommands(new HarpiesFeatherDuster());
+            addCommands(new HarpiesFeatherDuster(this));
         } else if (this.getName().equals(Effect.DARK_HOLE.toString())) {
-            addCommands(new DarkHole());
+            addCommands(new DarkHole(this));
         } else if (this.getName().equals(Effect.BLACK_PENDANT.toString())) {
-            addCommands(new EquipNormal());
+            addCommands(new EquipNormal(this));
         } else if (this.getName().equals(Effect.MAGNUM_SHIELD.toString())) {
-            addCommands(new EquipWarrior());
+            addCommands(new EquipWarrior(this));
         } else if (this.getName().equals(Effect.UNITED_WE_STAND.toString())) {
-            addCommands(new EquipNormal());
+            addCommands(new EquipNormal(this));
         } else if (this.getName().equals(Effect.SWORD_OF_DESTRUCTION.toString())) {
-            addCommands(new EquipFiend());
+            addCommands(new EquipFiend(this));
         } else if (this.getName().equals(Effect.TERRAFORMING.toString()))
-            addCommands(new Terrafoming());
+            addCommands(new Terrafoming(this));
         else if (this.getName().equals(Effect.UMIIRUKA.toString()) ||
                 this.getName().equals(Effect.YAMI.toString()) || this.getName().equals(Effect.FOREST.toString()) ||
                 this.getName().equals(Effect.CLOSED_FOREST.toString()))
-            addCommands(new FieldCard());
+            addCommands(new FieldCard(this));
         else if (this.getName().equals(Effect.CHANGE_OF_HEART.toString()))
-            addCommands(new ChangeOfHeart());
+            addCommands(new ChangeOfHeart(this));
         else if (this.getName().equals(Effect.SUPPLY_SQUAD.toString()))
-            addCommands(new SupplySquad());
+            addCommands(new SupplySquad(this));
         else if (this.getName().equals(Effect.NEGATE_ATTACK.toString()))
-            addCommands(new NegateAttack());
+            addCommands(new NegateAttack(this));
     }
 
 }

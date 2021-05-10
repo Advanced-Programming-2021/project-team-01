@@ -2,10 +2,15 @@ package model.commands;
 
 import model.Board;
 import model.ZoneSlot;
+import model.card.Card;
 import model.card.CardLocation;
 import view.menu.GameView;
 
 public class EquipNormal extends Command implements Activate {
+
+    public EquipNormal(Card card) {
+        super(card);
+    }
 
     @Override
     public void run() throws Exception {
