@@ -148,4 +148,12 @@ public class AttackController {
         attackedCards.add(attackingCard);
         return String.format("you opponent receives %d battle damage", zoneSlotAttacker.getAttack());
     }
+
+    public int getAttackerNumber() {
+        return gameController.gameBoard.getOwnerOfCard(attacker);
+    }
+
+    public int getTargetNumber() {
+        return gameController.gameBoard.getOwnerOfCard(target);
+    }
 }
