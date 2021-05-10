@@ -3,6 +3,8 @@ package controller;
 import controller.exceptions.*;
 import model.*;
 import model.card.*;
+import view.Menu;
+import view.menu.HandleRequestType;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,6 +23,8 @@ public class GameController {
     protected boolean isAI;
     protected Card summonedCard;
     protected int rounds;
+    protected int playerOneWin;
+    protected int playerTwoWin;
     protected SelectedCard selectedCard;
     protected ArrayList<Card> changedPositionCards = new ArrayList<>();
     protected ArrayList<Card> destroyedCardsForPlayerOne = new ArrayList<>();
@@ -158,6 +162,10 @@ public class GameController {
             throw new InvalidRoundNumber();
         }
         rounds = numberOfRounds;
+        if (numberOfRounds == 3) {
+            playerOneWin = 0;
+            playerTwoWin = 0;
+        }
         playerOneLp = 8000;
         playerTwoLp = 8000;
         gameBoard = new Board(playerOneDeck, playerTwoDeck);
@@ -398,14 +406,24 @@ public class GameController {
         String result = attackController.attack(number);
         selectedCard.reset();
         state = State.NONE;
+        if (isGameFinished()) {
+            finishGame();
+            return String.format("%s won the game and the score is: %d-%d",
+                    playerOneLp <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), playerOne.getScore(), playerTwo.getScore());
+        }
         return result;
     }
 
-    public String directAttack() throws AlreadyAttacked, CardNotSelected, NotAllowedAction, NotMonsterCard, DirectAttackError {
+    public String directAttack() throws Exception {
         state = State.ATTACK;
         String result = attackController.directAttack();
         selectedCard.reset();
         state = State.NONE;
+        if (isGameFinished()) {
+            finishGame();
+            return String.format("%s won the game and the score is: %d-%d",
+                    playerOneLp <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), playerOne.getScore(), playerTwo.getScore());
+        }
         return result;
     }
 
@@ -552,14 +570,41 @@ public class GameController {
         return playerOneLp <= 0 || playerTwoLp <= 0;
     }
 
-    public void finishGame() {
-        if (playerOneLp <= 0) {
-            playerOne.increaseLoseRate();
-            playerTwo.increaseWinRate();
-            //TODO: if game is 3 taei bayad game jadid start kone
+    public void finishGame() throws NoActiveDeck, InvalidDeck, UsernameNotExists, InvalidRoundNumber {
+        if (rounds == 1) {
+            if (playerOneLp <= 0) {
+                playerOne.increaseLoseRate();
+                playerTwo.increaseWinRate(1000);
+                playerOne.increaseMoney(100);
+                playerTwo.increaseMoney(1000 + playerTwoLp);
+            } else {
+                playerTwo.increaseLoseRate();
+                playerOne.increaseWinRate(1000);
+                playerTwo.increaseMoney(100);
+                playerOne.increaseMoney(1000 + playerOneLp);
+            }
+            HandleRequestType.currentMenu = Menu.MAIN_MENU;
         } else {
-            playerTwo.increaseLoseRate();
-            playerOne.increaseWinRate();
+            if (playerOneWin == 2 || playerTwoWin == 2) {
+                if (playerOneLp <= 0) {
+                    playerOne.increaseLoseRate();
+                    playerTwo.increaseWinRate(3000);
+                    playerOne.increaseMoney(300);
+                    playerTwo.increaseMoney(3000 + 3 * playerTwoLp);
+                } else {
+                    playerTwo.increaseLoseRate();
+                    playerOne.increaseWinRate(3000);
+                    playerTwo.increaseMoney(300);
+                    playerOne.increaseMoney(3000 + 3 * playerOneLp);
+                }
+                HandleRequestType.currentMenu = Menu.MAIN_MENU;
+            } else {
+                if (playerOneLp <= 0)
+                    playerTwoWin++;
+                else
+                    playerOneWin++;
+                startGame(playerTwo.getUsername(), 2);
+            }
         }
     }
 

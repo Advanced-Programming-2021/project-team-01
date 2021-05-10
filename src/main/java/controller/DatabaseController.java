@@ -34,10 +34,10 @@ public class DatabaseController {
         while ((spellTrapArray = reader.readNext()) != null) {
             if (spellTrapArray[1].equals("Trap")) {
                 Card.addCardToDatabase(new TrapCard(spellTrapArray[0], spellTrapArray[3], Integer.parseInt(spellTrapArray[5]),
-                        Property.getProperty(spellTrapArray[2])));
+                        Property.getProperty(spellTrapArray[2]), spellTrapArray[4]));
             } else {
                 Card.addCardToDatabase(new SpellCard(spellTrapArray[0], spellTrapArray[3], Integer.parseInt(spellTrapArray[5]),
-                        Property.getProperty(spellTrapArray[2])));
+                        Property.getProperty(spellTrapArray[2]), spellTrapArray[4]));
             }
         }
     }

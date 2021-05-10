@@ -2,17 +2,22 @@ package model.card;
 
 public class SpellCard extends Card {
     Property property;
-    //fixme: status is unclear
+    String limitationStatus;
 
 
     public Property getProperty() {
         return property;
     }
 
-    public SpellCard(String name, String description, int price, Property property) {
+    public String getLimitationStatus() {
+        return limitationStatus;
+    }
+
+    public SpellCard(String name, String description, int price, Property property, String limitationStatus) {
         super(name, description, price);
         super.type = "spell";
         this.property = property;
+        this.limitationStatus = limitationStatus;
     }
 
     //    @Override
@@ -21,7 +26,7 @@ public class SpellCard extends Card {
 //        spellCard.set
 //    }
     public Object clone() throws CloneNotSupportedException {
-        return new SpellCard(this.getName(), this.getDescription(), this.getPrice(), this.property);
+        return new SpellCard(this.getName(), this.getDescription(), this.getPrice(), this.property, this.limitationStatus);
     }
 
 }

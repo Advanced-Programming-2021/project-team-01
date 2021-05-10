@@ -74,6 +74,10 @@ public class Player {
         this.money = money - amount;
     }
 
+    public void increaseMoney(int amount) {
+        this.money = money - amount;
+    }
+
     public void setActiveDeck(String deckName) {
         activeDeck = deckName;
     }
@@ -90,7 +94,8 @@ public class Player {
         loseRate++;
     }
 
-    public void increaseWinRate() {
+    public void increaseWinRate(int amount) {
+        score += amount;
         winRate++;
     }
 
