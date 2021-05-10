@@ -26,6 +26,7 @@ public class ChainController {
 
     private void run(){
         ChainView.printTurn(currentPlayer);
+        GameView.showConsole("Do you want to activate your trap and spell?");
         if (!GameView.getValidResponse()){
             ChainView.printTurn(opponentPlayer);
             HandleRequestType.currentMenu = Menu.GAME_MENU;

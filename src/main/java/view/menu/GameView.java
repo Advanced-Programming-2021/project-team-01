@@ -239,10 +239,10 @@ public class GameView {
 
     public static boolean getValidResponse() {
         while (true) {
-            String input = prompt("y/n:");
-            if (input.equals("y")){
+            String input = prompt("Yes/No:");
+            if (input.equals("Yes")){
                 return true;
-            }else if (input.equals("n")){
+            }else if (input.equals("No")){
                 return false;
             }else {
                 System.out.println("Invalid Command!");
