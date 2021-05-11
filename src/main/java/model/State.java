@@ -4,6 +4,7 @@ public enum State {
     ACTIVE_SPELL,
     ACTIVE_TRAP,
     ATTACK,
+    SUMMON,
     NONE;
 
 //    public static State getState(String type) {

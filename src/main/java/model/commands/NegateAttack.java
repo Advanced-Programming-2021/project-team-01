@@ -1,6 +1,5 @@
 package model.commands;
 
-import controller.ChainController;
 import model.Board;
 import model.State;
 import model.card.Card;
@@ -20,11 +19,6 @@ public class NegateAttack extends Command implements Activate {
 
         gameController.setState(State.NONE);
         board.sendCardFromSpellZoneToGraveyard(myCard);
-    }
-
-    @Override
-    public void runContinuous() throws Exception {
-
     }
 
     @Override

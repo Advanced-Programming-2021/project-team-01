@@ -616,7 +616,6 @@ public class GameController {
         chain = new Chain();
         chainController = new ChainController(chain);
         chainController.run();
-
     }
 
     public void setState(State state) {

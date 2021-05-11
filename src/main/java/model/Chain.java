@@ -1,10 +1,8 @@
 package model;
 
 import model.card.Card;
-import model.commands.Command;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Chain {
     private final ArrayList<Card> chainElements;
