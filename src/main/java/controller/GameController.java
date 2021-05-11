@@ -8,6 +8,7 @@ import view.menu.HandleRequestType;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.TreeMap;
 
 public class GameController {
     protected static GameController instance = null;
@@ -439,8 +440,14 @@ public class GameController {
                 gameBoard.setSpell(getCurrentPlayerNumber(), card);
                 gameBoard.setSpellFaceUp(selectedCard.getCard());
             }
+        } else if (selectedCard.getCard() instanceof TrapCard){
+            TrapCard card = (TrapCard) selectedCard.getCard();
+            if (selectedCard.getCardLocation() == CardLocation.HAND) {
+                gameBoard.setTrap(getCurrentPlayerNumber(), card);
+                gameBoard.setSpellFaceUp(selectedCard.getCard());
+            }
         }
-        selectedCard.getCard().doActions();
+            selectedCard.getCard().doActions();
         state = State.NONE;
     }
 

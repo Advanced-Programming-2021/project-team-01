@@ -768,4 +768,12 @@ public class Board {
         }
         return null;
     }
+
+    public ArrayList<Card> getPlayerOneHand() {
+        return playerOneHand;
+    }
+
+    public ArrayList<Card> getPlayerTwoHand() {
+        return playerTwoHand;
+    }
 }
