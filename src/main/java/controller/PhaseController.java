@@ -31,20 +31,28 @@ public class PhaseController {
             case STANDBY_PHASE:
                 setGamePhase(GamePhase.MAIN_PHASE1);
                 result = "phase: main 1 phase";
+                gameController.createChain();
+                gameController.chain.run();
                 break;
             case MAIN_PHASE1:
                 setGamePhase(GamePhase.BATTLE_PHASE);
                 result = "phase: battle phase";
+                gameController.createChain();
+                gameController.chain.run();
                 break;
             case BATTLE_PHASE:
                 setGamePhase(GamePhase.MAIN_PHASE2);
                 result = "phase: main 2 phase";
+                gameController.createChain();
+                gameController.chain.run();
                 break;
             case MAIN_PHASE2:
                 setGamePhase(GamePhase.END_PHASE);
                 result = String.format("phase: end phase\nits %s’s turn", GameController.currentPlayer.getNickname());
                 break;
         }
+
+
         return result;
     }
 

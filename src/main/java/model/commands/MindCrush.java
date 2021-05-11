@@ -1,6 +1,7 @@
 package model.commands;
 
 import controller.Effect;
+import controller.GameController;
 import model.Board;
 import model.GamePhase;
 import model.card.Card;
@@ -22,7 +23,7 @@ public class MindCrush extends Command implements Activate {
         board = gameController.getGameBoard();
         board.setSpellFaceUp(myCard);
         String input = GameView.prompt("Enter a Card Name: ");
-        while (Effect.getSpellByName(input) == null)
+        while (Card.getCardByName(input) == null)
             input = GameView.prompt("Enter a valid Card Name: ");
         int currentPlayer = board.getOwnerOfCard(myCard);
         ArrayList<Card> cardsInHand;
@@ -49,6 +50,7 @@ public class MindCrush extends Command implements Activate {
             int index = random.nextInt(upperBound);
             Card card = cardsInHand.get(index);
             board.sendCardFromHandToGraveYard(board.getOwnerOfCard(card), card);
+            GameView.showConsole(card.getName() + " send to graveyard.");
         }
         board.sendCardFromSpellZoneToGraveyard(myCard);
     }

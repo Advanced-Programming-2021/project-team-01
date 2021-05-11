@@ -107,7 +107,6 @@ public class ChainView {
 
     public static void printTurn(Player player){
         System.out.println("now it will be "+player.getUsername()+"'s turn");
-        GameController.getInstance().getGameBoard().showBoard();
     }
 
 

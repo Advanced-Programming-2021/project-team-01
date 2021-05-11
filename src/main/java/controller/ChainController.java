@@ -23,9 +23,11 @@ public class ChainController {
         }
         gameController.changeTurn();
         ChainView.printTurn(GameController.getCurrentPlayer());
+        GameController.getInstance().getGameBoard().showBoard();
         GameView.showConsole("Do you want to activate your trap and spell?");
         if (!GameView.getValidResponse()) {
-            ChainView.printTurn(GameController.getOpponent());
+            back();
+            return;
         }
         ChainView chainView = new ChainView();
         chainView.start();
@@ -56,5 +58,6 @@ public class ChainController {
     public void back() {
         gameController.changeTurn();
         ChainView.printTurn(GameController.getCurrentPlayer());
+        GameController.getInstance().getGameBoard().showBoard();
     }
 }

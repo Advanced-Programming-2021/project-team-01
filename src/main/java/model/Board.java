@@ -637,6 +637,10 @@ public class Board {
             return 1;
         if (card == playerTwoFieldZone.getCard())
             return 2;
+        if (playerOneHand.contains(card))
+            return 1;
+        if (playerTwoHand.contains(card))
+            return 2;
         for (int i = 1; i < 6; i++) {
             if (card == playerOneSpellZone[i].getCard())
                 return 1;
@@ -647,6 +651,7 @@ public class Board {
             if (card == playerTwoMonsterZone[i].getCard())
                 return 2;
         }
+
         return 0;
     }
 
