@@ -121,8 +121,11 @@ public abstract class Card {
             addCommands(new MirrorForce(this));
         else if (this.getName().equals(Effect.MAGIC_CYLINDER.toString())) {
             addCommands(new MagicCylinder(this));
-        }if (this.getName().equals(Effect.MIND_CRUSH.toString()))
+        }else if (this.getName().equals(Effect.MIND_CRUSH.toString()))
             addCommands(new MindCrush(this));
+        else if (this.getName().equals(Effect.MAGIC_JAMMER.toString())){
+            addCommands(new MagicJammer(this));
+        }
     }
 
 }

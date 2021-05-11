@@ -22,7 +22,8 @@ public enum Effect {
     NEGATE_ATTACK("Negate Attack"),
     MIRROR_FORCE("Mirror Force"),
     MAGIC_CYLINDER("Magic Cylinder"),
-    MIND_CRUSH("Mind Crush");
+    MIND_CRUSH("Mind Crush"),
+    MAGIC_JAMMER("Magic Jammer");
     String value;
 
     Effect(String value) {

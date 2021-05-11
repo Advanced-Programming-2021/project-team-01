@@ -5,6 +5,7 @@ public enum State {
     ACTIVE_TRAP,
     ATTACK,
     SUMMON,
+    CHAIN,
     NONE;
 
 //    public static State getState(String type) {

@@ -16,6 +16,10 @@ public class ChainController {
         this.chain = chain;
     }
 
+    public Chain getChain() {
+        return chain;
+    }
+
     protected void run() throws Exception {
         //fixme: hand Checker
         if (gameController.getGameBoard().getCounterTraps(gameController.getOpponentPlayerNumber()) == null) {
