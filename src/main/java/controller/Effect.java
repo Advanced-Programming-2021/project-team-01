@@ -23,8 +23,7 @@ public enum Effect {
     MIRROR_FORCE("Mirror Force"),
     MAGIC_CYLINDER("Magic Cylinder"),
     MIND_CRUSH("Mind Crush"),
-    MAGIC_JAMMER("Magic Jammer");
-    MIND_CRUSH("Mind Crush"),
+    MAGIC_JAMMER("Magic Jammer"),
     TIME_SEAL("Time Seal");
     String value;
 
