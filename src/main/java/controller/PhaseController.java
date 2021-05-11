@@ -19,7 +19,7 @@ public class PhaseController {
                 if (canDraw) {
                     result = drawPhaseActions();
                     break;
-                }
+                } else canDraw = true;
             case DRAW_PHASE:
                 setGamePhase(GamePhase.STANDBY_PHASE);
                 gameController.effectController.doEffects();

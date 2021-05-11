@@ -37,6 +37,10 @@ public class GameController {
 
     }
 
+    public void resetChainController() {
+        this.chainController = null;
+    }
+
     public ChainController getChainController() {
         return chainController;
     }
