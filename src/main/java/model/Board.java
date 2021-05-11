@@ -341,11 +341,15 @@ public class Board {
             Card card = playerOneMonsterZone[indexOfCard].getCard();
             playerOneGraveYard.add(card);
             playerOneMonsterZone[indexOfCard].setCard(null);
+            playerOneMonsterZone[indexOfCard].setHidden(false);
+            playerOneMonsterZone[indexOfCard].setDefending(false);
             GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
         } else if (player == 2) {
             Card card = playerTwoMonsterZone[indexOfCard].getCard();
             playerTwoGraveYard.add(card);
             playerTwoMonsterZone[indexOfCard].setCard(null);
+            playerTwoMonsterZone[indexOfCard].setHidden(false);
+            playerTwoMonsterZone[indexOfCard].setDefending(false);
             GameController.getInstance().getDestroyedCardsForPlayerTwo().add(card);
         }
     }
