@@ -24,8 +24,7 @@ public enum Effect {
     MAGIC_CYLINDER("Magic Cylinder"),
     MIND_CRUSH("Mind Crush"),
     MAGIC_JAMMER("Magic Jammer"),
-    TIME_SEAL("Time Seal");
-    MIND_CRUSH("Mind Crush"),
+    TIME_SEAL("Time Seal"),
     TORRENTIAL_TRIBUTE("Torrential Tribute");
     String value;
 
