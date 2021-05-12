@@ -130,7 +130,8 @@ public abstract class Card {
             addCommands(new MagicJammer(this));
         else if (this.getName().equals(Effect.TRAP_HOLE.toString()))
             addCommands(new TrapHole(this));
-
+        else if (this.getName().equals(Effect.CALL_OF_THE_HAUNTED.toString()))
+            addCommands(new CallOfTheHaunted(this));
     }
 
 }

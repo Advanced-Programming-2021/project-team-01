@@ -26,7 +26,8 @@ public enum Effect {
     MAGIC_JAMMER("Magic Jammer"),
     TIME_SEAL("Time Seal"),
     TORRENTIAL_TRIBUTE("Torrential Tribute"),
-    TRAP_HOLE("Trap Hole");
+    TRAP_HOLE("Trap Hole"),
+    CALL_OF_THE_HAUNTED("Call of The Haunted");
     String value;
 
     Effect(String value) {
