@@ -21,9 +21,9 @@ public class EffectController {
 
 
     public void doEffects() throws Exception {
-        ArrayList<SpellCard> spellCards = board.faceUpSpells();
-        for (SpellCard spellCard : spellCards) {
-            spellCard.doContinuousActions();
+        ArrayList<Card> cards = board.faceUpSpellAndTraps();
+        for (Card card : cards) {
+            card.doContinuousActions();
         }
 
     }

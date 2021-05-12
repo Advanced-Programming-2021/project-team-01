@@ -5,6 +5,7 @@ public enum State {
     ACTIVE_TRAP,
     ATTACK,
     SUMMON,
+    FLIP_SUMMON,
     CHAIN,
     NONE;
 

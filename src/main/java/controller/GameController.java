@@ -200,6 +200,10 @@ public class GameController {
         return new Random().nextInt(2) + 1;
     }
 
+    public Card getSummonedCard() {
+        return summonedCard;
+    }
+
     public void selectPlayerCard(String fieldType) throws CardNotInPosition {
         if (gameBoard.getCard(fieldType, getCurrentPlayerNumber()) == null)
             throw new CardNotInPosition();
@@ -409,8 +413,13 @@ public class GameController {
             throw new ActivationPhaseError();
         if (!getZoneSlotSelectedCard().toString().equals("DH") || summonedCard == selectedCard.getCard())
             throw new NotFlippSummon();
+        state = State.FLIP_SUMMON;
+        setSummonedCard(selectedCard.getCard());
         getZoneSlotSelectedCard().setDefending(false);
         getZoneSlotSelectedCard().setHidden(false);
+        createChain();
+        chain.run();
+        setSummonedCard(null);
         selectedCard.reset();
     }
 
