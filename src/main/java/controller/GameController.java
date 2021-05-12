@@ -200,6 +200,10 @@ public class GameController {
         return new Random().nextInt(2) + 1;
     }
 
+    public Card getSummonedCard() {
+        return summonedCard;
+    }
+
     public void selectPlayerCard(String fieldType) throws CardNotInPosition {
         if (gameBoard.getCard(fieldType, getCurrentPlayerNumber()) == null)
             throw new CardNotInPosition();
@@ -317,10 +321,14 @@ public class GameController {
         if (isSummoned()) {
             throw new AlreadySummonedError();
         }
+        state = State.SUMMON;
         if (((MonsterCard) selectedCard.getCard()).getLevel() <= 4) {
             gameBoard.summonCard((MonsterCard) selectedCard.getCard(), getCurrentPlayerNumber());
             setSummonedCard(selectedCard.getCard());
             selectedCard.reset();
+            createChain();
+            chainController.chain.run();
+            state = State.NONE;
         } else if (((MonsterCard) selectedCard.getCard()).getLevel() == 5 ||
                 ((MonsterCard) selectedCard.getCard()).getLevel() == 6) {
             throw new LevelFiveException();
@@ -328,7 +336,6 @@ public class GameController {
                 ((MonsterCard) selectedCard.getCard()).getLevel() == 8) {
             throw new LevelSevenException();
         }
-
     }
 
     public void tributeSummonLevel7(int indexOfCard1, int indexOfCard2) throws Exception {
@@ -338,6 +345,9 @@ public class GameController {
                 gameBoard.getCardFromMonsterZone(indexOfCard2, getCurrentPlayerNumber()) == null)
             throw new NoMonsterInMultiplePositions();
         tribute(indexOfCard1, indexOfCard2);
+        createChain();
+        chainController.chain.run();
+        state = State.NONE;
     }
 
     public void tributeSummonLevel5(int indexOfCard) throws Exception {
@@ -346,6 +356,9 @@ public class GameController {
         if (gameBoard.getCardFromMonsterZone(indexOfCard, getCurrentPlayerNumber()) == null)
             throw new NoMonsterInPosition();
         tribute(indexOfCard);
+        createChain();
+        chainController.chain.run();
+        state = State.NONE;
     }
 
     public void tribute(int indexOfCard) throws Exception {
@@ -400,8 +413,13 @@ public class GameController {
             throw new ActivationPhaseError();
         if (!getZoneSlotSelectedCard().toString().equals("DH") || summonedCard == selectedCard.getCard())
             throw new NotFlippSummon();
+        state = State.FLIP_SUMMON;
+        setSummonedCard(selectedCard.getCard());
         getZoneSlotSelectedCard().setDefending(false);
         getZoneSlotSelectedCard().setHidden(false);
+        createChain();
+        chain.run();
+        setSummonedCard(null);
         selectedCard.reset();
     }
 

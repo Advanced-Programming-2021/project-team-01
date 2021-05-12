@@ -341,11 +341,45 @@ public class Board {
             Card card = playerOneMonsterZone[indexOfCard].getCard();
             playerOneGraveYard.add(card);
             playerOneMonsterZone[indexOfCard].setCard(null);
+            playerOneMonsterZone[indexOfCard].setHidden(false);
+            playerOneMonsterZone[indexOfCard].setDefending(false);
             GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
         } else if (player == 2) {
             Card card = playerTwoMonsterZone[indexOfCard].getCard();
             playerTwoGraveYard.add(card);
             playerTwoMonsterZone[indexOfCard].setCard(null);
+            playerTwoMonsterZone[indexOfCard].setHidden(false);
+            playerTwoMonsterZone[indexOfCard].setDefending(false);
+            GameController.getInstance().getDestroyedCardsForPlayerTwo().add(card);
+        }
+    }
+
+    public void sendCardFromMonsterZoneToGraveyard(Card card) {
+        int player = getOwnerOfCard(card);
+        int indexOfCard = 0;
+        if (player == 1) {
+            for (int i = 1; i < 6; i++) {
+                if (playerOneMonsterZone[i].getCard() == card) {
+                    indexOfCard = i;
+                    break;
+                }
+            }
+            playerOneGraveYard.add(card);
+            playerOneMonsterZone[indexOfCard].setCard(null);
+            playerOneMonsterZone[indexOfCard].setHidden(false);
+            playerOneMonsterZone[indexOfCard].setDefending(false);
+            GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
+        } else if (player == 2) {
+            for (int i = 1; i < 6; i++) {
+                if (playerTwoMonsterZone[i].getCard() == card) {
+                    indexOfCard = i;
+                    break;
+                }
+            }
+            playerTwoGraveYard.add(card);
+            playerTwoMonsterZone[indexOfCard].setCard(null);
+            playerTwoMonsterZone[indexOfCard].setHidden(false);
+            playerTwoMonsterZone[indexOfCard].setDefending(false);
             GameController.getInstance().getDestroyedCardsForPlayerTwo().add(card);
         }
     }
@@ -669,15 +703,15 @@ public class Board {
         }
     }
 
-    public ArrayList<SpellCard> faceUpSpells() {
-        ArrayList<SpellCard> spellCards = new ArrayList<>();
+    public ArrayList<Card> faceUpSpellAndTraps() {
+        ArrayList<Card> spellAndTraps = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
             if ((!playerOneSpellZone[i].isHidden()) && playerOneSpellZone[i].getCard() != null)
-                spellCards.add((SpellCard) playerOneSpellZone[i].getCard());
+                spellAndTraps.add(playerOneSpellZone[i].getCard());
             if ((!playerTwoSpellZone[i].isHidden()) && playerTwoSpellZone[i].getCard() != null)
-                spellCards.add((SpellCard) playerTwoSpellZone[i].getCard());
+                spellAndTraps.add(playerTwoSpellZone[i].getCard());
         }
-        return spellCards;
+        return spellAndTraps;
     }
 
     public ArrayList<Card> getCardInMonsterZone(int player) {
@@ -749,23 +783,23 @@ public class Board {
         if (playerNumber == 1) {
             for (int i = 1; i < 6; i++) {
                 Card card = playerOneSpellZone[i].getCard();
-                if (card instanceof TrapCard){
+                if (card instanceof TrapCard) {
                     return card;
-                } else if (card instanceof SpellCard){
+                } else if (card instanceof SpellCard) {
                     Property property = ((SpellCard) card).getProperty();
-                    if (property == Property.QUICK_PLAY || property == Property.COUNTER){
+                    if (property == Property.QUICK_PLAY || property == Property.COUNTER) {
                         return card;
                     }
                 }
             }
-        }else {
+        } else {
             for (int i = 1; i < 6; i++) {
                 Card card = playerTwoSpellZone[i].getCard();
-                if (card instanceof TrapCard){
+                if (card instanceof TrapCard) {
                     return card; //fixme: speed
-                } else if (card instanceof SpellCard){
+                } else if (card instanceof SpellCard) {
                     Property property = ((SpellCard) card).getProperty();
-                    if (property == Property.QUICK_PLAY || property == Property.COUNTER){
+                    if (property == Property.QUICK_PLAY || property == Property.COUNTER) {
                         return card;
                     }
                 }

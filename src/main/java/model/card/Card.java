@@ -1,7 +1,6 @@
 package model.card;
 
 import com.google.gson.annotations.Expose;
-import com.sun.org.apache.xpath.internal.operations.Neg;
 import controller.Effect;
 import model.commands.*;
 
@@ -119,15 +118,20 @@ public abstract class Card {
             addCommands(new NegateAttack(this));
         else if (this.getName().equals(Effect.MIRROR_FORCE.toString()))
             addCommands(new MirrorForce(this));
-        else if (this.getName().equals(Effect.MAGIC_CYLINDER.toString())) {
+        else if (this.getName().equals(Effect.MAGIC_CYLINDER.toString()))
             addCommands(new MagicCylinder(this));
-        } else if (this.getName().equals(Effect.MIND_CRUSH.toString())) {
+        else if (this.getName().equals(Effect.MIND_CRUSH.toString()))
             addCommands(new MindCrush(this));
-        } else if (this.getName().equals(Effect.TIME_SEAL.toString())) {
+        else if (this.getName().equals(Effect.TORRENTIAL_TRIBUTE.toString()))
+            addCommands(new TorrentialTribute(this));
+        else if (this.getName().equals(Effect.TIME_SEAL.toString()))
             addCommands(new TimeSeal(this));
-        }else if (this.getName().equals(Effect.MAGIC_JAMMER.toString())){
+        else if (this.getName().equals(Effect.MAGIC_JAMMER.toString()))
             addCommands(new MagicJammer(this));
-        }
+        else if (this.getName().equals(Effect.TRAP_HOLE.toString()))
+            addCommands(new TrapHole(this));
+        else if (this.getName().equals(Effect.CALL_OF_THE_HAUNTED.toString()))
+            addCommands(new CallOfTheHaunted(this));
     }
 
 }

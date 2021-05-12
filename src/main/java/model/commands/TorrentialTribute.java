@@ -1,19 +1,22 @@
 package model.commands;
 
 import model.Board;
+import model.State;
 import model.ZoneSlot;
 import model.card.Card;
 
-public class DarkHole extends Command implements Activate {
+public class TorrentialTribute extends Command implements Activate {
+
     Board board;
 
-    public DarkHole(Card card) {
+    public TorrentialTribute(Card card) {
         super(card);
     }
 
     @Override
     public void run() throws Exception {
         board = gameController.getGameBoard();
+        board.setSpellFaceUp(myCard);
         ZoneSlot[] zoneSlot;
         zoneSlot = board.getPlayerTwoMonsterZone();
         for (int i = 1; i < 6; i++)
@@ -24,5 +27,10 @@ public class DarkHole extends Command implements Activate {
             if (zoneSlot[i].getCard() != null)
                 board.sendCardFromMonsterZoneToGraveyard(i, 1);
         board.sendCardFromSpellZoneToGraveyard(myCard);
+    }
+
+    @Override
+    public boolean canActivate() throws Exception {
+        return gameController.getState() == State.SUMMON;
     }
 }
