@@ -414,12 +414,13 @@ public class GameController {
         if (!getZoneSlotSelectedCard().toString().equals("DH") || summonedCard == selectedCard.getCard())
             throw new NotFlippSummon();
         state = State.FLIP_SUMMON;
+        Card temp = getSummonedCard();
         setSummonedCard(selectedCard.getCard());
         getZoneSlotSelectedCard().setDefending(false);
         getZoneSlotSelectedCard().setHidden(false);
         createChain();
         chain.run();
-        setSummonedCard(null);
+        setSummonedCard(temp);
         selectedCard.reset();
     }
 
