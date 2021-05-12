@@ -20,7 +20,11 @@ public class HandleRequestType {
         ImportExportView importExportView = new ImportExportView();
         MainMenu mainMenu = new MainMenu();
         while (currentMenu != Menu.EXIT) {
-            String command = scanner.nextLine();
+            String command = "";
+            if (scanner.hasNext()) {
+                command = scanner.nextLine();
+            }else
+                break;
             if (currentMenu == Menu.REGISTER_MENU) {
                 registerView.run(command);
             } else if (currentMenu == Menu.MAIN_MENU) {

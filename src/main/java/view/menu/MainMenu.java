@@ -43,7 +43,7 @@ class MainMenu {
     }
 
     private void showCurrentMenu() {
-        System.out.println("Main Menu");
+        System.out.println("endpoint.Main Menu");
     }
 
     public void run(String command) {

@@ -49,8 +49,10 @@ public class ChainView {
 
     public void start() throws Exception {
         Scanner scanner = HandleRequestType.scanner;
+        String input = "";
         while (true){
-            String input = scanner.nextLine();
+            if (scanner.hasNext())
+            input = scanner.nextLine();
             if (input.equals("back")){
                 GameController.getInstance().getChainController().back();
                 break;

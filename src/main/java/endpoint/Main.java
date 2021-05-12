@@ -1,3 +1,5 @@
+package endpoint;
+
 import controller.DatabaseController;
 import controller.GameController;
 import view.menu.HandleRequestType;

@@ -124,7 +124,7 @@ public class DeckView {
         try {
             ArrayList<Card> cardMap = DeckController.getInstance().showDeckByName(name, isMainDeck);
             System.out.println("Deck: " + name);
-            System.out.println(isMainDeck ? "Main deck:" : "Side deck:");
+            System.out.println(isMainDeck ? "endpoint.Main deck:" : "Side deck:");
             System.out.println("Monsters:");
 
             for (Card card : cardMap)

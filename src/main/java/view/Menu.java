@@ -16,7 +16,7 @@ public enum Menu {
         switch (menu) {
             case "Login":
                 return REGISTER_MENU;
-            case "Main":
+            case "endpoint.Main":
                 return MAIN_MENU;
             case "Duel":
                 return GAME_MENU;
