@@ -27,7 +27,8 @@ public enum Effect {
     TIME_SEAL("Time Seal"),
     TORRENTIAL_TRIBUTE("Torrential Tribute"),
     TRAP_HOLE("Trap Hole"),
-    CALL_OF_THE_HAUNTED("Call of The Haunted");
+    CALL_OF_THE_HAUNTED("Call of The Haunted"),
+    SOLEMN_WARNING("Solemn Warning");
     String value;
 
     Effect(String value) {

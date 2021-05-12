@@ -132,6 +132,8 @@ public abstract class Card {
             addCommands(new TrapHole(this));
         else if (this.getName().equals(Effect.CALL_OF_THE_HAUNTED.toString()))
             addCommands(new CallOfTheHaunted(this));
+        else if (this.getName().equals(Effect.SOLEMN_WARNING.toString()))
+            addCommands(new SolemnWarning(this));
     }
 
 }
