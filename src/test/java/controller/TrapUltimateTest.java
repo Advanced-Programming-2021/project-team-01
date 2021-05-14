@@ -17,7 +17,6 @@ import java.util.ArrayList;
 class TrapUltimateTest {
     InputStream sysInBackup;
     ByteArrayInputStream in;
-    PrintStream printStream;
     Board board;
     GameController gameController;
 

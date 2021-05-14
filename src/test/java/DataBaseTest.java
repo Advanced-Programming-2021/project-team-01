@@ -8,13 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DataBaseTest {
-    @Test
-    void doesDataBaseCreateSuccessfully() {
-        Player player = new Player("ali", "123", "hoy");
-        DatabaseController.updatePlayer(player);
-        assertEquals(new Gson().toJson(player),
-                new Gson().toJson(DatabaseController.getUserByName("ali")));
-    }
+
 
     @ParameterizedTest
     @ValueSource(strings = {"hoy", "nickname"})

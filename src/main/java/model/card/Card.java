@@ -146,4 +146,7 @@ public abstract class Card {
     }
 
 
+    public void setType(String trap){
+        this.type = trap;
+    }
 }

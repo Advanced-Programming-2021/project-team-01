@@ -127,6 +127,16 @@ public class DatabaseController {
     }
 
     public static void updateDeck(Deck deck) {
+        ArrayList<Card> mainDeck = deck.getMainDeck();
+        for (Card card : mainDeck) {
+            if (card instanceof MonsterCard){
+                card.setType("monster");
+            }else if (card instanceof TrapCard){
+                card.setType("trap");
+            }else{
+                card.setType("spell");
+            }
+        }
         String deckName = deck.getDeckName();
         try {
             FileWriter fileWriter = new FileWriter(getDeckDirectory(deckName));
