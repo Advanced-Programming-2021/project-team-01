@@ -28,4 +28,6 @@ public class NegateAttack extends Command implements Activate {
         return gameController.getState() == State.ATTACK &&
                 board.getOwnerOfCard(gameController.getAttackController().getAttacker()) == gameController.getOpponentPlayerNumber();
     }
+
+
 }
