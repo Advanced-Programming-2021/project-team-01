@@ -1,5 +1,6 @@
 package view.menu;
 
+import controller.GameController;
 import view.ChainView;
 import view.Menu;
 
@@ -21,6 +22,11 @@ public class HandleRequestType {
         MainMenu mainMenu = new MainMenu();
         while (currentMenu != Menu.EXIT) {
             String command = "";
+            if (GameController.getCurrentPlayer().getUsername().equals("AI")) {
+                String output = GameController.getInstance().getAiBasicController().handleAiMoves();
+                System.out.println(output);
+                continue;
+            }
             if (scanner.hasNext()) {
                 command = scanner.nextLine();
             }else

@@ -18,6 +18,7 @@ public class GameController {
     protected PhaseController phaseController;
     protected AttackController attackController;
     protected EffectController effectController;
+    protected AiBasicController aiBasicController;
     protected int playerOneLp;
     protected int playerTwoLp;
     protected Board gameBoard;
@@ -36,14 +37,6 @@ public class GameController {
 
     private GameController() {
 
-    }
-
-    public void resetChainController() {
-        this.chainController = null;
-    }
-
-    public ChainController getChainController() {
-        return chainController;
     }
 
     public static Player getPlayerOne() {
@@ -72,7 +65,15 @@ public class GameController {
         return playerOne;
     }
 
-    public void changeTurn(){
+    public void resetChainController() {
+        this.chainController = null;
+    }
+
+    public ChainController getChainController() {
+        return chainController;
+    }
+
+    public void changeTurn() {
         currentPlayer = getOpponent();
     }
 
@@ -120,6 +121,10 @@ public class GameController {
         return state;
     }
 
+    public void setState(State state) {
+        this.state = state;
+    }
+
     public SelectedCard getSelectedCard() {
         return selectedCard;
     }
@@ -159,7 +164,7 @@ public class GameController {
             throw new NoActiveDeck(playerTwo.getUsername());
         }
         currentPlayer = playerOne;//TODO: SHASMAGHZ NABASHIM DAR SHAFEL
-        //currentPlayer = tossCoin() == 1 ? playerOne : playerTwo;
+        //currentPlayer = tossCoin() == 1 ? playerOne : playerTwo; //TODO : AI IS ALwAys player two
         Deck playerOneDeck = DatabaseController.getDeckByName(playerOne.getActiveDeck());
         Deck playerTwoDeck = DatabaseController.getDeckByName(playerTwo.getActiveDeck());
         if (!playerOneDeck.isDeckValid()) {
@@ -185,6 +190,7 @@ public class GameController {
         phaseController = new PhaseController(this);
         effectController = new EffectController(this);
         attackController = new AttackController(this);
+        aiBasicController = new AiBasicController(this);
         phaseController.setGamePhase(GamePhase.DRAW_PHASE);
         setup(playerOneDeck);
         setup(playerTwoDeck);
@@ -203,6 +209,10 @@ public class GameController {
 
     public Card getSummonedCard() {
         return summonedCard;
+    }
+
+    public void setSummonedCard(Card card) {
+        summonedCard = card;
     }
 
     public void selectPlayerCard(String fieldType) throws CardNotInPosition {
@@ -270,6 +280,10 @@ public class GameController {
                         getOpponent(), fieldNumber, CardLocation.SPELL);
                 break;
         }
+    }
+
+    public AiBasicController getAiBasicController() {
+        return aiBasicController;
     }
 
     public void deselect() throws CardNotSelected {
@@ -535,10 +549,6 @@ public class GameController {
         return playerOneLp;
     }
 
-    public void setSummonedCard(Card card) {
-        summonedCard = card;
-    }
-
     public String nextPhase() throws Exception {
         return phaseController.nextPhase();
     }
@@ -644,10 +654,6 @@ public class GameController {
         chain = new Chain();
         chainController = new ChainController(chain);
         chainController.run();
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 }
 //    backup
