@@ -52,7 +52,7 @@ public class ChainView {
         String input = "";
         while (true){
             if (scanner.hasNext())
-            input = scanner.nextLine();
+                input = scanner.nextLine();
             if (input.equals("back")){
                 GameController.getInstance().getChainController().back();
                 break;

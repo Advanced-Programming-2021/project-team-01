@@ -1,6 +1,7 @@
 package model.commands;
 
 import model.Board;
+import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
 import view.menu.GameView;
@@ -36,5 +37,15 @@ public class MysticalSpaceTyphoon extends Command implements Activate{
             throw new Exception("Empty zone");
         board.sendCardFromSpellZoneToGraveyard(zoneSlots[number].getCard());
         board.sendCardFromSpellZoneToGraveyard(myCard);
+    }
+
+    @Override
+    public boolean canActivate() throws Exception {
+        board = gameController.getGameBoard();
+        boolean canActivate = board.numberOfSpellAndTrapCards(gameController.getOpponentPlayerNumber()) != 0;
+        boolean correctPhase = gameController.getGamePhase() == GamePhase.MAIN_PHASE1 ||
+                gameController.getGamePhase() == GamePhase.MAIN_PHASE2 ||
+                gameController.getGamePhase() == GamePhase.BATTLE_PHASE;
+        return canActivate && correctPhase;
     }
 }

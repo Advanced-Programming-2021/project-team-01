@@ -1,6 +1,7 @@
 package model.commands;
 
 import model.Board;
+import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
 
@@ -25,6 +26,11 @@ public class HarpiesFeatherDuster extends Command implements Activate {
     }
 
     public boolean canActivate() throws Exception {
-        return true;
+        board = gameController.getGameBoard();
+        boolean canActivate = board.numberOfSpellAndTrapCards(gameController.getOpponentPlayerNumber()) != 0;
+        boolean correctPhase = gameController.getGamePhase() == GamePhase.MAIN_PHASE1 ||
+                gameController.getGamePhase() == GamePhase.MAIN_PHASE2 ||
+                gameController.getGamePhase() == GamePhase.BATTLE_PHASE;
+        return canActivate && correctPhase;
     }
 }

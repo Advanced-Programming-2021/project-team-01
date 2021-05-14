@@ -320,6 +320,22 @@ public class Board {
         return number;
     }
 
+    public int numberOfSpellAndTrapCards(int player) {
+        int number = 0;
+        if (player == 1) {
+            for (int i = 1; i < 6; i++) {
+                if (playerOneSpellZone[i].getCard() != null)
+                    number++;
+            }
+        } else if (player == 2) {
+            for (int i = 1; i < 6; i++) {
+                if (playerTwoSpellZone[i].getCard() != null)
+                    number++;
+            }
+        }
+        return number;
+    }
+
     public void addCardCheatToHand(Card card, int player) {
         if (player == 1) {
             playerOneHand.add(card);

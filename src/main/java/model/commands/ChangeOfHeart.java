@@ -41,4 +41,15 @@ public class ChangeOfHeart extends Command implements Activate {
             board.sendCardFromSpellZoneToGraveyard(myCard);
         }
     }
+
+    @Override
+    public boolean canActivate() throws Exception {
+        board = gameController.getGameBoard();
+        boolean canActivate = board.getNumberOfCardsInHand(gameController.getOpponentPlayerNumber()) != 0;
+        boolean correctPhase = gameController.getGamePhase() == GamePhase.MAIN_PHASE1 ||
+                gameController.getGamePhase() == GamePhase.MAIN_PHASE2 ||
+                gameController.getGamePhase() == GamePhase.BATTLE_PHASE;
+
+        return correctPhase && canActivate;
+    }
 }

@@ -29,4 +29,12 @@ public class SupplySquad extends Command implements Activate {
                 board.addCardFromDeckToHand(board.getOwnerOfCard(myCard));
         }
     }
+
+    @Override
+    public boolean canActivate() throws Exception {
+        board = gameController.getGameBoard();
+        return gameController.getGamePhase() == GamePhase.MAIN_PHASE1 ||
+                gameController.getGamePhase() == GamePhase.MAIN_PHASE2 ||
+                gameController.getGamePhase() == GamePhase.BATTLE_PHASE;
+    }
 }
