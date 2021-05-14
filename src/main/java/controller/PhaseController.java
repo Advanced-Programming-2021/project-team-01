@@ -49,7 +49,7 @@ public class PhaseController {
             case MAIN_PHASE2:
                 setGamePhase(GamePhase.END_PHASE);
                 gameController.effectController.doEffects();
-                result = String.format("phase: end phase\nits %s’s turn", GameController.currentPlayer.getNickname());
+                result = String.format("phase: end phase\nits %s’s turn", GameController.getOpponent().getNickname());
                 break;
         }
         return result;

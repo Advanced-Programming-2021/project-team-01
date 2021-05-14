@@ -188,7 +188,5 @@ public class DatabaseController {
         return players;
     }
 
-    public static void main(String[] args) throws IOException, CsvValidationException {
-        doesNicknameExist("mo");
-    }
+
 }

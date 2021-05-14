@@ -22,7 +22,8 @@ public class HandleRequestType {
         MainMenu mainMenu = new MainMenu();
         while (currentMenu != Menu.EXIT) {
             String command = "";
-            if (GameController.getCurrentPlayer().getUsername().equals("AI")) {
+            if (GameController.getCurrentPlayer() != null &&
+                    GameController.getCurrentPlayer().getUsername().equals("AI")) {
                 String output = GameController.getInstance().getAiBasicController().handleAiMoves();
                 System.out.println(output);
                 continue;
