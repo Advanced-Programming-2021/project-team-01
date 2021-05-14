@@ -34,7 +34,7 @@ public class Deck {
     }
 
     public boolean isDeckValid() {
-        return mainDeck.size() >= 40;
+        return mainDeck.size() >= 25;
     }
 
     public String getDeckName() {

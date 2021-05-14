@@ -1,6 +1,7 @@
 package view.menu;
 
 import controller.GameController;
+import controller.RegisterController;
 import controller.exceptions.*;
 import view.ConsoleCommands;
 import view.Menu;
@@ -39,7 +40,7 @@ class MainMenu {
     }
 
     private void exitMenu() {
-        HandleRequestType.currentMenu = Menu.REGISTER_MENU;
+        RegisterController.getInstance().logout();
     }
 
     private void showCurrentMenu() {
@@ -62,7 +63,14 @@ class MainMenu {
             newDuelWithFriend(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.NEW_DUEL_AI, command)) != null) {
             newDuelWithAI(matcher);
-        } else
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.LOGOUT, command)) != null){
+            logout();
+        }
+        else
             System.out.println("invalid command");
+    }
+    private void logout() {
+        RegisterController.getInstance().logout();
+        System.out.println("user logged out successfully");
     }
 }

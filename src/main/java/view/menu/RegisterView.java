@@ -14,8 +14,6 @@ class RegisterView {
             loginUser(matcher);
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.CREATE_USER, input)) != null) {
             createNewUser(matcher);
-        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.LOGOUT, input)) != null) {
-            logout();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.MENU_EXIT, input)) != null) {
             exitMenu();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.MENU_SHOW_CURRENT, input)) != null) {
@@ -49,11 +47,6 @@ class RegisterView {
         } catch (Exception exception) {
             System.err.println(exception.getMessage());
         }
-    }
-
-    private void logout() {
-        RegisterController.getInstance().logout();
-        System.out.println("user logged out successfully");
     }
 
     private void enterMenu(Matcher matcher) {
