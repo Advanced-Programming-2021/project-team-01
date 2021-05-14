@@ -108,8 +108,7 @@ public class DeckView {
 
     private void removeCardFromDeck(Matcher matcher) {
         String cardName = matcher.group("cardName"), deckName = matcher.group("deckName");
-        boolean isMainDeck = matcher.group("side").equals("");
-
+        boolean isMainDeck = matcher.group("side") == null;
         try {
             DeckController.getInstance().removeCardFromDeck(cardName, deckName, isMainDeck);
             System.out.println("card removed from deck successfully");

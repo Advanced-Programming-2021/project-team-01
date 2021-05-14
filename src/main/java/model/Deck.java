@@ -61,13 +61,15 @@ public class Deck {
         }
         if (card instanceof TrapCard) {
             if (((TrapCard) card).getLimitationStatus().equals("Limited"))
-                return counter == 0 && Collections.frequency(RegisterController.onlineUser.getPlayerCards(), card.getName())
-                        - (Collections.frequency(mainDeck, Card.getCardByName(card.getName())) + Collections.frequency(sideDeck, Card.getCardByName(card.getName()))) >= 0;
+                return counter == 0 && (Collections.frequency(RegisterController.onlineUser.getPlayerCards(), card.getName())
+                        - (Collections.frequency(mainDeck, Card.getCardByName(card.getName())) + Collections.frequency(sideDeck, Card.getCardByName(card.getName()))) >= 0);
         } else if (card instanceof SpellCard) {
             if (((SpellCard) card).getLimitationStatus().equals("Limited"))
-                return counter == 0;
+                return counter == 0 && (Collections.frequency(RegisterController.onlineUser.getPlayerCards(), card.getName())
+                        - (Collections.frequency(mainDeck, Card.getCardByName(card.getName())) + Collections.frequency(sideDeck, Card.getCardByName(card.getName()))) >= 0);
         }
-        return counter < 3;
+        return counter < 3 && (Collections.frequency(RegisterController.onlineUser.getPlayerCards(), card.getName())
+                - (Collections.frequency(mainDeck, Card.getCardByName(card.getName())) + Collections.frequency(sideDeck, Card.getCardByName(card.getName()))) >= 0);
     }
 
 

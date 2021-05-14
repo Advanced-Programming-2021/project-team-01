@@ -46,27 +46,33 @@ public class DeckController {
     }
 
     public void addCardToDeck(String cardName, String deckName, boolean isMainDeck) throws CardNameNotExists,
-            DeckNotExists, MainDeckIsFull, SideDeckIsFull, CardNumberLimit, IOException {
+            DeckNotExists, MainDeckIsFull, SideDeckIsFull, CardNumberLimit, IOException, PlayerCardNotExist {
         Card card = Card.getCardByName(cardName);
         if (card != null) {
             if (DatabaseController.doesDeckExists(deckName)) {
                 Deck deck = DatabaseController.getDeckByName(deckName);
                 if (isMainDeck) {
                     if (deck.getMainDeck().size() < 60) {
-                        if (deck.checkCardsLimit(card)) {
-                            deck.addCardToMainDeck(card);
-                            DatabaseController.updateDeck(deck);
+                        if (onlineUser.getPlayerCards().contains(cardName)) {
+                            if (deck.checkCardsLimit(card)) {
+                              deck.addCardToMainDeck(card);
+                              DatabaseController.updateDeck(deck);
+                            } else
+                               throw new CardNumberLimit(cardName, deckName);
                         } else
-                            throw new CardNumberLimit(cardName, deckName);
+                            throw new PlayerCardNotExist();
                     } else
                         throw new MainDeckIsFull();
                 } else {
                     if (deck.getSideDeck().size() < 15) {
-                        if (deck.checkCardsLimit(card)) {
-                            deck.addCardToSideDeck(card);
-                            DatabaseController.updateDeck(deck);
+                        if (onlineUser.getPlayerCards().contains(cardName)) {
+                            if (deck.checkCardsLimit(card)) {
+                                deck.addCardToSideDeck(card);
+                                DatabaseController.updateDeck(deck);
+                            } else
+                                throw new CardNumberLimit(cardName, deckName);
                         } else
-                            throw new CardNumberLimit(cardName, deckName);
+                            throw new PlayerCardNotExist();
                     } else
                         throw new SideDeckIsFull();
                 }
