@@ -4,8 +4,10 @@ import model.GamePhase;
 import model.card.Card;
 import model.card.MonsterCard;
 import model.card.SpellCard;
+import view.menu.GameView;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class AiBasicController {
     GameController gameController;
@@ -32,6 +34,11 @@ public class AiBasicController {
         } else if (gameController.getPhaseController().getGamePhase().equals(GamePhase.STANDBY_PHASE)){
             return phaseChangerActions();
         }
+        if (gameController.getPhaseController().getGamePhase().equals(GamePhase.MAIN_PHASE1) ||
+                gameController.getPhaseController().getGamePhase().equals(GamePhase.BATTLE_PHASE) ||
+                gameController.getPhaseController().getGamePhase().equals(GamePhase.MAIN_PHASE2)){
+            gameController.gameBoard.showBoard();
+        }
         return "";
 
     }
@@ -40,7 +47,12 @@ public class AiBasicController {
         ArrayList<Card> hand = gameController.getGameBoard().getPlayerTwoHand();
         for (int i = 0; i < hand.size(); i++) {
             if (hand.get(i) instanceof MonsterCard) {
-                gameController.selectPlayerCard("hand", i);
+                if (gameController.gameBoard.numberOfMonsterCards(2) == 5){
+                    break;
+                }
+                gameController.selectPlayerCard("hand", i + 1);
+                GameView.prompt(hand.get(i).getName() + " summoned");
+                TimeUnit.SECONDS.sleep(1);
                 gameController.summon();
                 break;
             }
@@ -50,14 +62,18 @@ public class AiBasicController {
     private void activateActions() throws Exception {
         ArrayList<Card> hand = gameController.getGameBoard().getPlayerTwoHand();
         for (int i = 0; i < hand.size(); i++) {
+            if(hand.get(i).getName().equals("Pot of Greed")){
+                int x = 3;
+            }
             if (hand.get(i) instanceof SpellCard) {
                 if (hand.get(i).canActivate()) {
-                    gameController.selectPlayerCard("hand", i);
+                    gameController.selectPlayerCard("hand", i + 1);
+                    GameView.prompt(hand.get(i).getName() + " activated");
+                    TimeUnit.SECONDS.sleep(1);
                     gameController.activateEffect();
                 }
             }
         }
-
     }
 
     private void attackActions() {

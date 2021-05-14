@@ -28,4 +28,12 @@ public class EquipFiend extends Command implements Activate{
         zoneSlot.setEquippedCard(gameController.getSelectedCard().getCard());
         board.setSpellFaceUp(gameController.getSelectedCard().getCard());
     }
+
+    public boolean canActivate() throws Exception {
+        int number = gameController.getCurrentPlayerNumber();
+        if (number == 1){
+            return gameController.getGameBoard().numberOfMonsterCards(1) != 0;
+        }
+        return gameController.getGameBoard().numberOfMonsterCards(2) != 0;
+    }
 }

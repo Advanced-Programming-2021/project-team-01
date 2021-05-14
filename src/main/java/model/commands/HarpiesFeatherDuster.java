@@ -23,4 +23,8 @@ public class HarpiesFeatherDuster extends Command implements Activate {
         }
         board.sendCardFromSpellZoneToGraveyard(myCard);
     }
+
+    public boolean canActivate() throws Exception {
+        return true;
+    }
 }

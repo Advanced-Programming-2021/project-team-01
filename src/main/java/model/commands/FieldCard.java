@@ -16,4 +16,8 @@ public class FieldCard extends Command implements Activate{
         board = gameController.getGameBoard();
         board.setCardFromHandToFieldZone(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
     }
+
+    public boolean canActivate() throws Exception {
+        return true;
+    }
 }

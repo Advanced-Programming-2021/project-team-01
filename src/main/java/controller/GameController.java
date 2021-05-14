@@ -318,7 +318,7 @@ public class GameController {
         setSummonedCard(selectedCard.getCard());
     }
 
-    public void summon() throws Exception {
+    public void summon() throws Exception {             //fixme : hand limit
         if (selectedCard.getCard() == null) {
             throw new CardNotSelected();
         }
