@@ -31,7 +31,6 @@ public class PotOfGreed extends Command implements Activate{
         }
         return board.getPlayerTwoHand().size() == 9;
 
-
     }
 }
 

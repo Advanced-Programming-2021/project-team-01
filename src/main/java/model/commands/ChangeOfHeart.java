@@ -41,4 +41,9 @@ public class ChangeOfHeart extends Command implements Activate {
             board.sendCardFromSpellZoneToGraveyard(myCard);
         }
     }
+
+    @Override
+    public boolean canActivate() throws Exception {
+        return true;
+    }
 }

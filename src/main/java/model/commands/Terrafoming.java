@@ -35,4 +35,9 @@ public class Terrafoming extends Command implements Activate{
         board.addCardFromDeckToHand(gameController.getCurrentPlayerNumber(), card);
         board.sendCardFromSpellZoneToGraveyard(myCard);
     }
+
+    @Override
+    public boolean canActivate() throws Exception {
+        return true;
+    }
 }

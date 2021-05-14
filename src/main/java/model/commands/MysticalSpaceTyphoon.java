@@ -37,4 +37,9 @@ public class MysticalSpaceTyphoon extends Command implements Activate{
         board.sendCardFromSpellZoneToGraveyard(zoneSlots[number].getCard());
         board.sendCardFromSpellZoneToGraveyard(myCard);
     }
+
+    @Override
+    public boolean canActivate() throws Exception {
+        return true;
+    }
 }
