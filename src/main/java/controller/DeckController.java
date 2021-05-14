@@ -4,6 +4,7 @@ import controller.exceptions.*;
 import model.Deck;
 import model.card.Card;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,7 +46,7 @@ public class DeckController {
     }
 
     public void addCardToDeck(String cardName, String deckName, boolean isMainDeck) throws CardNameNotExists,
-            DeckNotExists, MainDeckIsFull, SideDeckIsFull, CardNumberLimit {
+            DeckNotExists, MainDeckIsFull, SideDeckIsFull, CardNumberLimit, IOException {
         Card card = Card.getCardByName(cardName);
         if (card != null) {
             if (DatabaseController.doesDeckExists(deckName)) {
@@ -76,7 +77,7 @@ public class DeckController {
     }
 
     public void removeCardFromDeck(String cardName, String deckName, boolean isMainDeck) throws CardNameNotExists,
-            DeckNotExists, CardNotInDeck {
+            DeckNotExists, CardNotInDeck, IOException {
         Card card = Card.getCardByName(cardName);
         if (card != null) {
             if (DatabaseController.doesDeckExists(deckName)) {
@@ -100,7 +101,7 @@ public class DeckController {
             throw new CardNameNotExists(cardName);
     }
 
-    public ArrayList<Deck> showAllDecks() {
+    public ArrayList<Deck> showAllDecks() throws IOException {
         ArrayList<Deck> decks = new ArrayList<>();
         ArrayList<Deck> activeDeck = new ArrayList<>();
         if (RegisterController.onlineUser.getActiveDeck() == null) {
@@ -115,7 +116,7 @@ public class DeckController {
         return activeDeck;
     }
 
-    public ArrayList<Card> showDeckByName(String name, boolean isMainDeck) throws DeckNotExists {
+    public ArrayList<Card> showDeckByName(String name, boolean isMainDeck) throws DeckNotExists, IOException {
         if (DatabaseController.doesDeckExists(name)) {
             Deck deck = DatabaseController.getDeckByName(name);
             ArrayList<Card> cards = new ArrayList<>();

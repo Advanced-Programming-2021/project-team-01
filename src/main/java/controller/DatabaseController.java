@@ -40,6 +40,8 @@ public class DatabaseController {
                         Property.getProperty(spellTrapArray[2]), spellTrapArray[4]));
             }
         }
+        fileReader.close();
+        reader.close();
     }
 
     private static void write(String data, String directory) {
@@ -84,8 +86,10 @@ public class DatabaseController {
         try {
             FileReader fileReader = new FileReader(directory);
             Gson gson = new Gson();
-            return gson.fromJson(fileReader, Player.class);
-        } catch (FileNotFoundException e) {
+            Player player =  gson.fromJson(fileReader, Player.class);
+            fileReader.close();
+            return player;
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -103,7 +107,7 @@ public class DatabaseController {
         return file.exists();
     }
 
-    public static Deck getDeckByName(String deck) {
+    public static Deck getDeckByName(String deck) throws IOException {
         String directory = getDeckDirectory(deck);
         try {
             FileReader fileReader = new FileReader(directory);
@@ -113,7 +117,9 @@ public class DatabaseController {
                             registerSubtype(MonsterCard.class, "monster").
                             registerSubtype(SpellCard.class, "spell").
                             registerSubtype(TrapCard.class, "trap");
-            return gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(fileReader, Deck.class);
+            Deck deck1 =  gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(fileReader, Deck.class);
+            fileReader.close();
+            return deck1;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

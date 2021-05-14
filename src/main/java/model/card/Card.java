@@ -5,6 +5,7 @@ import controller.Effect;
 import model.commands.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.TreeMap;
 
 public abstract class Card {
@@ -135,5 +136,14 @@ public abstract class Card {
         else if (this.getName().equals(Effect.SOLEMN_WARNING.toString()))
             addCommands(new SolemnWarning(this));
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return Objects.equals(name, card.name);
+    }
+
 
 }

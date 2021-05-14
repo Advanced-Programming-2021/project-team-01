@@ -10,12 +10,13 @@ import model.card.TrapCard;
 import view.ConsoleCommands;
 import view.Menu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
 
 public class DeckView {
-    public void run(String input) {
+    public void run(String input) throws IOException {
         Matcher matcher;
         if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.CREATE_DECK, input)) != null) {
             createDeck(matcher);
@@ -95,7 +96,7 @@ public class DeckView {
 
     private void addCardToDeck(Matcher matcher) {
         String cardName = matcher.group("cardName"), deckName = matcher.group("deckName");
-        boolean isMainDeck = matcher.group("side").equals("");
+        boolean isMainDeck = (matcher.group("side") == null);
 
         try {
             DeckController.getInstance().addCardToDeck(cardName, deckName, isMainDeck);
@@ -141,7 +142,7 @@ public class DeckView {
         }
     }
 
-    private void showAllDeck() {
+    private void showAllDeck() throws IOException {
         ArrayList<Deck> decks = DeckController.getInstance().showAllDecks();
         System.out.println("Decks:");
         System.out.println("Active deck:");

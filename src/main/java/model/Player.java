@@ -75,7 +75,7 @@ public class Player {
     }
 
     public void increaseMoney(int amount) {
-        this.money = money - amount;
+        this.money = money + amount;
     }
 
     public void setActiveDeck(String deckName) {

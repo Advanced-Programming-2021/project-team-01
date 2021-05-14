@@ -1,5 +1,6 @@
 package view.menu;
 
+import controller.RegisterController;
 import controller.ShopController;
 import model.card.Card;
 import view.ConsoleCommands;
@@ -23,6 +24,8 @@ class ShopView {
             exitMenu();
         } else if (ConsoleCommands.getMatcher(ConsoleCommands.SHOW_ALL_CARDS, input) != null) {
             showAllCards();
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.INCREASE_MONEY, input)) != null) {
+            increaseMoney(matcher);
         } else {
             System.err.println("invalid command");
         }
@@ -50,6 +53,10 @@ class ShopView {
             return;
         }
         System.err.println("menu navigation is not possible");
+    }
+
+    private void increaseMoney(Matcher matcher) {
+        RegisterController.onlineUser.increaseMoney(Integer.parseInt(matcher.group(1)));
     }
 
     private void exitMenu() {

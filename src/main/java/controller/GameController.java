@@ -6,6 +6,7 @@ import model.card.*;
 import view.Menu;
 import view.menu.HandleRequestType;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -147,7 +148,7 @@ public class GameController {
         playerTwoLp += amount;
     }
 
-    public void startGame(String username, int numberOfRounds) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber {
+    public void startGame(String username, int numberOfRounds) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber, IOException {
         playerTwo = DatabaseController.getUserByName(username);
         playerOne = RegisterController.onlineUser;
         if (playerTwo == null) {
@@ -597,7 +598,7 @@ public class GameController {
         return playerOneLp <= 0 || playerTwoLp <= 0;
     }
 
-    public void finishGame() throws NoActiveDeck, InvalidDeck, UsernameNotExists, InvalidRoundNumber {
+    public void finishGame() throws NoActiveDeck, InvalidDeck, UsernameNotExists, InvalidRoundNumber, IOException {
         if (rounds == 1) {
             if (playerOneLp <= 0) {
                 playerOne.increaseLoseRate();
@@ -610,6 +611,8 @@ public class GameController {
                 playerTwo.increaseMoney(100);
                 playerOne.increaseMoney(1000 + playerOneLp);
             }
+            DatabaseController.updatePlayer(playerOne);
+            DatabaseController.updatePlayer(playerTwo);
             HandleRequestType.currentMenu = Menu.MAIN_MENU;
         } else {
             if (playerOneWin == 2 || playerTwoWin == 2) {
@@ -630,6 +633,8 @@ public class GameController {
                     playerTwoWin++;
                 else
                     playerOneWin++;
+                DatabaseController.updatePlayer(playerOne);
+                DatabaseController.updatePlayer(playerTwo);
                 startGame(playerTwo.getUsername(), 2);
             }
         }
