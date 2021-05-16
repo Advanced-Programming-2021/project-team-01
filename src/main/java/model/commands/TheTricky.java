@@ -23,6 +23,9 @@ public class TheTricky extends Command implements Activate{
             hand = board.getPlayerTwoHand();
         }
         while (true) {
+            if (!canActivate()){
+                throw new Exception("You cant activate this card");
+            }
             int input = Integer.parseInt(GameView.prompt("Choose a monster from your hand"));
             if (input > hand.size()){
                 GameView.showConsole("invalid selection");
