@@ -145,7 +145,7 @@ public class GameController {
         playerOneLp += amount;
     }
 
-    protected void increasePlayerLp(int amount) {
+    public void increasePlayerLp(int amount) {
         if (currentPlayer == playerOne) {
             playerOneLp += amount;
             return;
@@ -484,6 +484,16 @@ public class GameController {
 
     public void ritualSummon() {
 
+    }
+
+    public void setWinner(String nickname) throws Exception {
+        if (playerOne.getNickname().equals(nickname))
+            playerOneWin = 2;
+        else if (playerTwo.getNickname().equals(nickname))
+            playerTwoWin = 2;
+        else
+            throw new Exception("Nickname is invalid!");
+        finishGame();
     }
 
     public String showGraveyard() {

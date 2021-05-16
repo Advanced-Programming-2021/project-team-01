@@ -49,6 +49,10 @@ public class GameView {
             GameController.getInstance().getGameBoard().showBoard();
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.CHEAT, input)) != null) {
             GameController.getInstance().cheater(matcher.group(1));
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.INCREASE_LP, input)) != null) {
+            GameController.getInstance().increasePlayerLp(Integer.parseInt(matcher.group(1)));
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SET_WINNER, input)) != null) {
+            setWinner(matcher.group(1));
         } else {
             System.out.println("invalid command");
             return;
@@ -92,6 +96,14 @@ public class GameView {
             System.out.println("card deselected");
         } catch (Exception exp) {
             System.err.println(exp.getMessage());
+        }
+    }
+
+    private void setWinner(String nickname) throws Exception {
+        try {
+            GameController.getInstance().setWinner(nickname);
+        } catch (Exception expt) {
+            System.err.println(expt.getMessage());
         }
     }
 
