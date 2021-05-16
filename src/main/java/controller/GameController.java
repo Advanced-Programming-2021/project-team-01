@@ -172,7 +172,8 @@ public class GameController {
             throw new InvalidDeck(playerOne.getUsername());
         } else if (!playerTwoDeck.isDeckValid()) {
             throw new InvalidDeck(playerTwo.getUsername());
-        }
+        }setup(playerOneDeck);
+        setup(playerTwoDeck);
         if (numberOfRounds != 1 && numberOfRounds != 3) {
             throw new InvalidRoundNumber();
         }
@@ -193,13 +194,12 @@ public class GameController {
         attackController = new AttackController(this);
         aiBasicController = new AiBasicController(this);
         phaseController.setGamePhase(GamePhase.DRAW_PHASE);
-        setup(playerOneDeck);
-        setup(playerTwoDeck);
         state = State.NONE;
     }
 
     private void setup(Deck deck) {
-        for (Card card : deck.getMainDeck()) {
+        for (int i = 0; i < deck.getMainDeck().size(); i++) {
+            Card card = deck.getMainDeck().get(i);
             card.addCommandsToCard();
         }
     }
@@ -466,16 +466,14 @@ public class GameController {
         if (selectedCard.getCard() instanceof SpellCard) {
             SpellCard card = (SpellCard) selectedCard.getCard();
             if (card.getProperty() == Property.RITUAL) {
-                getRitualCard();
-
+                System.out.println("hi");
             } else if (!(card.getProperty() == Property.FIELD) && selectedCard.getCardLocation() == CardLocation.HAND) {
                 gameBoard.setSpell(getCurrentPlayerNumber(), card);
                 gameBoard.setSpellFaceUp(selectedCard.getCard());
             }
         }
         createChain();
-
-        selectedCard.getCard().doActions();
+        chain.run();
         state = State.NONE;
     }
 

@@ -264,15 +264,16 @@ public class GameView {
         }
     }
 
-    public static String[] getValidRitual(int level) {
+    public static String[] getValidRitual(int level) throws Exception {
         outer:
         while (true) {
             String input = prompt("Enter in the following format <num>,<num>,...");
+            if (input.equals("cancel")) throw new Exception("operation canceled");
             if (input.matches("[12345][(,[12345])]{0,4}")){
                 String[] monsterNumbers = input.split(",");
                 ZoneSlot[] monsterZones = GameController.getInstance().getGameBoard().getCurrentPlayerMonsterCards();
-                for (ZoneSlot monsterZone : monsterZones) {
-                    if (monsterZone.getCard() == null){
+                for (int i = 0; i < monsterNumbers.length; i++) {
+                    if (monsterZones[Integer.parseInt(monsterNumbers[i])].getCard() == null){
                         System.out.println("there is no monster here!");
                         continue outer;
                     }
