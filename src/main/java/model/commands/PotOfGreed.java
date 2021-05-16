@@ -22,6 +22,7 @@ public class PotOfGreed extends Command implements Activate{
 
     @Override
     public boolean canActivate() throws Exception {
+        board = gameController.getGameBoard();
         if(!(gameController.getPhaseController().getGamePhase().equals(GamePhase.MAIN_PHASE2)||
         gameController.getPhaseController().getGamePhase().equals(GamePhase.MAIN_PHASE1))){
             return false;
