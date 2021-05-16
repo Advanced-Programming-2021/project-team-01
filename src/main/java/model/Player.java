@@ -102,7 +102,7 @@ public class Player {
     public static class SortByScore implements Comparator<Player> {
         public int compare(Player player1, Player player2) {
             if (player1.getScore() != player2.getScore())
-                return player1.getScore() - player2.getScore();
+                return player2.getScore() - player1.getScore();
             else
                 return player1.getUsername().compareTo(player2.getUsername());
         }

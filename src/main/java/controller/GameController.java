@@ -487,10 +487,14 @@ public class GameController {
     }
 
     public void setWinner(String nickname) throws Exception {
-        if (playerOne.getNickname().equals(nickname))
+        if (playerOne.getNickname().equals(nickname)) {
             playerOneWin = 2;
-        else if (playerTwo.getNickname().equals(nickname))
+            playerOneLp = 0;
+        }
+        else if (playerTwo.getNickname().equals(nickname)) {
             playerTwoWin = 2;
+            playerTwoLp = 0;
+        }
         else
             throw new Exception("Nickname is invalid!");
         finishGame();
