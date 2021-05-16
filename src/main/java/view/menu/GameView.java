@@ -237,6 +237,7 @@ public class GameView {
     }
 
     public static int getValidNumber(int start, int end) {
+        end--;
         while (true) {
             String input = prompt("Enter a Number :");
             try {
@@ -272,8 +273,8 @@ public class GameView {
             if (input.matches("[12345][(,[12345])]{0,4}")){
                 String[] monsterNumbers = input.split(",");
                 ZoneSlot[] monsterZones = GameController.getInstance().getGameBoard().getCurrentPlayerMonsterCards();
-                for (int i = 0; i < monsterNumbers.length; i++) {
-                    if (monsterZones[Integer.parseInt(monsterNumbers[i])].getCard() == null){
+                for (String number : monsterNumbers) {
+                    if (monsterZones[Integer.parseInt(number)].getCard() == null) {
                         System.out.println("there is no monster here!");
                         continue outer;
                     }

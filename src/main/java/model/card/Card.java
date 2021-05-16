@@ -138,12 +138,13 @@ public abstract class Card {
             addCommands(new Suijin(this));
         else if (this.getName().equals(Effect.MAN_EATER_BUG.toString()))
             addCommands(new ManEaterBug(this));
-        else if (this.getName().equals(Effect.RITUAL.toString())){
+        else if (this.getName().equals(Effect.RITUAL.toString()))
             addCommands(new AdvanceRitualArt(this));
-        }
-        else if (this.getName().equals(Effect.TRICKY.toString())){
+        else if (this.getName().equals(Effect.TRICKY.toString()))
             addCommands(new TheTricky(this));
-        }
+        else if (this.getName().equals(Effect.GATE_GUARDIAN.toString()))
+            addCommands(new GateGuardian(this));
+
     }
 
 

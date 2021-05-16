@@ -33,7 +33,10 @@ public enum Effect {
     SUIJIN("Suijin"),
     MAN_EATER_BUG("Man-Eater Bug"),
     RITUAL("Advanced Ritual Art"),
-    TRICKY("The Tricky");
+    TRICKY("The Tricky"),
+    SCANNER("Scanner"),
+    MARSHMALLON("Marshmallon"),
+    GATE_GUARDIAN("Gate Guardian");
     String value;
 
     Effect(String value) {
