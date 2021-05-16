@@ -29,9 +29,9 @@ public class DarkHole extends Command implements Activate {
     public boolean canActivate() throws Exception {
         int number = gameController.getOpponentPlayerNumber();
         if (number == 1){
-            return gameController.getGameBoard().numberOfMonsterCards(2) != 0;
+            return gameController.getGameBoard().numberOfMonsterCards(1) != 0;
         }
-        return gameController.getGameBoard().numberOfMonsterCards(1) != 0;
+        return gameController.getGameBoard().numberOfMonsterCards(2) != 0;
     }
 
 
