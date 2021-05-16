@@ -32,7 +32,8 @@ public enum Effect {
     YOMI_SHIP("Yomi Ship"),
     SUIJIN("Suijin"),
     MAN_EATER_BUG("Man-Eater Bug"),
-    RITUAL("Advanced Ritual Art");
+    RITUAL("Advanced Ritual Art"),
+    TRICKY("The Tricky");
     String value;
 
     Effect(String value) {

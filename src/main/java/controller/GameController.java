@@ -472,7 +472,7 @@ public class GameController {
                 gameBoard.setSpellFaceUp(selectedCard.getCard());
             }
         }
-        createChain();
+        createChain(selectedCard.getCard());
         chain.run();
         state = State.NONE;
     }
@@ -732,13 +732,9 @@ public class GameController {
         return "";
     }
 
-    public void createChain() throws Exception {
-        chain = new Chain();
+    public void createChain(Card... cards) throws Exception {
+        chain = new Chain(cards);
         chainController = new ChainController(chain);
-        if (selectedCard.getCard() instanceof SpellCard ||
-                selectedCard.getCard() instanceof TrapCard) {
-            chain.setNext(selectedCard.getCard());
-        }
         chainController.run();
     }
 }

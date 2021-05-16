@@ -4,14 +4,16 @@ import controller.GameController;
 import model.card.Card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Chain {
     private final ArrayList<Card> chainElements;
     int counter;
 
-    public Chain() {
+    public Chain(Card... cards) {
         chainElements = new ArrayList<>();
         counter = 0;
+        chainElements.addAll(Arrays.asList(cards));
     }
 
     public void run() throws Exception {

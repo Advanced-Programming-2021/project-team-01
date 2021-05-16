@@ -141,6 +141,9 @@ public abstract class Card {
         else if (this.getName().equals(Effect.RITUAL.toString())){
             addCommands(new AdvanceRitualArt(this));
         }
+        else if (this.getName().equals(Effect.TRICKY.toString())){
+            addCommands(new TheTricky(this));
+        }
     }
 
 
