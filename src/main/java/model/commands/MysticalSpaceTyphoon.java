@@ -24,7 +24,6 @@ public class MysticalSpaceTyphoon extends Command implements Activate{
             if (zoneSlots[i].getCard() != null)
                 cards.add(zoneSlots[i].getCard());
         }
-        System.out.println("----->"+cards.size());
         if (cards.size() == 0) {
             throw new Exception("No card in zone");
         }

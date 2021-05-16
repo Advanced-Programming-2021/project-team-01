@@ -145,7 +145,7 @@ public class GameController {
         playerOneLp += amount;
     }
 
-    protected void increasePlayerLp(int amount) {
+    public void increasePlayerLp(int amount) {
         if (currentPlayer == playerOne) {
             playerOneLp += amount;
             return;
@@ -449,11 +449,6 @@ public class GameController {
         String result = attackController.attack(number);
         selectedCard.reset();
         state = State.NONE;
-        if (isGameFinished()) {
-            finishGame();
-            return String.format("%s won the game and the score is: %d-%d",
-                    playerOneLp <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), playerOne.getScore(), playerTwo.getScore());
-        }
         return result;
     }
 
@@ -462,11 +457,6 @@ public class GameController {
         String result = attackController.directAttack();
         selectedCard.reset();
         state = State.NONE;
-        if (isGameFinished()) {
-            finishGame();
-            return String.format("%s won the game and the score is: %d-%d",
-                    playerOneLp <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), playerOne.getScore(), playerTwo.getScore());
-        }
         return result;
     }
 
@@ -485,6 +475,20 @@ public class GameController {
 
     public void ritualSummon() {
 
+    }
+
+    public void setWinner(String nickname) throws Exception {
+        if (playerOne.getNickname().equals(nickname)) {
+            playerOneWin = 2;
+            playerTwoLp = 0;
+        }
+        else if (playerTwo.getNickname().equals(nickname)) {
+            playerTwoWin = 2;
+            playerOneLp = 0;
+        }
+        else
+            throw new Exception("Nickname is invalid!");
+        finishGame();
     }
 
     public String showGraveyard() {
@@ -609,22 +613,29 @@ public class GameController {
         return playerOneLp <= 0 || playerTwoLp <= 0;
     }
 
-    public void finishGame() throws NoActiveDeck, InvalidDeck, UsernameNotExists, InvalidRoundNumber, IOException {
+    public String finishGame() throws NoActiveDeck, InvalidDeck, UsernameNotExists, InvalidRoundNumber, IOException {
         if (rounds == 1) {
             if (playerOneLp <= 0) {
                 playerOne.increaseLoseRate();
                 playerTwo.increaseWinRate(1000);
                 playerOne.increaseMoney(100);
                 playerTwo.increaseMoney(1000 + playerTwoLp);
+                DatabaseController.updatePlayer(playerOne);
+                DatabaseController.updatePlayer(playerTwo);
+                HandleRequestType.currentMenu = Menu.MAIN_MENU;
+                return String.format("%s won the game and the score is: %d-%d",
+                        playerOneLp <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 100, 1000 + playerTwoLp);
             } else {
                 playerTwo.increaseLoseRate();
                 playerOne.increaseWinRate(1000);
                 playerTwo.increaseMoney(100);
                 playerOne.increaseMoney(1000 + playerOneLp);
+                DatabaseController.updatePlayer(playerOne);
+                DatabaseController.updatePlayer(playerTwo);
+                HandleRequestType.currentMenu = Menu.MAIN_MENU;
+                return String.format("%s won the game and the score is: %d-%d",
+                        playerOneLp <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 1000 + playerOneLp, 100);
             }
-            DatabaseController.updatePlayer(playerOne);
-            DatabaseController.updatePlayer(playerTwo);
-            HandleRequestType.currentMenu = Menu.MAIN_MENU;
         } else {
             if (playerOneWin == 2 || playerTwoWin == 2) {
                 if (playerOneLp <= 0) {
@@ -632,23 +643,31 @@ public class GameController {
                     playerTwo.increaseWinRate(3000);
                     playerOne.increaseMoney(300);
                     playerTwo.increaseMoney(3000 + 3 * playerTwoLp);
+                    DatabaseController.updatePlayer(playerOne);
+                    DatabaseController.updatePlayer(playerTwo);
+                    HandleRequestType.currentMenu = Menu.MAIN_MENU;
+                    return String.format("%s won the game and the score is: %d-%d",
+                            playerOneLp <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 300, 3000 + playerTwoLp);
                 } else {
                     playerTwo.increaseLoseRate();
                     playerOne.increaseWinRate(3000);
                     playerTwo.increaseMoney(300);
                     playerOne.increaseMoney(3000 + 3 * playerOneLp);
+                    DatabaseController.updatePlayer(playerOne);
+                    DatabaseController.updatePlayer(playerTwo);
+                    HandleRequestType.currentMenu = Menu.MAIN_MENU;
+                    return String.format("%s won the game and the score is: %d-%d",
+                            playerOneLp <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 3000 + playerOneLp, 300);
                 }
-                HandleRequestType.currentMenu = Menu.MAIN_MENU;
             } else {
                 if (playerOneLp <= 0)
                     playerTwoWin++;
                 else
                     playerOneWin++;
-                DatabaseController.updatePlayer(playerOne);
-                DatabaseController.updatePlayer(playerTwo);
                 startGame(playerTwo.getUsername(), 2);
             }
         }
+        return "";
     }
 
     public void createChain() throws Exception {

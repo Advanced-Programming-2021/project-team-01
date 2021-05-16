@@ -3,6 +3,8 @@ package controller;
 import model.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ScoreBoardController {
     private static ScoreBoardController instance = null;
@@ -14,7 +16,7 @@ public class ScoreBoardController {
         return instance;
     }
 
-    public ArrayList<Player> sortedScoreBoard() {
+    public ArrayList<Player> getSortedScoreBoard() {
         ArrayList<Player> players = DatabaseController.getAllPlayers();
         players.sort(new Player.SortByScore());
         return players;

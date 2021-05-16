@@ -29,7 +29,7 @@ public class ScoreBoardView {
     }
 
     private void showScoreBoard() {
-        ArrayList<Player> players = ScoreBoardController.getInstance().sortedScoreBoard();
+        ArrayList<Player> players = ScoreBoardController.getInstance().getSortedScoreBoard();
         int index = 1;
         for (Player player : players) {
             System.out.println(index + "- " + player.getUsername() + ": " + player.getScore());
