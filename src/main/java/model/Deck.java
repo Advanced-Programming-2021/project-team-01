@@ -50,26 +50,26 @@ public class Deck {
     }
 
     public boolean checkCardsLimit(Card card) {
-        int counter = 0;
-        for (Card iteratorCard : mainDeck) {
-            if (iteratorCard.equals(card))
-                counter++;
-        }
-        for (Card iteratorCard : sideDeck) {
-            if (iteratorCard.equals(card))
-                counter++;
-        }
+        int counter = 0, cardsOfPlayer = 0, cardsInDeck = 0;
+        for (Card iteratorCard : mainDeck)
+            if (iteratorCard.equals(card)) counter++;
+        for (Card iteratorCard : sideDeck)
+            if (iteratorCard.equals(card)) counter++;
+        for (String cardName : RegisterController.onlineUser.getPlayerCards())
+            if (card.getName().equals(cardName)) cardsOfPlayer++;
+        for (Card cardName : getMainDeck())
+            if (card.getName().equals(cardName.getName())) cardsInDeck++;
+        for (Card cardName : getSideDeck())
+            if (card.getName().equals(cardName.getName())) cardsInDeck++;
+
         if (card instanceof TrapCard) {
             if (((TrapCard) card).getLimitationStatus().equals("Limited"))
-                return counter == 0 && (Collections.frequency(RegisterController.onlineUser.getPlayerCards(), card.getName())
-                        - (Collections.frequency(mainDeck, Card.getCardByName(card.getName())) + Collections.frequency(sideDeck, Card.getCardByName(card.getName()))) >= 0);
+                return counter == 0 && (cardsOfPlayer - cardsInDeck >= 0);
         } else if (card instanceof SpellCard) {
             if (((SpellCard) card).getLimitationStatus().equals("Limited"))
-                return counter == 0 && (Collections.frequency(RegisterController.onlineUser.getPlayerCards(), card.getName())
-                        - (Collections.frequency(mainDeck, Card.getCardByName(card.getName())) + Collections.frequency(sideDeck, Card.getCardByName(card.getName()))) >= 0);
+                return counter == 0 && (cardsOfPlayer - cardsInDeck >= 0);
         }
-        return counter < 3 && (Collections.frequency(RegisterController.onlineUser.getPlayerCards(), card.getName())
-                - (Collections.frequency(mainDeck, Card.getCardByName(card.getName())) + Collections.frequency(sideDeck, Card.getCardByName(card.getName()))) >= 0);
+        return counter < 3 && (cardsOfPlayer - cardsInDeck >= 0);
     }
 
 
