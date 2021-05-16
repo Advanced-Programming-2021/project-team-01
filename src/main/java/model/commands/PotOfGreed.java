@@ -27,9 +27,9 @@ public class PotOfGreed extends Command implements Activate{
             return false;
         }
         if (gameController.getCurrentPlayerNumber() == 1){
-            return board.getPlayerOneHand().size() == 9;
+            return gameController.getGameBoard().getPlayerOneHand().size() == 9;
         }
-        return board.getPlayerTwoHand().size() == 9;
+        return gameController.getGameBoard().getPlayerTwoHand().size() == 9;
     }
 }
 

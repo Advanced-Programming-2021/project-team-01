@@ -6,6 +6,7 @@ import controller.exceptions.LevelSevenException;
 import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
+import model.card.MonsterCard;
 import view.ConsoleCommands;
 import view.Menu;
 
@@ -62,7 +63,7 @@ public class GameView {
             GameController.getInstance().getGameBoard().showBoard();
         }
         if (GameController.getInstance().isGameFinished()) {
-            System.out.println(GameController.getInstance().finishGame());
+            GameController.getInstance().finishGame();
         }
     }
 
@@ -257,6 +258,34 @@ public class GameView {
                 return true;
             }else if (input.equals("No")){
                 return false;
+            }else {
+                System.out.println("Invalid Command!");
+            }
+        }
+    }
+
+    public static String[] getValidRitual(int level) {
+        outer:
+        while (true) {
+            String input = prompt("Enter in the following format <num>,<num>,...");
+            if (input.matches("[12345][(,[12345])]{0,4}")){
+                String[] monsterNumbers = input.split(",");
+                ZoneSlot[] monsterZones = GameController.getInstance().getGameBoard().getCurrentPlayerMonsterCards();
+                for (ZoneSlot monsterZone : monsterZones) {
+                    if (monsterZone.getCard() == null){
+                        System.out.println("there is no monster here!");
+                        continue outer;
+                    }
+                }
+                int totalLevel = 0;
+                for (String monsterNumber : monsterNumbers) {
+                    totalLevel += ((MonsterCard)monsterZones[Integer.parseInt(monsterNumber)].getCard()).getLevel();
+                }
+                if (totalLevel < level){
+                    System.out.println("selected monsters dont match with ritual monsters");
+                    continue;
+                }
+                return monsterNumbers;
             }else {
                 System.out.println("Invalid Command!");
             }

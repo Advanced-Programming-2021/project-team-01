@@ -509,6 +509,13 @@ public class Board {
         zoneSlot.setHidden(false);
     }
 
+    public ZoneSlot[] getCurrentPlayerMonsterCards(){
+        if (GameController.getInstance().getCurrentPlayerNumber() == 1){
+            return playerOneMonsterZone;
+        }
+        return playerTwoMonsterZone;
+    }
+
     public String showGraveyard(int player) {
         StringBuilder result = new StringBuilder();
         if (player == 1)

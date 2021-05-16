@@ -4,6 +4,7 @@ import controller.exceptions.*;
 import model.*;
 import model.card.*;
 import view.Menu;
+import view.menu.GameView;
 import view.menu.HandleRequestType;
 
 import java.io.IOException;
@@ -464,17 +465,80 @@ public class GameController {
         state = State.ACTIVE_SPELL;
         if (selectedCard.getCard() instanceof SpellCard) {
             SpellCard card = (SpellCard) selectedCard.getCard();
-            if (!(card.getProperty() == Property.FIELD) && selectedCard.getCardLocation() == CardLocation.HAND) {
+            if (card.getProperty() == Property.RITUAL) {
+                getRitualCard();
+
+            } else if (!(card.getProperty() == Property.FIELD) && selectedCard.getCardLocation() == CardLocation.HAND) {
                 gameBoard.setSpell(getCurrentPlayerNumber(), card);
                 gameBoard.setSpellFaceUp(selectedCard.getCard());
             }
         }
+        createChain();
+
         selectedCard.getCard().doActions();
         state = State.NONE;
     }
 
-    public void ritualSummon() {
+    private void getRitualCard() throws Exception {
+        ArrayList<Card> temp = new ArrayList<>();
+        ArrayList<Card> hand;
+        ArrayList<Card> monsterCards;
+        if (getCurrentPlayerNumber() == 1) {
+            hand = gameBoard.getPlayerOneHand();
+            monsterCards = gameBoard.getCardInMonsterZone(1);
+        } else {
+            hand = gameBoard.getPlayerTwoHand();
+            monsterCards = gameBoard.getCardInMonsterZone(2);
+        }
+        for (Card card : hand) {
+            if (card instanceof MonsterCard) {
+                if (((MonsterCard) card).getCardType().equals(CardType.RITUAL)) {
+                    temp.add(card);
+                }
+            }
+        }
+        checkRitualLevel(temp, monsterCards);
+        GameView.printListOfCard(temp);
+        int target = Integer.parseInt(GameView.prompt("choose a card"));
+        if (target > temp.size()){
+            throw new Exception("Invalid Number");
+        }
+        MonsterCard dedicated = (MonsterCard) temp.get(target);
+        String[]monsters = GameView.getValidRitual(dedicated.getLevel());
+        for (String monster : monsters) {
+            gameBoard.sendCardFromMonsterZoneToGraveyard(Integer.parseInt(monster),getCurrentPlayerNumber());
+        }
+        gameBoard.setSpell(getCurrentPlayerNumber(), (SpellCard) selectedCard.getCard());
+        gameBoard.setSpellFaceUp(selectedCard.getCard());
+        gameBoard.summonCard(dedicated,getCurrentPlayerNumber());
+        gameBoard.sendCardFromSpellZoneToGraveyard(selectedCard.getCard());
+    }
 
+    private void checkRitualLevel(ArrayList<Card> temp, ArrayList<Card> monsterCards) throws Exception {
+        if (temp.size() == 0) {
+            throw new Exception("There is no way you could ritual summon a monster");
+        }
+        int totalLevel = 0;
+        for (Card monsterCard : monsterCards) {
+            if (monsterCard instanceof MonsterCard) {
+                totalLevel += ((MonsterCard) monsterCard).getLevel();
+            }
+        }
+        int minimumLevel = 80;
+        for (Card card : temp) {
+            if (card instanceof MonsterCard) {
+                if (((MonsterCard) card).getLevel() < minimumLevel){
+                    minimumLevel = ((MonsterCard) card).getLevel();
+                }
+            }
+        }
+        if (minimumLevel > totalLevel){
+            throw new Exception("There is no way you could ritual summon a monster");
+        }
+    }
+
+    public void ritualSummon() throws Exception {
+        getRitualCard();
     }
 
     public void setWinner(String nickname) throws Exception {
@@ -673,6 +737,10 @@ public class GameController {
     public void createChain() throws Exception {
         chain = new Chain();
         chainController = new ChainController(chain);
+        if (selectedCard.getCard() instanceof SpellCard ||
+                selectedCard.getCard() instanceof TrapCard) {
+            chain.setNext(selectedCard.getCard());
+        }
         chainController.run();
     }
 }
