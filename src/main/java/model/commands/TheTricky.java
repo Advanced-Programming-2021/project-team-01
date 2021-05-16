@@ -32,7 +32,7 @@ public class TheTricky extends Command implements Activate{
                 GameView.showConsole("Please choose a monster!");
                 continue;
             }
-            board.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(),hand.get(input));
+            board.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(),hand.get(input - 1));
             board.summonCard((MonsterCard) myCard, gameController.getCurrentPlayerNumber());
             break;
         }
