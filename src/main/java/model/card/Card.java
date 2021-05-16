@@ -5,7 +5,6 @@ import controller.Effect;
 import model.commands.*;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.TreeMap;
 
 public abstract class Card {
@@ -135,18 +134,14 @@ public abstract class Card {
             addCommands(new CallOfTheHaunted(this));
         else if (this.getName().equals(Effect.SOLEMN_WARNING.toString()))
             addCommands(new SolemnWarning(this));
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return Objects.equals(name, card.name);
+        else if (this.getName().equals(Effect.SUIJIN.toString()))
+            addCommands(new Suijin(this));
+        else if (this.getName().equals(Effect.MAN_EATER_BUG.toString()))
+            addCommands(new ManEaterBug(this));
     }
 
 
-    public void setType(String trap){
+    public void setType(String trap) {
         this.type = trap;
     }
 }

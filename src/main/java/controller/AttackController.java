@@ -15,8 +15,14 @@ public class AttackController {
     ArrayList<Card> attackedCards = new ArrayList<>();//TODO: clear in battle phase
     MonsterCard target;
     MonsterCard attacker;
+    int damage;
+
     public AttackController(GameController gameController) {
         this.gameController = gameController;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 
     public MonsterCard getAttacker() {
@@ -38,90 +44,89 @@ public class AttackController {
         if (gameController.phaseController.getGamePhase() != GamePhase.BATTLE_PHASE) {
             throw new NotAllowedAction();
         }
-        if (attackedCards.contains(gameController.selectedCard.getCard())){
+        if (attackedCards.contains(gameController.selectedCard.getCard())) {
             throw new AlreadyAttacked();
         }
-        target = (MonsterCard) gameController.gameBoard.getCard("monster", gameController.getOpponentPlayerNumber(),number);
+        target = (MonsterCard) gameController.gameBoard.getCard("monster", gameController.getOpponentPlayerNumber(), number);
         attacker = (MonsterCard) gameController.selectedCard.getCard();
-        if (target == null){
+        if (target == null) {
             throw new NoCardToAttack();
         }
         gameController.createChain();
-        gameController.chainController.chain.run();
-        if (gameController.getState() != State.ATTACK){
+        gameController.chain.run();
+        if (gameController.getState() != State.ATTACK) {
             return "battle negated";
         }
-        if (gameController.gameBoard.getZoneSlotByLocation(CardLocation.MONSTER,number,
-                gameController.getOpponentPlayerNumber()).toString().equals("OO")){
+        if (gameController.gameBoard.getZoneSlotByLocation(CardLocation.MONSTER, number,
+                gameController.getOpponentPlayerNumber()).toString().equals("OO")) {
             return attackInFaceUpPosition(number, target, attacker);
-        } else if (gameController.gameBoard.getZoneSlotByLocation(CardLocation.MONSTER,number,
-                gameController.getOpponentPlayerNumber()).toString().equals("DO")){
+        } else if (gameController.gameBoard.getZoneSlotByLocation(CardLocation.MONSTER, number,
+                gameController.getOpponentPlayerNumber()).toString().equals("DO")) {
             return attackFaceUpDefencePosition(number, target, attacker);
         } else {
             return attackFaceDownDefencePosition(number, target, attacker);
         }
     }
 
-    private String attackFaceDownDefencePosition(int number, MonsterCard target, MonsterCard attacker) {
+    private String attackFaceDownDefencePosition(int number, MonsterCard target, MonsterCard attacker) throws Exception {
         ZoneSlot zoneSlotAttacker = gameController.gameBoard.getZoneSlotByCard(attacker);
         ZoneSlot zoneSlotTarget = gameController.gameBoard.getZoneSlotByCard(target);
-        int damage = zoneSlotAttacker.getAttack() - zoneSlotTarget.getDefence();
+        damage = zoneSlotAttacker.getAttack() - zoneSlotTarget.getDefence();
         gameController.gameBoard.getZoneSlotByLocation(CardLocation.MONSTER, number, gameController.getOpponentPlayerNumber()).setHidden(false);
-        if (damage > 0){
+        gameController.effectController.checkTargetEffects();
+        if (damage > 0) {
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
             attackedCards.add(attacker);
             return String.format("the defense position monster %s was destroyed", target.getName());
         }
-        if (damage == 0){
+        if (damage == 0) {
             attackedCards.add(attacker);
             return String.format("defense position monster was %s and no card is destroyed", target.getName());
-        }
-        else {
+        } else {
             gameController.increasePlayerLp(damage);
             attackedCards.add(attacker);
-            return String.format("defense position monster was %s and no card is destroyed and you receive %d damage", target.getName(),-damage);
+            return String.format("defense position monster was %s and no card is destroyed and you receive %d damage", target.getName(), -damage);
         }
     }
 
-    private String attackFaceUpDefencePosition(int number, MonsterCard target, MonsterCard attacker) {
+    private String attackFaceUpDefencePosition(int number, MonsterCard target, MonsterCard attacker) throws Exception {
         ZoneSlot zoneSlotAttacker = gameController.gameBoard.getZoneSlotByCard(attacker);
         ZoneSlot zoneSlotTarget = gameController.gameBoard.getZoneSlotByCard(target);
-        int damage = zoneSlotAttacker.getAttack() - zoneSlotTarget.getDefence();
-        if (damage > 0){
+        damage = zoneSlotAttacker.getAttack() - zoneSlotTarget.getDefence();
+        gameController.effectController.checkTargetEffects();
+        if (damage > 0) {
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
             attackedCards.add(attacker);
             return "the defense position monster was destroyed";
         }
-        if (damage == 0){
+        if (damage == 0) {
             attackedCards.add(attacker);
             return "no card is destroyed";
-        }
-        else {
+        } else {
             gameController.increasePlayerLp(damage);
             attackedCards.add(attacker);
-            return String.format("no card is destroyed and you receive %d damage",-damage);
+            return String.format("no card is destroyed and you receive %d damage", -damage);
         }
     }
 
-    private String attackInFaceUpPosition(int number, MonsterCard target, MonsterCard attacker) {
+    private String attackInFaceUpPosition(int number, MonsterCard target, MonsterCard attacker) throws Exception {
         ZoneSlot zoneSlotAttacker = gameController.gameBoard.getZoneSlotByCard(attacker);
         ZoneSlot zoneSlotTarget = gameController.gameBoard.getZoneSlotByCard(target);
-        int damage = zoneSlotAttacker.getAttack() - zoneSlotTarget.getAttack();
-        if (damage > 0){
+        damage = zoneSlotAttacker.getAttack() - zoneSlotTarget.getAttack();
+        gameController.effectController.checkTargetEffects();
+        if (damage > 0) {
             gameController.increaseOpponentLp(-damage);
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
             attackedCards.add(attacker);
-            return String.format("opponent monster destroyed and opponent received %d damage",damage);
-        }
-        else if (damage == 0){
+            return String.format("opponent monster destroyed and opponent received %d damage", damage);
+        } else if (damage == 0) {
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(gameController.selectedCard.getIndex(), gameController.getCurrentPlayerNumber());
             return "both you and your opponent received no damage and both cards are destroyed";
-        }
-        else{
+        } else {
             gameController.increasePlayerLp(-damage);
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(gameController.selectedCard.getIndex(), gameController.getCurrentPlayerNumber());
-            return String.format("your monster card is destroyed and you receive %d damage",-damage);
+            return String.format("your monster card is destroyed and you receive %d damage", -damage);
         }
     }
 
@@ -136,7 +141,7 @@ public class AttackController {
         if (gameController.phaseController.getGamePhase() != GamePhase.BATTLE_PHASE) {
             throw new NotAllowedAction();
         }
-        if (attackedCards.contains(gameController.selectedCard.getCard())){
+        if (attackedCards.contains(gameController.selectedCard.getCard())) {
             throw new AlreadyAttacked();
         }
         if (!gameController.getGameBoard().isMonsterZoneEmpty(gameController.getOpponentPlayerNumber())) {
@@ -146,7 +151,7 @@ public class AttackController {
         ZoneSlot zoneSlotAttacker = gameController.gameBoard.getZoneSlotByCard(attacker);
         gameController.createChain();
         gameController.chainController.chain.run();
-        if (gameController.getState() != State.ATTACK){
+        if (gameController.getState() != State.ATTACK) {
             return "battle negated";
         }
         gameController.decreasePlayerLP(gameController.getOpponentPlayerNumber(), zoneSlotAttacker.getAttack());
@@ -156,6 +161,10 @@ public class AttackController {
 
     public int getAttackerNumber() {
         return gameController.gameBoard.getOwnerOfCard(attacker);
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     public int getTargetNumber() {

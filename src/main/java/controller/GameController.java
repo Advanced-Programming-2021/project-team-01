@@ -434,6 +434,7 @@ public class GameController {
         getZoneSlotSelectedCard().setDefending(false);
         getZoneSlotSelectedCard().setHidden(false);
         createChain();
+        chain.setNext(summonedCard);
         chain.run();
         setSummonedCard(temp);
         selectedCard.reset();

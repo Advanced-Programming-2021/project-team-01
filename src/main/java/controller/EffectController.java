@@ -1,6 +1,7 @@
 package controller;
 
 import model.Board;
+import model.State;
 import model.ZoneSlot;
 import model.card.*;
 
@@ -10,15 +11,14 @@ import java.util.HashMap;
 public class EffectController {
     GameController gameController;
     Board board;
+    AttackController attackController;
+    HashMap<Card, Integer> changeOfCards = new HashMap<>();
+    ArrayList<Card> effectedCards = new ArrayList<>();
 
     public EffectController(GameController gameController) {
         this.gameController = gameController;
         board = gameController.gameBoard;
     }
-
-    HashMap<Card, Integer> changeOfCards = new HashMap<>();
-    ArrayList<Card> effectedCards = new ArrayList<>();
-
 
     public void doEffects() throws Exception {
         ArrayList<Card> cards = board.faceUpSpellAndTraps();
@@ -129,15 +129,30 @@ public class EffectController {
         }
         return 0;
     }
+
     public int unitedWeStand() {
         int counter = 0;
         for (int i = 1; i <= 5; i++) {
             if (!board.getZoneSlotByLocation(CardLocation.MONSTER, i, gameController.getCurrentPlayerNumber()).isHidden() &&
-            board.getZoneSlotByLocation(CardLocation.MONSTER, i , gameController.getCurrentPlayerNumber()).getCard() == null) {
+                    board.getZoneSlotByLocation(CardLocation.MONSTER, i, gameController.getCurrentPlayerNumber()).getCard() == null) {
                 counter++;
             }
         }
         return 800 * counter;
     }
 
+    public void checkTargetEffects() throws Exception {
+        if (gameController.getState() == State.ATTACK) {
+            attackController = gameController.getAttackController();
+            if (attackController.getTarget().getName().equals(Effect.YOMI_SHIP.toString())) {
+                if (attackController.getDamage() > 0)
+                    board.sendCardFromMonsterZoneToGraveyard(attackController.getAttacker());
+            } else if (attackController.getTarget().getName().equals(Effect.SUIJIN.toString())) {
+                if (attackController.getTarget().canActivate())
+                    attackController.getTarget().doActions();
+            }
+        }else if (gameController.getState() == State.FLIP_SUMMON){
+
+        }
+    }
 }

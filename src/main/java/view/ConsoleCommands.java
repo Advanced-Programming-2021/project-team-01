@@ -106,7 +106,7 @@ public enum ConsoleCommands {
     NewEnumerationItem41,
     IMPORT_CARD("^import card (?<cardName>\\w+)$"),
     EXPORT_CARD("^export card (?<cardName>\\w+)$"),
-    CHEAT("gc ([a-zA-Z' ]+)");
+    CHEAT("gc ([a-zA-Z' -]+)");
     private String[] strings;
 
     ConsoleCommands(String... string) {

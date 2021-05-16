@@ -1,6 +1,7 @@
 package model.commands;
 
 import model.Board;
+import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
 import view.menu.GameView;

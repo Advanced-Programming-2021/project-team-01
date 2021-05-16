@@ -28,7 +28,10 @@ public enum Effect {
     TORRENTIAL_TRIBUTE("Torrential Tribute"),
     TRAP_HOLE("Trap Hole"),
     CALL_OF_THE_HAUNTED("Call of The Haunted"),
-    SOLEMN_WARNING("Solemn Warning");
+    SOLEMN_WARNING("Solemn Warning"),
+    YOMI_SHIP("Yomi Ship"),
+    SUIJIN("Suijin"),
+    MAN_EATER_BUG("Man-Eater Bug");
     String value;
 
     Effect(String value) {
