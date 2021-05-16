@@ -15,6 +15,9 @@ public class TheTricky extends Command implements Activate{
     }
 
     public void run() throws Exception {
+        if (!canActivate()){
+            throw new Exception("You cant activate this card");
+        }
         Board board = GameController.getInstance().getGameBoard();
         ArrayList<Card> hand;
         if (gameController.getCurrentPlayerNumber() == 1){
@@ -23,9 +26,6 @@ public class TheTricky extends Command implements Activate{
             hand = board.getPlayerTwoHand();
         }
         while (true) {
-            if (!canActivate()){
-                throw new Exception("You cant activate this card");
-            }
             int input = Integer.parseInt(GameView.prompt("Choose a monster from your hand"));
             if (input > hand.size()){
                 GameView.showConsole("invalid selection");
