@@ -7,7 +7,6 @@ import model.card.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class EffectController {
     GameController gameController;
@@ -151,15 +150,20 @@ public class EffectController {
             } else if (attackController.getTarget().getName().equals(Effect.SUIJIN.toString())) {
                 if (attackController.getTarget().canActivate())
                     attackController.getTarget().doActions();
+            } else if (attackController.getTarget().getName().equals(Effect.EXPLODER_DRAGON.toString())) {
+                if (attackController.getDamage() > 0){
+                    attackController.setDamage(0);
+                }
+
             }
         }
     }
 
-    public int getCalculatorPoints(){
+    public int getCalculatorPoints() {
         ZoneSlot[] array = gameController.getGameBoard().getCurrentPlayerMonsterCards();
         int totalLevel = 0;
-        for (int i = 1; i <= 5 ; i++) {
-            if (array[i].getCard() != null && !array[i].isHidden()){
+        for (int i = 1; i <= 5; i++) {
+            if (array[i].getCard() != null && !array[i].isHidden()) {
                 totalLevel += ((MonsterCard) array[i].getCard()).getLevel();
             }
         }
@@ -169,10 +173,10 @@ public class EffectController {
     public boolean isMirageDragoon() {
         Board board = GameController.instance.getGameBoard();
         for (int playerNum = 1; playerNum <= 2; playerNum++) {
-            for (int i = 1; i <= 5; i++ ){
+            for (int i = 1; i <= 5; i++) {
                 Card card = board.getPlayerMonsterZone(playerNum)[i].getCard();
                 if (card != null && card.getName().equals("Mirage Dragon") &&
-                !board.getPlayerMonsterZone(playerNum)[i].isHidden()){
+                        !board.getPlayerMonsterZone(playerNum)[i].isHidden()) {
                     return true;
                 }
             }

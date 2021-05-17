@@ -39,6 +39,7 @@ public enum Effect {
     GATE_GUARDIAN("Gate Guardian"),
     TEXCHANGER("Texchanger"),
     HERALD_OF_CREATION("Herald of Creation"),
+    EXPLODER_DRAGON("Exploder Dragon"),
     TERATIGER("Terratiger, the Empowered Warrior");
     String value;
 
