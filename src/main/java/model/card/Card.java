@@ -150,6 +150,9 @@ public abstract class Card {
             addCommands(new TerraTiger(this));
         else if (this.getName().equals(Effect.TEXCHANGER.toString()))
             addCommands(new Texchanger(this));
+        else if (this.getName().equals(Effect.HERALD_OF_CREATION.toString()))
+            addCommands(new HeraldOfCreation(this));
+
 
     }
 

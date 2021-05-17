@@ -342,8 +342,10 @@ public class GameController {
         state = State.SUMMON;
         if (((MonsterCard) selectedCard.getCard()).getLevel() <= 4) {
             gameBoard.summonCard((MonsterCard) selectedCard.getCard(), getCurrentPlayerNumber());
-            if (selectedCard.getCard().getName().equals(Effect.SCANNER.toString()))
+            if (selectedCard.getCard().getName().equals(Effect.SCANNER.toString()) ||
+                    selectedCard.getCard().getName().equals(Effect.HERALD_OF_CREATION.toString()))
                 selectedCard.getCard().doActions();
+
             setSummonedCard(selectedCard.getCard());
             if (selectedCard.getCard().getName().equals(Effect.TERATIGER.toString())){
                 createChain(selectedCard.getCard());
