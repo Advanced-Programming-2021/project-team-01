@@ -834,7 +834,8 @@ public class Board {
         if (playerNumber == 2) {
             for (int i = 1; i < 6; i++) {
                 Card card = playerOneSpellZone[i].getCard();
-                if (card instanceof TrapCard && card.canActivate()) {
+                if (card instanceof TrapCard && !GameController.getInstance().getEffectController().isMirageDragoon() &&
+                        card.canActivate()) {
                     return card;
                 } else if (card instanceof SpellCard) {
                     Property property = ((SpellCard) card).getProperty();
@@ -853,7 +854,8 @@ public class Board {
         } else {
             for (int i = 1; i < 6; i++) {
                 Card card = playerTwoSpellZone[i].getCard();
-                if (card instanceof TrapCard && card.canActivate()) {
+                if (card instanceof TrapCard && !GameController.getInstance().getEffectController().isMirageDragoon()
+                        && card.canActivate()) {
                     return card; //fixme: speed
                 } else if (card instanceof SpellCard) {
                     Property property = ((SpellCard) card).getProperty();
@@ -893,4 +895,10 @@ public class Board {
             return playerTwoHand;
     }
 
+    public ZoneSlot[] getPlayerMonsterZone(int playerNum) {
+        if (playerNum == 1){
+            return playerOneMonsterZone;
+        }
+        return playerTwoMonsterZone;
+    }
 }

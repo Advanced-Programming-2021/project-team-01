@@ -20,24 +20,24 @@ public class ImportExportController {
         File file = new File("src" + File.separator + "resources" + File.separator + "export" + File.separator + cardName + ".json");
         FileReader fileReader = new FileReader(file);
         Gson gson = new Gson();
-        String str = "";
+        StringBuilder str = new StringBuilder();
         int character;
         while ((character = fileReader.read()) != -1)
-            str += (char) character;
-        JsonObject jsonObject = new JsonParser().parse(str).getAsJsonObject();
+            str.append((char) character);
+        JsonObject jsonObject = new JsonParser().parse(str.toString()).getAsJsonObject();
         switch (jsonObject.get("type").getAsString()) {
             case "spell": {
-                SpellCard card = gson.fromJson(str, SpellCard.class);
+                SpellCard card = gson.fromJson(str.toString(), SpellCard.class);
                 Card.addCardToDatabase(card);
                 break;
             }
             case "monster": {
-                MonsterCard card = gson.fromJson(str, MonsterCard.class);
+                MonsterCard card = gson.fromJson(str.toString(), MonsterCard.class);
                 Card.addCardToDatabase(card);
                 break;
             }
             case "trap": {
-                TrapCard card = gson.fromJson(str, TrapCard.class);
+                TrapCard card = gson.fromJson(str.toString(), TrapCard.class);
                 Card.addCardToDatabase(card);
                 break;
             }

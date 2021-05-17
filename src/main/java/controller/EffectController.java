@@ -165,4 +165,18 @@ public class EffectController {
         }
         return totalLevel * 300;
     }
+
+    public boolean isMirageDragoon() {
+        Board board = GameController.instance.getGameBoard();
+        for (int playerNum = 1; playerNum <= 2; playerNum++) {
+            for (int i = 1; i <= 5; i++ ){
+                Card card = board.getPlayerMonsterZone(playerNum)[i].getCard();
+                if (card != null && card.getName().equals("Mirage Dragon") &&
+                !board.getPlayerMonsterZone(playerNum)[i].isHidden()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
