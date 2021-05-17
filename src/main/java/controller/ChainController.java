@@ -42,6 +42,9 @@ public class ChainController {
     public void activeEffect() throws Exception {
         Card card = gameController.getSelectedCard().getCard();
         if (card instanceof TrapCard) {
+            if (gameController.effectController.isMirageDragoon()){
+                throw new Exception("Mirage Dragon Stopped You!");
+            }
             if (chain.doesExistInChain(card))
                 throw new Exception("Card activated before");
             else if (card.canActivate()) chain.setNext(card);
