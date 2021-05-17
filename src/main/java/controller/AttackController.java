@@ -48,6 +48,8 @@ public class AttackController {
         if (gameController.phaseController.getGamePhase() != GamePhase.BATTLE_PHASE) {
             throw new NotAllowedAction();
         }
+        if (gameController.gameBoard.getOwnerOfCard(gameController.selectedCard.getCard()) != gameController.getCurrentPlayerNumber() )
+            throw new Exception("You can't attack with opponent card");
         if (attackedCards.contains(gameController.selectedCard.getCard())) {
             throw new AlreadyAttacked();
         }
@@ -56,8 +58,10 @@ public class AttackController {
         if (target == null) {
             throw new NoCardToAttack();
         }
-
-        gameController.createChain();
+        if (target.getName().equals(Effect.TEXCHANGER.toString()) && target.canActivate())
+            gameController.createChain(target);
+        else
+            gameController.createChain();
         gameController.chain.run();
 
         if (gameController.getState() != State.ATTACK) {

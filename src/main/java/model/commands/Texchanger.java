@@ -14,6 +14,8 @@ public class Texchanger extends Command implements Activate {
     Board board;
     Card shouldSummon;
     int player;
+    boolean canSummon;
+
     public Texchanger(Card card) {
         super(card);
     }
@@ -21,8 +23,10 @@ public class Texchanger extends Command implements Activate {
     @Override
     public void run() throws Exception {
         board = gameController.getGameBoard();
-        gameController.setState(State.SPECIAL_SUMMON);
-        board.summonCard((MonsterCard) shouldSummon, player);
+        if (canSummon) {
+            gameController.setState(State.SPECIAL_SUMMON);
+            board.summonCard((MonsterCard) shouldSummon, player);
+        }
         gameController.setState(State.NONE);
     }
 
@@ -39,19 +43,19 @@ public class Texchanger extends Command implements Activate {
 
         for (Card card : board.getPlayerHand(player)) {
             if (card instanceof MonsterCard)
-                if (((MonsterCard) card).getMonsterTypes().contains(MonsterType.CYBER) &&
-                        ((MonsterCard) card).getCardType() != CardType.NORMAL)
+                if (((MonsterCard) card).getMonsterTypes().contains(MonsterType.CYBERSE) &&
+                        ((MonsterCard) card).getCardType() == CardType.NORMAL)
                     hand.add(card);
         }
         for (Card card : board.getGraveyard(player)) {
             if (card instanceof MonsterCard)
-                if (((MonsterCard) card).getMonsterTypes().contains(MonsterType.CYBER) &&
+                if (((MonsterCard) card).getMonsterTypes().contains(MonsterType.CYBERSE) &&
                         ((MonsterCard) card).getCardType() != CardType.NORMAL)
                     graveyard.add(card);
         }
         for (Card card : board.getPlayerDrawZone(player)) {
             if (card instanceof MonsterCard)
-                if (((MonsterCard) card).getMonsterTypes().contains(MonsterType.CYBER) &&
+                if (((MonsterCard) card).getMonsterTypes().contains(MonsterType.CYBERSE) &&
                         ((MonsterCard) card).getCardType() != CardType.NORMAL)
                     deck.add(card);
         }
@@ -59,23 +63,27 @@ public class Texchanger extends Command implements Activate {
         if (!deck.isEmpty()) groups.add("Deck");
         if (!hand.isEmpty()) groups.add("Hand");
         if (!graveyard.isEmpty()) groups.add("Graveyard");
-        if (groups.isEmpty()) return false;
+        if (groups.isEmpty()) {
+            canSummon = false;
+            return true;
+        }
+        canSummon = true;
         String selected = GameView.selectGroups(groups);
         int index;
         switch (selected) {
             case "Hand":
                 GameView.printListOfCard(hand);
-                index = GameView.getValidNumber(0,hand.size()-1);
+                index = GameView.getValidNumber(0, hand.size() - 1);
                 shouldSummon = hand.get(index);
                 break;
             case "Deck":
                 GameView.printListOfCard(deck);
-                index = GameView.getValidNumber(0,deck.size()-1);
+                index = GameView.getValidNumber(0, deck.size() - 1);
                 shouldSummon = deck.get(index);
                 break;
             case "Graveyard":
                 GameView.printListOfCard(graveyard);
-                index = GameView.getValidNumber(0,graveyard.size()-1);
+                index = GameView.getValidNumber(0, graveyard.size() - 1);
                 shouldSummon = graveyard.get(index);
                 break;
         }

@@ -15,7 +15,7 @@ public enum MonsterType {
     MACHINE,
     ROCK,
     INSECT,
-    CYBER,
+    CYBERSE,
     FAIRY,
     BEAST_WARRIOR,
     SEA_SERPENT;
@@ -25,38 +25,56 @@ public enum MonsterType {
         String[] monsterTypeStringArray = types.split("-");
 
         for (String type : monsterTypeStringArray) {
-            if (type.equals("Warrior")) {
-                monsterTypes.add(WARRIOR);
-            } else if (type.equals("Beast")) {
-                monsterTypes.add(BEAST);
-            } else if (type.equals("Fiend")) {
-                monsterTypes.add(FIEND);
-            } else if (type.equals("Aqua")) {
-                monsterTypes.add(AQUA);
-            } else if (type.equals("Pyro")) {
-                monsterTypes.add(PYRO);
-            } else if (type.equals("Spellcaster")) {
-                monsterTypes.add(SPELLCASTER);
-            } else if (type.equals("Thunder")) {
-                monsterTypes.add(THUNDER);
-            } else if (type.equals("Dragon")) {
-                monsterTypes.add(DRAGON);
-            } else if (type.equals("Machine")) {
-                monsterTypes.add(MACHINE);
-            } else if (type.equals("Rock")) {
-                monsterTypes.add(ROCK);
-            } else if (type.equals("Insect")) {
-                monsterTypes.add(INSECT);
-            } else if (type.equals("Cyber")) {
-                monsterTypes.add(CYBER);
-            } else if (type.equals("Fairy")) {
-                monsterTypes.add(FAIRY);
-            } else if (type.equals("Sea Serpent")) {
-                monsterTypes.add(SEA_SERPENT);
-            } else if (type.equals("Beast-Warrior")) {
-                monsterTypes.add(BEAST_WARRIOR);
-            } else
-                monsterTypes.add(null);
+            switch (type) {
+                case "Warrior":
+                    monsterTypes.add(WARRIOR);
+                    break;
+                case "Beast":
+                    monsterTypes.add(BEAST);
+                    break;
+                case "Fiend":
+                    monsterTypes.add(FIEND);
+                    break;
+                case "Aqua":
+                    monsterTypes.add(AQUA);
+                    break;
+                case "Pyro":
+                    monsterTypes.add(PYRO);
+                    break;
+                case "Spellcaster":
+                    monsterTypes.add(SPELLCASTER);
+                    break;
+                case "Thunder":
+                    monsterTypes.add(THUNDER);
+                    break;
+                case "Dragon":
+                    monsterTypes.add(DRAGON);
+                    break;
+                case "Machine":
+                    monsterTypes.add(MACHINE);
+                    break;
+                case "Rock":
+                    monsterTypes.add(ROCK);
+                    break;
+                case "Insect":
+                    monsterTypes.add(INSECT);
+                    break;
+                case "Cyberse":
+                    monsterTypes.add(CYBERSE);
+                    break;
+                case "Fairy":
+                    monsterTypes.add(FAIRY);
+                    break;
+                case "Sea Serpent":
+                    monsterTypes.add(SEA_SERPENT);
+                    break;
+                case "Beast-Warrior":
+                    monsterTypes.add(BEAST_WARRIOR);
+                    break;
+                default:
+                    monsterTypes.add(null);
+                    break;
+            }
         }
 
         return monsterTypes;
