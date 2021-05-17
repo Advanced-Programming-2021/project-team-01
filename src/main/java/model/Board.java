@@ -9,7 +9,6 @@ import model.commands.Scanner;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Board {
     private final ZoneSlot[] playerOneMonsterZone;
@@ -354,6 +353,13 @@ public class Board {
         else if (player == 2)
             return playerTwoMonsterZone[indexOfCard].getCard();
         return null;
+    }
+
+    public ArrayList<Card> getGraveyard(int player) {
+        if (player == 1)
+            return playerOneGraveYard;
+        else
+            return playerTwoGraveYard;
     }
 
     public void sendCardFromMonsterZoneToGraveyard(int indexOfCard, int player) {
@@ -873,7 +879,7 @@ public class Board {
     }
 
     public ArrayList<Card> getCurrentPlayerHand() {
-        if (GameController.getInstance().getCurrentPlayerNumber() == 1){
+        if (GameController.getInstance().getCurrentPlayerNumber() == 1) {
             return playerOneHand;
         }
         return playerTwoHand;

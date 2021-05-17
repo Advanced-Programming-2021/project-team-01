@@ -37,6 +37,7 @@ public enum Effect {
     SCANNER("Scanner"),
     MARSHMALLON("Marshmallon"),
     GATE_GUARDIAN("Gate Guardian"),
+    TEXCHANGER("Texchanger"),
     TERATIGER("Terratiger, the Empowered Warrior");
     String value;
 

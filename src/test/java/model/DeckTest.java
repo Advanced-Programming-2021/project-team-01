@@ -1,6 +1,7 @@
 package model;
 
 import controller.DatabaseController;
+import controller.DeckController;
 import controller.RegisterController;
 import model.card.Card;
 import org.junit.jupiter.api.Assertions;

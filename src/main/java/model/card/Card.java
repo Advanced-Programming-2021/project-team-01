@@ -148,6 +148,8 @@ public abstract class Card {
             addCommands(new Scanner(this));
         else if (this.getName().equals(Effect.TERATIGER.toString()))
             addCommands(new TerraTiger(this));
+        else if (this.getName().equals(Effect.TEXCHANGER.toString()))
+            addCommands(new TerraTiger(this));
 
     }
 

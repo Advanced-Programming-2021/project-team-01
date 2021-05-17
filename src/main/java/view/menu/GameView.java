@@ -322,4 +322,16 @@ public class GameView {
         }
         System.out.print(stringBuilder);
     }
+
+    public static String selectGroups(ArrayList<String> groups){
+        StringBuilder stringBuilder = new StringBuilder();
+        int index = 0;
+        for (String string : groups) {
+            stringBuilder.append(index).append("- ").append(string).append('\n');
+            index++;
+        }
+        System.out.print(stringBuilder);
+        index = getValidNumber(0,groups.size()-1);
+        return groups.get(index);
+    }
 }
