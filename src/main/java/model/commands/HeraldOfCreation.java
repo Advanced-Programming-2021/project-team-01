@@ -13,6 +13,7 @@ public class HeraldOfCreation extends Command implements Activate {
     Board board;
     int player;
     MonsterCard shouldSummon;
+
     public HeraldOfCreation(Card card) {
         super(card);
     }
@@ -26,7 +27,7 @@ public class HeraldOfCreation extends Command implements Activate {
     @Override
     public void runContinuous() throws Exception {
         if (gameController.getGamePhase() == GamePhase.STANDBY_PHASE) {
-            if (board.getPlayerHand(player).isEmpty())
+            if (board.getPlayerHand(player).isEmpty() || board.numberOfMonsterCards(player) == 5)
                 return;
             ArrayList<Card> highLevel = new ArrayList<>();
             for (Card card : board.getGraveyard(player)) {
@@ -36,11 +37,11 @@ public class HeraldOfCreation extends Command implements Activate {
             if (highLevel.isEmpty())
                 return;
             GameView.printListOfCard(highLevel);
-            int index = GameView.getValidNumber(0,highLevel.size()-1);
+            int index = GameView.getValidNumber(0, highLevel.size() - 1);
             shouldSummon = (MonsterCard) highLevel.get(index);
             State temp = gameController.getState();
             gameController.setState(State.SPECIAL_SUMMON);
-            board.summonCard(shouldSummon,player);
+            board.summonCard(shouldSummon, player);
             gameController.setState(temp);
         }
     }
