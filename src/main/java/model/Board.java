@@ -5,6 +5,7 @@ import controller.exceptions.AlreadySummonedError;
 import controller.exceptions.MonsterZoneFull;
 import controller.exceptions.SpellZoneFullError;
 import model.card.*;
+import model.commands.Scanner;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -511,8 +512,8 @@ public class Board {
         zoneSlot.setHidden(false);
     }
 
-    public ZoneSlot[] getCurrentPlayerMonsterCards(){
-        if (GameController.getInstance().getCurrentPlayerNumber() == 1){
+    public ZoneSlot[] getCurrentPlayerMonsterCards() {
+        if (GameController.getInstance().getCurrentPlayerNumber() == 1) {
             return playerOneMonsterZone;
         }
         return playerTwoMonsterZone;
@@ -736,6 +737,21 @@ public class Board {
             if ((!playerTwoSpellZone[i].isHidden()) && playerTwoSpellZone[i].getCard() != null)
                 spellAndTraps.add(playerTwoSpellZone[i].getCard());
         }
+        for (int i = 1; i < 6; i++) {
+            Card card;
+            card = playerOneMonsterZone[i].getCard();
+            if (card != null)
+                if (card.getCommands() != null)
+                    if (card.getCommands().size() != 0)
+                        if (card.getCommands().get(0) instanceof Scanner)
+                            spellAndTraps.add(playerOneMonsterZone[i].getCard());
+            card = playerTwoMonsterZone[i].getCard();
+            if (card != null)
+                if (card.getCommands() != null)
+                    if (card.getCommands().size() != 0)
+                        if (card.getCommands().get(0) instanceof Scanner)
+                            spellAndTraps.add(playerTwoMonsterZone[i].getCard());
+        }
         return spellAndTraps;
     }
 
@@ -832,6 +848,7 @@ public class Board {
         }
         return null;
     }
+
 
     public ArrayList<Card> getPlayerOneHand() {
         return playerOneHand;

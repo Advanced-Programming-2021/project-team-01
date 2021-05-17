@@ -25,6 +25,10 @@ public class AttackController {
         return damage;
     }
 
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
     public MonsterCard getAttacker() {
         return attacker;
     }
@@ -52,6 +56,7 @@ public class AttackController {
         if (target == null) {
             throw new NoCardToAttack();
         }
+
         gameController.createChain();
         gameController.chain.run();
         if (gameController.getState() != State.ATTACK) {
@@ -74,7 +79,13 @@ public class AttackController {
         damage = zoneSlotAttacker.getAttack() - zoneSlotTarget.getDefence();
         gameController.gameBoard.getZoneSlotByLocation(CardLocation.MONSTER, number, gameController.getOpponentPlayerNumber()).setHidden(false);
         gameController.effectController.checkTargetEffects();
+        if (target.getName().equals(Effect.MARSHMALLON.toString()))
+            gameController.decreasePlayerLP(gameController.getCurrentPlayerNumber(), 1000);
         if (damage > 0) {
+            if (target.getName().equals(Effect.MARSHMALLON.toString())) {
+                attackedCards.add(attacker);
+                return String.format("the defense position monster %s was attacked", target.getName());
+            }
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
             attackedCards.add(attacker);
             return String.format("the defense position monster %s was destroyed", target.getName());
@@ -95,6 +106,10 @@ public class AttackController {
         damage = zoneSlotAttacker.getAttack() - zoneSlotTarget.getDefence();
         gameController.effectController.checkTargetEffects();
         if (damage > 0) {
+            if (target.getName().equals(Effect.MARSHMALLON.toString())) {
+                attackedCards.add(attacker);
+                return "the defense position monster was Marshmallon";
+            }
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
             attackedCards.add(attacker);
             return "the defense position monster was destroyed";
@@ -116,15 +131,33 @@ public class AttackController {
         gameController.effectController.checkTargetEffects();
         if (damage > 0) {
             gameController.increaseOpponentLp(-damage);
+            if (target.getName().equals(Effect.MARSHMALLON.toString())) {
+                attackedCards.add(attacker);
+                return String.format("opponent monster was Marshmallon and opponent received %d damage", damage);
+            }
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
             attackedCards.add(attacker);
             return String.format("opponent monster destroyed and opponent received %d damage", damage);
         } else if (damage == 0) {
+            if (target.getName().equals(Effect.MARSHMALLON.toString()) && attacker.getName().equals(Effect.MARSHMALLON.toString())) {
+                return "both cards was Marshmallon";
+            }
+            if (target.getName().equals(Effect.MARSHMALLON.toString())) {
+                gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(gameController.selectedCard.getIndex(), gameController.getCurrentPlayerNumber());
+                return "Marshmallon was attacked and your card is destroyed";
+            }
+            if (attacker.getName().equals(Effect.MARSHMALLON.toString())) {
+                gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
+                return "opponent card destroyed";
+            }
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(number, gameController.getOpponentPlayerNumber());
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(gameController.selectedCard.getIndex(), gameController.getCurrentPlayerNumber());
             return "both you and your opponent received no damage and both cards are destroyed";
         } else {
-            gameController.increasePlayerLp(-damage);
+            gameController.increasePlayerLp(damage);
+            if (attacker.getName().equals(Effect.MARSHMALLON.toString())) {
+                return String.format("your monster card is Marshmallon and you receive %d damage", -damage);
+            }
             gameController.gameBoard.sendCardFromMonsterZoneToGraveyard(gameController.selectedCard.getIndex(), gameController.getCurrentPlayerNumber());
             return String.format("your monster card is destroyed and you receive %d damage", -damage);
         }
@@ -161,10 +194,6 @@ public class AttackController {
 
     public int getAttackerNumber() {
         return gameController.gameBoard.getOwnerOfCard(attacker);
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
     }
 
     public int getTargetNumber() {

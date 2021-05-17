@@ -9,9 +9,9 @@ import java.util.TreeMap;
 
 public abstract class Card {
     private static final TreeMap<String, Card> allCards = new TreeMap<>();
-    private final String name;
-    private final String description;
-    private final int price;
+    private String name;
+    private String description;
+    private int price;
     protected String type = "type";
     @Expose(serialize = false, deserialize = false)
     protected ArrayList<Command> commands = new ArrayList<>();
@@ -144,7 +144,17 @@ public abstract class Card {
             addCommands(new TheTricky(this));
         else if (this.getName().equals(Effect.GATE_GUARDIAN.toString()))
             addCommands(new GateGuardian(this));
+        else if (this.getName().equals(Effect.SCANNER.toString()))
+            addCommands(new Scanner(this));
 
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 

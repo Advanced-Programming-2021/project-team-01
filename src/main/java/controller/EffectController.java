@@ -151,8 +151,6 @@ public class EffectController {
                 if (attackController.getTarget().canActivate())
                     attackController.getTarget().doActions();
             }
-        }else if (gameController.getState() == State.FLIP_SUMMON){
-
         }
     }
 }

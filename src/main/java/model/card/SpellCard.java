@@ -20,11 +20,6 @@ public class SpellCard extends Card {
         this.limitationStatus = limitationStatus;
     }
 
-    //    @Override
-//    public Object clone() throws CloneNotSupportedException {
-//        SpellCard spellCard =  new SpellCard(this.getName(), this.getDescription(), this.getPrice(), this.property);
-//        spellCard.set
-//    }
     public Object clone() throws CloneNotSupportedException {
         return new SpellCard(this.getName(), this.getDescription(), this.getPrice(), this.property, this.limitationStatus);
     }

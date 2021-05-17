@@ -293,7 +293,7 @@ public class GameController {
         selectedCard.reset();
     }
 
-    public void setCard() throws CardNotSelected, CardNotInHand, ActivationPhaseError, MonsterZoneFull, AlreadySummonedError, SpellZoneFullError {
+    public void setCard() throws Exception {
         if (selectedCard.getCard() == null)
             throw new CardNotSelected();
         if (selectedCard.getCardLocation() != CardLocation.HAND)
@@ -310,12 +310,14 @@ public class GameController {
         selectedCard.reset();
     }
 
-    public void setMonster() throws MonsterZoneFull, AlreadySummonedError {
+    public void setMonster() throws Exception {
         if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) == 5)
             throw new MonsterZoneFull();
         if (isSummoned())
             throw new AlreadySummonedError();
         gameBoard.setMonster(getCurrentPlayerNumber(), (MonsterCard) selectedCard.getCard());
+        if (selectedCard.getCard().getName().equals(Effect.SCANNER.toString()))
+            selectedCard.getCard().doActions();
         setSummonedCard(selectedCard.getCard());
     }
 
@@ -340,6 +342,8 @@ public class GameController {
         state = State.SUMMON;
         if (((MonsterCard) selectedCard.getCard()).getLevel() <= 4) {
             gameBoard.summonCard((MonsterCard) selectedCard.getCard(), getCurrentPlayerNumber());
+            if (selectedCard.getCard().getName().equals(Effect.SCANNER.toString()))
+                selectedCard.getCard().doActions();
             setSummonedCard(selectedCard.getCard());
             selectedCard.reset();
             createChain();

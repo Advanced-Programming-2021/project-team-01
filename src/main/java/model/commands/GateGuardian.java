@@ -7,8 +7,9 @@ import view.menu.GameView;
 
 import java.util.ArrayList;
 
-public class GateGuardian extends Command implements Activate{
+public class GateGuardian extends Command implements Activate {
     Board board;
+
     public GateGuardian(Card card) {
         super(card);
     }
@@ -24,16 +25,16 @@ public class GateGuardian extends Command implements Activate{
         int index1 = -1;
         int index2 = -1;
         int index3 = -1;
-        index1 = GameView.getValidNumber(0,monsterCards.size());
+        index1 = GameView.getValidNumber(0, monsterCards.size() - 1);
         do {
-            index2 = GameView.getValidNumber(0, monsterCards.size());
+            index2 = GameView.getValidNumber(0, monsterCards.size() - 1);
         } while (index2 == index1);
         do {
-            index3 = GameView.getValidNumber(0, monsterCards.size());
+            index3 = GameView.getValidNumber(0, monsterCards.size() - 1);
         } while (index3 == index1 || index3 == index2);
-        board.sendCardFromMonsterZoneToGraveyard(index1,player);
-        board.sendCardFromMonsterZoneToGraveyard(index2,player);
-        board.sendCardFromMonsterZoneToGraveyard(index3,player);
-        board.summonCard((MonsterCard) myCard,player);
+        board.sendCardFromMonsterZoneToGraveyard(index1, player);
+        board.sendCardFromMonsterZoneToGraveyard(index2, player);
+        board.sendCardFromMonsterZoneToGraveyard(index3, player);
+        board.summonCard((MonsterCard) myCard, player);
     }
 }

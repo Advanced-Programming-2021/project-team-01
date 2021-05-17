@@ -237,7 +237,6 @@ public class GameView {
     }
 
     public static int getValidNumber(int start, int end) {
-        end--;
         while (true) {
             String input = prompt("Enter a Number :");
             try {
