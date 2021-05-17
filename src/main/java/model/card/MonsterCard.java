@@ -1,5 +1,7 @@
 package model.card;
 
+import controller.GameController;
+
 import java.util.ArrayList;
 
 public class MonsterCard extends Card {
@@ -23,6 +25,9 @@ public class MonsterCard extends Card {
     }
 
     public int getAttack() {
+        if (name.equals("The Calculator")){
+            return GameController.getInstance().getEffectController().getCalculatorPoints();
+        }
         return attack;
     }
 

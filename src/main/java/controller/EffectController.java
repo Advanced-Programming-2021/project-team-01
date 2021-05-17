@@ -7,6 +7,7 @@ import model.card.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class EffectController {
     GameController gameController;
@@ -152,5 +153,16 @@ public class EffectController {
                     attackController.getTarget().doActions();
             }
         }
+    }
+
+    public int getCalculatorPoints(){
+        ZoneSlot[] array = gameController.getGameBoard().getCurrentPlayerMonsterCards();
+        int totalLevel = 0;
+        for (int i = 1; i <= 5 ; i++) {
+            if (array[i].getCard() != null && !array[i].isHidden()){
+                totalLevel += ((MonsterCard) array[i].getCard()).getLevel();
+            }
+        }
+        return totalLevel * 300;
     }
 }

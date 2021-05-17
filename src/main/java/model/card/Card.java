@@ -9,7 +9,7 @@ import java.util.TreeMap;
 
 public abstract class Card {
     private static final TreeMap<String, Card> allCards = new TreeMap<>();
-    private String name;
+    protected String name;
     private String description;
     private int price;
     protected String type = "type";

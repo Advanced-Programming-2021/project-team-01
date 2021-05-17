@@ -22,10 +22,11 @@ public class ChainController {
 
     protected void run() throws Exception {
         //fixme: hand Checker
+        gameController.changeTurn();
         if (gameController.getGameBoard().getCounterTraps(gameController.getOpponentPlayerNumber()) == null) {
+            gameController.changeTurn();
             return;
         }
-        gameController.changeTurn();
         ChainView.printTurn(GameController.getCurrentPlayer());
         GameController.getInstance().getGameBoard().showBoard();
         GameView.showConsole("Do you want to activate your trap and spell?");

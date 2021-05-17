@@ -820,23 +820,25 @@ public class Board {
     }
 
 
-    public Card getCounterTraps(int playerNumber) {
-        if (playerNumber == 1) {
+    public Card getCounterTraps(int playerNumber) throws Exception {
+        if (playerNumber == 2) {
             for (int i = 1; i < 6; i++) {
                 Card card = playerOneSpellZone[i].getCard();
-                if (card instanceof TrapCard) {
+                if (card instanceof TrapCard && card.canActivate()) {
                     return card;
                 } else if (card instanceof SpellCard) {
                     Property property = ((SpellCard) card).getProperty();
                     if (property == Property.QUICK_PLAY || property == Property.COUNTER) {
-                        return card;
+                        if (card.canActivate()) {
+                            return card;
+                        }
                     }
                 }
             }
         } else {
             for (int i = 1; i < 6; i++) {
                 Card card = playerTwoSpellZone[i].getCard();
-                if (card instanceof TrapCard) {
+                if (card instanceof TrapCard && card.canActivate()) {
                     return card; //fixme: speed
                 } else if (card instanceof SpellCard) {
                     Property property = ((SpellCard) card).getProperty();
