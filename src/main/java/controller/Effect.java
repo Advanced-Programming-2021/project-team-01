@@ -36,7 +36,8 @@ public enum Effect {
     TRICKY("The Tricky"),
     SCANNER("Scanner"),
     MARSHMALLON("Marshmallon"),
-    GATE_GUARDIAN("Gate Guardian");
+    GATE_GUARDIAN("Gate Guardian"),
+    TERATIGER("Terratiger, the Empowered Warrior");
     String value;
 
     Effect(String value) {

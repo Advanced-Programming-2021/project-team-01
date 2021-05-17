@@ -16,7 +16,6 @@ public class NegateAttack extends Command implements Activate {
     public void run() throws Exception {
         board = gameController.getGameBoard();
         board.setSpellFaceUp(myCard);
-
         gameController.setState(State.NONE);
         board.sendCardFromSpellZoneToGraveyard(myCard);
     }

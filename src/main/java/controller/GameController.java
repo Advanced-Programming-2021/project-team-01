@@ -345,9 +345,13 @@ public class GameController {
             if (selectedCard.getCard().getName().equals(Effect.SCANNER.toString()))
                 selectedCard.getCard().doActions();
             setSummonedCard(selectedCard.getCard());
-            selectedCard.reset();
-            createChain();
+            if (selectedCard.getCard().getName().equals(Effect.TERATIGER.toString())){
+                createChain(selectedCard.getCard());
+            }else {
+                createChain();
+            }
             chainController.chain.run();
+            selectedCard.reset();
             state = State.NONE;
         } else if (((MonsterCard) selectedCard.getCard()).getLevel() == 5 ||
                 ((MonsterCard) selectedCard.getCard()).getLevel() == 6) {

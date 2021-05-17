@@ -9,6 +9,7 @@ import model.commands.Scanner;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Board {
     private final ZoneSlot[] playerOneMonsterZone;
@@ -278,7 +279,7 @@ public class Board {
     }
 
     public void summonCard(MonsterCard monsterCard, int player) throws Exception {
-        if (monsterCard.getCardType() != CardType.RITUAL) {
+        if (monsterCard.getCardType() != CardType.RITUAL && GameController.getInstance().getState() != State.SPECIAL_SUMMON) {
             if (GameController.getInstance().isSummoned()) {
                 throw new AlreadySummonedError();
             }
@@ -857,6 +858,13 @@ public class Board {
     }
 
     public ArrayList<Card> getPlayerTwoHand() {
+        return playerTwoHand;
+    }
+
+    public ArrayList<Card> getCurrentPlayerHand() {
+        if (GameController.getInstance().getCurrentPlayerNumber() == 1){
+            return playerOneHand;
+        }
         return playerTwoHand;
     }
 }
