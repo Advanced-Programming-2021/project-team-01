@@ -59,6 +59,7 @@ public class AttackController {
 
         gameController.createChain();
         gameController.chain.run();
+
         if (gameController.getState() != State.ATTACK) {
             return "battle negated";
         }

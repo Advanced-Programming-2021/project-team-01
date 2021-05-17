@@ -468,6 +468,9 @@ public class GameController {
     public void activateEffect() throws Exception {
         state = State.ACTIVE_SPELL;
         if (selectedCard.getCard() instanceof SpellCard) {
+            if (!selectedCard.getCard().canActivate()){
+                throw new Exception("You cant activate this card");
+            }
             SpellCard card = (SpellCard) selectedCard.getCard();
             if (card.getProperty() == Property.RITUAL) {
                 System.out.println("hi");
