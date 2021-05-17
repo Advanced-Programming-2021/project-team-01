@@ -90,8 +90,8 @@ public abstract class Card {
             addCommands(new MysticalSpaceTyphoon(this));
         } else if (this.getName().equals(Effect.MONSTER_REBORN.toString())) {
             addCommands(new MonsterReborn(this));
-        //} else if (this.getName().equals(Effect.TWIN_TWISTERS.toString())) {
-        //    addCommands(new TwinTwisters(this));
+        } else if (this.getName().equals(Effect.TWIN_TWISTERS.toString())) {
+            addCommands(new TwinTwisters(this));
         } else if (this.getName().equals(Effect.HARPIES_FEATHER_DUSTER.toString())) {
             addCommands(new HarpiesFeatherDuster(this));
         } else if (this.getName().equals(Effect.DARK_HOLE.toString())) {
