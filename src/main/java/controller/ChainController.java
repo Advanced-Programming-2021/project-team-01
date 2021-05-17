@@ -52,7 +52,11 @@ public class ChainController {
             if (property == Property.QUICK_PLAY || property == Property.COUNTER) {
                 if (chain.doesExistInChain(card))
                     throw new Exception("Card activated before");
-                else if (card.canActivate()) chain.setNext(card);
+                else if (card.canActivate()){
+                    GameController.getInstance().getGameBoard().setSpell(gameController.getCurrentPlayerNumber(), (SpellCard) card);
+                    GameController.getInstance().getGameBoard().setSpellFaceUp(card);
+                    chain.setNext(card);
+                }
                 else throw new Exception("you cant activate this card");
             }
         } else {
