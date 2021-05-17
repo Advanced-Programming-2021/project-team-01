@@ -852,7 +852,6 @@ public class Board {
         return null;
     }
 
-
     public ArrayList<Card> getPlayerOneHand() {
         return playerOneHand;
     }
@@ -867,4 +866,12 @@ public class Board {
         }
         return playerTwoHand;
     }
+
+    public ArrayList<Card> getPlayerHand(int player) {
+        if (player == 1)
+            return playerOneHand;
+        else
+            return playerTwoHand;
+    }
+
 }
