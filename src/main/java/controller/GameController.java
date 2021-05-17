@@ -668,7 +668,10 @@ public class GameController {
 
     public void cheater(String cardName) throws Exception {
         Card card = Card.getCardByName(cardName);
-        if (card == null) throw new RuntimeException();
+        if (card == null) {
+            System.err.println("TYPO DETECTED");
+            return;
+        };
         Card newCard;
         if (card instanceof MonsterCard) {
             newCard = (Card) ((MonsterCard) card).clone();

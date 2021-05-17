@@ -842,6 +842,11 @@ public class Board {
                     }
                 }
             }
+            for (Card card : playerOneHand) {
+                if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.QUICK_PLAY){
+                    return card;
+                }
+            }
         } else {
             for (int i = 1; i < 6; i++) {
                 Card card = playerTwoSpellZone[i].getCard();
@@ -852,6 +857,11 @@ public class Board {
                     if (property == Property.QUICK_PLAY || property == Property.COUNTER) {
                         return card;
                     }
+                }
+            }
+            for (Card card : playerTwoHand) {
+                if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.QUICK_PLAY){
+                    return card;
                 }
             }
         }

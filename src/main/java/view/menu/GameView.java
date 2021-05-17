@@ -317,7 +317,7 @@ public class GameView {
                 stringBuilder.append(index).append("- ").append(card.getName()).append(':');
                 stringBuilder.append(card.getDescription()).append('\n');
             }else
-                stringBuilder.append(index).append("- ").append("Hidden Card");
+                stringBuilder.append(index).append("- ").append("Hidden Card\n");
             index++;
         }
         System.out.print(stringBuilder);
