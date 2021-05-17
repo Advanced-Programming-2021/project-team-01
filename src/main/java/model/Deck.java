@@ -52,9 +52,9 @@ public class Deck {
     public boolean checkCardsLimit(Card card) {
         int counter = 0, cardsOfPlayer = 0, cardsInDeck = 0;
         for (Card iteratorCard : mainDeck)
-            if (iteratorCard.equals(card)) counter++;
+            if (iteratorCard.getName().equals(card.getName())) counter++;
         for (Card iteratorCard : sideDeck)
-            if (iteratorCard.equals(card)) counter++;
+            if (iteratorCard.getName().equals(card.getName())) counter++;
         for (String cardName : RegisterController.onlineUser.getPlayerCards())
             if (card.getName().equals(cardName)) cardsOfPlayer++;
         for (Card cardName : getMainDeck())
@@ -71,6 +71,4 @@ public class Deck {
         }
         return counter < 3 && (cardsOfPlayer - cardsInDeck >= 0);
     }
-
-
 }
