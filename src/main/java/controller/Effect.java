@@ -41,7 +41,8 @@ public enum Effect {
     HERALD_OF_CREATION("Herald of Creation"),
     EXPLODER_DRAGON("Exploder Dragon"),
     TERATIGER("Terratiger, the Empowered Warrior"),
-    SPELL_ABSORPTION("Spell Absorption");
+    SPELL_ABSORPTION("Spell Absorption"),
+    SWORDS_OF_REVEALING_LIGHT("Swords of Revealing Light");
     String value;
 
     Effect(String value) {

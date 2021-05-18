@@ -183,4 +183,15 @@ public class EffectController {
         }
         return false;
     }
+
+    public boolean isSwordOfRevealingLight() {
+        Board board = GameController.instance.getGameBoard();
+        for (int i = 1; i <= 5; i++) {
+            Card card = board.getPlayerSpellZone(gameController.getOpponentPlayerNumber())[i].getCard();
+            if (card != null && card.getName().equals("Swords of Revealing Light")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

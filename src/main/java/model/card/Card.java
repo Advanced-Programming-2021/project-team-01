@@ -152,9 +152,10 @@ public abstract class Card {
             addCommands(new Texchanger(this));
         else if (this.getName().equals(Effect.HERALD_OF_CREATION.toString()))
             addCommands(new HeraldOfCreation(this));
-
         else if (this.getName().equals(Effect.SPELL_ABSORPTION.toString()))
             addCommands(new SpellAbsorption(this));
+        else if (this.getName().equals(Effect.SWORDS_OF_REVEALING_LIGHT.toString()))
+            addCommands(new SwordOfRevealingLight(this));
     }
 
     public void setName(String name) {

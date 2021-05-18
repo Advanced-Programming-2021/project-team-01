@@ -64,7 +64,7 @@ public class AttackController {
             gameController.createChain();
         gameController.chain.run();
 
-        if (gameController.getState() != State.ATTACK) {
+        if (gameController.getState() != State.ATTACK || gameController.effectController.isSwordOfRevealingLight()) {
             return "battle negated";
         }
         if (gameController.gameBoard.getZoneSlotByLocation(CardLocation.MONSTER, number,
@@ -189,7 +189,7 @@ public class AttackController {
         ZoneSlot zoneSlotAttacker = gameController.gameBoard.getZoneSlotByCard(attacker);
         gameController.createChain();
         gameController.chainController.chain.run();
-        if (gameController.getState() != State.ATTACK) {
+        if (gameController.getState() != State.ATTACK || gameController.effectController.isSwordOfRevealingLight()) {
             return "battle negated";
         }
         gameController.decreasePlayerLP(gameController.getOpponentPlayerNumber(), zoneSlotAttacker.getAttack());
