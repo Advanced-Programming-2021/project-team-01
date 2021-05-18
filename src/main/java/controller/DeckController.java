@@ -13,6 +13,7 @@ import static controller.RegisterController.onlineUser;
 
 public class DeckController {
     private static DeckController instance = null;
+    private Object cardSort;
 
     public static DeckController getInstance() {
         if (instance == null) {
@@ -138,11 +139,11 @@ public class DeckController {
 
     public ArrayList<Card> showPlayersAllCards() {
         ArrayList<String> cardsName = onlineUser.getPlayerCards();
-        Collections.sort(cardsName);
         ArrayList<Card> cards = new ArrayList<>();
         for (String name : cardsName) {
             cards.add(Card.getCardByName(name));
         }
+        Collections.sort(cards, new cardSort());
         return cards;
     }
 
