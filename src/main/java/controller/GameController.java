@@ -475,6 +475,7 @@ public class GameController {
         state = State.ACTIVE_SPELL;
         if (selectedCard.getCard() instanceof SpellCard) {
             if (!selectedCard.getCard().canActivate()){
+                state = State.NONE;
                 throw new Exception("You cant activate this card");
             }
             SpellCard card = (SpellCard) selectedCard.getCard();
@@ -483,6 +484,10 @@ public class GameController {
             } else if (!(card.getProperty() == Property.FIELD) && selectedCard.getCardLocation() == CardLocation.HAND) {
                 gameBoard.setSpell(getCurrentPlayerNumber(), card);
                 gameBoard.setSpellFaceUp(selectedCard.getCard());
+            }
+            for (int i = 0; i < gameBoard.getCardInSpellZone(getOpponentPlayerNumber()).size(); i++) {
+                if (gameBoard.getCardInSpellZone(getOpponentPlayerNumber()).get(i).getName().equals("Spell Absorption"))
+                    decreasePlayerLP(getOpponentPlayerNumber(), -500);
             }
         }
         createChain(selectedCard.getCard());

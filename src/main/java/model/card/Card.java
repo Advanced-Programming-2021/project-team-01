@@ -153,7 +153,8 @@ public abstract class Card {
         else if (this.getName().equals(Effect.HERALD_OF_CREATION.toString()))
             addCommands(new HeraldOfCreation(this));
 
-
+        else if (this.getName().equals(Effect.SPELL_ABSORPTION.toString()))
+            addCommands(new SpellAbsorption(this));
     }
 
     public void setName(String name) {

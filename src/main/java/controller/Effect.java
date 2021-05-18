@@ -40,7 +40,8 @@ public enum Effect {
     TEXCHANGER("Texchanger"),
     HERALD_OF_CREATION("Herald of Creation"),
     EXPLODER_DRAGON("Exploder Dragon"),
-    TERATIGER("Terratiger, the Empowered Warrior");
+    TERATIGER("Terratiger, the Empowered Warrior"),
+    SPELL_ABSORPTION("Spell Absorption");
     String value;
 
     Effect(String value) {
