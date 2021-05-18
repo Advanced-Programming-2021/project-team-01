@@ -156,6 +156,8 @@ public abstract class Card {
             addCommands(new SpellAbsorption(this));
         else if (this.getName().equals(Effect.SWORDS_OF_REVEALING_LIGHT.toString()))
             addCommands(new SwordOfRevealingLight(this));
+        else if (this.getName().equals(Effect.MESSENGER_OF_PEACE.toString()))
+            addCommands(new MessengerOfPeace(this));
     }
 
     public void setName(String name) {

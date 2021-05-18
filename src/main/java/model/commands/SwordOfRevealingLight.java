@@ -38,7 +38,6 @@ public class SwordOfRevealingLight extends Command implements Activate{
 
     @Override
     public boolean canActivate() throws Exception {
-        board = gameController.getGameBoard();
         return gameController.getGamePhase() == GamePhase.MAIN_PHASE1 ||
                 gameController.getGamePhase() == GamePhase.MAIN_PHASE2 ||
                 gameController.getGamePhase() == GamePhase.BATTLE_PHASE;

@@ -194,4 +194,15 @@ public class EffectController {
         }
         return false;
     }
+
+    public boolean isMessengerOfPeace() {
+        Board board = GameController.instance.getGameBoard();
+        for (int i = 1; i <= 5; i++) {
+            Card card = board.getPlayerSpellZone(gameController.getOpponentPlayerNumber())[i].getCard();
+            if (card != null && card.getName().equals("Messenger of peace")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
