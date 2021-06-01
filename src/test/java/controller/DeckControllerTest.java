@@ -9,6 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeckControllerTest {
@@ -86,8 +88,26 @@ class DeckControllerTest {
         Deck deck = DatabaseController.getDeckByName("test_deck");
         deck.addCardToMainDeck(Card.getCardByName("Suijin"));
         deck.addCardToMainDeck(Card.getCardByName("Axe Raider"));
-        Assertions.assertTrue(DeckController.getInstance().showDeckByName("test_deck", true)
-                .get(0).getName().equals("Axe Raider"));
+        DatabaseController.updateDeck(deck);
+        ArrayList<Card> newDeck = DeckController.getInstance().showDeckByName("test_deck", true);
+        Assertions.assertTrue(newDeck.get(0).getName().equals("Axe Raider"));
+        DatabaseController.deleteDeckFile("test_deck");
+    }
+
+    @DisplayName("Show all decks test")
+    @Test
+    void showAllDecksTest() throws Exception {
+        ArrayList<Deck> decks = DeckController.getInstance().showAllDecks();
+        Assertions.assertNotNull(decks.get(0));
+    }
+
+    @DisplayName("Show deck cards test")
+    @Test
+    void showDeckCardsTest() throws Exception {
+        DeckController.getInstance().createDeck("test_deck");
+        Deck deck = DatabaseController.getDeckByName("test_deck");
+        ArrayList<Card> cards = DeckController.getInstance().showPlayersAllCards();
+        Assertions.assertTrue(cards.get(0).getName().equals("Axe Raider"));
         DatabaseController.deleteDeckFile("test_deck");
     }
 }

@@ -150,7 +150,14 @@ public abstract class Card {
             addCommands(new TerraTiger(this));
         else if (this.getName().equals(Effect.TEXCHANGER.toString()))
             addCommands(new Texchanger(this));
-
+        else if (this.getName().equals(Effect.HERALD_OF_CREATION.toString()))
+            addCommands(new HeraldOfCreation(this));
+        else if (this.getName().equals(Effect.SPELL_ABSORPTION.toString()))
+            addCommands(new SpellAbsorption(this));
+        else if (this.getName().equals(Effect.SWORDS_OF_REVEALING_LIGHT.toString()))
+            addCommands(new SwordOfRevealingLight(this));
+        else if (this.getName().equals(Effect.MESSENGER_OF_PEACE.toString()))
+            addCommands(new MessengerOfPeace(this));
     }
 
     public void setName(String name) {

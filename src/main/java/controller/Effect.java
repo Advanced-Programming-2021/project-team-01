@@ -38,7 +38,12 @@ public enum Effect {
     MARSHMALLON("Marshmallon"),
     GATE_GUARDIAN("Gate Guardian"),
     TEXCHANGER("Texchanger"),
-    TERATIGER("Terratiger, the Empowered Warrior");
+    HERALD_OF_CREATION("Herald of Creation"),
+    EXPLODER_DRAGON("Exploder Dragon"),
+    TERATIGER("Terratiger, the Empowered Warrior"),
+    SPELL_ABSORPTION("Spell Absorption"),
+    SWORDS_OF_REVEALING_LIGHT("Swords of Revealing Light"),
+    MESSENGER_OF_PEACE("Messenger of peace");
     String value;
 
     Effect(String value) {

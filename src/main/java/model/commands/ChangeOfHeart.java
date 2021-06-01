@@ -20,7 +20,7 @@ public class ChangeOfHeart extends Command implements Activate {
     @Override
     public void run() throws Exception {
         board = gameController.getGameBoard();
-        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0)
+        if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 5)
             throw new MonsterZoneFull();
         if (board.numberOfMonsterCards(gameController.getOpponentPlayerNumber()) == 0)
             throw new Exception("Monster Zone of your opponent is Empty");

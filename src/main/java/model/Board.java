@@ -5,6 +5,7 @@ import controller.exceptions.AlreadySummonedError;
 import controller.exceptions.MonsterZoneFull;
 import controller.exceptions.SpellZoneFullError;
 import model.card.*;
+import model.commands.HeraldOfCreation;
 import model.commands.Scanner;
 
 import java.util.ArrayList;
@@ -750,13 +751,15 @@ public class Board {
             if (card != null)
                 if (card.getCommands() != null)
                     if (card.getCommands().size() != 0)
-                        if (card.getCommands().get(0) instanceof Scanner)
+                        if (card.getCommands().get(0) instanceof Scanner ||
+                                card.getCommands().get(0) instanceof HeraldOfCreation)
                             spellAndTraps.add(playerOneMonsterZone[i].getCard());
             card = playerTwoMonsterZone[i].getCard();
             if (card != null)
                 if (card.getCommands() != null)
                     if (card.getCommands().size() != 0)
-                        if (card.getCommands().get(0) instanceof Scanner)
+                        if (card.getCommands().get(0) instanceof Scanner ||
+                                card.getCommands().get(0) instanceof HeraldOfCreation)
                             spellAndTraps.add(playerTwoMonsterZone[i].getCard());
         }
         return spellAndTraps;

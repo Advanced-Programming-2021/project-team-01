@@ -22,7 +22,7 @@ public class TwinTwisters extends Command implements Activate {
         board = gameController.getGameBoard();
         board.sendCardFromSpellZoneToGraveyard(t1);
         board.sendCardFromSpellZoneToGraveyard(t2);
-        board.getPlayerHand(gameController.getCurrentPlayerNumber()).remove(shouldRemove);
+        board.sendCardFromHandToGraveYard(board.getOwnerOfCard(myCard),shouldRemove);
         board.sendCardFromSpellZoneToGraveyard(myCard);
     }
 
