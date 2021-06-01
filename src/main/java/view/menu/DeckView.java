@@ -118,7 +118,7 @@ public class DeckView {
     }
 
     private void showDeck(Matcher matcher) {
-        boolean isMainDeck = matcher.group("side").equals(""); //fixme: kharab
+        boolean isMainDeck = matcher.group("side") == null;//equals(""); //fixme: kharab
         String name = matcher.group("deckName");
 
         try {
