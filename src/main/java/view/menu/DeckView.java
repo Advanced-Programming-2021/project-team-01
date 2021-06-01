@@ -32,7 +32,7 @@ public class DeckView {
             showDeck(matcher);
         } else if (ConsoleCommands.getMatcher(ConsoleCommands.SHOW_ALL_DECK, input) != null) {
             showAllDeck();
-        } else if (ConsoleCommands.getMatcher(ConsoleCommands.SHOW_ALL_CARDS, input) != null) {
+        } else if (ConsoleCommands.getMatcher(ConsoleCommands.SHOW_ALL_CARDS, input) != null) { //TODO: FIX Enum
             showDecksCards();
         } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.MENU_ENTER, input)) != null) {
             try {
@@ -118,7 +118,7 @@ public class DeckView {
     }
 
     private void showDeck(Matcher matcher) {
-        boolean isMainDeck = matcher.group("side").equals("");
+        boolean isMainDeck = matcher.group("side").equals(""); //fixme: kharab
         String name = matcher.group("deckName");
 
         try {
