@@ -1,6 +1,6 @@
 package controller;
 
-import endpoint.Main;
+import endpoint.MainConsole;
 import model.Board;
 import model.card.Card;
 import org.junit.jupiter.api.*;
@@ -8,7 +8,6 @@ import org.junit.jupiter.api.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ class TrapUltimateTest {
         sysInBackup = System.in; // backup System.in to restore it later
         in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        Main.main(new String[1]);
+        MainConsole.main(new String[1]);
         board = GameController.instance.getGameBoard();
         gameController = GameController.instance;
     }

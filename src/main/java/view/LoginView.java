@@ -25,7 +25,7 @@ public class LoginView {
             RegisterController.getInstance().createUser(username, password, nickname);
             System.out.println("user created successfully!");
         } catch (Exception exception) {
-            System.err.println(exception.getMessage());
+            new MyAlert(Alert.AlertType.ERROR,exception.getMessage());
         }
 
     }
@@ -39,7 +39,7 @@ public class LoginView {
             RegisterController.getInstance().loginUser(usernameField.getText(), passwordField.getText());
             System.out.println("user logged in successfully!");
         } catch (Exception exception) {
-            System.err.println(exception.getMessage());
+            new MyAlert(Alert.AlertType.ERROR,exception.getMessage());
         }
 
     }

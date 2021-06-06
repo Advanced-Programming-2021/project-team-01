@@ -42,7 +42,7 @@
             <Cursor fx:constant="CLOSED_HAND" />
          </cursor>
       </Button>
-      <TextField fx:id="username" promptText="enter your username" layoutX="234.0" layoutY="128.0" prefHeight="25.0" prefWidth="212.0">
+      <TextField fx:id="usernameField" promptText="enter your username" layoutX="234.0" layoutY="128.0" prefHeight="25.0" prefWidth="212.0">
          <effect>
             <InnerShadow choke="0.16" height="56.58" radius="31.4975" width="71.41">
                <color>
