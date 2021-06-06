@@ -5,7 +5,7 @@ import controller.exceptions.MonsterZoneFull;
 import model.Board;
 import model.GamePhase;
 import model.card.Card;
-import view.menu.GameView;
+import console.menu.GameView;
 
 import java.util.ArrayList;
 

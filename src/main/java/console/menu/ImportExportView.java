@@ -1,16 +1,16 @@
-package view.menu;
+package console.menu;
 
-import controller.ScoreBoardController;
+import controller.ImportExportController;
+import controller.exceptions.CardNameNotExists;
 import controller.exceptions.InvalidMenuNavigation;
-import model.Player;
-import view.ConsoleCommands;
-import view.Menu;
+import console.ConsoleCommands;
+import console.Menu;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.regex.Matcher;
 
-public class ScoreBoardView {
-    public void run(String input) {
+public class ImportExportView {
+    public void run(String input) throws CardNameNotExists, IOException {
         Matcher matcher;
         if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.MENU_ENTER, input)) != null) {
             try {
@@ -22,19 +22,20 @@ public class ScoreBoardView {
             exitMenu();
         } else if (ConsoleCommands.getMatcher(ConsoleCommands.MENU_SHOW_CURRENT, input) != null) {
             showCurrentMenu();
-        } else if (ConsoleCommands.getMatcher(ConsoleCommands.SHOW_SCOREBOARD, input) != null) {
-            showScoreBoard();
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.IMPORT_CARD, input)) != null) {
+            importCard(matcher);
+        } else if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.EXPORT_CARD, input)) != null) {
+            exportCard(matcher);
         } else
             System.out.println("invalid command");
     }
 
-    private void showScoreBoard() {
-        ArrayList<Player> players = ScoreBoardController.getInstance().getSortedScoreBoard();
-        int index = 1;
-        for (Player player : players) {
-            System.out.println(index + "- " + player.getUsername() + ": " + player.getScore());
-            index++;
-        }
+    private void importCard(Matcher matcher) throws IOException {
+        ImportExportController.importCard(matcher.group("cardName"));
+    }
+
+    private void exportCard(Matcher matcher) throws CardNameNotExists, IOException {
+        ImportExportController.exportCard(matcher.group("cardName"));
     }
 
     private void enterMenu(Matcher matcher) throws InvalidMenuNavigation {
@@ -50,6 +51,6 @@ public class ScoreBoardView {
     }
 
     private void showCurrentMenu() {
-        System.out.println("Scoreboard Menu");
+        System.out.println("Import/Export Menu");
     }
 }

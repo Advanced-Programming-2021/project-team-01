@@ -6,7 +6,7 @@ import model.card.Card;
 import model.card.CardType;
 import model.card.MonsterCard;
 import model.card.MonsterType;
-import view.menu.GameView;
+import console.menu.GameView;
 
 import java.util.ArrayList;
 

@@ -4,7 +4,7 @@ import model.Board;
 import model.State;
 import model.card.Card;
 import model.card.MonsterCard;
-import view.menu.GameView;
+import console.menu.GameView;
 
 import java.util.ArrayList;
 

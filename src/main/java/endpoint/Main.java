@@ -2,7 +2,7 @@ package endpoint;
 
 import controller.DatabaseController;
 import controller.GameController;
-import view.menu.HandleRequestType;
+import console.menu.HandleRequestType;
 
 public class Main {
     public static void main(String[] args) throws Exception {

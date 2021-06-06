@@ -1,11 +1,9 @@
 package model.commands;
 
-import controller.Effect;
-import controller.GameController;
 import model.Board;
 import model.GamePhase;
 import model.card.Card;
-import view.menu.GameView;
+import console.menu.GameView;
 
 import java.util.ArrayList;
 import java.util.Random;

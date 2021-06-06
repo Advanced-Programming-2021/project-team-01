@@ -1,10 +1,10 @@
-package view.menu;
+package console.menu;
 
 import controller.GameController;
 import controller.RegisterController;
 import controller.exceptions.*;
-import view.ConsoleCommands;
-import view.Menu;
+import console.ConsoleCommands;
+import console.Menu;
 
 import java.util.regex.Matcher;
 

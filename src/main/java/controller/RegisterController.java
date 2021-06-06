@@ -5,8 +5,8 @@ import controller.exceptions.UsernameExists;
 import controller.exceptions.UsernameNotExists;
 import controller.exceptions.WrongUsernamePassword;
 import model.Player;
-import view.Menu;
-import view.menu.HandleRequestType;
+import console.Menu;
+import console.menu.HandleRequestType;
 
 public class RegisterController {
     public static Player onlineUser; //TODO Important: UPDATE DATABASE WHEN :-> AFTER LOGOUT, NEW_GAME

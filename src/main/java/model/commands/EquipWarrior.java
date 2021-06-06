@@ -6,7 +6,7 @@ import model.card.Card;
 import model.card.CardLocation;
 import model.card.MonsterCard;
 import model.card.MonsterType;
-import view.menu.GameView;
+import console.menu.GameView;
 
 public class EquipWarrior extends Command implements Activate{
     Board board = gameController.getGameBoard();

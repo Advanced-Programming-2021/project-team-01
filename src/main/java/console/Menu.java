@@ -1,4 +1,4 @@
-package view;
+package console;
 
 public enum Menu {
     EXIT,

@@ -1,4 +1,4 @@
-package view.menu;
+package console.menu;
 
 import controller.DeckController;
 import controller.exceptions.InvalidMenuNavigation;
@@ -7,12 +7,11 @@ import model.card.Card;
 import model.card.MonsterCard;
 import model.card.SpellCard;
 import model.card.TrapCard;
-import view.ConsoleCommands;
-import view.Menu;
+import console.ConsoleCommands;
+import console.Menu;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.regex.Matcher;
 
 public class DeckView {

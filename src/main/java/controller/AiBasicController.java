@@ -5,7 +5,7 @@ import model.ZoneSlot;
 import model.card.Card;
 import model.card.MonsterCard;
 import model.card.SpellCard;
-import view.menu.GameView;
+import console.menu.GameView;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;

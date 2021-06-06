@@ -1,8 +1,8 @@
-package view.menu;
+package console.menu;
 
 import controller.GameController;
-import view.ChainView;
-import view.Menu;
+import console.ChainView;
+import console.Menu;
 
 import java.util.Scanner;
 

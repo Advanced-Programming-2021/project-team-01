@@ -6,7 +6,7 @@ import model.GamePhase;
 import model.card.Card;
 import model.card.Property;
 import model.card.SpellCard;
-import view.menu.GameView;
+import console.menu.GameView;
 
 import java.util.ArrayList;
 

@@ -1,12 +1,10 @@
 package model.commands;
 
 import controller.GameController;
-import model.GamePhase;
 import model.State;
 import model.card.Card;
 import model.card.MonsterCard;
-import view.ConsoleCommands;
-import view.menu.GameView;
+import console.menu.GameView;
 
 import java.util.ArrayList;
 

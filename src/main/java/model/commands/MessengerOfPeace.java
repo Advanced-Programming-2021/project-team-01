@@ -3,7 +3,7 @@ package model.commands;
 import model.Board;
 import model.GamePhase;
 import model.card.Card;
-import view.menu.GameView;
+import console.menu.GameView;
 
 public class MessengerOfPeace extends Command implements Activate{
     Board board;

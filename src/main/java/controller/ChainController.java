@@ -5,8 +5,8 @@ import model.card.Card;
 import model.card.Property;
 import model.card.SpellCard;
 import model.card.TrapCard;
-import view.ChainView;
-import view.menu.GameView;
+import console.ChainView;
+import console.menu.GameView;
 
 public class ChainController {
     GameController gameController = GameController.getInstance();

@@ -1,10 +1,9 @@
 package model.commands;
 
 import model.Board;
-import model.State;
 import model.card.Card;
 import model.card.SpellCard;
-import view.menu.GameView;
+import console.menu.GameView;
 
 public class MagicJammer extends Command implements Activate {
     Board board;

@@ -4,7 +4,7 @@ import model.Board;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
-import view.menu.GameView;
+import console.menu.GameView;
 
 public class EquipNormal extends Command implements Activate {
 

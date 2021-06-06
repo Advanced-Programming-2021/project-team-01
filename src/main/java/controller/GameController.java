@@ -3,9 +3,9 @@ package controller;
 import controller.exceptions.*;
 import model.*;
 import model.card.*;
-import view.Menu;
-import view.menu.GameView;
-import view.menu.HandleRequestType;
+import console.Menu;
+import console.menu.GameView;
+import console.menu.HandleRequestType;
 
 import java.io.IOException;
 import java.util.ArrayList;

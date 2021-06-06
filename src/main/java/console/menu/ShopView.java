@@ -1,12 +1,11 @@
-package view.menu;
+package console.menu;
 
 import controller.RegisterController;
 import controller.ShopController;
 import model.card.Card;
-import view.ConsoleCommands;
-import view.Menu;
+import console.ConsoleCommands;
+import console.Menu;
 
-import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 

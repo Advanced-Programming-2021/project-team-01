@@ -1,10 +1,8 @@
-package view;
+package console;
 
-import controller.ChainController;
 import controller.GameController;
 import model.Player;
-import view.menu.GameView;
-import view.menu.HandleRequestType;
+import console.menu.HandleRequestType;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

@@ -1,4 +1,4 @@
-package view.menu;
+package console.menu;
 
 import controller.GameController;
 import controller.exceptions.LevelFiveException;
@@ -7,8 +7,8 @@ import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.MonsterCard;
-import view.ConsoleCommands;
-import view.Menu;
+import console.ConsoleCommands;
+import console.Menu;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

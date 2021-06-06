@@ -1,8 +1,8 @@
-package view.menu;
+package console.menu;
 
 import controller.ProfileController;
-import view.ConsoleCommands;
-import view.Menu;
+import console.ConsoleCommands;
+import console.Menu;
 
 import java.util.regex.Matcher;
 

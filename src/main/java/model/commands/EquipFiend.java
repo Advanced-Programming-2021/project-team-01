@@ -6,7 +6,7 @@ import model.card.Card;
 import model.card.CardLocation;
 import model.card.MonsterCard;
 import model.card.MonsterType;
-import view.menu.GameView;
+import console.menu.GameView;
 
 public class EquipFiend extends Command implements Activate{
     public EquipFiend(Card card) {
