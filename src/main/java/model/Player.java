@@ -21,6 +21,7 @@ public class Player {
         this.nickname = nickname;
         this.winRate = 0;
         this.loseRate = 0;
+        this.money = 1000000;
     }
 
     public String getNickname() {

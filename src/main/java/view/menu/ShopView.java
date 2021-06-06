@@ -43,7 +43,7 @@ class ShopView {
 
     private void showAllCards() {
         TreeMap<String, Card> shopCards = Card.getAllCards();
-        shopCards.forEach((key, value) -> System.out.println(key + ":" + value.getDescription()));
+        shopCards.forEach((key, value) -> System.out.println(key + ":" + value.getPrice()));
     }
 
     private void enterMenu(Matcher matcher) {
