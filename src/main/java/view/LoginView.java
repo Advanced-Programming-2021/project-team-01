@@ -17,6 +17,10 @@ public class LoginView {
         String username = usernameField.getText();
         String password = passwordField.getText();
         String nickname = inputDialog.getEditor().getText();
+        if (nickname.isBlank() || password.isBlank() || username.isBlank()){
+            new MyAlert(Alert.AlertType.ERROR,"empty fields");
+            return;
+        }
         try {
             RegisterController.getInstance().createUser(username, password, nickname);
             System.out.println("user created successfully!");
