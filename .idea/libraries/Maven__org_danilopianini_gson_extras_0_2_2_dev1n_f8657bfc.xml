@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.danilopianini:gson-extras:0.2.2-dev1n+f8657bfc">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/danilopianini/gson-extras/0.2.2-dev1n+f8657bfc/gson-extras-0.2.2-dev1n+f8657bfc.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/danilopianini/gson-extras/0.2.2-dev1n+f8657bfc/gson-extras-0.2.2-dev1n+f8657bfc-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/danilopianini/gson-extras/0.2.2-dev1n+f8657bfc/gson-extras-0.2.2-dev1n+f8657bfc-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

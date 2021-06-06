@@ -13,12 +13,16 @@ public class LoginView {
     public void signUp(MouseEvent event) {
         TextInputDialog inputDialog = new TextInputDialog();
         inputDialog.setContentText("Enter a nickname");
-        inputDialog.showAndWait();
         String username = usernameField.getText();
         String password = passwordField.getText();
+        if (password.isBlank() || username.isBlank()){
+            new MyAlert(Alert.AlertType.ERROR,"empty fields").show();
+            return;
+        }
+        inputDialog.showAndWait();
         String nickname = inputDialog.getEditor().getText();
-        if (nickname.isBlank() || password.isBlank() || username.isBlank()){
-            new MyAlert(Alert.AlertType.ERROR,"empty fields");
+        if (nickname.isBlank()){
+            new MyAlert(Alert.AlertType.ERROR,"empty field").show();
             return;
         }
         try {

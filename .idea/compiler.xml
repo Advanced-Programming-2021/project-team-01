@@ -9,5 +9,8 @@
         <module name="YuGiOh" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="YuGiOh" target="16" />
+    </bytecodeTargetLevel>
   </component>
 </project>
