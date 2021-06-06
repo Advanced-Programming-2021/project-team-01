@@ -20,6 +20,10 @@ public class ViewSwitcher {
             e.printStackTrace();
         }
         assert root != null;
+        //dont forget the switch case!!!
+        switch (view){
+
+        }
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

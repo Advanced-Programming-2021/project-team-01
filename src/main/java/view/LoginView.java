@@ -1,22 +1,18 @@
 package view;
 
 import controller.RegisterController;
-import javafx.application.Application;
-import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
+import javafx.event.EventHandler;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 public class LoginView {
 
     public PasswordField passwordField;
     public TextField usernameField;
 
-    public void signUp(MouseEvent event){
+    public void signUp(MouseEvent event) {
         TextInputDialog inputDialog = new TextInputDialog();
-        inputDialog.getEditor().setText("Enter a nickname");
+        inputDialog.setContentText("Enter a nickname");
         inputDialog.showAndWait();
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -25,21 +21,22 @@ public class LoginView {
             RegisterController.getInstance().createUser(username, password, nickname);
             System.out.println("user created successfully!");
         } catch (Exception exception) {
-            new MyAlert(Alert.AlertType.ERROR,exception.getMessage());
+            inputDialog.close();
+            new MyAlert(Alert.AlertType.ERROR,exception.getMessage()).show();
         }
 
     }
 
-    public void login(MouseEvent event){
-        if (usernameField.getText().isBlank() || passwordField.getText().isBlank()){
-            new MyAlert(Alert.AlertType.ERROR,"empty fields").show();
+    public void login(MouseEvent event) {
+        if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
+            new MyAlert(Alert.AlertType.ERROR, "empty fields").show();
             return;
         }
         try {
             RegisterController.getInstance().loginUser(usernameField.getText(), passwordField.getText());
             System.out.println("user logged in successfully!");
         } catch (Exception exception) {
-            new MyAlert(Alert.AlertType.ERROR,exception.getMessage());
+            new MyAlert(Alert.AlertType.ERROR, exception.getMessage());
         }
 
     }
