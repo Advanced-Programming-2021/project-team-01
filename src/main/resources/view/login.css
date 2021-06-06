@@ -1,0 +1,17 @@
+.main{
+    -fx-background-image: url(unnamed.jpg);
+    -fx-background-size: cover;
+}
+.button1{
+    -fx-background-color: #1f1fef;
+}
+.button1:hover{
+    -fx-background-color: #0db2b6;
+}
+
+.button2{
+    -fx-background-color: #e81111;
+}
+.button2:hover{
+    -fx-background-color: #f35454;
+}
