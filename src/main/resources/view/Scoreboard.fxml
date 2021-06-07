@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.ScoreboardView"
+            prefHeight="1000" prefWidth="700" styleClass="main">
+    <stylesheets>
+        <URL value="@Scoreboard.css"/>
+    </stylesheets>
+    <Button onMouseClicked="#exitMenu" styleClass="button" translateX="30" translateY="900" text="Exit" prefWidth="60" prefHeight="40"/>
+</AnchorPane>

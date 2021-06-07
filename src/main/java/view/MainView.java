@@ -10,4 +10,9 @@ public class MainView {
         RegisterController.getInstance().logout();
         ViewSwitcher.switchTo(View.LOGIN);
     }
+
+    @FXML
+    private void startScoreboardView() {
+        ViewSwitcher.switchTo(View.SCOREBOARD);
+    }
 }

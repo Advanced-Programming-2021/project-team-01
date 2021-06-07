@@ -1,6 +1,5 @@
 package view;
 
-import console.menu.ScoreBoardView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -22,7 +21,7 @@ public class ViewSwitcher {
         assert root != null;
         //dont forget the switch case!!!
         switch (view){
-
+            case SCOREBOARD -> new ScoreboardView().init(root);
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);
