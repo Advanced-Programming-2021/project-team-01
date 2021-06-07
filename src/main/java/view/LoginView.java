@@ -45,7 +45,7 @@ public class LoginView {
             ViewSwitcher.switchTo(View.MAIN);
             System.out.println("user logged in successfully!");
         } catch (Exception exception) {
-            new MyAlert(Alert.AlertType.ERROR, exception.getMessage());
+            new MyAlert(Alert.AlertType.ERROR, exception.getMessage()).show();
         }
     }
 }

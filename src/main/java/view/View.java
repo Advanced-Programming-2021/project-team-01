@@ -3,7 +3,7 @@ package view;
 public enum View {
     LOGIN("Login.fxml"),
     MAIN("Main.fxml"),
-    ABOUT("about.fxml"),
+    PROFILE("profile.fxml"),
     SCOREBOARD("Scoreboard.fxml");
 
     private String fileName;
