@@ -11,7 +11,7 @@ public class Player {
     private int score;
     private String activeDeck;
     private final ArrayList<String> playerDecks = new ArrayList<>();
-    private final ArrayList<String> playerCards = new ArrayList<>();  //TODO: string or card
+    private final ArrayList<String> playerCards = new ArrayList<>();
     private int winRate;
     private int loseRate;
 

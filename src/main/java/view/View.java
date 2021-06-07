@@ -1,8 +1,8 @@
 package view;
 
 public enum View {
-    LOGIN("login.fxml"),
-    MAIN("main.fxml"),
+    LOGIN("Login.fxml"),
+    MAIN("Main.fxml"),
     ABOUT("about.fxml");
 
     private String fileName;

@@ -42,11 +42,10 @@ public class LoginView {
         }
         try {
             RegisterController.getInstance().loginUser(usernameField.getText(), passwordField.getText());
+            ViewSwitcher.switchTo(View.MAIN);
             System.out.println("user logged in successfully!");
         } catch (Exception exception) {
             new MyAlert(Alert.AlertType.ERROR, exception.getMessage());
         }
-
     }
-
 }
