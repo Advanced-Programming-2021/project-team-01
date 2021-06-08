@@ -19,9 +19,15 @@ public class ViewSwitcher {
             e.printStackTrace();
         }
         assert root != null;
-        //dont forget the switch case!!!
         switch (view){
-            case SCOREBOARD -> new ScoreboardView().init(root);
+            case SCOREBOARD : {
+                new ScoreboardView().init(root);
+                break;
+            }
+            case IMPORTEXPORT : {
+                new ImportExportView().init(root);
+                break;
+            }
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);

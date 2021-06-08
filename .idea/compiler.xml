@@ -6,11 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="YuGiOh" />
+        <module name="ApSpring" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="YuGiOh" target="16" />
-    </bytecodeTargetLevel>
   </component>
 </project>

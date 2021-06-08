@@ -16,7 +16,7 @@
         <Button prefWidth="100" text="Deck" styleClass="button"/>
         <Button prefWidth="100" text="Profile" styleClass="button"/>
         <Button prefWidth="100" text="Shop" styleClass="button"/>
-        <Button prefWidth="100" text="Import/Export" styleClass="button"/>
+        <Button prefWidth="100" text="Import/Export" styleClass="button" onMouseClicked="#startImportExportView"/>
         <Button prefWidth="100" text="Logout" styleClass="button" onMouseClicked="#logout"/>
     </VBox>
 </AnchorPane>

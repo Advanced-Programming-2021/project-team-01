@@ -12,64 +12,78 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="647.0" styleClass="main" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginView">
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.control.Tab?>
+<?import com.jfoenix.controls.JFXButton?>
+<AnchorPane prefHeight="400.0" prefWidth="647.0" styleClass="main" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginView">
 
-    <stylesheets>
-        <URL value="@login.css" />
-    </stylesheets>
-   <children>
-      <Button onMouseClicked="#login" layoutX="418.0" layoutY="248.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="72.0" styleClass="button1" text="Login" textFill="#87ddff">
-         <effect>
-            <DropShadow blurType="GAUSSIAN" height="57.56" radius="38.980000000000004" spread="0.56" width="100.36">
-               <color>
-                  <Color red="0.2043684720993042" green="0.09019999951124191" blue="0.8199999928474426" />
-               </color>
-            </DropShadow>
-         </effect>
-         <cursor>
-            <Cursor fx:constant="CLOSED_HAND" />
-         </cursor>
-      </Button>
-      <Button onMouseClicked="#signUp" layoutX="184.0" layoutY="248.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="72.0" styleClass="button2" text="SignUp">
-         <effect>
-            <DropShadow blurType="GAUSSIAN" height="129.63" radius="62.1175" spread="0.53" width="120.84">
-               <color>
-                  <Color red="0.8552631735801697" green="0.047514621168375015" blue="0.047514621168375015" />
-               </color>
-            </DropShadow>
-         </effect>
-         <cursor>
-            <Cursor fx:constant="CLOSED_HAND" />
-         </cursor>
-      </Button>
-      <TextField fx:id="usernameField" promptText="enter your username" layoutX="234.0" layoutY="128.0" prefHeight="25.0" prefWidth="212.0">
-         <effect>
-            <InnerShadow choke="0.16" height="56.58" radius="31.4975" width="71.41">
-               <color>
-                  <Color red="0.8684210777282715" green="0.10855263471603394" blue="0.10855263471603394" />
-               </color>
-            </InnerShadow>
-         </effect>
-      </TextField>
-      <PasswordField fx:id="passwordField" promptText="enter your password" layoutX="234.0" layoutY="176.0" prefHeight="25.0" prefWidth="212.0">
-         <effect>
-            <InnerShadow choke="0.12" radius="21.86" width="68.44">
-               <color>
-                  <Color red="0.08009999990463257" green="0.16908179223537445" blue="0.8899999856948853" />
-               </color>
-            </InnerShadow>
-         </effect>
-      </PasswordField>
-      <Label layoutX="142.0" layoutY="128.0" prefHeight="25.0" prefWidth="64.0" text="username" textFill="#44f2fc">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label layoutX="142.0" layoutY="179.0" prefHeight="17.0" prefWidth="64.0" text="password" textFill="#7ad0ff">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-   </children>
+   <stylesheets>
+      <URL value="@login.css"/>
+   </stylesheets>
+   <JFXTabPane>
+      <Tab text="tab 1">
+         <JFXButton text="button1"/>
+      </Tab>
 
+      <Tab text="tab 2">
+         <JFXButton style="-fx-background-color: red" text="button2"/>
+      </Tab>
+   </JFXTabPane>
+   <Button onMouseClicked="#login" layoutX="418.0" layoutY="248.0" mnemonicParsing="false" prefHeight="32.0"
+           prefWidth="72.0" styleClass="button1" text="Login" textFill="#87ddff">
+      <effect>
+         <DropShadow blurType="GAUSSIAN" height="57.56" radius="38.980000000000004" spread="0.56" width="100.36">
+            <color>
+               <Color red="0.2043684720993042" green="0.09019999951124191" blue="0.8199999928474426"/>
+            </color>
+         </DropShadow>
+      </effect>
+      <cursor>
+         <Cursor fx:constant="CLOSED_HAND"/>
+      </cursor>
+   </Button>
+   <Button onMouseClicked="#signUp" layoutX="184.0" layoutY="248.0" mnemonicParsing="false" prefHeight="32.0"
+           prefWidth="72.0" styleClass="button2" text="SignUp">
+      <effect>
+         <DropShadow blurType="GAUSSIAN" height="129.63" radius="62.1175" spread="0.53" width="120.84">
+            <color>
+               <Color red="0.8552631735801697" green="0.047514621168375015" blue="0.047514621168375015"/>
+            </color>
+         </DropShadow>
+      </effect>
+      <cursor>
+         <Cursor fx:constant="CLOSED_HAND"/>
+      </cursor>
+   </Button>
+   <TextField fx:id="usernameField" promptText="enter your username" layoutX="234.0" layoutY="128.0" prefHeight="25.0"
+              prefWidth="212.0">
+      <effect>
+         <InnerShadow choke="0.16" height="56.58" radius="31.4975" width="71.41">
+            <color>
+               <Color red="0.8684210777282715" green="0.10855263471603394" blue="0.10855263471603394"/>
+            </color>
+         </InnerShadow>
+      </effect>
+   </TextField>
+   <PasswordField fx:id="passwordField" promptText="enter your password" layoutX="234.0" layoutY="176.0"
+                  prefHeight="25.0" prefWidth="212.0">
+      <effect>
+         <InnerShadow choke="0.12" radius="21.86" width="68.44">
+            <color>
+               <Color red="0.08009999990463257" green="0.16908179223537445" blue="0.8899999856948853"/>
+            </color>
+         </InnerShadow>
+      </effect>
+   </PasswordField>
+   <Label layoutX="142.0" layoutY="128.0" prefHeight="25.0" prefWidth="64.0" text="username" textFill="#44f2fc">
+      <font>
+         <Font name="System Bold" size="13.0"/>
+      </font>
+   </Label>
+   <Label layoutX="142.0" layoutY="179.0" prefHeight="17.0" prefWidth="64.0" text="password" textFill="#7ad0ff">
+      <font>
+         <Font name="System Bold" size="13.0"/>
+      </font>
+   </Label>
 </AnchorPane>

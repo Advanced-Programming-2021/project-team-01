@@ -13,7 +13,7 @@ public class ProfileView {
         inputDialog.setHeaderText("enter new nickname");
         inputDialog.showAndWait();
         String nickname = inputDialog.getEditor().getText();
-        if (nickname.isBlank()){
+        if (nickname.isEmpty()){
             inputDialog.close();
             new MyAlert(Alert.AlertType.ERROR,"emptyField").show();
             return;
@@ -30,7 +30,7 @@ public class ProfileView {
         inputDialog.setHeaderText("enter your old password");
         inputDialog.showAndWait();
         String oldPassword = inputDialog.getEditor().getText();
-        if (oldPassword.isBlank()){
+        if (oldPassword.isEmpty()){
             inputDialog.close();
             new MyAlert(Alert.AlertType.ERROR,"emptyField").show();
             return;
@@ -39,7 +39,7 @@ public class ProfileView {
         inputDialog.setContentText("enter your new password");
         inputDialog.showAndWait();
         String newPassword = inputDialog.getEditor().getText();
-        if (newPassword.isBlank()){
+        if (newPassword.isEmpty()){
             inputDialog.close();
             new MyAlert(Alert.AlertType.ERROR,"emptyField").show();
             return;

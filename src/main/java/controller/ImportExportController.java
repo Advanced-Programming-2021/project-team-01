@@ -56,6 +56,7 @@ public class ImportExportController {
 
     public static void main(String[] args) throws IOException, CardNameNotExists, CsvValidationException {
         DatabaseController.loadGameCards();
+        exportCard("Twin Twisters");
         importCard("Twin Twisters");
     }
 }

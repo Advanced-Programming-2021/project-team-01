@@ -15,13 +15,13 @@ public class LoginView {
         inputDialog.setContentText("Enter a nickname");
         String username = usernameField.getText();
         String password = passwordField.getText();
-        if (password.isBlank() || username.isBlank()){
+        if (password.isEmpty() || username.isEmpty()){
             new MyAlert(Alert.AlertType.ERROR,"empty fields").show();
             return;
         }
         inputDialog.showAndWait();
         String nickname = inputDialog.getEditor().getText();
-        if (nickname.isBlank()){
+        if (nickname.isEmpty()){
             new MyAlert(Alert.AlertType.ERROR,"empty field").show();
             return;
         }
@@ -32,11 +32,10 @@ public class LoginView {
             inputDialog.close();
             new MyAlert(Alert.AlertType.ERROR,exception.getMessage()).show();
         }
-
     }
 
     public void login(MouseEvent event) {
-        if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
+        if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
             new MyAlert(Alert.AlertType.ERROR, "empty fields").show();
             return;
         }

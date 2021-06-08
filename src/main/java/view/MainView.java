@@ -15,4 +15,9 @@ public class MainView {
     private void startScoreboardView() {
         ViewSwitcher.switchTo(View.SCOREBOARD);
     }
+
+    @FXML
+    private void startImportExportView() {
+        ViewSwitcher.switchTo(View.IMPORTEXPORT);
+    }
 }

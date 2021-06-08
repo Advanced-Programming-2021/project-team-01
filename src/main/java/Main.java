@@ -7,7 +7,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         ViewSwitcher.setStage(primaryStage);
-        ViewSwitcher.switchTo(View.PROFILE);
+        ViewSwitcher.switchTo(View.LOGIN);
     }
 
     public static void main(String[] args) {
