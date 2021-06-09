@@ -9,6 +9,7 @@ public class LoginView {
 
     public PasswordField passwordField;
     public TextField usernameField;
+    public Label registerLabel;
 
     public void signUp(MouseEvent event) {
         TextInputDialog inputDialog = new TextInputDialog();

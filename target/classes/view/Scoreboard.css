@@ -1,0 +1,8 @@
+.main{
+    -fx-background-image: url("ScoreboardBackground.jpeg");
+    -fx-background-size: cover;
+}
+
+.button{
+    -fx-background-color: #e6ed21;
+}
