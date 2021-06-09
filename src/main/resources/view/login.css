@@ -65,7 +65,7 @@
 }
 
 .Error {
-    -fx-font-size: 25px;
+    -fx-font-size: 20px;
     -fx-padding: 10px;
     -fx-font-family: Bahnschrift;
     -fx-text-fill: red;

@@ -19,23 +19,23 @@
     <JFXTabPane styleClass="tab" >
         <Tab text="Login" styleClass="tabTop">
             <VBox styleClass="vBoxTop">
-                <JFXTextField styleClass="writeBox" promptText="username" prefWidth="100"/>
-                <JFXPasswordField styleClass="writeBox" promptText="password" prefWidth="100"/>
-                <Label fx:id="registerLabel" styleClass="Error" prefWidth="400"
+                <JFXTextField fx:id="rUsernameField" styleClass="writeBox" promptText="username" prefWidth="100"/>
+                <JFXPasswordField fx:id="rPasswordField" styleClass="writeBox" promptText="password" prefWidth="100"/>
+                <Label fx:id="loginLabel" styleClass="Error" prefWidth="400"
                        prefHeight="30">
                 </Label>
-                <JFXButton buttonType="RAISED" text="Login" styleClass="button1"/>
+                <JFXButton onMouseClicked="#login" buttonType="RAISED" text="Login" styleClass="button1"/>
             </VBox>
         </Tab>
         <Tab text="SignUp" styleClass="tabTop">
             <VBox styleClass="vBoxTop">
-                <JFXTextField styleClass="writeBox" promptText="username" prefWidth="100"/>
-                <JFXTextField styleClass="writeBox" promptText="nickname" prefWidth="100"/>
-                <JFXPasswordField styleClass="writeBox" promptText="password" prefWidth="100"/>
-                <Label  styleClass="Error" prefWidth="400"
+                <JFXTextField fx:id="usernameField" styleClass="writeBox" promptText="username" prefWidth="100"/>
+                <JFXTextField fx:id="nicknameField" styleClass="writeBox" promptText="nickname" prefWidth="100"/>
+                <JFXPasswordField fx:id="passwordField" styleClass="writeBox" promptText="password" prefWidth="100"/>
+                <Label fx:id="registerLabel" styleClass="Error" prefWidth="400"
                        prefHeight="30">
                 </Label>
-                <JFXButton buttonType="RAISED" text="SignUp" styleClass="button1"/>
+                <JFXButton onMouseClicked="#signUp" buttonType="RAISED" text="SignUp" styleClass="button1"/>
             </VBox>
         </Tab>
     </JFXTabPane>

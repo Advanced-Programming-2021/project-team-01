@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.ImportExportView"
+            prefHeight="600.0" prefWidth="500.0" styleClass="main">
+    <stylesheets>
+        <URL value="@importexport.css"/>
+    </stylesheets>
+</AnchorPane>
