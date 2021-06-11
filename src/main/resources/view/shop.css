@@ -1,0 +1,38 @@
+.background{
+    -fx-background-image: url("dadtav.png");
+}
+.tab2 {
+    -fx-pref-width: 1000px;
+    -fx-max-width: 1000px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-alignment: center;
+    -fx-background-color: transparent;
+}
+.tab-header-background {
+    -fx-background-color: black;
+    -fx-background-radius: 10px;
+}
+
+.tabTop2 {
+    -fx-max-width: 400px;
+    -fx-pref-width: 400px;
+    -fx-background-color: black;
+}
+
+.jfx-tab-pane .tab-selected-line {
+    -fx-background-color: yellow;
+}
+
+.jfx-tab-pane .tab-header-area{
+    -fx-background-color: black;
+}
+
+.scroll-pane{
+    -fx-background-color:transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+

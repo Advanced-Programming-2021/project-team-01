@@ -28,6 +28,7 @@ public class ViewSwitcher {
                 new ImportExportView().init(root);
                 break;
             }
+
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);

@@ -4,15 +4,17 @@ import com.google.gson.annotations.Expose;
 import controller.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
 import model.commands.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 public abstract class Card {
     @Expose(serialize = false ,deserialize = false)
-    private final ImageView cardImage;
+    private final ImagePattern cardImage;
     private static final TreeMap<String, Card> allCards = new TreeMap<>();
     protected String name;
     private String description;
@@ -20,7 +22,7 @@ public abstract class Card {
     protected String type = "type";
     @Expose(serialize = false, deserialize = false)
     protected ArrayList<Command> commands = new ArrayList<>();
-    static HashMap<String, ImageView> cachedImage = new HashMap<>();
+    static HashMap<String, ImagePattern> cachedImage = new HashMap<>();
 
     public Card(String name, String description, int price) {
         this.name = name;
@@ -30,7 +32,8 @@ public abstract class Card {
         cardImage = cachedImage.get(buildImage());
     }
 
-    public ImageView getCardImage() {
+
+    public ImagePattern getCardImage() {
         return cardImage;
     }
 
@@ -43,7 +46,7 @@ public abstract class Card {
         }catch (Exception e){
             System.err.println(imageName);
         }
-        ImageView imageView = new ImageView(image);
+        ImagePattern imageView = new ImagePattern(image);
         cachedImage.put(imageName, imageView);
     }
 
