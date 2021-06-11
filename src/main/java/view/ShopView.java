@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -38,7 +39,7 @@ public class ShopView implements Initializable {
         ImageView button = new ImageView(new Image(getClass().getResource("k1.png").toExternalForm()));
         button.setFitWidth(100);
         button.setTranslateX(100);
-        button.setTranslateY(800);
+        button.setTranslateY(500);
         button.setFitHeight(100);
         button.setOnMouseClicked(event -> buyCard());
         button.getStyleClass().add("but");
@@ -47,6 +48,7 @@ public class ShopView implements Initializable {
 
     private void setupMonsterTab() {
         GridPane pane = new GridPane();
+        pane.setPadding(new Insets(10,10,10,20));
         monsterScroll.setContent(pane);
         monsterTab.setContent(monsterScroll);
         pane.setStyle("-fx-background-color: transparent");
@@ -59,12 +61,17 @@ public class ShopView implements Initializable {
                 ShopCardView rectangle = new ShopCardView(monsters.get(6 * i + j));
                 rectangle.setHeight(250);
                 rectangle.setWidth(150);
+                rectangle.getStyleClass().add("but");
                 rectangle.setFill(monsters.get(6 * i + j).getCardImage());
                 rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         selectedCard = rectangle;
-                        Rectangle rectangle1 = new Rectangle(300, 500);
+                        for (Node child : pane.getChildren()) {
+                            child.getStyleClass().remove("butoo");
+                        }
+                        rectangle.getStyleClass().add("butoo");
+                        Rectangle rectangle1 = new Rectangle(250, 450);
                         rectangle1.setFill(selectedCard.getCard().getCardImage());
                         imageBar.getChildren().clear();
                         imageBar.getChildren().add(rectangle1);
@@ -90,11 +97,16 @@ public class ShopView implements Initializable {
                 rectangle.setHeight(250);
                 rectangle.setWidth(150);
                 rectangle.setFill(spells.get(6 * i + j).getCardImage());
+                rectangle.getStyleClass().add("but");
                 rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         selectedCard = rectangle;
-                        Rectangle rectangle1 = new Rectangle(300, 500);
+                        for (Node child : pane.getChildren()) {
+                            child.getStyleClass().remove("butoo");
+                        }
+                        rectangle.getStyleClass().add("butoo");
+                        Rectangle rectangle1 = new Rectangle(250, 450);
                         rectangle1.setFill(selectedCard.getCard().getCardImage());
                         imageBar.getChildren().clear();
                         imageBar.getChildren().add(rectangle1);

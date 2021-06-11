@@ -67,3 +67,8 @@
    -fx-scale-x: 1.2;
    -fx-scale-y: 1.2;
 }
+.butoo{
+    -fx-effect: dropshadow(gaussian, rgba(110,10,133,0.83), 20, 0.3, -5, -5);
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
