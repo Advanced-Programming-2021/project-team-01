@@ -1,5 +1,6 @@
 package view;
 
+import controller.ShopController;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -142,6 +143,13 @@ public class ShopView implements Initializable {
     private void buyCard() {
         if (selectedCard == null) {
             new MyAlert(Alert.AlertType.WARNING, "No card is selected!").show();
+            return;
+        }
+        String cardName = selectedCard.getCard().getName();
+        try {
+            ShopController.getInstance().buyCard(cardName);
+        } catch (Exception exception) {
+            System.err.println(exception.getMessage());
         }
         new MyAlert(Alert.AlertType.CONFIRMATION, "Card is bought").show();
     }
