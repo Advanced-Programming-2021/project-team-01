@@ -4,13 +4,9 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
 <?import java.net.URL?>
-<?import com.jfoenix.controls.JFXScrollPane?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.layout.GridPane?>
 <?import com.jfoenix.controls.JFXButton?>
 <BorderPane styleClass="background" fx:id="mainPane" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -20,19 +16,19 @@
         <URL value="@shop.css"/>
     </stylesheets>
     <left>
-    <VBox>
-        <StackPane fx:id="imageBar"/>
-    </VBox>
+        <VBox>
+            <StackPane fx:id="imageBar"/>
+        </VBox>
     </left>
 
 
     <right>
         <JFXTabPane styleClass="tab2">
             <Tab styleClass="tabTop2" fx:id="monsterTab" text="Monster">
-                <ScrollPane fx:id="scroll" styleClass="scroll-pane"/>
+                <ScrollPane fx:id="monsterScroll" styleClass="scroll-pane"/>
             </Tab>
             <Tab styleClass="tabTop2" fx:id="spellTab" text="Spell">
-
+                <ScrollPane fx:id="spellScroll" styleClass="scroll-pane"/>
             </Tab>
         </JFXTabPane>
     </right>

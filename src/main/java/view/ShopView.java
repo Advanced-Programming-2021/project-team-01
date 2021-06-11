@@ -1,24 +1,18 @@
 package view;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXScrollPane;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.card.Card;
 import model.card.MonsterCard;
@@ -30,48 +24,92 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 public class ShopView implements Initializable {
-    public Tab monsterTab;
+    private ShopCardView selectedCard = null;
+    public Tab monsterTab, spellTab;
     public BorderPane mainPane;
     public StackPane imageBar;
-    public ScrollPane scroll;
+    public ScrollPane monsterScroll, spellScroll;
 
 
-    public void init(){
+    public void init() {
+        setupMonsterTab();
+        setupSpellTrapTab();
+        imageBar.setPadding(new Insets(40, 40, 40, 40));
+        ImageView button = new ImageView(new Image(getClass().getResource("k1.png").toExternalForm()));
+        button.setFitWidth(100);
+        button.setTranslateX(100);
+        button.setTranslateY(800);
+        button.setFitHeight(100);
+        button.setOnMouseClicked(event -> buyCard());
+        button.getStyleClass().add("but");
+        mainPane.getChildren().add(button);
+    }
+
+    private void setupMonsterTab() {
         GridPane pane = new GridPane();
-        scroll.setContent(pane);
-        monsterTab.setContent(scroll);
+        monsterScroll.setContent(pane);
+        monsterTab.setContent(monsterScroll);
         pane.setStyle("-fx-background-color: transparent");
         pane.setVgap(10);
         pane.setHgap(10);
         pane.setAlignment(Pos.CENTER);
         ArrayList<Card> monsters = getMonsters();
-        ArrayList<Card> spells = getSpell();
-        for (int i = 0; i < Math.round((double) monsters.size() / 6); i++){
-            for (int j = 0; j < (Math.min((monsters.size() - 6 * i), 6)); j++){
-                Rectangle rectangle = new Rectangle();
+        for (int i = 0; i < Math.round((double) monsters.size() / 6); i++) {
+            for (int j = 0; j < (Math.min((monsters.size() - 6 * i), 6)); j++) {
+                ShopCardView rectangle = new ShopCardView(monsters.get(6 * i + j));
                 rectangle.setHeight(250);
                 rectangle.setWidth(150);
                 rectangle.setFill(monsters.get(6 * i + j).getCardImage());
-                pane.add(rectangle,j,i);
+                rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        selectedCard = rectangle;
+                        Rectangle rectangle1 = new Rectangle(300, 500);
+                        rectangle1.setFill(selectedCard.getCard().getCardImage());
+                        imageBar.getChildren().clear();
+                        imageBar.getChildren().add(rectangle1);
+                    }
+                });
+                pane.add(rectangle, j, i);
             }
         }
-        imageBar.setPadding(new Insets(40,40,40,40));
-        imageBar.getChildren().add(new Rectangle(220,380,Color.BLUE));
+    }
 
-        ImageView button = new ImageView(new Image(getClass().getResource("k1.png").toExternalForm()));
-        button.setFitWidth(100);
-        button.setTranslateX(100);
-        button.setTranslateY(1000);
-        button.setFitHeight(100);
-        button.setOnMouseClicked(event -> buyCard());
-        mainPane.getChildren().add(button);
+    private void setupSpellTrapTab() {
+        GridPane pane = new GridPane();
+        spellScroll.setContent(pane);
+        spellTab.setContent(spellScroll);
+        pane.setStyle("-fx-background-color: transparent");
+        pane.setVgap(10);
+        pane.setHgap(10);
+        pane.setAlignment(Pos.CENTER);
+        ArrayList<Card> spells = getSpell();
+        for (int i = 0; i < Math.round((double) spells.size() / 6); i++) {
+            for (int j = 0; j < (Math.min((spells.size() - 6 * i), 6)); j++) {
+                ShopCardView rectangle = new ShopCardView(spells.get(6 * i + j));
+                rectangle.setHeight(250);
+                rectangle.setWidth(150);
+                rectangle.setFill(spells.get(6 * i + j).getCardImage());
+                rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        selectedCard = rectangle;
+                        Rectangle rectangle1 = new Rectangle(300, 500);
+                        rectangle1.setFill(selectedCard.getCard().getCardImage());
+                        imageBar.getChildren().clear();
+                        imageBar.getChildren().add(rectangle1);
+                    }
+                });
+                pane.add(rectangle, j, i);
+            }
+        }
     }
 
     private ArrayList<Card> getMonsters() {
         ArrayList<Card> temp = new ArrayList<>();
         TreeMap<String, Card> treeMap = Card.getAllCards();
-        for (Map.Entry<String, Card> entry : treeMap.entrySet()){
-            if (entry.getValue() instanceof MonsterCard){
+        for (Map.Entry<String, Card> entry : treeMap.entrySet()) {
+            if (entry.getValue() instanceof MonsterCard) {
                 temp.add(entry.getValue());
             }
         }
@@ -81,8 +119,8 @@ public class ShopView implements Initializable {
     private ArrayList<Card> getSpell() {
         ArrayList<Card> temp = new ArrayList<>();
         TreeMap<String, Card> treeMap = Card.getAllCards();
-        for (Map.Entry<String, Card> entry : treeMap.entrySet()){
-            if (!(entry.getValue() instanceof MonsterCard)){
+        for (Map.Entry<String, Card> entry : treeMap.entrySet()) {
+            if (!(entry.getValue() instanceof MonsterCard)) {
                 temp.add(entry.getValue());
             }
         }
@@ -90,8 +128,10 @@ public class ShopView implements Initializable {
     }
 
     private void buyCard() {
-        new MyAlert(Alert.AlertType.WARNING,"clicked on button").show();
-
+        if (selectedCard == null) {
+            new MyAlert(Alert.AlertType.WARNING, "No card is selected!").show();
+        }
+        new MyAlert(Alert.AlertType.CONFIRMATION, "Card is bought").show();
     }
 
     @Override

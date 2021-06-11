@@ -14,7 +14,7 @@ import java.util.TreeMap;
 
 public abstract class Card {
     @Expose(serialize = false ,deserialize = false)
-    private final ImagePattern cardImage;
+    private final Image cardImage;
     private static final TreeMap<String, Card> allCards = new TreeMap<>();
     protected String name;
     private String description;
@@ -22,7 +22,7 @@ public abstract class Card {
     protected String type = "type";
     @Expose(serialize = false, deserialize = false)
     protected ArrayList<Command> commands = new ArrayList<>();
-    static HashMap<String, ImagePattern> cachedImage = new HashMap<>();
+    static HashMap<String, Image> cachedImage = new HashMap<>();
 
     public Card(String name, String description, int price) {
         this.name = name;
@@ -34,7 +34,7 @@ public abstract class Card {
 
 
     public ImagePattern getCardImage() {
-        return cardImage;
+        return new ImagePattern(cardImage);
     }
 
     private void addImage(){
@@ -46,8 +46,7 @@ public abstract class Card {
         }catch (Exception e){
             System.err.println(imageName);
         }
-        ImagePattern imageView = new ImagePattern(image);
-        cachedImage.put(imageName, imageView);
+        cachedImage.put(imageName, image);
     }
 
     private String buildImage(){

@@ -36,3 +36,34 @@
     -fx-background-color: transparent;
 }
 
+.scroll-pane > .corner {
+    -fx-background-color: black;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #cbd1a5;
+    -fx-background-radius: 5em;
+}
+
+.but:hover {
+   -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.5), 20, 0.3, -5, -5);
+   -fx-scale-x: 1.2;
+   -fx-scale-y: 1.2;
+}
