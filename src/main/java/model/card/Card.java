@@ -2,12 +2,17 @@ package model.card;
 
 import com.google.gson.annotations.Expose;
 import controller.Effect;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import model.commands.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 public abstract class Card {
+    @Expose(serialize = false ,deserialize = false)
+    private final ImageView cardImage;
     private static final TreeMap<String, Card> allCards = new TreeMap<>();
     protected String name;
     private String description;
@@ -15,11 +20,46 @@ public abstract class Card {
     protected String type = "type";
     @Expose(serialize = false, deserialize = false)
     protected ArrayList<Command> commands = new ArrayList<>();
+    static HashMap<String, ImageView> cachedImage = new HashMap<>();
 
     public Card(String name, String description, int price) {
         this.name = name;
         this.description = description;
         this.price = price;
+        addImage();
+        cardImage = cachedImage.get(buildImage());
+    }
+
+    public ImageView getCardImage() {
+        return cardImage;
+    }
+
+    private void addImage(){
+        String imageName = buildImage();
+        if (cachedImage.containsKey(imageName)) return;
+        Image image = null;
+        try {
+            image = new Image(getClass().getResource("/Cards/" + imageName).toExternalForm());
+        }catch (Exception e){
+            System.err.println(imageName);
+        }
+        ImageView imageView = new ImageView(image);
+        cachedImage.put(imageName, imageView);
+    }
+
+    private String buildImage(){
+        String[] parts = name.split(" ");
+        for (String part : parts) { //fixme for is not object
+            StringBuilder temp = new StringBuilder(part);
+            temp.setCharAt(0,Character.toUpperCase(part.charAt(0)));
+            part = temp.toString();
+        }
+        StringBuilder result = new StringBuilder();
+        for (String part : parts) {
+            result.append(part);
+        }
+        result.append(".jpg");
+        return result.toString();
     }
 
     public static Card getCardByName(String name) {
