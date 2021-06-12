@@ -4,5 +4,13 @@
 }
 
 .but {
+    -fx-background-color: linear-gradient(to right, #ede73b, #c45dc9);
+}
 
+.but:hover {
+   -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.5), 20, 0.3, -5, -5);
+}
+
+.choice-box {
+    -fx-background-color: white;
 }

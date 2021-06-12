@@ -16,11 +16,11 @@
     </stylesheets>
     <center>
         <VBox spacing="15" alignment="CENTER">
-            <ChoiceBox fx:id="deckBar"/>
-            <Button prefWidth="100" text="Create deck"/>
-            <Button prefWidth="100" text="Delete deck"/>
-            <Button prefWidth="100" text="Activate deck"/>
-            <Button prefWidth="100" text="Exit"/>
+            <ChoiceBox prefWidth="100" fx:id="deckBar"/>
+            <Button styleClass="but" prefWidth="100" text="Create deck"/>
+            <Button styleClass="but" prefWidth="100" text="Delete deck" onMouseClicked="#deleteDeck"/>
+            <Button styleClass="but" prefWidth="100" text="Activate deck"/>
+            <Button styleClass="but" prefWidth="100" text="Exit" onMouseClicked="#exit"/>
         </VBox>
     </center>
 </BorderPane>
