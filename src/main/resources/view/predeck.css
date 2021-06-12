@@ -1,0 +1,8 @@
+.background{
+    -fx-background-image: url("PreDeckBackground.jpeg");
+    -fx-background-size: cover;
+}
+
+.but {
+
+}

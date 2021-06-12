@@ -2,7 +2,6 @@ package view;
 
 import controller.RegisterController;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
 public class MainView {
     @FXML
@@ -19,5 +18,20 @@ public class MainView {
     @FXML
     private void startImportExportView() {
         ViewSwitcher.switchTo(View.IMPORTEXPORT);
+    }
+
+    @FXML
+    private void startDeckView() {
+        ViewSwitcher.switchTo(View.PRE_DECK);
+    }
+
+    @FXML
+    private void startShopView() {
+        ViewSwitcher.switchTo(View.SHOP);
+    }
+
+    @FXML
+    private void startProfileView() {
+        ViewSwitcher.switchTo(View.PROFILE);
     }
 }

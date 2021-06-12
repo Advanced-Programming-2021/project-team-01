@@ -28,11 +28,10 @@ public class ViewSwitcher {
                 new ImportExportView().init(root);
                 break;
             }
-
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setMaximized(true);
+        stage.setMaximized(false);
         stage.show();
     }
 

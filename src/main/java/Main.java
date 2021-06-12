@@ -11,7 +11,7 @@ public class Main extends Application {
         DatabaseController.loadGameCards();
         GameController.getInstance();
         ViewSwitcher.setStage(primaryStage);
-        ViewSwitcher.switchTo(View.SHOP);
+        ViewSwitcher.switchTo(View.PRE_DECK);
     }
 
     public static void main(String[] args) {

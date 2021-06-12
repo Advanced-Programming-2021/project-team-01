@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<BorderPane styleClass="background" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.DeckPreView"
+            prefHeight="400.0" prefWidth="600.0">
+    <stylesheets>
+        <URL value="@predeck.css"/>
+    </stylesheets>
+    <center>
+        <VBox spacing="15" alignment="CENTER">
+            <ChoiceBox fx:id="deckBar"/>
+            <Button prefWidth="100" text="Create deck"/>
+            <Button prefWidth="100" text="Delete deck"/>
+            <Button prefWidth="100" text="Activate deck"/>
+            <Button prefWidth="100" text="Exit"/>
+        </VBox>
+    </center>
+</BorderPane>

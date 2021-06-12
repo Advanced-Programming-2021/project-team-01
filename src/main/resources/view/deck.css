@@ -1,0 +1,7 @@
+.background {
+    -fx-background-image: url("DeckBackground.jpeg");
+    -fx-background-size: cover;
+}
+
+
+

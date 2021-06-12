@@ -6,7 +6,9 @@ public enum View {
     PROFILE("profile.fxml"),
     SCOREBOARD("Scoreboard.fxml"),
     IMPORTEXPORT("ImportExport.fxml"),
-    SHOP("shop.fxml");
+    SHOP("shop.fxml"),
+    DECK("Deck.fxml"),
+    PRE_DECK("PreDeck.fxml");
 
 
     private String fileName;
