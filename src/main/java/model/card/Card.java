@@ -3,13 +3,11 @@ package model.card;
 import com.google.gson.annotations.Expose;
 import controller.Effect;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import model.commands.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeMap;
 
 public abstract class Card {
@@ -60,6 +58,8 @@ public abstract class Card {
         for (String part : parts) {
             result.append(part);
         }
+        if (name.equals("Dark Hole"))
+            System.out.println(result);
         result.append(".jpg");
         return result.toString();
     }

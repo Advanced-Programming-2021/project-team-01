@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import java.net.URL?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <BorderPane styleClass="background" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.DeckView"
@@ -14,5 +15,25 @@
     <stylesheets>
         <URL value="@deck.css"/>
     </stylesheets>
+    <left>
+        <StackPane fx:id="imageBar"/>
+        <VBox translateX="80" translateY="700" spacing="15">
+            <Button styleClass="but" prefWidth="100" text="Add card"/>
+            <Button styleClass="but" prefWidth="100" text="Remove card"/>
+            <Button styleClass="but" prefWidth="100" text="Exit" onMouseClicked="#exit"/>
+        </VBox>
+    </left>
+    <center>
+        <JFXTabPane styleClass="tab2">
+            <Tab styleClass="tabTop2" fx:id="mainDeckTab" text="Main">
+                <ScrollPane fx:id="mainDeckScroll" styleClass="scroll-pane"/>
+            </Tab>
+            <Tab styleClass="tabTop2" fx:id="sideDeckTab" text="Side">
+                <ScrollPane fx:id="sideDeckScroll" styleClass="scroll-pane"/>
+            </Tab>
+        </JFXTabPane>
+    </center>
+    <right>
 
+    </right>
 </BorderPane>

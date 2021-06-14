@@ -3,5 +3,61 @@
     -fx-background-size: cover;
 }
 
+.tab2 {
+    -fx-pref-width: 1000px;
+    -fx-max-width: 1000px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-alignment: center;
+    -fx-background-color: transparent;
+}
+.tab-header-background {
+    -fx-background-color: black;
+    -fx-background-radius: 10px;
+}
+
+.tabTop2 {
+    -fx-max-width: 400px;
+    -fx-pref-width: 400px;
+    -fx-background-color: black;
+}
+
+.jfx-tab-pane .tab-selected-line {
+    -fx-background-color: yellow;
+}
+
+.jfx-tab-pane .tab-header-area{
+    -fx-background-color: black;
+}
+
+.scroll-pane{
+    -fx-background-color:transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: black;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.but {
+    -fx-background-color: linear-gradient(to right, #43cea2, #185a9d);
+}
+
+.but:hover {
+    -fx-background-color: linear-gradient(to right, #ffd89b, #19547b);
+}
+
+.butoo{
+    -fx-effect: dropshadow(gaussian, rgba(110,10,133,0.83), 20, 0.3, -5, -5);
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
 
 
