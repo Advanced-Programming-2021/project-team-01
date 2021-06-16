@@ -20,23 +20,23 @@
     </stylesheets>
     <left>
         <VBox translateX="90" translateY="650" spacing="15">
-            <Button styleClass="but" prefWidth="170" text="Add card to main deck" />
-            <Button styleClass="but" prefWidth="170" text="Add card to side deck"/>
+            <Button styleClass="but" prefWidth="170" text="Add card to main deck" onMouseClicked="#addCardToMainDeck"/>
+            <Button styleClass="but" prefWidth="170" text="Add card to side deck" onMouseClicked="#addCardToSideDeck"/>
             <Button styleClass="but" prefWidth="170" text="Remove card" onMouseClicked="#removeCardFromDeck"/>
             <Button styleClass="but" prefWidth="170" text="Exit" onMouseClicked="#exit"/>
         </VBox>
     </left>
     <center>
-        <JFXTabPane styleClass="tab2">
-            <Tab styleClass="tabTop2" fx:id="mainDeckTab" text="Main">
+        <JFXTabPane translateX="30" styleClass="tab2">
+            <Tab styleClass="tabTop2" fx:id="mainDeckTab" text="Main Deck">
                 <ScrollPane fx:id="mainDeckScroll" styleClass="scroll-pane"/>
             </Tab>
-            <Tab styleClass="tabTop2" fx:id="sideDeckTab" text="Side">
+            <Tab styleClass="tabTop2" fx:id="sideDeckTab" text="Side Deck">
                 <ScrollPane fx:id="sideDeckScroll" styleClass="scroll-pane"/>
             </Tab>
         </JFXTabPane>
     </center>
     <right>
-        <ScrollPane fx:id="cardsScroll" styleClass="scroll-pane"/>
+        <ScrollPane translateX="-40" fx:id="cardsScroll" styleClass="scroll-pane"/>
     </right>
 </BorderPane>
