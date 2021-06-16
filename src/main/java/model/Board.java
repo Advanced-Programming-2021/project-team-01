@@ -617,22 +617,6 @@ public class Board {
         return true;
     }
 
-    public void deactivateFieldSpell(int playerNumber) {
-        if (playerNumber == 1) {
-            Card card = playerOneFieldZone.getCard();
-            if (card != null) {
-                playerOneFieldZone.setCard(null);
-                playerOneGraveYard.add(card);
-            }
-        } else {
-            Card card = playerTwoFieldZone.getCard();
-            if (card != null) {
-                playerTwoFieldZone.setCard(null);
-                playerTwoGraveYard.add(card);
-            }
-        }
-
-    }
 
     public ArrayList<Card> getPlayerOneGraveYard() {
         return playerOneGraveYard;
