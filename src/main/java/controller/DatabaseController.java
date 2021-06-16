@@ -44,36 +44,12 @@ public class DatabaseController {
         reader.close();
     }
 
-    private static void write(String data, String directory) {
-        try {
-            FileWriter fileWriter = new FileWriter(directory);
-            PrintWriter printWriter = new PrintWriter(fileWriter);
-            printWriter.println(data);
-            printWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private static String getUserDirectory(String username) {
         return "src" + File.separator + "resources" + File.separator + "users" + File.separator + username + ".json";
     }
 
     private static String getDeckDirectory(String deck) {
         return "src" + File.separator + "resources" + File.separator + "deck" + File.separator + deck + ".json";
-    }
-
-    public static String read(String directory) {
-        try {
-            FileReader fileReader = new FileReader(directory);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String data = bufferedReader.readLine();
-            bufferedReader.close();
-            return data;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public static void deleteDeckFile(String name) {
@@ -86,7 +62,7 @@ public class DatabaseController {
         try {
             FileReader fileReader = new FileReader(directory);
             Gson gson = new Gson();
-            Player player =  gson.fromJson(fileReader, Player.class);
+            Player player = gson.fromJson(fileReader, Player.class);
             fileReader.close();
             return player;
         } catch (IOException e) {
@@ -117,7 +93,7 @@ public class DatabaseController {
                             registerSubtype(MonsterCard.class, "monster").
                             registerSubtype(SpellCard.class, "spell").
                             registerSubtype(TrapCard.class, "trap");
-            Deck deck1 =  gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(fileReader, Deck.class);
+            Deck deck1 = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(fileReader, Deck.class);
             fileReader.close();
             return deck1;
         } catch (FileNotFoundException e) {
@@ -129,11 +105,11 @@ public class DatabaseController {
     public static void updateDeck(Deck deck) {
         ArrayList<Card> mainDeck = deck.getMainDeck();
         for (Card card : mainDeck) {
-            if (card instanceof MonsterCard){
+            if (card instanceof MonsterCard) {
                 card.setType("monster");
-            }else if (card instanceof TrapCard){
+            } else if (card instanceof TrapCard) {
                 card.setType("trap");
-            }else{
+            } else {
                 card.setType("spell");
             }
         }

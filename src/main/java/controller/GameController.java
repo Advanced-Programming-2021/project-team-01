@@ -321,7 +321,7 @@ public class GameController {
         setSummonedCard(selectedCard.getCard());
     }
 
-    public void summon() throws Exception {             //fixme : hand limit
+    public void summon() throws Exception {//fixme : hand limit
         if (selectedCard.getCard() == null) {
             throw new CardNotSelected();
         }
@@ -608,14 +608,6 @@ public class GameController {
         currentPlayer.increaseLoseRate();
     }
 
-    public void sendCardFromHandToSpellZone() throws SpellZoneFullError {
-        if (selectedCard.getCardLocation() == CardLocation.HAND) {
-            SpellCard card = (SpellCard) selectedCard.getCard();
-            gameBoard.setSpell(getCurrentPlayerNumber(), card);
-            gameBoard.getZoneSlotByCard(card).setHidden(false);
-        }
-    }
-
     public int getOpponentLp() {
         if (getOpponent() == playerOne) {
             return playerOneLp;
@@ -764,29 +756,3 @@ public class GameController {
         RegisterController.onlineUser = null;
     }
 }
-//    backup
-//    public void createChain() throws Exception {
-//        //fixme : test speed of instant traps
-//        ArrayList<Card> opponentSpellZone = getGameBoard().getCardInSpellZone(getOpponentPlayerNumber());
-//        chain = new Chain();
-//        Card counterTrap;
-//        GameView.showConsole("Its now " + getCurrentPlayer().getNickname() + "turn!");
-//        for (Card card : opponentSpellZone) {
-//            if (card.canActivate()) {
-//                chain.setNext(card);
-//                counterTrap = gameBoard.getCounterTraps(getCurrentPlayerNumber()); //TODO : MORE THAN 1 CARD
-//                if (counterTrap != null && !chain.doesExistInChain(counterTrap)) {
-//                    GameView.showConsole("do you want to activate" + counterTrap.getName());
-//                    if (GameView.getValidResponse()) {
-//                        GameView.showConsole("Its now " + getOpponent().getNickname() + "turn!");
-//                        chain.setNext(counterTrap);
-//                    }
-//                    GameView.showConsole("Its now " + getCurrentPlayer().getNickname() + "turn!");
-//                    gameBoard.showBoard();
-//                }
-//            }
-//        }
-//
-//    }
-
-

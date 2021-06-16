@@ -17,6 +17,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AttackControllerTest {
@@ -66,6 +69,17 @@ class AttackControllerTest {
         assertEquals(board.getPlayerTwoGraveYard().size(),1);
     }
 
+    @Test
+    @DisplayName("attack to defence")
+    void test20() throws Exception {
+        for (int i = 0; i < 7; i++)
+            gameController.nextPhase();
+        gameController.selectPlayerCard("monster",2);
+        gameController.attack(2);
+        assertNull(board.getPlayerOneMonsterZone()[2].getCard());
+        assertEquals(gameController.getOpponentLp(),8000);
+    }
+
     @AfterEach
     @DisplayName("cleanUp")
     void reset() throws IOException {
@@ -73,5 +87,6 @@ class AttackControllerTest {
         System.setIn(sysInBackup);
         in.close();
     }
+
 
 }

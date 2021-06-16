@@ -1,6 +1,7 @@
 package controller;
 
-import controller.exceptions.*;
+import controller.exceptions.CardNotInDeck;
+import controller.exceptions.MainDeckIsFull;
 import model.Deck;
 import model.card.Card;
 import org.junit.jupiter.api.Assertions;
@@ -10,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DeckControllerTest {
     @BeforeEach
