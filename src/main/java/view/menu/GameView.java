@@ -63,7 +63,7 @@ public class GameView {
             GameController.getInstance().getGameBoard().showBoard();
         }
         if (GameController.getInstance().isGameFinished()) {
-            GameController.getInstance().finishGame();
+            System.out.println(GameController.getInstance().finishGame());
         }
     }
 
