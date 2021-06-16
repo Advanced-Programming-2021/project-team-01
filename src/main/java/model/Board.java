@@ -125,7 +125,7 @@ public class Board {
                     playerOneSpellZone[i].setCard(null);
             }
             GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
-        } else {
+        } else if (player == 2){
             playerTwoGraveYard.add(card);
             for (int i = 1; i < 6; i++) {
                 if (playerTwoSpellZone[i].getCard() == card)

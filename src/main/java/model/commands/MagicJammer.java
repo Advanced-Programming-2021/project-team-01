@@ -19,6 +19,7 @@ public class MagicJammer extends Command implements Activate {
         gameController.getChainController().getChain().getChainElements().remove(target);
         GameView.showConsole(target.getName() + " removed from chain! :)");
         board.sendCardFromSpellZoneToGraveyard(myCard);
+        board.sendCardFromSpellZoneToGraveyard(target);
     }
 
     @Override
@@ -31,7 +32,6 @@ public class MagicJammer extends Command implements Activate {
         board = gameController.getGameBoard();
         myCard = gameController.getSelectedCard().getCard();
         return gameController.getChainController() != null &&
-                gameController.getChainController().getChain().getChainElements().size() > 0 &&
-                gameController.getChainController().getChain().getPrev() instanceof SpellCard;
+                gameController.getChainController().getChain().getChainElements().size() > 0;
     }
 }

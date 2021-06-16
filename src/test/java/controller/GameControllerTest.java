@@ -272,7 +272,7 @@ class GameControllerTest {
     }
 
     @Test
-    @DisplayName("change of heart")
+    @DisplayName("man of heart")
     void test8() throws Exception {
         String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/man_eater_bug.txt")));
         sysInBackup = System.in;
@@ -394,6 +394,18 @@ class GameControllerTest {
         board = gameController.getGameBoard();
         assertEquals("Monster Reborn", board.getPlayerTwoGraveYard().get(0).getName());
         assertEquals(5, board.getCardInMonsterZone(2).size());
+    }
+
+    @Test
+    @DisplayName("magic jammer")
+    void testJammmm() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/magicJammer")));
+        in = new ByteArrayInputStream(input.getBytes());
+        HandleRequestType.scanner = new Scanner(in);
+        Main.main(new String[1]);
+        board = gameController.getGameBoard();
+        assertEquals(0,board.getCardInSpellZone(1).size());
+        assertEquals(0,board.getCardInSpellZone(2).size());
     }
 
     @AfterEach

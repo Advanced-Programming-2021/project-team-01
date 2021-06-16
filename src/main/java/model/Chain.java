@@ -5,6 +5,7 @@ import model.card.Card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class Chain {
     private final ArrayList<Card> chainElements;
@@ -18,6 +19,11 @@ public class Chain {
 
     public void run() throws Exception {
         for (int i = chainElements.size() - 1; i >= 0; i--) {
+            if (chainElements.get(i).getName().equals("Magic Jamamer")) {
+                i--;
+                chainElements.get(i + 1).doActions();
+                continue;
+            }
             chainElements.get(i).doActions();
         }
         GameController.getInstance().resetChainController();
