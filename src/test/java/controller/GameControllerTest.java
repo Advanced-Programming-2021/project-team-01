@@ -198,6 +198,50 @@ class GameControllerTest {
     }
 
     @Test
+    @DisplayName("terraforming")
+    void test9() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/terraforming.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        gameController = GameController.getInstance();
+        board = gameController.getGameBoard();
+        assertEquals(board.getPlayerOneGraveYard().size(),1);
+        assertEquals(board.getPlayerOneGraveYard().get(0).getName(),"Terraforming");
+        assertEquals(board.getPlayerOneHand().get(4).getName(),"Umiiruka");
+    }
+
+    @Test
+    @DisplayName("dark hole")
+    void test10() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/terraforming.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        gameController = GameController.getInstance();
+        board = gameController.getGameBoard();
+        assertEquals(board.numberOfMonsterCards(1),0);
+        assertEquals(board.numberOfMonsterCards(2),0);
+    }
+
+    @Test
+    @DisplayName("")
+    void test11() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/terraforming.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        gameController = GameController.getInstance();
+        board = gameController.getGameBoard();
+    }
+
+    @Test
     @DisplayName("black pendant")
     void blackT() throws Exception {
         String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/blackPendant.txt")));
@@ -217,7 +261,7 @@ class GameControllerTest {
         HandleRequestType.scanner = new Scanner(in);
         Main.main(new String[1]);
         board = gameController.getGameBoard();
-        assertEquals(board.getPlayerMonsterZone(1)[1].getCard().getName(),"Gate Guardian");
+        assertEquals(board.getPlayerMonsterZone(1)[1].getCard().getName(), "Gate Guardian");
     }
 
     @AfterEach

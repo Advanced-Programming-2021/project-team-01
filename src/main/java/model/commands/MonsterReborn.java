@@ -9,7 +9,7 @@ import view.menu.GameView;
 
 import java.util.ArrayList;
 
-public class MonsterReborn extends Command implements Activate {
+public class    MonsterReborn extends Command implements Activate {
     Board board;
 
     public MonsterReborn(Card card) {
