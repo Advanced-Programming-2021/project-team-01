@@ -758,6 +758,11 @@ public class GameController {
         chainController = new ChainController(chain);
         chainController.run();
     }
+
+    public void endJunit(){
+        HandleRequestType.currentMenu = Menu.REGISTER_MENU;
+        RegisterController.onlineUser = null;
+    }
 }
 //    backup
 //    public void createChain() throws Exception {
