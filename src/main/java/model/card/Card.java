@@ -69,6 +69,12 @@ public abstract class Card {
         commands.add(command);
     }
 
+    public void addCommands() {
+        if (commands == null)
+            commands = new ArrayList<>();
+
+    }
+
     public int getPrice() {
         return price;
     }
@@ -158,6 +164,7 @@ public abstract class Card {
             addCommands(new SwordOfRevealingLight(this));
         else if (this.getName().equals(Effect.MESSENGER_OF_PEACE.toString()))
             addCommands(new MessengerOfPeace(this));
+        else addCommands();
     }
 
     public void setName(String name) {

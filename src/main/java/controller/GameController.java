@@ -102,22 +102,6 @@ public class GameController {
         return attackController;
     }
 
-    public int getPlayerOneLp() {
-        return playerOneLp;
-    }
-
-    public int getPlayerTwoLp() {
-        return playerTwoLp;
-    }
-
-    public boolean isAI() {
-        return isAI;
-    }
-
-    public int getRounds() {
-        return rounds;
-    }
-
     public State getState() {
         return state;
     }
