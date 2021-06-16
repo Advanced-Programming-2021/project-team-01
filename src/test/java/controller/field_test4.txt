@@ -38,12 +38,14 @@ next phase
 select hand 2
 summon
 next phase
+select monster 3
+attack 1
 next phase
 next phase
 next phase
 next phase
 next phase
-gc Yomi Ship
+gc Battle OX
 select hand 6
 summon
 next phase
@@ -52,7 +54,13 @@ next phase
 next phase
 next phase
 next phase
-gc Yomi Ship
-select hand 4
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+gc Silver Fang
+select hand 7
 summon
-gc Umiiruka
+gc Closed Forest

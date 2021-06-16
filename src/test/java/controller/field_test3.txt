@@ -43,7 +43,7 @@ next phase
 next phase
 next phase
 next phase
-gc Yomi Ship
+gc Man-Eater Bug
 select hand 6
 summon
 next phase
@@ -52,7 +52,7 @@ next phase
 next phase
 next phase
 next phase
-gc Yomi Ship
+gc Silver Fang
 select hand 4
 summon
-gc Umiiruka
+gc Forest

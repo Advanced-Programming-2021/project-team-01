@@ -36,7 +36,7 @@ class GameControllerTest {
     }
 
     @Test
-    @DisplayName("field spell")
+    @DisplayName("field spell umiiruka")
     void test1() throws Exception {
         String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/field_test.txt")));
         sysInBackup = System.in;
@@ -49,6 +49,9 @@ class GameControllerTest {
         gameController.selectPlayerCard("monster", 4);
         assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 800);
         assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 1400);
+        gameController.selectOpponentCard("monster", 3);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 800);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 1400);
         gameController.selectPlayerCard("hand", 4);
         gameController.setCard();
         gameController.selectPlayerCard("field");
@@ -56,7 +59,91 @@ class GameControllerTest {
         gameController.selectPlayerCard("monster", 4);
         assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 1300);
         assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 1000);
+        gameController.selectOpponentCard("monster", 3);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 1300);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 1000);
+    }
 
+    @Test
+    @DisplayName("field spell Yami")
+    void test13() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/field_test2.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        board = GameController.getInstance().getGameBoard();
+        gameController = GameController.getInstance();
+        gameController.selectPlayerCard("monster", 4);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 300);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 500);
+        gameController.selectOpponentCard("monster", 3);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 1300);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 1000);
+        gameController.selectPlayerCard("hand", 4);
+        gameController.setCard();
+        gameController.selectPlayerCard("field");
+        assertNotNull(gameController.selectedCard.getCard());
+        gameController.selectPlayerCard("monster", 4);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 100);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 300);
+        gameController.selectOpponentCard("monster", 3);
+        System.out.println(gameController.getSelectedCard().getCard().getName());
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 1500);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 1200);
+    }
+
+    @Test
+    @DisplayName("field spell Forest")
+    void test14() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/field_test3.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        board = GameController.getInstance().getGameBoard();
+        gameController = GameController.getInstance();
+        gameController.selectPlayerCard("monster", 4);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 1200);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 800);
+        gameController.selectOpponentCard("monster", 3);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 450);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 600);
+        gameController.selectPlayerCard("hand", 4);
+        gameController.setCard();
+        gameController.selectPlayerCard("field");
+        assertNotNull(gameController.selectedCard.getCard());
+        gameController.selectOpponentCard("monster", 3);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 650);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 800);
+        gameController.selectPlayerCard("monster", 4);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 1400);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 1000);
+    }
+
+    @Test
+    @DisplayName("field spell Closed Forest")
+    void test15() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/field_test4.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        board = GameController.getInstance().getGameBoard();
+        gameController = GameController.getInstance();
+        gameController.selectPlayerCard("monster", 3);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 1200);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 800);
+        gameController.selectPlayerCard("hand", 7);
+        gameController.setCard();
+        gameController.selectPlayerCard("field");
+        assertNotNull(gameController.selectedCard.getCard());
+        gameController.selectPlayerCard("monster", 3);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 1300);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 800);
     }
 
     @Test
@@ -217,7 +304,7 @@ class GameControllerTest {
     @Test
     @DisplayName("dark hole")
     void test10() throws Exception {
-        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/terraforming.txt")));
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/darkhole.txt")));
         sysInBackup = System.in;
         in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
@@ -257,10 +344,10 @@ class GameControllerTest {
         board = gameController.getGameBoard();
         assertEquals(board.numberOfSpellAndTrapCards(2), 2);
         assertEquals(board.numberOfSpellAndTrapCards(1), 2);
-        assertEquals(board.getPlayerSpellZone(1)[1].getCard().getName(),"Pot of Greed");
-        assertEquals(board.getPlayerSpellZone(1)[2].getCard().getName(),"Trap Hole");
-        assertEquals(board.getPlayerSpellZone(2)[1].getCard().getName(),"Pot of Greed");
-        assertEquals(board.getPlayerSpellZone(2)[2].getCard().getName(),"Trap Hole");
+        assertEquals(board.getPlayerSpellZone(1)[1].getCard().getName(), "Pot of Greed");
+        assertEquals(board.getPlayerSpellZone(1)[2].getCard().getName(), "Trap Hole");
+        assertEquals(board.getPlayerSpellZone(2)[1].getCard().getName(), "Pot of Greed");
+        assertEquals(board.getPlayerSpellZone(2)[2].getCard().getName(), "Trap Hole");
     }
 
     @Test
