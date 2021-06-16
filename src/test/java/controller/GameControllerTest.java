@@ -3,6 +3,7 @@ package controller;
 import endpoint.Main;
 import model.Board;
 import model.card.Card;
+import model.card.MonsterCard;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -122,6 +123,18 @@ class GameControllerTest {
         assertEquals(gameController.getZoneSlotSelectedCard().getDefence(),2000);
         assertEquals(gameController.getZoneSlotSelectedCard().getCard().getName(),"Bitron");
         assertEquals(gameController.getOpponentLp(),8000);
+    }
+
+    @Test
+    @DisplayName("black pendant")
+    void blackT() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/blackPendant.txt")));
+        in = new ByteArrayInputStream(input.getBytes());
+        HandleRequestType.scanner = new Scanner(in);
+        Main.main(new String[1]);
+        int original = ((MonsterCard) gameController.getGameBoard().getPlayerOneMonsterZone()[1].getCard()).getAttack();
+        int boost = gameController.getGameBoard().getPlayerOneMonsterZone()[1].getAttack();
+        assertEquals(boost - original, 500);
     }
 
     @AfterEach
