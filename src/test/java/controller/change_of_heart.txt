@@ -52,6 +52,8 @@ next phase
 next phase
 next phase
 next phase
+show graveyard
+back
 gc Change of Heart
 select hand 4
 set
