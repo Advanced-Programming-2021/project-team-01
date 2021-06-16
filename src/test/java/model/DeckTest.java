@@ -1,7 +1,6 @@
 package model;
 
 import controller.DatabaseController;
-import controller.DeckController;
 import controller.RegisterController;
 import model.card.Card;
 import org.junit.jupiter.api.Assertions;
@@ -10,8 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DeckTest {
     @BeforeEach
