@@ -78,6 +78,19 @@ class GameControllerTest {
 
     }
 
+    @Test
+    @DisplayName("negateAttack")
+    void negate() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/negateAttack")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        assertEquals(8000,gameController.getOpponentLp());
+        assertNull(gameController.getGameBoard().getPlayerSpellZone(2)[1].getCard());
+    }
+
     @AfterEach
     @DisplayName("cleanUp")
     void reset() throws IOException {
