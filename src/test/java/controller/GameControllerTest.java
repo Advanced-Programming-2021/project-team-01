@@ -172,15 +172,29 @@ class GameControllerTest {
         board = GameController.getInstance().getGameBoard();
         gameController = GameController.getInstance();
         assertNull(board.getPlayerTwoMonsterZone()[2].getCard());
-        assertEquals(board.getPlayerOneMonsterZone()[4].getCard().getName(),"Alexandrite Dragon");
-        assertEquals(board.getPlayerSpellZone(1)[2].getCard().getName(),"Change of Heart");
+        assertEquals(board.getPlayerOneMonsterZone()[4].getCard().getName(), "Alexandrite Dragon");
+        assertEquals(board.getPlayerSpellZone(1)[2].getCard().getName(), "Change of Heart");
         for (int i = 0; i < 6; i++) {
             gameController.nextPhase();
         }
         assertNull(board.getPlayerOneMonsterZone()[4].getCard());
-        assertEquals(board.getPlayerTwoMonsterZone()[2].getCard().getName(),"Alexandrite Dragon");
+        assertEquals(board.getPlayerTwoMonsterZone()[2].getCard().getName(), "Alexandrite Dragon");
         assertNull(board.getPlayerSpellZone(1)[2].getCard());
 
+    }
+
+    @Test
+    @DisplayName("change of heart")
+    void test8() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/man_eater_bug.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        board = GameController.getInstance().getGameBoard();
+        gameController = GameController.getInstance();
+        assertNull(board.getPlayerTwoMonsterZone()[3].getCard());
     }
 
     @Test
