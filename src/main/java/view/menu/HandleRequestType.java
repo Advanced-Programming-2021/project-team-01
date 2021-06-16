@@ -32,10 +32,6 @@ public class HandleRequestType {
         return deckView;
     }
 
-    public GameView getGameView() {
-        return gameView;
-    }
-
     public ShopView getShopView() {
         return shopView;
     }
@@ -48,9 +44,6 @@ public class HandleRequestType {
         return mainMenu;
     }
 
-    public void setCommand(String command) {
-        this.command = command;
-    }
 
     public void start() throws Exception {
         registerView = new RegisterView();

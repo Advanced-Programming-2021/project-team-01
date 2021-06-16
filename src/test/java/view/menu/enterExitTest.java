@@ -27,6 +27,7 @@ public class enterExitTest {
         handleRequestType.getRegisterView().run("user login u ali p 123");
         assertEquals(HandleRequestType.currentMenu, Menu.MAIN_MENU);
         handleRequestType.getMainMenu().run("menu enter Shop");
+        handleRequestType.getShopView().run("menu entry Login");
         assertEquals(HandleRequestType.currentMenu, Menu.SHOP);
         handleRequestType.getShopView().run("menu exit");
         assertEquals(HandleRequestType.currentMenu, Menu.MAIN_MENU);
