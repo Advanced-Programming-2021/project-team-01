@@ -1,8 +1,10 @@
 package model.commands;
 
 import controller.exceptions.NoFieldSpellInDeck;
+import controller.exceptions.SpellZoneFullError;
 import model.Board;
 import model.card.Card;
+import model.card.SpellCard;
 
 public class FieldCard extends Command implements Activate{
     Board board;
@@ -12,9 +14,9 @@ public class FieldCard extends Command implements Activate{
     }
 
     @Override
-    public void run(){
+    public void run() throws SpellZoneFullError {
         board = gameController.getGameBoard();
-        board.setCardFromHandToFieldZone(gameController.getCurrentPlayerNumber(), gameController.getSelectedCard().getCard());
+        board.setSpell(gameController.getCurrentPlayerNumber(), (SpellCard) gameController.getSelectedCard().getCard());
     }
 
     public boolean canActivate() throws Exception {

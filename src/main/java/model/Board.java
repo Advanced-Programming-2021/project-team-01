@@ -692,20 +692,6 @@ public class Board {
         return 0;
     }
 
-    public void setCardFromHandToFieldZone(int player, Card card) {
-        if (player == 1) {
-            if (playerOneFieldZone.getCard() != null)
-                playerOneGraveYard.add(playerOneFieldZone.getCard());
-            playerOneFieldZone.setCard(card);
-            playerOneHand.remove(card);
-        } else if (player == 2) {
-            if (playerTwoFieldZone.getCard() != null)
-                playerTwoGraveYard.add(playerTwoFieldZone.getCard());
-            playerTwoFieldZone.setCard(card);
-            playerTwoHand.remove(card);
-        }
-    }
-
     public ArrayList<Card> faceUpSpellAndTraps() {
         ArrayList<Card> spellAndTraps = new ArrayList<>();
         for (int i = 1; i < 6; i++) {

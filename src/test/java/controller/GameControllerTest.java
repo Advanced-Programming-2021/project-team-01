@@ -45,16 +45,16 @@ class GameControllerTest {
         Main.main(new String[1]);
         board = GameController.getInstance().getGameBoard();
         gameController = GameController.getInstance();
-        gameController.selectPlayerCard("monster",4);
-        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(),800);
-        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(),1400);
-        gameController.selectPlayerCard("hand",4);
+        gameController.selectPlayerCard("monster", 4);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 800);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 1400);
+        gameController.selectPlayerCard("hand", 4);
         gameController.setCard();
         gameController.selectPlayerCard("field");
         assertNotNull(gameController.selectedCard.getCard());
-        gameController.selectPlayerCard("monster",4);
-        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(),1300);
-        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(),1000);
+        gameController.selectPlayerCard("monster", 4);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 1300);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 1000);
 
     }
 
@@ -69,11 +69,11 @@ class GameControllerTest {
         Main.main(new String[1]);
         board = GameController.getInstance().getGameBoard();
         gameController = GameController.getInstance();
-        assertEquals(board.getPlayerOneGraveYard().size(),2);
-        assertEquals(board.getPlayerTwoGraveYard().size(),2);
+        assertEquals(board.getPlayerOneGraveYard().size(), 2);
+        assertEquals(board.getPlayerTwoGraveYard().size(), 2);
         ArrayList<String> names = new ArrayList<>();
         for (Card card : board.getPlayerTwoGraveYard()) {
-            names.add(card.getName()) ;
+            names.add(card.getName());
         }
         assertTrue(names.contains("Twin Twisters"));
 
@@ -90,9 +90,9 @@ class GameControllerTest {
         Main.main(new String[1]);
         board = GameController.getInstance().getGameBoard();
         gameController = GameController.getInstance();
-        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(),1200);
-        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(),700);
-        assertEquals(gameController.getZoneSlotSelectedCard().getCard().getName(),"Baby dragon");
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 1200);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 700);
+        assertEquals(gameController.getZoneSlotSelectedCard().getCard().getName(), "Baby dragon");
     }
 
     @Test
@@ -104,8 +104,43 @@ class GameControllerTest {
         System.setIn(in);
         HandleRequestType.scanner = new Scanner(System.in);
         Main.main(new String[1]);
-        assertEquals(8000,gameController.getOpponentLp());
+        board = GameController.getInstance().getGameBoard();
+        gameController = GameController.getInstance();
+        assertEquals(8000, gameController.getOpponentLp());
         assertNull(gameController.getGameBoard().getPlayerSpellZone(2)[1].getCard());
+    }
+
+    @Test
+    @DisplayName("mind crush")
+    void test5() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/mind_crush.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        board = GameController.getInstance().getGameBoard();
+        gameController = GameController.getInstance();
+        assertEquals(board.getPlayerOneGraveYard().size(), 1);
+        assertEquals(board.getPlayerTwoGraveYard().size(), 1);
+        assertEquals(board.getPlayerTwoGraveYard().get(0).getName(), "Battle warrior");
+        assertEquals(board.getPlayerOneGraveYard().get(0).getName(), "Mind Crush");
+        assertNull(board.getPlayerSpellZone(1)[2].getCard());
+    }
+
+    @Test
+    @DisplayName("mind crush2")
+    void test6() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/mind_crush2.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        board = GameController.getInstance().getGameBoard();
+        gameController = GameController.getInstance();
+        assertNull(board.getPlayerSpellZone(1)[2].getCard());
+        assertEquals(board.getPlayerOneHand().size(), 2);
     }
 
     @Test
@@ -119,10 +154,33 @@ class GameControllerTest {
         Main.main(new String[1]);
         board = GameController.getInstance().getGameBoard();
         gameController = GameController.getInstance();
-        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(),200);
-        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(),2000);
-        assertEquals(gameController.getZoneSlotSelectedCard().getCard().getName(),"Bitron");
-        assertEquals(gameController.getOpponentLp(),8000);
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(), 200);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(), 2000);
+        assertEquals(gameController.getZoneSlotSelectedCard().getCard().getName(), "Bitron");
+        assertEquals(gameController.getOpponentLp(), 8000);
+    }
+
+    @Test
+    @DisplayName("change of heart")
+    void test7() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/change_of_heart.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        board = GameController.getInstance().getGameBoard();
+        gameController = GameController.getInstance();
+        assertNull(board.getPlayerTwoMonsterZone()[2].getCard());
+        assertEquals(board.getPlayerOneMonsterZone()[4].getCard().getName(),"Alexandrite Dragon");
+        assertEquals(board.getPlayerSpellZone(1)[2].getCard().getName(),"Change of Heart");
+        for (int i = 0; i < 6; i++) {
+            gameController.nextPhase();
+        }
+        assertNull(board.getPlayerOneMonsterZone()[4].getCard());
+        assertEquals(board.getPlayerTwoMonsterZone()[2].getCard().getName(),"Alexandrite Dragon");
+        assertNull(board.getPlayerSpellZone(1)[2].getCard());
+
     }
 
     @Test
