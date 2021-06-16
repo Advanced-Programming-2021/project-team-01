@@ -12,15 +12,18 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.DeckView"
             prefHeight="400.0" prefWidth="600.0">
+    <HBox alignment="CENTER">
+        <Pane fx:id="imageBar" translateX="60" translateY="50"/>
+    </HBox>
     <stylesheets>
         <URL value="@deck.css"/>
     </stylesheets>
     <left>
-        <StackPane fx:id="imageBar"/>
-        <VBox translateX="80" translateY="700" spacing="15">
-            <Button styleClass="but" prefWidth="100" text="Add card"/>
-            <Button styleClass="but" prefWidth="100" text="Remove card"/>
-            <Button styleClass="but" prefWidth="100" text="Exit" onMouseClicked="#exit"/>
+        <VBox translateX="90" translateY="650" spacing="15">
+            <Button styleClass="but" prefWidth="170" text="Add card to main deck" />
+            <Button styleClass="but" prefWidth="170" text="Add card to side deck"/>
+            <Button styleClass="but" prefWidth="170" text="Remove card" onMouseClicked="#removeCardFromDeck"/>
+            <Button styleClass="but" prefWidth="170" text="Exit" onMouseClicked="#exit"/>
         </VBox>
     </left>
     <center>
@@ -34,6 +37,6 @@
         </JFXTabPane>
     </center>
     <right>
-
+        <ScrollPane fx:id="cardsScroll" styleClass="scroll-pane"/>
     </right>
 </BorderPane>

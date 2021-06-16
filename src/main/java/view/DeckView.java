@@ -7,10 +7,13 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import model.Deck;
@@ -23,8 +26,8 @@ import java.util.ResourceBundle;
 public class DeckView implements Initializable {
     public static Deck currentDeck;
     private ShopCardView selectedCard = null;
-    public StackPane imageBar;
-    public ScrollPane sideDeckScroll, mainDeckScroll;
+    public Pane imageBar;
+    public ScrollPane sideDeckScroll, mainDeckScroll, cardsScroll;
     public Tab mainDeckTab, sideDeckTab;
 
     public void init() throws Exception {
@@ -63,7 +66,7 @@ public class DeckView implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         selectedCard = rectangle;
-                        selectedCard.setDeckViewLocation(DeckViewLocation.DECK);
+                        selectedCard.setDeckViewLocation(DeckViewLocation.MAIN_DECK);
                         for (Node child : pane.getChildren()) {
                             child.getStyleClass().remove("butoo");
                         }
@@ -100,7 +103,7 @@ public class DeckView implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         selectedCard = rectangle;
-                        selectedCard.setDeckViewLocation(DeckViewLocation.DECK);
+                        selectedCard.setDeckViewLocation(DeckViewLocation.SIDE_DECK);
                         for (Node child : pane.getChildren()) {
                             child.getStyleClass().remove("butoo");
                         }
@@ -119,5 +122,20 @@ public class DeckView implements Initializable {
     @FXML
     private void exit() {
         ViewSwitcher.switchTo(View.MAIN);
+    }
+
+    @FXML
+    private void removeCardFromDeck() {
+        if (selectedCard == null || selectedCard.getDeckViewLocation() == DeckViewLocation.CARDS) {
+            new MyAlert(Alert.AlertType.WARNING, "No card is selected!").show();
+            return;
+        } else if (selectedCard.getDeckViewLocation() == DeckViewLocation.MAIN_DECK) {
+            currentDeck.removeCardFromMainDeck(selectedCard.getCard());
+            setupMainDeckTab();
+        } else if (selectedCard.getDeckViewLocation() == DeckViewLocation.SIDE_DECK) {
+            currentDeck.removeCardFromSideDeck(selectedCard.getCard());
+            setupSideDeckTab();
+        }
+        new MyAlert(Alert.AlertType.INFORMATION, "Card got removed successfully.").show();
     }
 }

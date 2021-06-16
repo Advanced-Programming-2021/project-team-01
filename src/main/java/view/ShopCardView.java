@@ -25,6 +25,7 @@ public class ShopCardView extends Rectangle {
 }
 
 enum DeckViewLocation {
-    DECK,
+    SIDE_DECK,
+    MAIN_DECK,
     CARDS;
 }
