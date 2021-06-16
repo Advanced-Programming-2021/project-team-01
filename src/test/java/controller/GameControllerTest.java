@@ -408,6 +408,28 @@ class GameControllerTest {
         assertEquals(0,board.getCardInSpellZone(2).size());
     }
 
+    @Test
+    @DisplayName("for jaden")
+    void level7() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/level7")));
+        in = new ByteArrayInputStream(input.getBytes());
+        HandleRequestType.scanner = new Scanner(in);
+        Main.main(new String[1]);
+        board = gameController.getGameBoard();
+        assertEquals(2,board.getCardInMonsterZone(1).size());
+    }
+
+    @Test
+    @DisplayName("yugioh gx")
+    void level5() throws Exception{
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/level5")));
+        in = new ByteArrayInputStream(input.getBytes());
+        HandleRequestType.scanner = new Scanner(in);
+        Main.main(new String[1]);
+        board = gameController.getGameBoard();
+        assertEquals(3,board.getCardInMonsterZone(1).size());
+    }
+
     @AfterEach
     @DisplayName("cleanUp")
     void reset() throws IOException {
