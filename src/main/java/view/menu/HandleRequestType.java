@@ -28,6 +28,10 @@ public class HandleRequestType {
         return profileView;
     }
 
+    public DeckView getDeckView(){
+        return deckView;
+    }
+
     public GameView getGameView() {
         return gameView;
     }

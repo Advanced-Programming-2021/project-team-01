@@ -37,20 +37,6 @@ class DeckTest {
         Assertions.assertTrue(deck.getSideDeck().contains(Card.getCardByName("Suijin")));
     }
 
-    @DisplayName("Deck remove card test")
-    @Test
-    void removeCardTest() throws IOException {
-        Deck deck = DatabaseController.getDeckByName("ai");
-        RegisterController.onlineUser = DatabaseController.getUserByName("AI");
-        deck.addCardToMainDeck(Card.getCardByName("Suijin"));
-        Assertions.assertTrue(deck.getMainDeck().contains(Card.getCardByName("Suijin")));
-        deck.addCardToSideDeck(Card.getCardByName("Suijin"));
-        Assertions.assertTrue(deck.getSideDeck().contains(Card.getCardByName("Suijin")));
-        deck.removeCardFromMainDeck(Card.getCardByName("Suijin"));
-        deck.removeCardFromSideDeck(Card.getCardByName("Suijin"));
-        Assertions.assertFalse(deck.getMainDeck().contains(Card.getCardByName("Suijin")));
-        Assertions.assertFalse(deck.getSideDeck().contains(Card.getCardByName("Suijin")));
-    }
 
     @DisplayName("Deck name getter test")
     @Test

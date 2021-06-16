@@ -96,8 +96,7 @@ public class DatabaseController {
             Deck deck1 = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(fileReader, Deck.class);
             fileReader.close();
             return deck1;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException ignored) {
         }
         return null;
     }

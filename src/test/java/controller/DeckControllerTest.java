@@ -63,22 +63,6 @@ class DeckControllerTest {
         DatabaseController.deleteDeckFile("test_deck");
     }
 
-    @DisplayName("Remove card test")
-    @Test
-    void removeCardFromDeckTest() throws Exception {
-        Assertions.assertThrows(CardNotInDeck.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                DeckController.getInstance().removeCardFromDeck("Suijin", "test", true);
-            }
-        });
-        DeckController.getInstance().createDeck("test_deck");
-        Deck deck = DatabaseController.getDeckByName("test_deck");
-        deck.addCardToMainDeck(Card.getCardByName("Suijin"));
-        deck.removeCardFromMainDeck(Card.getCardByName("Suijin"));
-        Assertions.assertFalse(deck.getMainDeck().contains(Card.getCardByName("Suijin")));
-        DatabaseController.deleteDeckFile("test_deck");
-    }
 
     @DisplayName("Show deck by name test")
     @Test

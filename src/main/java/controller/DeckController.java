@@ -46,8 +46,7 @@ public class DeckController {
             throw new DeckNotExists(name);
     }
 
-    public void addCardToDeck(String cardName, String deckName, boolean isMainDeck) throws CardNameNotExists,
-            DeckNotExists, MainDeckIsFull, SideDeckIsFull, CardNumberLimit, IOException, PlayerCardNotExist {
+    public void addCardToDeck(String cardName, String deckName, boolean isMainDeck) throws Exception{
         Card card = Card.getCardByName(cardName);
         if (card != null) {
             if (DatabaseController.doesDeckExists(deckName)) {
@@ -83,6 +82,14 @@ public class DeckController {
             throw new CardNameNotExists(cardName);
     }
 
+    public boolean containName(ArrayList<Card> cards,String name){
+        for (Card card : cards) {
+            if (card.getName().equals(name))
+                return true;
+        }
+        return false;
+    }
+
     public void removeCardFromDeck(String cardName, String deckName, boolean isMainDeck) throws CardNameNotExists,
             DeckNotExists, CardNotInDeck, IOException {
         Card card = Card.getCardByName(cardName);
@@ -90,13 +97,13 @@ public class DeckController {
             if (DatabaseController.doesDeckExists(deckName)) {
                 Deck deck = DatabaseController.getDeckByName(deckName);
                 if (isMainDeck) {
-                    if (deck.getMainDeck().contains(card)) {
+                    if (containName(deck.getMainDeck(),card.getName()) ){
                         deck.removeCardFromMainDeck(card);
                         DatabaseController.updateDeck(deck);
                     } else
                         throw new CardNotInDeck(cardName, "main");
                 } else {
-                    if (deck.getSideDeck().contains(card)) {
+                    if (containName(deck.getSideDeck(),card.getName()) ){
                         deck.removeCardFromSideDeck(card);
                         DatabaseController.updateDeck(deck);
                     } else

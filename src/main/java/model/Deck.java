@@ -6,7 +6,6 @@ import model.card.SpellCard;
 import model.card.TrapCard;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Deck {
     private final String deckName;
@@ -26,7 +25,12 @@ public class Deck {
     }
 
     public void removeCardFromMainDeck(Card card) {
-        mainDeck.remove(card);
+        for (Card card1 : mainDeck) {
+            if (card1.getName().equals(card.getName())) {
+                mainDeck.remove(card1);
+                return;
+            }
+        }
     }
 
     public void removeCardFromSideDeck(Card card) {
