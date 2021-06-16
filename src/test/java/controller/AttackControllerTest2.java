@@ -13,12 +13,10 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AttackControllerTest2 {
-    Board board;
     GameController gameController;
 
     @BeforeEach
     public void init() throws Exception {
-        board = GameController.getInstance().getGameBoard();
         gameController = GameController.getInstance();
     }
 
