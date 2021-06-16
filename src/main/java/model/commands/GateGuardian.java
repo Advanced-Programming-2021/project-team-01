@@ -33,9 +33,9 @@ public class GateGuardian extends Command implements Activate {
         do {
             index3 = GameView.getValidNumber(0, monsterCards.size() - 1);
         } while (index3 == index1 || index3 == index2);
-        board.sendCardFromMonsterZoneToGraveyard(index1, player);
-        board.sendCardFromMonsterZoneToGraveyard(index2, player);
-        board.sendCardFromMonsterZoneToGraveyard(index3, player);
+        board.sendCardFromMonsterZoneToGraveyard(index1 + 1, player);
+        board.sendCardFromMonsterZoneToGraveyard(index2 + 1, player);
+        board.sendCardFromMonsterZoneToGraveyard(index3 + 1, player);
         State temp = gameController.getState();
         gameController.setState(State.SPECIAL_SUMMON);
         board.summonCard((MonsterCard) myCard, player);

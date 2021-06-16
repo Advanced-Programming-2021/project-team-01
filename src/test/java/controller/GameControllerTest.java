@@ -195,6 +195,17 @@ class GameControllerTest {
         assertEquals(boost - original, 500);
     }
 
+    @Test
+    @DisplayName("gate guardian")
+    void gate() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/gate.txt")));
+        in = new ByteArrayInputStream(input.getBytes());
+        HandleRequestType.scanner = new Scanner(in);
+        Main.main(new String[1]);
+        board = gameController.getGameBoard();
+        assertEquals(board.getPlayerMonsterZone(1)[1].getCard().getName(),"Gate Guardian");
+    }
+
     @AfterEach
     @DisplayName("cleanUp")
     void reset() throws IOException {
