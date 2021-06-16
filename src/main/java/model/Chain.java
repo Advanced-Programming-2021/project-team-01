@@ -5,7 +5,6 @@ import model.card.Card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class Chain {
     private final ArrayList<Card> chainElements;
