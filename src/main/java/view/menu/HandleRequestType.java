@@ -18,6 +18,7 @@ public class HandleRequestType {
     ScoreBoardView scoreBoardView;
     ProfileView profileView;
     RegisterView registerView;
+    String command = "";
 
     public RegisterView getRegisterView() {
         return registerView;
@@ -27,8 +28,8 @@ public class HandleRequestType {
         return profileView;
     }
 
-    public DeckView getDeckView() {
-        return deckView;
+    public GameView getGameView() {
+        return gameView;
     }
 
     public ShopView getShopView() {
@@ -43,6 +44,10 @@ public class HandleRequestType {
         return mainMenu;
     }
 
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
     public void start() throws Exception {
         registerView = new RegisterView();
         profileView = new ProfileView();
@@ -54,7 +59,6 @@ public class HandleRequestType {
         importExportView = new ImportExportView();
         mainMenu = new MainMenu();
         while (currentMenu != Menu.EXIT) {
-            String command = "";
             if (GameController.getCurrentPlayer() != null &&
                     GameController.getCurrentPlayer().getUsername().equals("AI")) {
                 String output = GameController.getInstance().getAiBasicController().handleAiMoves();

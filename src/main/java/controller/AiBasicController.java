@@ -52,7 +52,7 @@ public class AiBasicController {
                     break;
                 }
                 gameController.selectPlayerCard("hand", i + 1);
-                GameView.prompt(hand.get(i).getName() + " summoned");
+                GameView.showConsole(hand.get(i).getName() + " summoned");
                 TimeUnit.SECONDS.sleep(1);
                 gameController.summon();
                 break;
@@ -69,7 +69,7 @@ public class AiBasicController {
             if (hand.get(i) instanceof SpellCard) {
                 if (hand.get(i).canActivate()) {
                     gameController.selectPlayerCard("hand", i + 1);
-                    GameView.prompt(hand.get(i).getName() + " activated");
+                    GameView.showConsole(hand.get(i).getName() + " activated");
                     TimeUnit.SECONDS.sleep(1);
                     gameController.activateEffect();
                 }

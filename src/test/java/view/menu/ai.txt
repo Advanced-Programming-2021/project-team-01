@@ -1,0 +1,9 @@
+user login u ali p 123
+duel new ai rounds 1
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
