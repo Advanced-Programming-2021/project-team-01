@@ -78,6 +78,22 @@ class GameControllerTest {
 
     }
 
+    @Test
+    @DisplayName("scanner")
+    void test3() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/scanner_test.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        board = GameController.getInstance().getGameBoard();
+        gameController = GameController.getInstance();
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(),1200);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(),700);
+        assertEquals(gameController.getZoneSlotSelectedCard().getCard().getName(),"Baby dragon");
+    }
+
     @AfterEach
     @DisplayName("cleanUp")
     void reset() throws IOException {
