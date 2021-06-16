@@ -107,6 +107,23 @@ class GameControllerTest {
         assertNull(gameController.getGameBoard().getPlayerSpellZone(2)[1].getCard());
     }
 
+    @Test
+    @DisplayName("Texchanger")
+    void test4() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/texchanger.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        board = GameController.getInstance().getGameBoard();
+        gameController = GameController.getInstance();
+        assertEquals(gameController.getZoneSlotSelectedCard().getAttack(),200);
+        assertEquals(gameController.getZoneSlotSelectedCard().getDefence(),2000);
+        assertEquals(gameController.getZoneSlotSelectedCard().getCard().getName(),"Bitron");
+        assertEquals(gameController.getOpponentLp(),8000);
+    }
+
     @AfterEach
     @DisplayName("cleanUp")
     void reset() throws IOException {
