@@ -4,6 +4,7 @@ import endpoint.Main;
 import model.Board;
 import model.card.Card;
 import org.junit.jupiter.api.*;
+import view.menu.HandleRequestType;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 class TrapUltimateTest {
@@ -27,9 +29,10 @@ class TrapUltimateTest {
         sysInBackup = System.in; // backup System.in to restore it later
         in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
         Main.main(new String[1]);
-        board = GameController.instance.getGameBoard();
-        gameController = GameController.instance;
+        board = GameController.getInstance().getGameBoard();
+        gameController = GameController.getInstance();
     }
 
     @Test
@@ -52,6 +55,7 @@ class TrapUltimateTest {
     @AfterEach
     @DisplayName("cleanUp")
     void reset() throws IOException {
+        gameController.endJunit();
         System.setIn(sysInBackup);
         in.close();
     }

@@ -8,12 +8,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import view.menu.HandleRequestType;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,9 +32,10 @@ class AttackControllerTest {
         sysInBackup = System.in; // backup System.in to restore it later
         in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
         Main.main(new String[1]);
-        board = GameController.instance.getGameBoard();
-        gameController = GameController.instance;
+        board = GameController.getInstance().getGameBoard();
+        gameController = GameController.getInstance();
     }
 
     @Test
