@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 public abstract class Card {
-    @Expose(serialize = false ,deserialize = false)
-    private final Image cardImage;
+    @Expose(serialize = false, deserialize = false)
+    private Image cardImage;
     private static final TreeMap<String, Card> allCards = new TreeMap<>();
     protected String name;
     private String description;
@@ -20,6 +20,7 @@ public abstract class Card {
     protected String type = "type";
     @Expose(serialize = false, deserialize = false)
     protected ArrayList<Command> commands = new ArrayList<>();
+    @Expose(serialize = false, deserialize = false)
     static HashMap<String, Image> cachedImage = new HashMap<>();
 
     public Card(String name, String description, int price) {
@@ -32,34 +33,39 @@ public abstract class Card {
 
 
     public ImagePattern getCardImage() {
+        if (cardImage == null)
+            cardImage = cachedImage.get(buildImage());
+        try {
+;        return new ImagePattern(cardImage);
+        } catch (Exception expt) {
+            System.err.println(name);
+        }
         return new ImagePattern(cardImage);
     }
 
-    private void addImage(){
+    private void addImage() {
         String imageName = buildImage();
         if (cachedImage.containsKey(imageName)) return;
         Image image = null;
         try {
             image = new Image(getClass().getResource("/Cards/" + imageName).toExternalForm());
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(imageName);
         }
         cachedImage.put(imageName, image);
     }
 
-    private String buildImage(){
+    private String buildImage() {
         String[] parts = name.split(" ");
         for (String part : parts) { //fixme for is not object
             StringBuilder temp = new StringBuilder(part);
-            temp.setCharAt(0,Character.toUpperCase(part.charAt(0)));
+            temp.setCharAt(0, Character.toUpperCase(part.charAt(0)));
             part = temp.toString();
         }
         StringBuilder result = new StringBuilder();
         for (String part : parts) {
             result.append(part);
         }
-        if (name.equals("Dark Hole"))
-            System.out.println(result);
         result.append(".jpg");
         return result.toString();
     }

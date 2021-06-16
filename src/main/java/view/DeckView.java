@@ -28,8 +28,9 @@ public class DeckView implements Initializable {
     public Tab mainDeckTab, sideDeckTab;
 
     public void init() throws Exception {
-        currentDeck = DatabaseController.getDeckByName("xx");
+        currentDeck = DatabaseController.getDeckByName("test");
         setupMainDeckTab();
+        setupSideDeckTab();
     }
 
     @Override
@@ -51,17 +52,55 @@ public class DeckView implements Initializable {
         pane.setHgap(10);
         pane.setAlignment(Pos.CENTER);
         ArrayList<Card> mainDeck = currentDeck.getMainDeck();
-        for (int i = 0; i < Math.round((double) mainDeck.size() / 4); i++) {
-            for (int j = 0; j < (Math.min((mainDeck.size() - 4 * i), 4)); j++) {
-                ShopCardView rectangle = new ShopCardView(mainDeck.get(4 * i + j));
+        for (int i = 0; i < Math.round((double) mainDeck.size() / 6); i++) {
+            for (int j = 0; j < (Math.min((mainDeck.size() - 6 * i), 6)); j++) {
+                ShopCardView rectangle = new ShopCardView(mainDeck.get(6 * i + j));
                 rectangle.setHeight(250);
                 rectangle.setWidth(150);
                 rectangle.getStyleClass().add("but");
-                rectangle.setFill(mainDeck.get(4 * i + j).getCardImage());
+                rectangle.setFill(mainDeck.get(6 * i + j).getCardImage());
                 rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         selectedCard = rectangle;
+                        selectedCard.setDeckViewLocation(DeckViewLocation.DECK);
+                        for (Node child : pane.getChildren()) {
+                            child.getStyleClass().remove("butoo");
+                        }
+                        rectangle.getStyleClass().add("butoo");
+                        Rectangle rectangle1 = new Rectangle(250, 450);
+                        rectangle1.setFill(selectedCard.getCard().getCardImage());
+                        imageBar.getChildren().clear();
+                        imageBar.getChildren().add(rectangle1);
+                    }
+                });
+                pane.add(rectangle, j, i);
+            }
+        }
+    }
+
+    private void setupSideDeckTab() {
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(10,10,10,20));
+        sideDeckScroll.setContent(pane);
+        sideDeckTab.setContent(sideDeckScroll);
+        pane.setStyle("-fx-background-color: transparent");
+        pane.setVgap(10);
+        pane.setHgap(10);
+        pane.setAlignment(Pos.CENTER);
+        ArrayList<Card> sideDeck = currentDeck.getSideDeck();
+        for (int i = 0; i < Math.round((double) sideDeck.size() / 6); i++) {
+            for (int j = 0; j < (Math.min((sideDeck.size() - 6 * i), 6)); j++) {
+                ShopCardView rectangle = new ShopCardView(sideDeck.get(6 * i + j));
+                rectangle.setHeight(250);
+                rectangle.setWidth(150);
+                rectangle.getStyleClass().add("but");
+                rectangle.setFill(sideDeck.get(6 * i + j).getCardImage());
+                rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        selectedCard = rectangle;
+                        selectedCard.setDeckViewLocation(DeckViewLocation.DECK);
                         for (Node child : pane.getChildren()) {
                             child.getStyleClass().remove("butoo");
                         }
