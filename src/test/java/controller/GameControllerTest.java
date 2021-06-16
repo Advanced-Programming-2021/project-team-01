@@ -276,6 +276,18 @@ class GameControllerTest {
         assertSame(((MonsterCard) (board.getPlayerOneMonsterZone()[1].getCard())).getCardType(), CardType.RITUAL);
     }
 
+    @Test
+    @DisplayName("monster reborn")
+    void reborn() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/reborn.txt")));
+        in = new ByteArrayInputStream(input.getBytes());
+        HandleRequestType.scanner = new Scanner(in);
+        Main.main(new String[1]);
+        board = gameController.getGameBoard();
+        assertEquals("Monster Reborn", board.getPlayerTwoGraveYard().get(0).getName());
+        assertEquals(5, board.getCardInMonsterZone(2).size());
+    }
+
     @AfterEach
     @DisplayName("cleanUp")
     void reset() throws IOException {
