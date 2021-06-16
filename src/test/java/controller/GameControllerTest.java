@@ -3,6 +3,7 @@ package controller;
 import endpoint.Main;
 import model.Board;
 import model.card.Card;
+import model.card.CardType;
 import model.card.MonsterCard;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -262,6 +263,17 @@ class GameControllerTest {
         Main.main(new String[1]);
         board = gameController.getGameBoard();
         assertEquals(board.getPlayerMonsterZone(1)[1].getCard().getName(), "Gate Guardian");
+    }
+
+    @Test
+    @DisplayName("ritual")
+    void ritual() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/ritual")));
+        in = new ByteArrayInputStream(input.getBytes());
+        HandleRequestType.scanner = new Scanner(in);
+        Main.main(new String[1]);
+        board = gameController.getGameBoard();
+        assertSame(((MonsterCard) (board.getPlayerOneMonsterZone()[1].getCard())).getCardType(), CardType.RITUAL);
     }
 
     @AfterEach
