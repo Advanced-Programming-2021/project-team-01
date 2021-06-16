@@ -209,9 +209,9 @@ class GameControllerTest {
         Main.main(new String[1]);
         gameController = GameController.getInstance();
         board = gameController.getGameBoard();
-        assertEquals(board.getPlayerOneGraveYard().size(),1);
-        assertEquals(board.getPlayerOneGraveYard().get(0).getName(),"Terraforming");
-        assertEquals(board.getPlayerOneHand().get(4).getName(),"Umiiruka");
+        assertEquals(board.getPlayerOneGraveYard().size(), 1);
+        assertEquals(board.getPlayerOneGraveYard().get(0).getName(), "Terraforming");
+        assertEquals(board.getPlayerOneHand().get(4).getName(), "Umiiruka");
     }
 
     @Test
@@ -225,14 +225,14 @@ class GameControllerTest {
         Main.main(new String[1]);
         gameController = GameController.getInstance();
         board = gameController.getGameBoard();
-        assertEquals(board.numberOfMonsterCards(1),0);
-        assertEquals(board.numberOfMonsterCards(2),0);
+        assertEquals(board.numberOfMonsterCards(1), 0);
+        assertEquals(board.numberOfMonsterCards(2), 0);
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("raigeki")
     void test11() throws Exception {
-        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/terraforming.txt")));
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/raigeki.txt")));
         sysInBackup = System.in;
         in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
@@ -240,6 +240,27 @@ class GameControllerTest {
         Main.main(new String[1]);
         gameController = GameController.getInstance();
         board = gameController.getGameBoard();
+        assertEquals(board.numberOfMonsterCards(2), 0);
+        assertNotEquals(board.numberOfMonsterCards(1), 0);
+    }
+
+    @Test
+    @DisplayName("set cards")
+    void test12() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/set_cards.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        gameController = GameController.getInstance();
+        board = gameController.getGameBoard();
+        assertEquals(board.numberOfSpellAndTrapCards(2), 2);
+        assertEquals(board.numberOfSpellAndTrapCards(1), 2);
+        assertEquals(board.getPlayerSpellZone(1)[1].getCard().getName(),"Pot of Greed");
+        assertEquals(board.getPlayerSpellZone(1)[2].getCard().getName(),"Trap Hole");
+        assertEquals(board.getPlayerSpellZone(2)[1].getCard().getName(),"Pot of Greed");
+        assertEquals(board.getPlayerSpellZone(2)[2].getCard().getName(),"Trap Hole");
     }
 
     @Test
