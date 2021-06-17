@@ -176,6 +176,7 @@ public class DeckView implements Initializable {
             DeckController.getInstance().removeCardFromDeck(selectedCard.getCard().getName(), currentDeck.getDeckName(), false);
             setupSideDeckTab();
         }
+        imageBar.getChildren().clear();
         new MyAlert(Alert.AlertType.INFORMATION, "Card got removed successfully.").show();
     }
 

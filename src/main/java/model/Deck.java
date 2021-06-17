@@ -25,12 +25,24 @@ public class Deck {
         sideDeck.add(card);
     }
 
-    public void removeCardFromMainDeck(Card card) {
-        mainDeck.remove(card);
+    public boolean removeCardFromMainDeck(Card card) {
+        for (Card cardObj : mainDeck) {
+            if (cardObj.getName().equals(card.getName())) {
+                mainDeck.remove(cardObj);
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void removeCardFromSideDeck(Card card) {
-        sideDeck.remove(card);
+    public boolean removeCardFromSideDeck(Card card) {
+        for (Card cardObj : sideDeck) {
+            if (cardObj.getName().equals(card.getName())) {
+                sideDeck.remove(cardObj);
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isDeckValid() {

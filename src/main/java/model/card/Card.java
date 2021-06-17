@@ -6,22 +6,23 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import model.commands.*;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 
 public abstract class Card {
     @Expose(serialize = false, deserialize = false)
-    private Image cardImage;
+    private transient Image cardImage;
     private static final TreeMap<String, Card> allCards = new TreeMap<>();
     protected String name;
     private String description;
-    private int price;
     protected String type = "type";
+    private int price;
     @Expose(serialize = false, deserialize = false)
-    protected ArrayList<Command> commands = new ArrayList<>();
+    protected transient ArrayList<Command> commands = new ArrayList<>();
     @Expose(serialize = false, deserialize = false)
-    static HashMap<String, Image> cachedImage = new HashMap<>();
+    static transient HashMap<String, Image> cachedImage = new HashMap<>();
 
     public Card(String name, String description, int price) {
         this.name = name;
@@ -35,12 +36,7 @@ public abstract class Card {
     public ImagePattern getCardImage() {
         if (cardImage == null)
             cardImage = cachedImage.get(buildImage());
-        try {
-;        return new ImagePattern(cardImage);
-        } catch (Exception expt) {
-            System.err.println(name);
-        }
-        return new ImagePattern(cardImage);
+;       return new ImagePattern(cardImage);
     }
 
     private void addImage() {

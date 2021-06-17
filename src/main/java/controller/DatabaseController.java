@@ -187,6 +187,4 @@ public class DatabaseController {
         }
         return players;
     }
-
-
 }

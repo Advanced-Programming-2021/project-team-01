@@ -90,14 +90,12 @@ public class DeckController {
             if (DatabaseController.doesDeckExists(deckName)) {
                 Deck deck = DatabaseController.getDeckByName(deckName);
                 if (isMainDeck) {
-                    if (deck.getMainDeck().contains(card)) {
-                        deck.removeCardFromMainDeck(card);
+                    if (deck.removeCardFromMainDeck(card)) {
                         DatabaseController.updateDeck(deck);
                     } else
                         throw new CardNotInDeck(cardName, "main");
                 } else {
-                    if (deck.getSideDeck().contains(card)) {
-                        deck.removeCardFromSideDeck(card);
+                    if (deck.removeCardFromSideDeck(card)) {
                         DatabaseController.updateDeck(deck);
                     } else
                         throw new CardNotInDeck(cardName, "side");
