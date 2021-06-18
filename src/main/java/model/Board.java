@@ -125,7 +125,7 @@ public class Board {
                     playerOneSpellZone[i].setCard(null);
             }
             GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
-        } else if (player == 2){
+        } else if (player == 2) {
             playerTwoGraveYard.add(card);
             for (int i = 1; i < 6; i++) {
                 if (playerTwoSpellZone[i].getCard() == card)
@@ -695,9 +695,9 @@ public class Board {
     public ArrayList<Card> faceUpSpellAndTraps() {
         ArrayList<Card> spellAndTraps = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
-            if ((!playerOneSpellZone[i].isHidden()) && playerOneSpellZone[i].getCard() != null)
+            if (playerOneSpellZone[i].getCard() != null && (!playerOneSpellZone[i].isHidden()))
                 spellAndTraps.add(playerOneSpellZone[i].getCard());
-            if ((!playerTwoSpellZone[i].isHidden()) && playerTwoSpellZone[i].getCard() != null)
+            if (playerTwoSpellZone[i].getCard() != null && (!playerTwoSpellZone[i].isHidden()))
                 spellAndTraps.add(playerTwoSpellZone[i].getCard());
         }
         for (int i = 1; i < 6; i++) {
@@ -802,7 +802,7 @@ public class Board {
                 }
             }
             for (Card card : playerOneHand) {
-                if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.QUICK_PLAY){
+                if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.QUICK_PLAY) {
                     return card;
                 }
             }
@@ -820,7 +820,7 @@ public class Board {
                 }
             }
             for (Card card : playerTwoHand) {
-                if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.QUICK_PLAY){
+                if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.QUICK_PLAY) {
                     return card;
                 }
             }
@@ -851,7 +851,7 @@ public class Board {
     }
 
     public ZoneSlot[] getPlayerMonsterZone(int playerNum) {
-        if (playerNum == 1){
+        if (playerNum == 1) {
             return playerOneMonsterZone;
         }
         return playerTwoMonsterZone;

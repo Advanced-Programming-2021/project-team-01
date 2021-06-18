@@ -351,6 +351,24 @@ class GameControllerTest {
     }
 
     @Test
+    @DisplayName("sword of ...")
+    void sword() throws Exception {
+        String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/sword.txt")));
+        sysInBackup = System.in;
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        HandleRequestType.scanner = new Scanner(System.in);
+        Main.main(new String[1]);
+        gameController = GameController.getInstance();
+        board = gameController.getGameBoard();
+        assertEquals(gameController.getOpponentLp(),8000);
+        assertEquals(gameController.getCurrentLp(),8000);
+        assertEquals(board.getPlayerOneGraveYard().get(0).getName(),"Swords of Revealing Light");
+        assertNull(board.getPlayerSpellZone(1)[1].getCard());
+
+    }
+
+    @Test
     @DisplayName("black pendant")
     void blackT() throws Exception {
         String input = new String(Files.readAllBytes(Paths.get("src/test/java/controller/blackPendant.txt")));
