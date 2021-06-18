@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import model.commands.*;
 
-import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -34,6 +33,7 @@ public abstract class Card {
 
 
     public ImagePattern getCardImage() {
+        System.out.println(name);
         if (cardImage == null)
             cardImage = cachedImage.get(buildImage());
 ;       return new ImagePattern(cardImage);

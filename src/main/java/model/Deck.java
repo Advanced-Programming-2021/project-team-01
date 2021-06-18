@@ -26,9 +26,9 @@ public class Deck {
     }
 
     public boolean removeCardFromMainDeck(Card card) {
-        for (Card cardObj : mainDeck) {
-            if (cardObj.getName().equals(card.getName())) {
-                mainDeck.remove(cardObj);
+        for (int i = 0; i < mainDeck.size(); i++) {
+            if (mainDeck.get(i).getName().equals(card.getName())) {
+                mainDeck.remove(i);
                 return true;
             }
         }
@@ -36,9 +36,9 @@ public class Deck {
     }
 
     public boolean removeCardFromSideDeck(Card card) {
-        for (Card cardObj : sideDeck) {
-            if (cardObj.getName().equals(card.getName())) {
-                sideDeck.remove(cardObj);
+        for (int i = 0; i < sideDeck.size(); i++) {
+            if (sideDeck.get(i).getName().equals(card.getName())) {
+                sideDeck.remove(i);
                 return true;
             }
         }

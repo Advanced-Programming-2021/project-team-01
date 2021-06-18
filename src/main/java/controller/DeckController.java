@@ -91,11 +91,13 @@ public class DeckController {
                 Deck deck = DatabaseController.getDeckByName(deckName);
                 if (isMainDeck) {
                     if (deck.removeCardFromMainDeck(card)) {
+                        deck.removeCardFromMainDeck(card);
                         DatabaseController.updateDeck(deck);
                     } else
                         throw new CardNotInDeck(cardName, "main");
                 } else {
                     if (deck.removeCardFromSideDeck(card)) {
+                        deck.removeCardFromSideDeck(card);
                         DatabaseController.updateDeck(deck);
                     } else
                         throw new CardNotInDeck(cardName, "side");

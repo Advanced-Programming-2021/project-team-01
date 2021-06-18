@@ -31,7 +31,7 @@ public class DeckView implements Initializable {
     public Tab mainDeckTab, sideDeckTab;
 
     public void init() throws Exception {
-        currentDeck = DatabaseController.getDeckByName("test");
+        currentDeck = DatabaseController.getDeckByName("tribute");
         RegisterController.onlineUser = DatabaseController.getUserByName("mamaaad");
         setupMainDeckTab();
         setupSideDeckTab();
@@ -47,7 +47,7 @@ public class DeckView implements Initializable {
         }
     }
 
-    private void setupMainDeckTab() {
+    private void setupMainDeckTab() throws Exception {
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(10,10,10,20));
         mainDeckScroll.setContent(pane);
@@ -56,7 +56,7 @@ public class DeckView implements Initializable {
         pane.setVgap(10);
         pane.setHgap(10);
         pane.setAlignment(Pos.CENTER);
-        ArrayList<Card> mainDeck = currentDeck.getMainDeck();
+        ArrayList<Card> mainDeck = DatabaseController.getDeckByName(currentDeck.getDeckName()).getMainDeck();
         for (int i = 0; i < Math.round((double) mainDeck.size() / 6); i++) {
             for (int j = 0; j < (Math.min((mainDeck.size() - 6 * i), 6)); j++) {
                 ShopCardView rectangle = new ShopCardView(mainDeck.get(6 * i + j));
@@ -84,7 +84,7 @@ public class DeckView implements Initializable {
         }
     }
 
-    private void setupSideDeckTab() {
+    private void setupSideDeckTab() throws Exception {
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(10,10,10,20));
         sideDeckScroll.setContent(pane);
@@ -93,7 +93,7 @@ public class DeckView implements Initializable {
         pane.setVgap(10);
         pane.setHgap(10);
         pane.setAlignment(Pos.CENTER);
-        ArrayList<Card> sideDeck = currentDeck.getSideDeck();
+        ArrayList<Card> sideDeck = DatabaseController.getDeckByName(currentDeck.getDeckName()).getSideDeck();
         for (int i = 0; i < Math.round((double) sideDeck.size() / 6); i++) {
             for (int j = 0; j < (Math.min((sideDeck.size() - 6 * i), 6)); j++) {
                 ShopCardView rectangle = new ShopCardView(sideDeck.get(6 * i + j));
@@ -189,8 +189,8 @@ public class DeckView implements Initializable {
         try {
             DeckController.getInstance().addCardToDeck(
                     selectedCard.getCard().getName(), currentDeck.getDeckName(), true);
-            new MyAlert(Alert.AlertType.INFORMATION, "Card is added successfully.").show();
             setupMainDeckTab();
+            new MyAlert(Alert.AlertType.INFORMATION, "Card is added successfully.").show();
         } catch (Exception expt) {
             new MyAlert(Alert.AlertType.WARNING, expt.getMessage()).show();
         }
