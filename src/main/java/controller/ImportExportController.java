@@ -53,9 +53,4 @@ public class ImportExportController {
         gson.toJson(card, fileWriter);
         fileWriter.close();
     }
-
-    public static void main(String[] args) throws IOException, CardNameNotExists, CsvValidationException {
-        DatabaseController.loadGameCards();
-        importCard("Twin Twisters");
-    }
 }
