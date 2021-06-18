@@ -37,6 +37,8 @@ public class ProfileViewTest {
         assertEquals(player.getNickname(),"y");
         handleRequestType.getRegisterView().run("user login u x p y");
         handleRequestType.getMainMenu().run("menu enter Profile");
+        handleRequestType.getProfileView().run("menu enter Login");
+        assertEquals(HandleRequestType.currentMenu,Menu.PROFILE_VIEW);
         handleRequestType.getProfileView().run("profile change nickname x");
         handleRequestType.getProfileView().run("profile change password new x current y");
         handleRequestType.getProfileView().run("menu exit");
