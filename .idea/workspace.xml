@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="64d49e60-7e50-4ebb-bac4-ab078291a1a1" name="Default Changelist" comment="commit">
-      <change afterPath="$PROJECT_DIR$/src/test/java/controller/sword.txt" afterDir="false" />
+    <list default="true" id="64d49e60-7e50-4ebb-bac4-ab078291a1a1" name="Default Changelist" comment="1 PERCENT">
+      <change afterPath="$PROJECT_DIR$/src/resources/export/radme" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/commands/SwordOfRevealingLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/commands/SwordOfRevealingLight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/GameControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/GameControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/users/AI.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/users/AI.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/users/ali.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/users/ali.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/users/username.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/users/username.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +72,7 @@
       <recent name="controller" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.GameControllerTest.sword">
+  <component name="RunManager" selected="JUnit.All in ApSpring">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="endpoint.Main" />
       <module name="YuGiOh" />
@@ -86,13 +86,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -155,10 +157,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in ApSpring" />
         <item itemvalue="JUnit.GameControllerTest.sword" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.CommandsTest.test2" />
-        <item itemvalue="JUnit.All in ApSpring" />
         <item itemvalue="JUnit.PlayerTest.test" />
       </list>
     </recent_temporary>
