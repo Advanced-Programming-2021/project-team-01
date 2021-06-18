@@ -365,7 +365,6 @@ class GameControllerTest {
         assertEquals(gameController.getCurrentLp(),8000);
         assertEquals(board.getPlayerOneGraveYard().get(0).getName(),"Swords of Revealing Light");
         assertNull(board.getPlayerSpellZone(1)[1].getCard());
-
     }
 
     @Test
