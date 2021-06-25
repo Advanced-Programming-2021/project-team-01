@@ -24,19 +24,25 @@ public class Deck {
         sideDeck.add(card);
     }
 
-    public void removeCardFromMainDeck(Card card) {
-        for (Card card1 : mainDeck) {
-            if (card1.getName().equals(card.getName())) {
-                mainDeck.remove(card1);
-                return;
+    public boolean removeCardFromMainDeck(Card card) {
+        for (int i = 0; i < mainDeck.size(); i++) {
+            if (mainDeck.get(i).getName().equals(card.getName())) {
+                mainDeck.remove(i);
+                return true;
             }
         }
+        return false;
     }
 
-    public void removeCardFromSideDeck(Card card) {
-        sideDeck.remove(card);
+    public boolean removeCardFromSideDeck(Card card) {
+        for (int i = 0; i < sideDeck.size(); i++) {
+            if (sideDeck.get(i).getName().equals(card.getName())) {
+                sideDeck.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
-
     public boolean isDeckValid() {
         return mainDeck.size() >= 25;
     }

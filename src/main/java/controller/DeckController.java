@@ -82,14 +82,6 @@ public class DeckController {
             throw new CardNameNotExists(cardName);
     }
 
-    public boolean containName(ArrayList<Card> cards,String name){
-        for (Card card : cards) {
-            if (card.getName().equals(name))
-                return true;
-        }
-        return false;
-    }
-
     public void removeCardFromDeck(String cardName, String deckName, boolean isMainDeck) throws CardNameNotExists,
             DeckNotExists, CardNotInDeck, IOException {
         Card card = Card.getCardByName(cardName);
@@ -97,14 +89,12 @@ public class DeckController {
             if (DatabaseController.doesDeckExists(deckName)) {
                 Deck deck = DatabaseController.getDeckByName(deckName);
                 if (isMainDeck) {
-                    if (containName(deck.getMainDeck(),card.getName()) ){
-                        deck.removeCardFromMainDeck(card);
+                    if (deck.removeCardFromMainDeck(card)) {
                         DatabaseController.updateDeck(deck);
                     } else
                         throw new CardNotInDeck(cardName, "main");
                 } else {
-                    if (containName(deck.getSideDeck(),card.getName()) ){
-                        deck.removeCardFromSideDeck(card);
+                    if (deck.removeCardFromSideDeck(card)) {
                         DatabaseController.updateDeck(deck);
                     } else
                         throw new CardNotInDeck(cardName, "side");

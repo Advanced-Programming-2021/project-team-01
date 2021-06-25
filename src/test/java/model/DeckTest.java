@@ -48,8 +48,8 @@ class DeckTest {
     @DisplayName("Deck validation test")
     @Test
     void deckIsValidTest() throws IOException {
-        Deck deck = DatabaseController.getDeckByName("ai");
-        Assertions.assertTrue(deck.getMainDeck().size() >= 25);
+        Deck deck = DatabaseController.getDeckByName("test");
+        Assertions.assertTrue(deck.getMainDeck().size() >= 45);
         Assertions.assertTrue(deck.isDeckValid());
     }
 }

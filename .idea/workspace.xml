@@ -5,11 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64d49e60-7e50-4ebb-bac4-ab078291a1a1" name="Default Changelist" comment="1 PERCENT">
-      <change afterPath="$PROJECT_DIR$/src/resources/export/radme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_6_16_2021_4_06_PM_[Default_Changelist]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_6_16_2021_4_06_PM__Default_Changelist_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/users/AI.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/users/AI.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/users/ali.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/users/ali.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/users/username.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/users/username.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/DatabaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/DatabaseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/DeckController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/DeckController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/export/Negate Attack.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/export/Pot of Greed.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/export/Suijin.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/export/radme" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/DeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/DeckTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,20 +80,7 @@
       <recent name="controller" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in YuGiOh">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="endpoint.Main" />
-      <module name="YuGiOh" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="endpoint.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.All in ApSpring">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -113,17 +108,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CommandsTest.test2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="YuGiOh" />
+    <configuration name="DeckTest.deckIsValidTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ApSpring" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="controller.*" />
+          <option name="PATTERN" value="model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="controller" />
-      <option name="MAIN_CLASS_NAME" value="controller.CommandsTest" />
-      <option name="METHOD_NAME" value="test2" />
+      <option name="PACKAGE_NAME" value="model" />
+      <option name="MAIN_CLASS_NAME" value="model.DeckTest" />
+      <option name="METHOD_NAME" value="deckIsValidTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -145,13 +140,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ImportExportControllerTest.exportTest1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ApSpring" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.ImportExportControllerTest" />
+      <option name="METHOD_NAME" value="exportTest1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in YuGiOh" />
         <item itemvalue="JUnit.All in ApSpring" />
+        <item itemvalue="JUnit.DeckTest.deckIsValidTest" />
+        <item itemvalue="JUnit.ImportExportControllerTest.exportTest1" />
+        <item itemvalue="JUnit.All in YuGiOh" />
         <item itemvalue="JUnit.GameControllerTest.sword" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.CommandsTest.test2" />
       </list>
     </recent_temporary>
   </component>
@@ -371,21 +382,43 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/phase1$All_in_ApSpring.ic" NAME="All in ApSpring Coverage Results" MODIFIED="1623866183757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/phase1$finishGame.ic" NAME="finishGame Coverage Results" MODIFIED="1623851248238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/phase1$AttackControllerTest_and_1_more__1_.ic" NAME="AttackControllerTest and 1 more (1) Coverage Results" MODIFIED="1623841841380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/ProjectPrime$ImportExportControllerTest_importTest3.ic" NAME="ImportExportControllerTest.importTest3 Coverage Results" MODIFIED="1624021328596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>controller.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/Main_java$All_in_YuGiOh.ic" NAME="All in YuGiOh Coverage Results" MODIFIED="1623872413115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/phase1$AttackControllerTest_and_1_more__1_.ic" NAME="AttackControllerTest and 1 more (1) Coverage Results" MODIFIED="1623841841380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/phase1$controller_in_ApSpring.ic" NAME="controller in ApSpring Coverage Results" MODIFIED="1623841798493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/ProjectPrime$DeckTest_deckIsValidTest.ic" NAME="DeckTest.deckIsValidTest Coverage Results" MODIFIED="1624631376206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/ProjectPrime$ImportExportControllerTest_importTest2.ic" NAME="ImportExportControllerTest.importTest2 Coverage Results" MODIFIED="1624021233618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>controller.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/phase1$AttackControllerTest_and_2_more.ic" NAME="AttackControllerTest and 2 more Coverage Results" MODIFIED="1623841855115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/phase1$All_in_ApSpring.ic" NAME="All in ApSpring Coverage Results" MODIFIED="1623866183757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/ProjectPrime$ImportExportControllerTest_importTest.ic" NAME="ImportExportControllerTest.importTest Coverage Results" MODIFIED="1624021152465" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>controller.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/project_team_01$controller_in_YuGiOh.ic" NAME="controller in YuGiOh Coverage Results" MODIFIED="1623863569050" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>controller.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/phase1$AttackControllerTest_and_1_more.ic" NAME="AttackControllerTest and 1 more Coverage Results" MODIFIED="1623841822204" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/Main_java$All_in_ApSpring.ic" NAME="All in ApSpring Coverage Results" MODIFIED="1624018997263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/ProjectPrime$ImportExportControllerTest_exportTest2.ic" NAME="ImportExportControllerTest.exportTest2 Coverage Results" MODIFIED="1624021496214" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>controller.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/ProjectPrime$ImportExportControllerTest.ic" NAME="ImportExportControllerTest Coverage Results" MODIFIED="1624631053961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>controller.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/project_team_01$All_in_YuGiOh.ic" NAME="All in YuGiOh Coverage Results" MODIFIED="1623866136597" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/phase1$finishGame.ic" NAME="finishGame Coverage Results" MODIFIED="1623851248238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>controller.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Main_java$All_in_YuGiOh.ic" NAME="All in YuGiOh Coverage Results" MODIFIED="1623870684171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/ProjectPrime$All_in_ApSpring.ic" NAME="All in ApSpring Coverage Results" MODIFIED="1624020242283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/phase1$controller_in_ApSpring.ic" NAME="controller in ApSpring Coverage Results" MODIFIED="1623841798493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>controller.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Main_java$All_in_ApSpring.ic" NAME="All in ApSpring Coverage Results" MODIFIED="1624018997263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/ProjectPrime$ImportExportControllerTest_exportTest.ic" NAME="ImportExportControllerTest.exportTest Coverage Results" MODIFIED="1624020874785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>controller.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/phase1$AttackControllerTest_and_1_more.ic" NAME="AttackControllerTest and 1 more Coverage Results" MODIFIED="1623841822204" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

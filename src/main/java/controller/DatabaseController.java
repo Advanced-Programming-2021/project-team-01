@@ -103,12 +103,22 @@ public class DatabaseController {
 
     public static void updateDeck(Deck deck) {
         ArrayList<Card> mainDeck = deck.getMainDeck();
+        ArrayList<Card> sideDeck = deck.getSideDeck();
         for (Card card : mainDeck) {
             if (card instanceof MonsterCard) {
                 card.setType("monster");
             } else if (card instanceof TrapCard) {
                 card.setType("trap");
             } else {
+                card.setType("spell");
+            }
+        }
+        for (Card card : sideDeck) {
+            if (card instanceof MonsterCard){
+                card.setType("monster");
+            }else if (card instanceof TrapCard){
+                card.setType("trap");
+            }else{
                 card.setType("spell");
             }
         }
