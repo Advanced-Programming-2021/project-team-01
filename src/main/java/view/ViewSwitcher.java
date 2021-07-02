@@ -11,7 +11,7 @@ import java.util.Objects;
 public class ViewSwitcher {
     private static Stage stage;
 
-    public static void switchTo(View view){
+    public static void switchTo(View view) {
         Pane root = null;
         try {
             root = FXMLLoader.load(Objects.requireNonNull(ViewSwitcher.class.getResource(view.getFileName())));
@@ -19,18 +19,25 @@ public class ViewSwitcher {
             e.printStackTrace();
         }
         assert root != null;
-        switch (view){
-            case SCOREBOARD : {
+        switch (view) {
+            case SCOREBOARD: {
                 new ScoreboardView().init(root);
                 break;
             }
-            case IMPORTEXPORT : {
+            case IMPORTEXPORT: {
                 new ImportExportView().init(root);
                 break;
+            }
+            case LOGIN: {
+                new LoginView().init(root);
+            }
+            case GAME_VIEW: {
+                new GameView().init(root);
             }
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.setMaximized(true);
         stage.show();
     }

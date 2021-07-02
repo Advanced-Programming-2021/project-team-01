@@ -3,8 +3,13 @@ package view;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import controller.RegisterController;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 public class LoginView {
 
@@ -16,6 +21,15 @@ public class LoginView {
     public JFXTextField nicknameField;
     public JFXPasswordField passwordField;
     public Label loginLabel;
+    private MediaView mediaView;
+
+    @FXML
+    public void init(Pane root){
+        Media media = new Media(getClass().getResource("/Assets/YuGiOhGx.mp4").toExternalForm());
+        mediaView = new MediaView(new MediaPlayer(media));
+        mediaView.getMediaPlayer().play();
+        mediaView.getMediaPlayer().autoPlayProperty().setValue(true);
+    }
 
     public void signUp(MouseEvent event) {
         String nickname = nicknameField.getText();
