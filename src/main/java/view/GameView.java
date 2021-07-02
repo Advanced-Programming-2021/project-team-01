@@ -17,6 +17,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.Board;
 
+import java.util.Stack;
+
 public class GameView {
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1366;
@@ -128,25 +130,23 @@ public class GameView {
 
     public void setupHealthBar() {
         int playerOneLp = gameController.getPlayerOneLp();
-        Text text = new Text();
-        text.setText("LP : " + playerOneLp);
-        ProgressBar progressBar = new ProgressBar();
-        progressBar.setProgress(playerOneLp * 1.0 / 8000);
-        VBox vBox = new VBox();
-        vBox.getChildren().add(text);
-        vBox.getChildren().add(progressBar);
-        playerOneHealthBar.getChildren().add(vBox);
-
+        setupHealthBarPlayer(playerOneLp,playerOneHealthBar);
         int playerTwoLp = gameController.getPlayerTwoLp();
-        text = new Text();
-        text.setText("LP : " + playerTwoLp);
-        progressBar = new ProgressBar();
-        progressBar.setProgress(playerTwoLp * 1.0 / 8000);
-        vBox = new VBox();
+        setupHealthBarPlayer(playerTwoLp,playerTwoHealthBar);
+    }
+
+    private void setupHealthBarPlayer(int playerLp, StackPane playerHealthBar) {
+        Text text = new Text();
+        text.setId("lpText");
+        text.setText("LP : " + playerLp);
+        ProgressBar progressBar = new ProgressBar();
+        progressBar.setPrefWidth(250);
+        progressBar.setProgress(playerLp * 1.0 / 8000);
+        VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().add(text);
         vBox.getChildren().add(progressBar);
-        playerTwoHealthBar.getChildren().add(vBox);
+        playerHealthBar.getChildren().add(vBox);
     }
 
     private StackPane createStackPane(int width, int height, int x, int y) {
