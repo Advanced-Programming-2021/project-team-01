@@ -27,8 +27,6 @@ public class GameView {
     StackPane playerTwoHealthBar;
     ScrollPane cardInformation;
     GridPane playerOneHand;
-    GridPane playerOneMonsterZone;
-    GridPane playerTwoMonsterZone;
     StackPane mainPane;
     GameController gameController;
     private GridPane playerTwoHand;
@@ -64,24 +62,12 @@ public class GameView {
             mainPane.getChildren().addAll(playerOneHand, playerTwoHand);
             setupHealthBar();
             setupHands();
-            setupGamePane();
             root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
             cardText.setBackground(new Background(new BackgroundFill(Color.DARKGOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-    }
-
-    private void setupGamePane() {
-        playerOneMonsterZone = new GridPane();
-        playerOneMonsterZone.setTranslateX(210);
-        playerOneMonsterZone.setTranslateY(380);
-        for (int i = 0; i < 4; i++){
-            playerOneMonsterZone.setHgap(80);
-            playerOneMonsterZone.add(new Rectangle(70,100,Color.GREEN),i,1);
-        }
-        mainPane.getChildren().add(playerOneMonsterZone);
     }
 
     private void setBackgroundImage(String filename) {
@@ -102,19 +88,22 @@ public class GameView {
         for (int i = 0; i < board.getPlayerOneHand().size(); i++) {
             CardView cardView = new CardView(board.getPlayerOneHand().get(i));
             cardView.setImage(false, false);
-            cardView.setOnMouseEntered(event -> {
-                imageCard.getChildren().clear();
-                imageCard.getChildren().add(new Rectangle(300, 400, cardView.getImage()));
-                cardView.setScaleX(1.2);
-                cardView.setScaleY(1.2);
-                StackPane cardText = (StackPane) cardInformation.getContent();
-                cardText.getChildren().clear();
-                if (!cardView.isHidden()) {
-                    Text text = new Text();
-                    text.setFont(Font.font(20));
-                    text.setWrappingWidth(300);
-                    text.setText(cardView.getCard().getDescription());
-                    cardText.getChildren().add(text);
+            cardView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    imageCard.getChildren().clear();
+                    imageCard.getChildren().add(new Rectangle(300, 400, cardView.getImage()));
+                    cardView.setScaleX(1.2);
+                    cardView.setScaleY(1.2);
+                    StackPane cardText = (StackPane) cardInformation.getContent();
+                    cardText.getChildren().clear();
+                    if (!cardView.isHidden()) {
+                        Text text = new Text();
+                        text.setFont(Font.font(20));
+                        text.setWrappingWidth(300);
+                        text.setText(cardView.getCard().getDescription());
+                        cardText.getChildren().add(text);
+                    }
                 }
             });
             playerOneHand.add(cardView, i, 1);
@@ -129,6 +118,7 @@ public class GameView {
                 imageCard.getChildren().add(new Rectangle(300, 400, cardView.getImage()));
                 cardView.setScaleX(1.2);
                 cardView.setScaleY(1.2);
+
                 StackPane cardText = (StackPane) cardInformation.getContent();
                 cardText.getChildren().clear();
                 if (!cardView.isHidden()) {
