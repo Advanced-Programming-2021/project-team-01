@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -25,6 +26,7 @@ public class GameView {
     StackPane playerTwoHealthBar;
     ScrollPane cardInformation;
     GridPane playerOneHand;
+    StackPane mainPane;
     GameController gameController;
     private int width;
     private int height;
@@ -49,13 +51,23 @@ public class GameView {
             StackPane cardText = createStackPane(300,200,0,0);
             cardInformation.setContent(cardText);
             playerOneHand = new GridPane();
-            playerOneHand.setTranslateX(500);
             playerTwoHand = new GridPane();
-            playerTwoHand.setTranslateX(500);
             playerTwoHand.setTranslateY(height);
-            setupHands();
             cardText.setBackground(new Background(new BackgroundFill(Color.DARKGOLDENROD,CornerRadii.EMPTY,Insets.EMPTY)));
-            root.getChildren().addAll(playerTwoHand, playerOneHand, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
+            mainPane = new StackPane();
+            mainPane.setTranslateX(300);
+            BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/Assets/Field/fie_normal.bmp").toExternalForm()),
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+            mainPane.setBackground(new Background(backgroundimage));
+            mainPane.setBackground(new Background(new BackgroundFill(Color.YELLOW,CornerRadii.EMPTY,Insets.EMPTY)));
+            mainPane.setPrefWidth(1100);
+            mainPane.setPrefHeight(768);
+            mainPane.getChildren().addAll(playerOneHand, playerTwoHand);
+            setupHands();
+            root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -63,6 +75,7 @@ public class GameView {
     }
 
     private void setupHands() {
+        playerOneHand.setTranslateX(200);
         playerOneHand.setTranslateY(height - 100);
         Board board = gameController.getGameBoard();
         for (int i = 0;i < board.getPlayerOneHand().size(); i++) {
@@ -79,6 +92,7 @@ public class GameView {
             });
             playerOneHand.add(cardView,i,1);
         }
+        playerTwoHand.setTranslateX(200);
         playerTwoHand.setTranslateY(-100);
         for (int i = 0; i < board.getPlayerTwoHand().size(); i++) {
             CardView cardView = new CardView(board.getPlayerOneHand().get(i));

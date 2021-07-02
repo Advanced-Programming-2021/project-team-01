@@ -4,6 +4,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.GameView"
-            prefHeight="1080.0" prefWidth="1920.0">
+            prefHeight="768.0" prefWidth="1366.0"
+            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
 </AnchorPane>
