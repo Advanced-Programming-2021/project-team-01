@@ -9,7 +9,7 @@
 <?import java.net.URL?>
 <BorderPane styleClass="background" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.DeckPreView"
+            fx:controller="view.DeckPreview"
             prefHeight="400.0" prefWidth="600.0">
     <stylesheets>
         <URL value="@predeck.css"/>

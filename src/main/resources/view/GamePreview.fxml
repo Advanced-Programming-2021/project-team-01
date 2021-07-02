@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXButton?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.GamePreview"
+            prefHeight="700.0" prefWidth="1300.0" styleClass="background">
+    <stylesheets>
+        <URL value="@gamepreview.css"/>
+    </stylesheets>
+    <JFXTabPane styleClass="tab" translateX="400" translateY="300">
+        <Tab text="AI" styleClass="tabTop">
+            <VBox styleClass="vBoxTop" spacing="20">
+                <JFXTextField fx:id="roundNumAI" styleClass="writeBox" promptText="Number of rounds:" prefWidth="100"/>
+                <JFXButton fx:id="playWithAIButton" buttonType="RAISED" text="Play" styleClass="button1" onMouseClicked="#startGameWithAI"/>
+            </VBox>
+        </Tab>
+        <Tab text="MultiPlayer" styleClass="tabTop">
+            <VBox styleClass="vBoxTop" spacing="15">
+                <JFXTextField fx:id="opponentUsername" styleClass="writeBox" promptText="Opponent's username:" prefWidth="100"/>
+                <JFXTextField fx:id="roundNumMultiplayer" styleClass="writeBox" promptText="Opponent's username:" prefWidth="100"/>
+                <HBox translateX="30" spacing="20">
+                    <JFXButton fx:id="headButton" buttonType="RAISED" text="Head" styleClass="button1" onMouseClicked="#tossCoinHead"/>
+                    <JFXButton fx:id="tailButton" buttonType="RAISED" text="Tail" styleClass="button1" onMouseClicked="#tossCoinTail"/>
+                </HBox>
+                <JFXButton fx:id="playWithOpponentButton" buttonType="RAISED" text="Play" styleClass="button1" onMouseClicked="#startGameWithOpponent"/>
+            </VBox>
+        </Tab>
+    </JFXTabPane>
+    <StackPane fx:id="coinStackPane" translateX="350" translateY="100"/>
+</AnchorPane>

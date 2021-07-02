@@ -11,7 +11,7 @@
         <URL value="@main.css"/>
     </stylesheets>
     <VBox spacing="10" translateX="40" translateY="50">
-        <Button prefWidth="100" text="Duel" styleClass="button"/>
+        <Button prefWidth="100" text="Duel" styleClass="button" onMouseClicked="#startGamePreview"/>
         <Button prefWidth="100" text="Scoreboard" styleClass="button" onMouseClicked="#startScoreboardView"/>
         <Button prefWidth="100" text="Deck" styleClass="button" onMouseClicked="#startDeckView"/>
         <Button prefWidth="100" text="Profile" styleClass="button" onMouseClicked="#startProfileView"/>
