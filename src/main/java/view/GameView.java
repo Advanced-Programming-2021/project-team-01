@@ -53,14 +53,8 @@ public class GameView {
             playerTwoHand.setTranslateY(HEIGHT);
             cardText.setBackground(new Background(new BackgroundFill(Color.DARKGOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
             mainPane = new StackPane();
+            setBackgroundImage("fie_normal");
             mainPane.setTranslateX(300);
-            BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/Assets/Field/fie_normal.bmp").toExternalForm()),
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
-            mainPane.setBackground(new Background(backgroundimage));
-            mainPane.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
             mainPane.setPrefWidth(WIDTH - 300);
             mainPane.setPrefHeight(HEIGHT);
             mainPane.getChildren().addAll(playerOneHand, playerTwoHand);
@@ -72,6 +66,17 @@ public class GameView {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+    }
+
+    private void setBackgroundImage(String filename) {
+        BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/Assets/Field/" + filename + ".bmp").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(1050, HEIGHT  , false, false, false, false));
+        mainPane.setBackground(new Background(backgroundimage));
+        //mainPane.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
 
     }
 
