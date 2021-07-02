@@ -36,7 +36,12 @@ public abstract class Card {
         System.out.println(name);
         if (cardImage == null)
             cardImage = cachedImage.get(buildImage());
-;       return new ImagePattern(cardImage);
+       return new ImagePattern(cardImage);
+    }
+
+    public ImagePattern getBackImage() {
+        Image image = new Image(getClass().getResource("/Cards/" + "unknown.jpg").toExternalForm());
+        return new ImagePattern(image);
     }
 
     private void addImage() {

@@ -64,19 +64,16 @@ public class ShopView implements Initializable {
                 rectangle.setWidth(150);
                 rectangle.getStyleClass().add("but");
                 rectangle.setFill(monsters.get(6 * i + j).getCardImage());
-                rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        selectedCard = rectangle;
-                        for (Node child : pane.getChildren()) {
-                            child.getStyleClass().remove("butoo");
-                        }
-                        rectangle.getStyleClass().add("butoo");
-                        Rectangle rectangle1 = new Rectangle(250, 450);
-                        rectangle1.setFill(selectedCard.getCard().getCardImage());
-                        imageBar.getChildren().clear();
-                        imageBar.getChildren().add(rectangle1);
+                rectangle.setOnMouseClicked(event -> {
+                    selectedCard = rectangle;
+                    for (Node child : pane.getChildren()) {
+                        child.getStyleClass().remove("butoo");
                     }
+                    rectangle.getStyleClass().add("butoo");
+                    Rectangle rectangle1 = new Rectangle(250, 450);
+                    rectangle1.setFill(selectedCard.getCard().getCardImage());
+                    imageBar.getChildren().clear();
+                    imageBar.getChildren().add(rectangle1);
                 });
                 pane.add(rectangle, j, i);
             }
