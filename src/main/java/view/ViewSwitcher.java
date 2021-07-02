@@ -38,7 +38,7 @@ public class ViewSwitcher {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
-        stage.setMaximized(true);
+        stage.setMaximized(false);
         stage.show();
     }
 

@@ -21,9 +21,7 @@ public class MainView {
     }
 
     @FXML
-    private void startDeckView() {
-        ViewSwitcher.switchTo(View.PRE_DECK);
-    }
+    private void startDeckView() { ViewSwitcher.switchTo(View.PRE_DECK); }
 
     @FXML
     private void startShopView() {
@@ -34,4 +32,7 @@ public class MainView {
     private void startProfileView() {
         ViewSwitcher.switchTo(View.PROFILE);
     }
+
+    @FXML
+    private void startGamePreview() { ViewSwitcher.switchTo(View.PRE_GAME); }
 }

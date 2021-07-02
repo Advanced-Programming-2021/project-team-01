@@ -1,7 +1,6 @@
 import controller.DatabaseController;
 import controller.GameController;
 import javafx.application.Application;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import view.View;
 import view.ViewSwitcher;
@@ -12,7 +11,7 @@ public class Main extends Application {
         DatabaseController.loadGameCards();
         GameController.getInstance();
         ViewSwitcher.setStage(primaryStage);
-        ViewSwitcher.switchTo(View.GAME_VIEW);
+        ViewSwitcher.switchTo(View.PRE_GAME);
     }
 
     public static void main(String[] args) {

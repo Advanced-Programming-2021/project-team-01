@@ -1,0 +1,66 @@
+.background {
+    -fx-background-image: url("GamePreview.png");
+    -fx-background-size: cover;
+}
+
+.button1{
+    -fx-background-color: rgba(237,220,73,0.83);
+    -fx-font-family: Bahnschrift;
+    -fx-pref-width: 200px;
+    -fx-font-size: 20px;
+    -fx-padding: 10px;
+    -fx-pref-height: 50px;
+}
+.button1:hover{
+    -fx-background-color: #eda01a;
+}
+
+.tab {
+    -fx-pref-width: 510px;
+    -fx-max-width: 510px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-background-color: black;
+    -fx-alignment: center;
+}
+.tab-header-background {
+    -fx-background-color: black;
+    -fx-background-radius: 10px;
+}
+
+.tabTop {
+    -fx-max-width: 250px;
+    -fx-pref-width: 250px;
+    -fx-background-color: black;
+}
+
+.jfx-tab-pane .tab-selected-line {
+    -fx-background-color: yellow;
+}
+
+.jfx-tab-pane .tab-header-area{
+    -fx-background-color: black;
+}
+.vBoxTop {
+    -fx-alignment: center;
+    -fx-background-color: #292929;
+    -fx-border-radius: 10px;
+    -fx-padding: 15px;
+    -fx-background-radius: 10px;
+}
+
+
+.writeBox{
+    -fx-font-size: 20px;
+    -fx-text-fill: #e6ed21;
+    -fx-alignment: center;
+    -fx-font-family: Bahnschrift;
+}
+
+.Error {
+    -fx-font-size: 20px;
+    -fx-padding: 10px;
+    -fx-font-family: Bahnschrift;
+    -fx-text-fill: red;
+    -fx-alignment: center;
+}

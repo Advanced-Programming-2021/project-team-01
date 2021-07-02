@@ -9,6 +9,7 @@ public enum View {
     SHOP("shop.fxml"),
     DECK("Deck.fxml"),
     PRE_DECK("PreDeck.fxml"),
+    PRE_GAME("GamePreview.fxml"),
     GAME_VIEW("GameView.fxml");
 
 
