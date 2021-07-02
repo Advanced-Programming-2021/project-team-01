@@ -45,17 +45,27 @@ public class GameView {
             imageCard.setBackground(new Background(new BackgroundFill(Color.DEEPSKYBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
             cardInformation = new ScrollPane();
             cardInformation.setTranslateY(470);
+            cardInformation.prefHeight(133);
             cardInformation.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             StackPane cardText = createStackPane(300, 133, 0, 0);
+            cardText.setId("cardText");
             cardInformation.setContent(cardText);
             playerOneHand = new GridPane();
             playerOneHand.setTranslateX(500);
             playerTwoHand = new GridPane();
             playerTwoHand.setTranslateX(500);
             playerTwoHand.setTranslateY(HEIGHT);
-            cardText.setBackground(new Background(new BackgroundFill(Color.DARKGOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
             mainPane = new StackPane();
-            setBackgroundImage("fie_normal");
+
+            BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/view/card_information.png").toExternalForm()),
+                    BackgroundRepeat.REPEAT,
+                    BackgroundRepeat.REPEAT,
+                    BackgroundPosition.DEFAULT,
+                    new BackgroundSize(300,133  , false, false, false, false));
+            cardText.setBackground(new Background(backgroundimage));
+            setBackgroundImage(mainPane,"/Assets/Field/fie_normal.bmp",1050,HEIGHT);
+            setBackgroundImage(playerOneHealthBar,"/view/lp_background.png",300,70);
+            setBackgroundImage(playerTwoHealthBar,"/view/lp_background.png",300,70);
             mainPane.setTranslateX(300);
             mainPane.setPrefWidth(WIDTH - 300);
             mainPane.setPrefHeight(HEIGHT);
@@ -63,22 +73,19 @@ public class GameView {
             setupHealthBar();
             setupHands();
             root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
-            cardText.setBackground(new Background(new BackgroundFill(Color.DARKGOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
     }
 
-    private void setBackgroundImage(String filename) {
-        BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/Assets/Field/" + filename + ".bmp").toExternalForm()),
+    private void setBackgroundImage(Pane pane, String address, int width, int height) {
+        BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource(address).toExternalForm()),
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
-                new BackgroundSize(1050, HEIGHT  , false, false, false, false));
-        mainPane.setBackground(new Background(backgroundimage));
-        //mainPane.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
-
+                new BackgroundSize(width, height  , false, false, false, false));
+        pane.setBackground(new Background(backgroundimage));
     }
 
     private void setupHands() {
@@ -100,8 +107,9 @@ public class GameView {
                     if (!cardView.isHidden()) {
                         Text text = new Text();
                         text.setFont(Font.font(20));
-                        text.setWrappingWidth(300);
+                        text.setWrappingWidth(250);
                         text.setText(cardView.getCard().getDescription());
+                        text.setFill(Color.WHITE);
                         cardText.getChildren().add(text);
                     }
                 }
@@ -123,8 +131,10 @@ public class GameView {
                 cardText.getChildren().clear();
                 if (!cardView.isHidden()) {
                     Text text = new Text();
-                    text.setWrappingWidth(300);
+                    text.setFont(Font.font(20));
+                    text.setWrappingWidth(250);
                     text.setText(cardView.getCard().getDescription());
+                    text.setFill(Color.WHITE);
                     cardText.getChildren().add(text);
                 }
             });
