@@ -3,6 +3,8 @@ package console.menu;
 import controller.GameController;
 import controller.exceptions.LevelFiveException;
 import controller.exceptions.LevelSevenException;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.IntegerPropertyBase;
 import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;

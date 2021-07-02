@@ -63,7 +63,7 @@ public class GameView {
     }
 
     private void setupHands() {
-        playerOneHand.setTranslateY(height - 200);
+        playerOneHand.setTranslateY(height - 100);
         Board board = gameController.getGameBoard();
         for (int i = 0;i < board.getPlayerOneHand().size(); i++) {
             CardView cardView = new CardView(board.getPlayerOneHand().get(i));
@@ -79,7 +79,7 @@ public class GameView {
             });
             playerOneHand.add(cardView,i,1);
         }
-        playerTwoHand.setTranslateY(5);
+        playerTwoHand.setTranslateY(-100);
         for (int i = 0; i < board.getPlayerTwoHand().size(); i++) {
             CardView cardView = new CardView(board.getPlayerOneHand().get(i));
             cardView.setImage(true,true);
