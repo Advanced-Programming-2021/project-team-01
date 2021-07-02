@@ -8,6 +8,7 @@ import model.card.Card;
 public class CardView extends Rectangle {
     private Card card;
     private ImagePattern image;
+    private boolean isHidden;
 
     public CardView(Card card){
         super(421.0/3,614.0/3);
@@ -18,7 +19,12 @@ public class CardView extends Rectangle {
         });
     }
 
-    public void setImage(boolean isHidden,boolean is180){
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setImage(boolean isHidden, boolean is180){
+        this.isHidden = isHidden;
         if(isHidden)
             image = card.getBackImage();
         else
