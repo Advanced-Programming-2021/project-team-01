@@ -31,6 +31,7 @@ public class GameView {
 
     public void init(Pane root) {
         try {
+            root.getStylesheets().add(getClass().getResource("/view/game.css").toExternalForm());
             gameController = GameController.getInstance();
 //            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 //            width = gd.getDisplayMode().getWidth();
