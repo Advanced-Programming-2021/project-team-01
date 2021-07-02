@@ -37,8 +37,9 @@ public class ViewSwitcher {
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setMaxWidth(1366);
-        stage.setMaxHeight(768);
+        stage.setMaxWidth(1200);
+        stage.setMaxHeight(720);
+        stage.setResizable(true);
         stage.show();
     }
 

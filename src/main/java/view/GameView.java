@@ -5,6 +5,7 @@ import controller.GameController;
 import controller.RegisterController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -12,12 +13,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.Board;
 
-import java.awt.*;
-
 public class GameView {
+    public static final int HEIGHT = 720;
+    public static final int WIDTH = 1366;
     StackPane imageCard;
     StackPane playerOneHealthBar;
     StackPane playerTwoHealthBar;
@@ -25,36 +27,30 @@ public class GameView {
     GridPane playerOneHand;
     StackPane mainPane;
     GameController gameController;
-    private int width;
-    private int height;
     private GridPane playerTwoHand;
 
     public void init(Pane root) {
         try {
             root.getStylesheets().add(getClass().getResource("/view/game.css").toExternalForm());
             gameController = GameController.getInstance();
-//            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-//            width = gd.getDisplayMode().getWidth();
-//            height = gd.getDisplayMode().getHeight();
-            width = 1366;
-            height = 768;
             RegisterController.onlineUser = DatabaseController.getUserByName("ali");
             GameController.getInstance().startGame("username", 1);
-            playerOneHealthBar = createStackPane(300, 100, 0, 0);
+            playerOneHealthBar = createStackPane(300, 70, 0, 0);
             playerOneHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-            playerTwoHealthBar = createStackPane(300, 100, 0, height - 100);
+            playerTwoHealthBar = createStackPane(300, 70, 0, HEIGHT - 117);
             playerTwoHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-            imageCard = createStackPane(300, 400, 0, 100);
+            imageCard = createStackPane(300, 400, 0, 70);
             imageCard.setBackground(new Background(new BackgroundFill(Color.DEEPSKYBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
             cardInformation = new ScrollPane();
-            cardInformation.setTranslateY(500);
-            StackPane cardText = createStackPane(300, 200, 0, 0);
+            cardInformation.setTranslateY(470);
+            cardInformation.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            StackPane cardText = createStackPane(300, 133, 0, 0);
             cardInformation.setContent(cardText);
             playerOneHand = new GridPane();
             playerOneHand.setTranslateX(500);
             playerTwoHand = new GridPane();
             playerTwoHand.setTranslateX(500);
-            playerTwoHand.setTranslateY(height);
+            playerTwoHand.setTranslateY(HEIGHT);
             cardText.setBackground(new Background(new BackgroundFill(Color.DARKGOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
             mainPane = new StackPane();
             mainPane.setTranslateX(300);
@@ -65,8 +61,8 @@ public class GameView {
                     BackgroundSize.DEFAULT);
             mainPane.setBackground(new Background(backgroundimage));
             mainPane.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
-            mainPane.setPrefWidth(1100);
-            mainPane.setPrefHeight(768);
+            mainPane.setPrefWidth(WIDTH - 300);
+            mainPane.setPrefHeight(HEIGHT);
             mainPane.getChildren().addAll(playerOneHand, playerTwoHand);
             setupHealthBar();
             setupHands();
@@ -81,7 +77,7 @@ public class GameView {
 
     private void setupHands() {
         playerOneHand.setTranslateX(200);
-        playerOneHand.setTranslateY(height - 100);
+        playerOneHand.setTranslateY(HEIGHT - 100);
         Board board = gameController.getGameBoard();
         for (int i = 0; i < board.getPlayerOneHand().size(); i++) {
             CardView cardView = new CardView(board.getPlayerOneHand().get(i));
@@ -97,6 +93,7 @@ public class GameView {
                     cardText.getChildren().clear();
                     if (!cardView.isHidden()) {
                         Text text = new Text();
+                        text.setFont(Font.font(20));
                         text.setWrappingWidth(300);
                         text.setText(cardView.getCard().getDescription());
                         cardText.getChildren().add(text);
@@ -134,7 +131,7 @@ public class GameView {
         Text text = new Text();
         text.setText("LP : " + playerOneLp);
         ProgressBar progressBar = new ProgressBar();
-        progressBar.setProgress(playerOneLp*1.0/8000);
+        progressBar.setProgress(playerOneLp * 1.0 / 8000);
         VBox vBox = new VBox();
         vBox.getChildren().add(text);
         vBox.getChildren().add(progressBar);
@@ -144,8 +141,9 @@ public class GameView {
         text = new Text();
         text.setText("LP : " + playerTwoLp);
         progressBar = new ProgressBar();
-        progressBar.setProgress(playerTwoLp*1.0/8000);
+        progressBar.setProgress(playerTwoLp * 1.0 / 8000);
         vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().add(text);
         vBox.getChildren().add(progressBar);
         playerTwoHealthBar.getChildren().add(vBox);
