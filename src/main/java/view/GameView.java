@@ -6,26 +6,23 @@ import controller.RegisterController;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.Board;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
-
-import java.util.List;
 
 
 public class GameView {
@@ -137,7 +134,6 @@ public class GameView {
             RegisterController.onlineUser = DatabaseController.getUserByName("ali");
             GameController.getInstance().startGame("username", 1);
             //TODO: delete down
-//            gameController.nextPhase();
             gameController.nextPhase();
             gameController.nextPhase();
             //TODO delete up
@@ -179,7 +175,8 @@ public class GameView {
             mainPane.setTranslateX(300);
             mainPane.setPrefWidth(WIDTH - 300);
             mainPane.setPrefHeight(HEIGHT);
-            mainPane.getChildren().addAll(playerOneCardsInBoard, playerTwoCardsInBoard, playerOneHand, playerTwoHand);
+            mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard);
+//            mainPane.getChildren().addAll(playerOneHand, playerTwoHand);
             setupHealthBar();
             setupHands();
             setupHandObservables();
@@ -196,10 +193,13 @@ public class GameView {
         listenOnHand(playerOneLogicHand, playerOneHand);
         listenOnHand(playerTwoLogicHand, playerTwoHand);
         Button button = new Button("Click Me");
-        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                playerOneLogicHand.remove(0,1);
+        button.setOnMouseClicked(event -> {
+            for (int i = 0; i < 12; i++) {
+                try {
+                    gameController.nextPhase();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         mainPane.getChildren().add(button);
@@ -212,7 +212,7 @@ public class GameView {
                 for (Card card : c.getRemoved()) {
                     for (int i = 0; i < playerHand.getChildren().size(); i++) {
                         CardView cardView = (CardView) playerHand.getChildren().get(i);
-                        if (cardView.getCard().getName().equals(card.getName())){
+                        if (cardView.getCard().getName().equals(card.getName())) {
                             playerHand.getChildren().remove(cardView);
                             break;
                         }
@@ -268,25 +268,37 @@ public class GameView {
         drawZonePlayer2.setTranslateY(-220);
         drawZonePlayer2.setTranslateX(-430);
         mainPane.getChildren().addAll(drawZonePlayer1, drawZonePlayer2);
-        Button button = new Button("ERFAN VA DADBEH");
-        button.setOnMouseClicked(event -> {
-            playerOneDrawZone.remove(0);
-            playerTwoDrawZone.remove(0);
-        });
-        mainPane.getChildren().add(button);
-        button.setTranslateX(-500);
+//        Button button = new Button("ERFAN VA DADBEH");
+//        button.setOnMouseClicked(event -> {
+//            try {
+//                for (int i = 0; i < 12; i++)
+//                    gameController.nextPhase();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
+//        mainPane.getChildren().add(button);
+//        button.setTranslateX(-500);
     }
 
     private void setZoneInBoard() {
-        playerTwoCardsInBoard.setTranslateY(120);
-        playerTwoCardsInBoard.setTranslateX(220);
-        playerOneCardsInBoard.setVgap(25);
-        playerOneCardsInBoard.setHgap(70);
 
-        playerOneCardsInBoard.setTranslateY(385);
-        playerOneCardsInBoard.setTranslateX(220);
+        playerOneCardsInBoard.setTranslateY(133);
+        playerOneCardsInBoard.setTranslateX(10);
+        playerOneCardsInBoard.setMaxWidth(680);
+        playerOneCardsInBoard.setMaxHeight(220);
+        playerOneCardsInBoard.setAlignment(Pos.CENTER);
+        playerOneCardsInBoard.setVgap(25);
+        playerOneCardsInBoard.setHgap(40);
+
+
+        playerTwoCardsInBoard.setTranslateY(-130);
+        playerTwoCardsInBoard.setTranslateX(10);
+        playerTwoCardsInBoard.setMaxWidth(680);
+        playerTwoCardsInBoard.setMaxHeight(220);
+        playerTwoCardsInBoard.setAlignment(Pos.CENTER);
         playerTwoCardsInBoard.setVgap(25);
-        playerTwoCardsInBoard.setHgap(70);
+        playerTwoCardsInBoard.setHgap(40);
 
     }
 
@@ -300,11 +312,15 @@ public class GameView {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
                 StackPane stackPane = new StackPane();
+                stackPane.maxHeight(100);
+                stackPane.prefHeight(100);
+                stackPane.maxWidth(100);
+                stackPane.prefWidth(100);
+                stackPane.getChildren().add(new Rectangle(100, 100, Color.TRANSPARENT));
                 GridPane.setRowIndex(stackPane, i);
                 GridPane.setColumnIndex(stackPane, j);
-                stackPane.maxHeight(100);
-                stackPane.maxWidth(100);
                 playerCardsInBoard.getChildren().add(stackPane);
+//                playerCardsInBoard.add(stackPane,j,i);
             }
         }
     }
@@ -439,8 +455,8 @@ public class GameView {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
-            cardView.setRotate(90);
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
+            cardView.setRotate(270);
             cardView.setImage(false, false);
         } else {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
@@ -491,9 +507,10 @@ public class GameView {
         zone.getChildren().clear();
         CardView cardView = new CardView(card, playerNumber, true, false);
         cardView.setToBoard();
-        cardView.setRotate(90);
         cardView.setViewLocation(ViewLocation.MONSTER_DEFENSIVE);
         zone.getChildren().add(cardView);
+        cardView.setRotate(90);
+        gameController.getGameBoard().showBoard();
     }
 
     private void setSpell(int index, int playerNumber) {

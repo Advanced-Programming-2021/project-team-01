@@ -132,6 +132,7 @@ public class CardView extends Rectangle {
     private void setContext() {
         int currentPlayer = GameController.getInstance().getCurrentPlayerNumber();
         contextMenu.setStyle("-fx-background-color: black;-fx-text-fill: white;");
+        contextMenu.getItems().clear();
         if (viewLocation == ViewLocation.MONSTER_OFFENSIVE)
             contextMenu.getItems().addAll(addMenuItem("Attack"), addMenuItem("Change position"));
         else if (viewLocation == ViewLocation.MONSTER_DEFENSIVE)
