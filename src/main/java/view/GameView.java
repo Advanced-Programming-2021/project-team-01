@@ -224,17 +224,4 @@ public class GameView {
         stackPane.setTranslateY(y);
         return stackPane;
     }
-
-    private void createContextMenu() {
-        ContextMenu contextMenu = new ContextMenu();
-        contextMenu.setStyle("-fx-background-color: black;-fx-text-fill: white;");
-        MenuItem attackItem = new MenuItem("Attack");
-        MenuItem changePositonItem = new MenuItem("Change position");
-        attackItem.setGraphic(new ImageView(new Image(getClass().getResource("AttackIcon.png").toExternalForm())));
-        changePositonItem.setGraphic(new ImageView(new Image(getClass().getResource("changePositionIcon.png").toExternalForm())));
-        attackItem.setStyle("-fx-text-fill: white;");
-        changePositonItem.setStyle("-fx-text-fill: white;");
-        contextMenu.getItems().addAll(attackItem, changePositonItem);
-        imageCard.setOnContextMenuRequested(event -> contextMenu.show(imageCard, event.getScreenX(), event.getScreenY()));
-    }
 }
