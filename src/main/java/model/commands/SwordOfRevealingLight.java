@@ -17,6 +17,7 @@ public class SwordOfRevealingLight extends Command implements Activate{
     @Override
     public void run() {
         board = gameController.getGameBoard();
+        board.getZoneSlotByCard(myCard).setHidden(false);
         ZoneSlot[] zoneSlots = board.getPlayerMonsterZone(gameController.getOpponentPlayerNumber());
         for (int i = 1; i <= 5; i++) {
             if (zoneSlots[i].getCard() != null && zoneSlots[i].isHidden())
@@ -27,19 +28,21 @@ public class SwordOfRevealingLight extends Command implements Activate{
     @Override
     public void runContinuous() throws Exception {
         board = gameController.getGameBoard();
-        if (counter == 3 && gameController.getGamePhase() == GamePhase.END_PHASE) {
-            board.sendCardFromSpellZoneToGraveyard(myCard);
-            return;
-        }
         if (gameController.getGamePhase() == GamePhase.DRAW_PHASE &&
-                gameController.getCurrentPlayerNumber() != board.getOwnerOfCard(myCard))
+                gameController.getOpponentPlayerNumber() == board.getOwnerOfCard(myCard)) {
             counter++;
+        }
+        if (counter == 2 && gameController.getGamePhase() == GamePhase.END_PHASE &&
+            gameController.getOpponentPlayerNumber() == board.getOwnerOfCard(myCard)) {
+            board.sendCardFromSpellZoneToGraveyard(myCard);
+        }
     }
 
     @Override
     public boolean canActivate() throws Exception {
         return gameController.getGamePhase() == GamePhase.MAIN_PHASE1 ||
                 gameController.getGamePhase() == GamePhase.MAIN_PHASE2 ||
+                gameController.getGamePhase() == GamePhase.END_PHASE ||
                 gameController.getGamePhase() == GamePhase.BATTLE_PHASE;
     }
 }

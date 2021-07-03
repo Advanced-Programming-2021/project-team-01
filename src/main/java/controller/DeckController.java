@@ -46,8 +46,7 @@ public class DeckController {
             throw new DeckNotExists(name);
     }
 
-    public void addCardToDeck(String cardName, String deckName, boolean isMainDeck) throws CardNameNotExists,
-            DeckNotExists, MainDeckIsFull, SideDeckIsFull, CardNumberLimit, IOException, PlayerCardNotExist {
+    public void addCardToDeck(String cardName, String deckName, boolean isMainDeck) throws Exception{
         Card card = Card.getCardByName(cardName);
         if (card != null) {
             if (DatabaseController.doesDeckExists(deckName)) {

@@ -1,0 +1,48 @@
+user login u ali p 123
+duel new second-player username rounds 1
+next phase
+gc Swords of Revealing Light
+select hand 5
+set
+select spell 1
+active effect
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+next phase
+select hand 2
+summon
+next phase
+select monster 1
+attack direct
+next phase
+next phase
+next phase
+next phase
+next phase

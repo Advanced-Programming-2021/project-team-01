@@ -1,7 +1,6 @@
 package model;
 
 import controller.DatabaseController;
-import controller.DeckController;
 import controller.RegisterController;
 import model.card.Card;
 import org.junit.jupiter.api.Assertions;
@@ -10,8 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DeckTest {
     @BeforeEach
@@ -40,20 +37,6 @@ class DeckTest {
         Assertions.assertTrue(deck.getSideDeck().contains(Card.getCardByName("Suijin")));
     }
 
-    @DisplayName("Deck remove card test")
-    @Test
-    void removeCardTest() throws IOException {
-        Deck deck = DatabaseController.getDeckByName("ai");
-        RegisterController.onlineUser = DatabaseController.getUserByName("AI");
-        deck.addCardToMainDeck(Card.getCardByName("Suijin"));
-        Assertions.assertTrue(deck.getMainDeck().contains(Card.getCardByName("Suijin")));
-        deck.addCardToSideDeck(Card.getCardByName("Suijin"));
-        Assertions.assertTrue(deck.getSideDeck().contains(Card.getCardByName("Suijin")));
-        deck.removeCardFromMainDeck(Card.getCardByName("Suijin"));
-        deck.removeCardFromSideDeck(Card.getCardByName("Suijin"));
-        Assertions.assertFalse(deck.getMainDeck().contains(Card.getCardByName("Suijin")));
-        Assertions.assertFalse(deck.getSideDeck().contains(Card.getCardByName("Suijin")));
-    }
 
     @DisplayName("Deck name getter test")
     @Test
@@ -65,8 +48,8 @@ class DeckTest {
     @DisplayName("Deck validation test")
     @Test
     void deckIsValidTest() throws IOException {
-        Deck deck = DatabaseController.getDeckByName("ai");
-        Assertions.assertTrue(deck.getMainDeck().size() >= 25);
+        Deck deck = DatabaseController.getDeckByName("test");
+        Assertions.assertTrue(deck.getMainDeck().size() >= 45);
         Assertions.assertTrue(deck.isDeckValid());
     }
 }

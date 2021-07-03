@@ -9,19 +9,53 @@ import java.util.Scanner;
 public class HandleRequestType {
     public static Scanner scanner = new Scanner(System.in);
     public static Menu currentMenu = Menu.REGISTER_MENU;
+    ShopView shopView;
+    DeckView deckView;
+    GameView gameView;
+    ChainView chainView;
+    ImportExportView importExportView;
+    MainMenu mainMenu;
+    ScoreBoardView scoreBoardView;
+    ProfileView profileView;
+    RegisterView registerView;
+    String command = "";
+
+    public RegisterView getRegisterView() {
+        return registerView;
+    }
+
+    public ProfileView getProfileView() {
+        return profileView;
+    }
+
+    public DeckView getDeckView(){
+        return deckView;
+    }
+
+    public ShopView getShopView() {
+        return shopView;
+    }
+
+    public ScoreBoardView getScoreBoardView() {
+        return scoreBoardView;
+    }
+
+    public MainMenu getMainMenu() {
+        return mainMenu;
+    }
+
 
     public void start() throws Exception {
-        RegisterView registerView = new RegisterView();
-        ProfileView profileView = new ProfileView();
-        ScoreBoardView scoreBoardView = new ScoreBoardView();
-        ShopView shopView = new ShopView();
-        DeckView deckView = new DeckView();
-        GameView gameView = new GameView();
-        ChainView chainView = new ChainView();
-        ImportExportView importExportView = new ImportExportView();
-        MainMenu mainMenu = new MainMenu();
+        registerView = new RegisterView();
+        profileView = new ProfileView();
+        scoreBoardView = new ScoreBoardView();
+        shopView = new ShopView();
+        deckView = new DeckView();
+        gameView = new GameView();
+        chainView = new ChainView();
+        importExportView = new ImportExportView();
+        mainMenu = new MainMenu();
         while (currentMenu != Menu.EXIT) {
-            String command = "";
             if (GameController.getCurrentPlayer() != null &&
                     GameController.getCurrentPlayer().getUsername().equals("AI")) {
                 String output = GameController.getInstance().getAiBasicController().handleAiMoves();
@@ -30,7 +64,7 @@ public class HandleRequestType {
             }
             if (scanner.hasNext()) {
                 command = scanner.nextLine();
-            }else
+            } else
                 break;
             if (currentMenu == Menu.REGISTER_MENU) {
                 registerView.run(command);

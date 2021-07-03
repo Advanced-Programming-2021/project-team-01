@@ -24,6 +24,7 @@ public class ChangeOfHeart extends Command implements Activate {
             throw new MonsterZoneFull();
         if (board.numberOfMonsterCards(gameController.getOpponentPlayerNumber()) == 0)
             throw new Exception("Monster Zone of your opponent is Empty");
+        board.getZoneSlotByCard(myCard).setHidden(false);
         ArrayList<Card> monsterCards = board.getCardInMonsterZone(gameController.getOpponentPlayerNumber());
         GameView.printListOfCardOpponent(monsterCards);
         int index = GameView.getValidNumber(0, monsterCards.size() - 1);
@@ -45,7 +46,8 @@ public class ChangeOfHeart extends Command implements Activate {
     @Override
     public boolean canActivate() throws Exception {
         board = gameController.getGameBoard();
-        boolean canActivate = board.getNumberOfCardsInHand(gameController.getOpponentPlayerNumber()) != 0;
+        boolean canActivate = board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) != 5 &&
+                board.numberOfMonsterCards(gameController.getOpponentPlayerNumber()) != 0;
         boolean correctPhase = gameController.getGamePhase() == GamePhase.MAIN_PHASE1 ||
                 gameController.getGamePhase() == GamePhase.MAIN_PHASE2 ||
                 gameController.getGamePhase() == GamePhase.BATTLE_PHASE;

@@ -337,7 +337,7 @@ public class GameController {
         setSummonedCard(selectedCard.getCard());
     }
 
-    public void summon() throws Exception {             //fixme : hand limit
+    public void summon() throws Exception {//fixme : hand limit
         if (selectedCard.getCard() == null) {
             throw new CardNotSelected();
         }
@@ -623,14 +623,6 @@ public class GameController {
         currentPlayer.increaseLoseRate();
     }
 
-    public void sendCardFromHandToSpellZone() throws SpellZoneFullError {
-        if (selectedCard.getCardLocation() == CardLocation.HAND) {
-            SpellCard card = (SpellCard) selectedCard.getCard();
-            gameBoard.setSpell(getCurrentPlayerNumber(), card);
-            gameBoard.getZoneSlotByCard(card).setHidden(false);
-        }
-    }
-
     public int getOpponentLp() {
         if (getOpponent() == playerOne) {
             return playerOneLp.getValue();
@@ -766,6 +758,11 @@ public class GameController {
         chain = new Chain(cards);
         chainController = new ChainController(chain);
         chainController.run();
+    }
+
+    public void endJunit(){
+        HandleRequestType.currentMenu = Menu.REGISTER_MENU;
+        RegisterController.onlineUser = null;
     }
 }
 

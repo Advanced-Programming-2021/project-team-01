@@ -31,7 +31,7 @@ public class EffectController {
     public int fieldAttackBoosterCurrent(MonsterCard monsterCard) {
         if (!board.isCardInMonsterZone(monsterCard))
             return 0;
-        ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(gameController.getCurrentPlayerNumber());
+        ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(board.getOwnerOfCard(monsterCard));
         SpellCard card = (SpellCard) zoneSlot.getCard();
         if (card == null)
             return 0;
@@ -64,7 +64,12 @@ public class EffectController {
     public int fieldAttackBoosterOpponent(MonsterCard monsterCard) {
         if (!board.isCardInMonsterZone(monsterCard))
             return 0;
-        ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(gameController.getOpponentPlayerNumber());
+        int number = board.getOwnerOfCard(monsterCard);
+        if (number == 1)
+            number = 2;
+        else
+            number = 1;
+        ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(number);
         SpellCard card = (SpellCard) zoneSlot.getCard();
         if (card == null)
             return 0;
@@ -87,7 +92,7 @@ public class EffectController {
     public int fieldDefenceBoosterCurrent(MonsterCard monsterCard) {
         if (!board.isCardInMonsterZone(monsterCard))
             return 0;
-        ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(gameController.getCurrentPlayerNumber());
+        ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(board.getOwnerOfCard(monsterCard));
         SpellCard card = (SpellCard) zoneSlot.getCard();
         if (card == null)
             return 0;
@@ -110,7 +115,12 @@ public class EffectController {
     public int fieldDefenceBoosterOpponent(MonsterCard monsterCard) {
         if (!board.isCardInMonsterZone(monsterCard))
             return 0;
-        ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(gameController.getOpponentPlayerNumber());
+        int number = board.getOwnerOfCard(monsterCard);
+        if (number == 1)
+            number = 2;
+        else
+            number = 1;
+        ZoneSlot zoneSlot = gameController.gameBoard.getPlayerFieldZone(number);
         SpellCard card = (SpellCard) zoneSlot.getCard();
         if (card == null)
             return 0;
@@ -151,7 +161,7 @@ public class EffectController {
                 if (attackController.getTarget().canActivate())
                     attackController.getTarget().doActions();
             } else if (attackController.getTarget().getName().equals(Effect.EXPLODER_DRAGON.toString())) {
-                if (attackController.getDamage() > 0){
+                if (attackController.getDamage() > 0) {
                     attackController.setDamage(0);
                 }
 

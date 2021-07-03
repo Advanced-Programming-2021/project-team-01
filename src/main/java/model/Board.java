@@ -126,7 +126,7 @@ public class Board {
                     playerOneSpellZone[i].setCard(null);
             }
             GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
-        } else {
+        } else if (player == 2) {
             playerTwoGraveYard.add(card);
             for (int i = 1; i < 6; i++) {
                 if (playerTwoSpellZone[i].getCard() == card)
@@ -676,21 +676,6 @@ public class Board {
         return null;
     }
 
-    public void changePowerMonster(int attack, int defense, MonsterType... monsterTypes) {
-        for (int j = 1; j < 6; j++) {
-            for (MonsterType monsterType : monsterTypes) {
-                MonsterCard monsterCard = ((MonsterCard) playerOneMonsterZone[j].getCard());
-                if (monsterCard == null)
-                    continue;
-                if (monsterCard.getMonsterTypes().contains(monsterType)) {
-                    monsterCard.increaseAttack(attack);
-                    monsterCard.increaseDefense(defense);
-                    break;
-                }
-            }
-        }
-    }
-
     public ZoneSlot[] getPlayerSpellZone(int playerNum) {
         return playerNum == 1 ? playerOneSpellZone : playerTwoSpellZone;
     }
@@ -802,9 +787,9 @@ public class Board {
     public ArrayList<Card> faceUpSpellAndTraps() {
         ArrayList<Card> spellAndTraps = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
-            if ((!playerOneSpellZone[i].isHidden()) && playerOneSpellZone[i].getCard() != null)
+            if (playerOneSpellZone[i].getCard() != null && (!playerOneSpellZone[i].isHidden()))
                 spellAndTraps.add(playerOneSpellZone[i].getCard());
-            if ((!playerTwoSpellZone[i].isHidden()) && playerTwoSpellZone[i].getCard() != null)
+            if (playerTwoSpellZone[i].getCard() != null && (!playerTwoSpellZone[i].isHidden()))
                 spellAndTraps.add(playerTwoSpellZone[i].getCard());
         }
         for (int i = 1; i < 6; i++) {

@@ -6,7 +6,6 @@ import model.card.SpellCard;
 import model.card.TrapCard;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Deck {
     private final String deckName;
@@ -44,7 +43,6 @@ public class Deck {
         }
         return false;
     }
-
     public boolean isDeckValid() {
         return mainDeck.size() >= 25;
     }

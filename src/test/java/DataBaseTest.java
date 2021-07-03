@@ -1,6 +1,4 @@
-import com.google.gson.Gson;
 import controller.DatabaseController;
-import model.Player;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -15,6 +13,7 @@ class DataBaseTest {
     void nicknameTest(String name) {
         assertTrue(DatabaseController.doesNicknameExist(name));
     }
+
     @ParameterizedTest
     @ValueSource(strings = {"horrry", "nicrererkname"})
     void nicknameFailTest(String name) {

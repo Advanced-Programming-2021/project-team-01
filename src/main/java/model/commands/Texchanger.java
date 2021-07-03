@@ -71,11 +71,6 @@ public class Texchanger extends Command implements Activate {
         String selected = GameView.selectGroups(groups);
         int index;
         switch (selected) {
-            case "Hand":
-                GameView.printListOfCard(hand);
-                index = GameView.getValidNumber(0, hand.size() - 1);
-                shouldSummon = hand.get(index);
-                break;
             case "Deck":
                 GameView.printListOfCard(deck);
                 index = GameView.getValidNumber(0, deck.size() - 1);
@@ -85,6 +80,11 @@ public class Texchanger extends Command implements Activate {
                 GameView.printListOfCard(graveyard);
                 index = GameView.getValidNumber(0, graveyard.size() - 1);
                 shouldSummon = graveyard.get(index);
+                break;
+            case "Hand":
+                GameView.printListOfCard(hand);
+                index = GameView.getValidNumber(0, hand.size() - 1);
+                shouldSummon = hand.get(index);
                 break;
         }
         return true;

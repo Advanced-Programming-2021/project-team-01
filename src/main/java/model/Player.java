@@ -66,7 +66,7 @@ public class Player {
 
     public void deleteDeck(String deckName) {
         playerDecks.removeIf(deck -> deck.equals(deckName));
-        if (activeDeck.equals(deckName)) {
+        if (activeDeck != null && activeDeck.equals(deckName)) {
             activeDeck = null;
         }
     }

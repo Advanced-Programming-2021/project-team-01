@@ -10,6 +10,5 @@ public class MainConsole {
         GameController.getInstance();
         HandleRequestType handleRequestType = new HandleRequestType();
         handleRequestType.start();
-
     }
 }

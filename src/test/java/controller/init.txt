@@ -44,6 +44,7 @@ next phase
 next phase
 next phase
 select hand 3
+css
 summon
 next phase
 next phase

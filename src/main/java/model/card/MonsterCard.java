@@ -67,14 +67,6 @@ public class MonsterCard extends Card {
         this.cardType = cardType;
     }
 
-    public void increaseAttack(int amount) {
-        attack += amount;
-    }
-
-    public void increaseDefense(int amount) {
-        defense += amount;
-    }
-
     public int getLevel() {
         return level;
     }
