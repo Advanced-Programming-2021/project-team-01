@@ -1,6 +1,8 @@
 package view;
 
 import controller.GameController;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
@@ -74,6 +76,7 @@ public class CardView extends Rectangle {
     }
 
     private void handleOnMouseEntered() {
+        GameController.getInstance().getSelectedCard().set(card);
         GameView.imageCard.getChildren().clear();
         GameView.imageCard.getChildren().add(new Rectangle(300, 400, getImage()));
         setScaleX(1.2);
@@ -156,21 +159,36 @@ public class CardView extends Rectangle {
                 break;
             case "Activate effect":
                 menuItem.setGraphic(activateEffectView);
+                menuItem.setOnAction(event -> {
+                    GameView.activateSpellCard();
+                });
                 break;
             case "Set":
                 menuItem.setGraphic(setView);
+                menuItem.setOnAction(event -> {
+                    GameView.setCard();
+                });
                 break;
             case "Defensive set":
                 menuItem.setGraphic(defensiveSetView);
+                menuItem.setOnAction(event -> {
+                    GameView.setCard();
+                });
                 break;
             case "Flip summon":
                 menuItem.setGraphic(flipSummonView);
+                menuItem.setOnAction(event -> {
+                    GameView.flipSummonCard();
+                });
                 break;
             case "Special summon":
                 menuItem.setGraphic(specialSummonView);
                 break;
             case "Normal summon":
                 menuItem.setGraphic(normalSummonView);
+                menuItem.setOnAction(event -> {
+                    GameView.summonCard();
+                });
                 break;
         }
         return menuItem;

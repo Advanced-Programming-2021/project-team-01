@@ -728,6 +728,67 @@ public class Board {
         return 0;
     }
 
+    public CardLocation getCardLocation(Card card) {
+        if (card == playerOneFieldZone.getCard())
+            return CardLocation.FIELD;
+        if (card == playerTwoFieldZone.getCard())
+            return CardLocation.FIELD;
+        if (playerOneHand.contains(card))
+            return CardLocation.HAND;
+        if (playerTwoHand.contains(card))
+            return CardLocation.HAND;
+        for (int i = 1; i < 6; i++) {
+            if (card == playerOneSpellZone[i].getCard())
+                return CardLocation.SPELL;
+            if (card == playerTwoSpellZone[i].getCard())
+                return CardLocation.SPELL;
+            if (card == playerOneMonsterZone[i].getCard())
+                return CardLocation.MONSTER;
+            if (card == playerTwoMonsterZone[i].getCard())
+                return CardLocation.MONSTER;
+        }
+        return null;
+    }
+
+    public int getIndexOfCard(SelectedCard selectedCard) {
+        Card card = selectedCard.getCard();
+        switch (selectedCard.getCardLocation()) {
+            case HAND:
+                if (getOwnerOfCard(card) == 1) {
+                    if (playerOneHand.contains(card))
+                        return playerOneHand.indexOf(card);
+                } else {
+                    if (playerTwoHand.contains(card))
+                        return playerTwoHand.indexOf(card);
+                }
+                break;
+            case MONSTER:
+                if (getOwnerOfCard(card) == 1) {
+                    for (int i = 1; i < 7; i++)
+                        if (playerOneMonsterZone[i].getCard() == card)
+                            return i;
+                } else {
+                    for (int i = 1; i < 7; i++)
+                        if (playerTwoMonsterZone[i].getCard() == card)
+                            return i;
+                }
+                break;
+            case SPELL:
+                if (getOwnerOfCard(card) == 1) {
+                    for (int i = 1; i < 7; i++)
+                        if (playerOneSpellZone[i].getCard() == card)
+                            return i;
+                } else {
+                    for (int i = 1; i < 7; i++)
+                        if (playerTwoSpellZone[i].getCard() == card)
+                            return i;
+                }
+                break;
+        }
+        return -1;
+    }
+
+
     public void setCardFromHandToFieldZone(int player, Card card) {
         if (player == 1) {
             if (playerOneFieldZone.getCard() != null)
@@ -852,7 +913,7 @@ public class Board {
                 }
             }
             for (Card card : playerOneHand) {
-                if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.QUICK_PLAY){
+                if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.QUICK_PLAY) {
                     return card;
                 }
             }
@@ -870,7 +931,7 @@ public class Board {
                 }
             }
             for (Card card : playerTwoHand) {
-                if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.QUICK_PLAY){
+                if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.QUICK_PLAY) {
                     return card;
                 }
             }
@@ -901,7 +962,7 @@ public class Board {
     }
 
     public ZoneSlot[] getPlayerMonsterZone(int playerNum) {
-        if (playerNum == 1){
+        if (playerNum == 1) {
             return playerOneMonsterZone;
         }
         return playerTwoMonsterZone;
