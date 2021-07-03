@@ -4,12 +4,15 @@ import controller.GameController;
 import controller.exceptions.AlreadySummonedError;
 import controller.exceptions.MonsterZoneFull;
 import controller.exceptions.SpellZoneFullError;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.card.*;
 import model.commands.HeraldOfCreation;
 import model.commands.Scanner;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Board {
     private final ZoneSlot[] playerOneMonsterZone;
@@ -20,8 +23,8 @@ public class Board {
     private final ArrayList<Card> playerTwoGraveYard;
     private final ArrayList<Card> playerOneBanishedZone;
     private final ArrayList<Card> playerTwoBanishedZone;
-    private final ArrayList<Card> playerOneDrawZone;
-    private final ArrayList<Card> playerTwoDrawZone;
+    private final ObservableList<Card> playerOneDrawZone;
+    private final ObservableList<Card> playerTwoDrawZone;
     private final ZoneSlot playerOneFieldZone;
     private final ZoneSlot playerTwoFieldZone;
     private final ArrayList<Card> playerOneHand;
@@ -49,8 +52,8 @@ public class Board {
     }
 
     public Board(Deck deck1, Deck deck2) {
-        playerOneDrawZone = deck1.getMainDeck();
-        playerTwoDrawZone = deck2.getMainDeck();
+        playerOneDrawZone = FXCollections.observableArrayList(deck1.getMainDeck());
+        playerTwoDrawZone = FXCollections.observableArrayList(deck2.getMainDeck());
         for (int i = 0; i < 4; i++) {
             addCardFromDeckToHand(1);
         }
@@ -650,7 +653,7 @@ public class Board {
         return playerTwoMonsterZone;
     }
 
-    public ArrayList<Card> getPlayerDrawZone(int player) {
+    public List<Card> getPlayerDrawZone(int player) {
         if (player == 1)
             return playerOneDrawZone;
         else

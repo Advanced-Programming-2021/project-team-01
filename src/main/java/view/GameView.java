@@ -3,14 +3,23 @@ package view;
 import controller.DatabaseController;
 import controller.GameController;
 import controller.RegisterController;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -19,6 +28,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import model.Board;
+import model.card.Card;
+
+import java.util.ArrayList;
 
 public class GameView {
     public static final int HEIGHT = 720;
@@ -27,6 +39,8 @@ public class GameView {
     StackPane playerOneHealthBar;
     StackPane playerTwoHealthBar;
     ScrollPane cardInformation;
+    StackPane drawZonePlayer1;
+    StackPane drawZonePlayer2;
     GridPane playerOneHand;
     GridPane playerTwoHand;
     StackPane mainPane;
@@ -69,10 +83,11 @@ public class GameView {
             playerTwoHand.setTranslateX(500);
             playerOneCardsInBoard = new GridPane();
             playerTwoCardsInBoard = new GridPane();
+            mainPane = new StackPane();
             setZoneInBoard();
+            setupDrawPhase();
             setupGamePane();
             playerTwoHand.setTranslateY(HEIGHT);
-            mainPane = new StackPane();
             BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/view/card_information.png").toExternalForm()),
                     BackgroundRepeat.REPEAT,
                     BackgroundRepeat.REPEAT,
@@ -94,6 +109,47 @@ public class GameView {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private void setupDrawPhase() {
+        ObservableList<Card> playerOneDrawZone = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerDrawZone(1);
+        ObservableList<Card> playerTwoDrawZone = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerDrawZone(2);
+        Label draw1 = new Label(String.valueOf(playerOneDrawZone.size()));
+        Label draw2 = new Label(String.valueOf(playerTwoDrawZone.size()));
+        draw1.setFont(Font.font("Tahoma",12));
+        draw1.setTextFill(Color.WHEAT);
+        draw2.setFont(Font.font("Tahoma",12));
+        draw2.setTextFill(Color.WHEAT);
+        Image image1 = new Image("/Assets/draw.PNG");
+        Image image2 = new Image("/Assets/draw2.PNG");
+        ImageView imageView1 = new ImageView(image1);
+        imageView1.setFitHeight(100);
+        imageView1.setFitWidth(70);
+        ImageView imageView2 = new ImageView(image2);
+        imageView2.setFitWidth(70);
+        imageView2.setFitHeight(100);
+        drawZonePlayer1 = new StackPane(imageView1, draw1);
+        drawZonePlayer2 = new StackPane(imageView2, draw2);
+        playerOneDrawZone.addListener((ListChangeListener<Card>) c -> {
+            draw1.setText(String.valueOf(playerOneDrawZone.size()));
+            //TODO: drawAnimations
+        });
+        playerTwoDrawZone.addListener((ListChangeListener<Card>) c -> {
+            draw2.setText(String.valueOf(playerTwoDrawZone.size()));
+            //TODO: drawAnimations
+        });
+        drawZonePlayer1.setTranslateX(430);
+        drawZonePlayer1.setTranslateY(200);
+        drawZonePlayer2.setTranslateY(-220);
+        drawZonePlayer2.setTranslateX(-430);
+        mainPane.getChildren().addAll( drawZonePlayer1,drawZonePlayer2);
+        Button button = new Button("ERFAN VA DADBEH");
+        button.setOnMouseClicked(event -> {
+            playerOneDrawZone.remove(0);
+            playerTwoDrawZone.remove(0);
+        });
+        mainPane.getChildren().add(button);
+        button.setTranslateX(-300);
     }
 
     private void setZoneInBoard() {

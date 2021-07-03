@@ -9,6 +9,7 @@ import model.card.SpellCard;
 import console.menu.GameView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Terrafoming extends Command implements Activate {
     Board board;
@@ -20,7 +21,7 @@ public class Terrafoming extends Command implements Activate {
     @Override
     public void run() throws NoFieldSpellInDeck {
         board = gameController.getGameBoard();
-        ArrayList<Card> cardsInDeck = board.getPlayerDrawZone(gameController.getCurrentPlayerNumber());
+        List<Card> cardsInDeck = board.getPlayerDrawZone(gameController.getCurrentPlayerNumber());
         ArrayList<Card> fieldSpells = new ArrayList<>();
         for (Card card : cardsInDeck) {
             if (!(card instanceof SpellCard))
@@ -40,7 +41,7 @@ public class Terrafoming extends Command implements Activate {
     @Override
     public boolean canActivate() throws Exception {
         board = gameController.getGameBoard();
-        ArrayList<Card> cardsInDeck = board.getPlayerDrawZone(gameController.getCurrentPlayerNumber());
+        List<Card> cardsInDeck = board.getPlayerDrawZone(gameController.getCurrentPlayerNumber());
         ArrayList<Card> fieldSpells = new ArrayList<>();
         for (Card card : cardsInDeck) {
             if (!(card instanceof SpellCard))
