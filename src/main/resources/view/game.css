@@ -56,9 +56,15 @@
 .progress-bar > .bar {
     -fx-background-color: linear-gradient(to right, red, #00a6ff);
 }
+
 #lpText {
     -fx-font:30px Tahoma;
     -fx-fill: linear-gradient(to right,red, #00a6ff);
     -fx-stroke: black;
     -fx-stroke-width: 1;
+}
+
+.context-menu {
+  -fx-background-color: #006699;
+  -fx-text-fill: white;
 }
