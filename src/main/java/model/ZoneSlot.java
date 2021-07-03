@@ -41,10 +41,12 @@ public class ZoneSlot {
                 GameView.getInstance().observeZoneSlot(this, Action.FLIP_SUMMON); //DH to OO
             }else if (isDefending && (isHidden == hidden)) {
                 GameView.getInstance().observeZoneSlot(this, Action.CHANGE_POSITION); //OO to DO
-            }
-        }else {
+            }else if (!isDefending && (isHidden == hidden))
+                GameView.getInstance().observeZoneSlot(this, Action.CHANGE_POSITION); //DO to OO
+
+        }else if (card instanceof SpellCard || card instanceof TrapCard){
             if (isHidden != hidden) {
-                GameView.getInstance().observeZoneSlot(this, Action.CHANGE_POSITION); //H TO O
+                GameView.getInstance().observeZoneSlot(this, Action.ACTIVATE_SPELL); //H TO O
             }
         }
         isHidden = hidden;
@@ -62,7 +64,7 @@ public class ZoneSlot {
         }
         if (card instanceof SpellCard || card instanceof TrapCard) {
             if (isHidden)
-                GameView.getInstance().observeZoneSlot(this, Action.ACTIVATE_SPELL);
+                GameView.getInstance().observeZoneSlot(this, Action.SET);
         } else {
             if (isDefending && isHidden) {
                 GameView.getInstance().observeZoneSlot(this, Action.SET);

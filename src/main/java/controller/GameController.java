@@ -11,6 +11,7 @@ import model.card.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -178,7 +179,7 @@ public class GameController {
             throw new NoActiveDeck(playerTwo.getUsername());
         }
         currentPlayer = playerOne;//TODO: SHASMAGHZ NABASHIM DAR SHAFEL
-        //currentPlayer = tossCoin() == 1 ? playerOne : playerTwo; //TODO : AI IS ALwAys player two
+//        currentPlayer = tossCoin() == 1 ? playerOne : playerTwo; //TODO : AI IS ALwAys player two
         Deck playerOneDeck = DatabaseController.getDeckByName(playerOne.getActiveDeck());
         Deck playerTwoDeck = DatabaseController.getDeckByName(playerTwo.getActiveDeck());
         if (!playerOneDeck.isDeckValid()) {
@@ -196,6 +197,7 @@ public class GameController {
             playerOneWin = 0;
             playerTwoWin = 0;
         }
+//        Collections.shuffle(playerOneDeck.getMainDeck());
         playerOneLp = new SimpleIntegerProperty();
         playerTwoLp = new SimpleIntegerProperty();
         playerOneLp.set(8000);

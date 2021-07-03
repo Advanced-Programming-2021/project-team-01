@@ -87,7 +87,7 @@ public class CardView extends Rectangle {
         setScaleY(1.2);
         StackPane cardText = (StackPane) GameView.cardInformation.getContent();
         cardText.getChildren().clear();
-        if (!isHidden()) {
+        if (!isHidden() || (cardOwner==GameController.getInstance().getCurrentPlayerNumber())) {
             Text text = new Text();
             text.setFont(Font.font(20));
             text.setWrappingWidth(250);
@@ -113,7 +113,11 @@ public class CardView extends Rectangle {
     }
 
     public ImagePattern getImage() {
-        return image;
+        boolean isOwnerTurn = cardOwner == GameController.getInstance().getCurrentPlayerNumber();
+        if (isOwnerTurn)
+            return card.getCardImage();
+        else
+            return card.getBackImage();
     }
 
     public Card getCard() {
@@ -161,6 +165,9 @@ public class CardView extends Rectangle {
                 break;
             case "Change position":
                 menuItem.setGraphic(changePositionView);
+                menuItem.setOnAction(event -> {
+                    GameView.changeCardPosition();
+                });
                 break;
             case "Activate effect":
                 menuItem.setGraphic(activateEffectView);
