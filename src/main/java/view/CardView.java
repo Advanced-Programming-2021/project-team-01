@@ -8,6 +8,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.card.Card;
+import model.card.CardType;
+import model.card.MonsterCard;
+import model.card.SpellCard;
 
 public class CardView extends Rectangle {
     private Card card;
@@ -54,6 +57,11 @@ public class CardView extends Rectangle {
             setScaleX(1);
             setScaleY(1);
         });
+        if (getCard() instanceof MonsterCard && ((MonsterCard) getCard()).getCardType() == CardType.EFFECT)
+            setViewLocation(ViewLocation.HAND_MONSTER_EFFECT);
+        else if (getCard() instanceof MonsterCard && ((MonsterCard) getCard()).getCardType() == CardType.NORMAL)
+            setViewLocation(ViewLocation.HAND_MONSTER_NORMAL);
+        else if (getCard() instanceof SpellCard) setViewLocation(ViewLocation.HAND_SPELL);
     }
 
     public boolean isHidden() {
