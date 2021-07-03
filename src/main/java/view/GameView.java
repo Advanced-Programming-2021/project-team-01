@@ -3,9 +3,9 @@ package view;
 import controller.DatabaseController;
 import controller.GameController;
 import controller.RegisterController;
+import javafx.beans.property.IntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,16 +15,12 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.Board;
-import model.card.CardType;
-import model.card.MonsterCard;
-import model.card.SpellCard;
 import model.card.Card;
 
 
@@ -32,9 +28,9 @@ public class GameView {
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1366;
     static StackPane imageCard;
+    static ScrollPane cardInformation;
     StackPane playerOneHealthBar;
     StackPane playerTwoHealthBar;
-    static ScrollPane cardInformation;
     StackPane drawZonePlayer1;
     StackPane drawZonePlayer2;
     GridPane playerOneHand;
@@ -112,9 +108,9 @@ public class GameView {
         ObservableList<Card> playerTwoDrawZone = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerDrawZone(2);
         Label draw1 = new Label(String.valueOf(playerOneDrawZone.size()));
         Label draw2 = new Label(String.valueOf(playerTwoDrawZone.size()));
-        draw1.setFont(Font.font("Tahoma",12));
+        draw1.setFont(Font.font("Tahoma", 12));
         draw1.setTextFill(Color.WHEAT);
-        draw2.setFont(Font.font("Tahoma",12));
+        draw2.setFont(Font.font("Tahoma", 12));
         draw2.setTextFill(Color.WHEAT);
         Image image1 = new Image("/Assets/draw.PNG");
         Image image2 = new Image("/Assets/draw2.PNG");
@@ -128,15 +124,15 @@ public class GameView {
         drawZonePlayer2 = new StackPane(imageView2, draw2);
         playerOneDrawZone.addListener((ListChangeListener<Card>) c -> {
             draw1.setText(String.valueOf(playerOneDrawZone.size()));
-            while (c.next()){
-                playerOneHand.addRow(1,new CardView(c.getRemoved().get(0),1,false,false));
+            while (c.next()) {
+                playerOneHand.addRow(1, new CardView(c.getRemoved().get(0), 1, false, false));
             }
             //TODO: drawAnimations
         });
         playerTwoDrawZone.addListener((ListChangeListener<Card>) c -> {
             draw2.setText(String.valueOf(playerTwoDrawZone.size()));
-            while (c.next()){
-                playerTwoHand.addRow(1,new CardView(c.getRemoved().get(0),1,false,true));
+            while (c.next()) {
+                playerTwoHand.addRow(1, new CardView(c.getRemoved().get(0), 1, false, true));
             }
             //TODO: drawAnimations
         });
@@ -144,11 +140,12 @@ public class GameView {
         drawZonePlayer1.setTranslateY(200);
         drawZonePlayer2.setTranslateY(-220);
         drawZonePlayer2.setTranslateX(-430);
-        mainPane.getChildren().addAll( drawZonePlayer1,drawZonePlayer2);
+        mainPane.getChildren().addAll(drawZonePlayer1, drawZonePlayer2);
         Button button = new Button("ERFAN VA DADBEH");
         button.setOnMouseClicked(event -> {
-            playerOneDrawZone.remove(0);
-            playerTwoDrawZone.remove(0);
+            gameController.decreasePlayerLP(1, 1000);
+//            playerOneDrawZone.remove(0);
+//            playerTwoDrawZone.remove(0);
         });
         mainPane.getChildren().add(button);
         button.setTranslateX(-500);
@@ -205,28 +202,40 @@ public class GameView {
         playerTwoHand.setTranslateX(100);
         playerTwoHand.setTranslateY(-100);
         for (int i = 0; i < board.getPlayerTwoHand().size(); i++) {
-            CardView cardView = new CardView(board.getPlayerOneHand().get(i), 2,true,true);
+            CardView cardView = new CardView(board.getPlayerOneHand().get(i), 2, true, true);
             playerTwoHand.add(cardView, i, 1);
         }
     }
 
     public void setupHealthBar() {
-        int playerOneLp = gameController.getPlayerOneLp();
+        IntegerProperty playerOneLp = gameController.getPlayerOneLp();
         setupHealthBarPlayer(playerOneLp, playerOneHealthBar);
-        int playerTwoLp = gameController.getPlayerTwoLp();
+        IntegerProperty playerTwoLp = gameController.getPlayerTwoLp();
         setupHealthBarPlayer(playerTwoLp, playerTwoHealthBar);
     }
 
-    private void setupHealthBarPlayer(int playerLp, StackPane playerHealthBar) {
-        Text text = new Text();
-        text.setId("lpText");
-        text.setText("LP : " + playerLp);
+    private void setupHealthBarPlayer(IntegerProperty playerLp, StackPane playerHealthBar) {
+        Text textLp = new Text();
+        textLp.setId("lpText");
+
+        Text textString = new Text();
+        textString.setId("lpText");
+        textString.setText("LP : ");
+
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.getChildren().addAll(textString, textLp);
+
         ProgressBar progressBar = new ProgressBar();
         progressBar.setPrefWidth(250);
-        progressBar.setProgress(playerLp * 1.0 / 8000);
+
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(text, progressBar);
+        vBox.getChildren().addAll(hBox, progressBar);
+
+        textLp.textProperty().bind(playerLp.asString());
+        progressBar.progressProperty().bind(playerLp.divide(1.0 * 8000));
+
         playerHealthBar.getChildren().add(vBox);
     }
 

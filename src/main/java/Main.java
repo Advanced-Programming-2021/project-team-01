@@ -1,9 +1,11 @@
 import controller.DatabaseController;
 import controller.GameController;
 import javafx.application.Application;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import view.MyAlert;
 import view.View;
 import view.ViewSwitcher;
 

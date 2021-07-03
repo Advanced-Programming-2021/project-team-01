@@ -1,11 +1,13 @@
 package controller;
 
-import controller.exceptions.*;
-import model.*;
-import model.card.*;
 import console.Menu;
 import console.menu.GameView;
 import console.menu.HandleRequestType;
+import controller.exceptions.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import model.*;
+import model.card.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,8 +22,8 @@ public class GameController {
     protected AttackController attackController;
     protected EffectController effectController;
     protected AiBasicController aiBasicController;
-    protected int playerOneLp;
-    protected int playerTwoLp;
+    protected IntegerProperty playerOneLp;
+    protected IntegerProperty playerTwoLp;
     protected Board gameBoard;
     protected boolean isAI;
     protected Card summonedCard;
@@ -102,11 +104,11 @@ public class GameController {
         return attackController;
     }
 
-    public int getPlayerOneLp() {
+    public IntegerProperty getPlayerOneLp() {
         return playerOneLp;
     }
 
-    public int getPlayerTwoLp() {
+    public IntegerProperty getPlayerTwoLp() {
         return playerTwoLp;
     }
 
@@ -140,18 +142,26 @@ public class GameController {
 
     protected void increaseOpponentLp(int amount) {
         if (currentPlayer == playerOne) {
-            playerTwoLp += amount;
+            playerTwoLp.set(playerTwoLp.getValue() + amount);
             return;
         }
-        playerOneLp += amount;
+        playerOneLp.set(playerOneLp.getValue() + amount);
+    }
+
+    public void decreasePlayerLP(int playerNum, int amount) {
+        if (playerNum == 1) {
+            playerOneLp.set(playerOneLp.getValue() - amount);
+        } else {
+            playerTwoLp.set(playerTwoLp.getValue() - amount);
+        }
     }
 
     public void increasePlayerLp(int amount) {
         if (currentPlayer == playerOne) {
-            playerOneLp += amount;
+            playerOneLp.set(playerOneLp.getValue() + amount);
             return;
         }
-        playerTwoLp += amount;
+        playerTwoLp.set(playerTwoLp.getValue() + amount);
     }
 
     public void startGame(String username, int numberOfRounds) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber, IOException {
@@ -172,7 +182,8 @@ public class GameController {
             throw new InvalidDeck(playerOne.getUsername());
         } else if (!playerTwoDeck.isDeckValid()) {
             throw new InvalidDeck(playerTwo.getUsername());
-        }setup(playerOneDeck);
+        }
+        setup(playerOneDeck);
         setup(playerTwoDeck);
         if (numberOfRounds != 1 && numberOfRounds != 3) {
             throw new InvalidRoundNumber();
@@ -182,8 +193,10 @@ public class GameController {
             playerOneWin = 0;
             playerTwoWin = 0;
         }
-        playerOneLp = 8000;
-        playerTwoLp = 8000;
+        playerOneLp = new SimpleIntegerProperty();
+        playerTwoLp = new SimpleIntegerProperty();
+        playerOneLp.set(8000);
+        playerTwoLp.set(8000);
         gameBoard = new Board(playerOneDeck, playerTwoDeck);
         isAI = username.equals("AI");
         gameBoard.showBoard();
@@ -347,9 +360,9 @@ public class GameController {
                 selectedCard.getCard().doActions();
 
             setSummonedCard(selectedCard.getCard());
-            if (selectedCard.getCard().getName().equals(Effect.TERATIGER.toString())){
+            if (selectedCard.getCard().getName().equals(Effect.TERATIGER.toString())) {
                 createChain(selectedCard.getCard());
-            }else {
+            } else {
                 createChain();
             }
             chainController.chain.run();
@@ -474,7 +487,7 @@ public class GameController {
     public void activateEffect() throws Exception {
         state = State.ACTIVE_SPELL;
         if (selectedCard.getCard() instanceof SpellCard) {
-            if (!selectedCard.getCard().canActivate()){
+            if (!selectedCard.getCard().canActivate()) {
                 state = State.NONE;
                 throw new Exception("You cant activate this card");
             }
@@ -516,17 +529,17 @@ public class GameController {
         checkRitualLevel(temp, monsterCards);
         GameView.printListOfCard(temp);
         int target = Integer.parseInt(GameView.prompt("choose a card"));
-        if (target > temp.size()){
+        if (target > temp.size()) {
             throw new Exception("Invalid Number");
         }
         MonsterCard dedicated = (MonsterCard) temp.get(target);
-        String[]monsters = GameView.getValidRitual(dedicated.getLevel());
+        String[] monsters = GameView.getValidRitual(dedicated.getLevel());
         for (String monster : monsters) {
-            gameBoard.sendCardFromMonsterZoneToGraveyard(Integer.parseInt(monster),getCurrentPlayerNumber());
+            gameBoard.sendCardFromMonsterZoneToGraveyard(Integer.parseInt(monster), getCurrentPlayerNumber());
         }
         gameBoard.setSpell(getCurrentPlayerNumber(), (SpellCard) selectedCard.getCard());
         gameBoard.setSpellFaceUp(selectedCard.getCard());
-        gameBoard.summonCard(dedicated,getCurrentPlayerNumber());
+        gameBoard.summonCard(dedicated, getCurrentPlayerNumber());
         gameBoard.sendCardFromSpellZoneToGraveyard(selectedCard.getCard());
     }
 
@@ -543,12 +556,12 @@ public class GameController {
         int minimumLevel = 80;
         for (Card card : temp) {
             if (card instanceof MonsterCard) {
-                if (((MonsterCard) card).getLevel() < minimumLevel){
+                if (((MonsterCard) card).getLevel() < minimumLevel) {
                     minimumLevel = ((MonsterCard) card).getLevel();
                 }
             }
         }
-        if (minimumLevel > totalLevel){
+        if (minimumLevel > totalLevel) {
             throw new Exception("There is no way you could ritual summon a monster");
         }
     }
@@ -560,13 +573,11 @@ public class GameController {
     public void setWinner(String nickname) throws Exception {
         if (playerOne.getNickname().equals(nickname)) {
             playerOneWin = 2;
-            playerTwoLp = 0;
-        }
-        else if (playerTwo.getNickname().equals(nickname)) {
+            playerTwoLp.set(0);
+        } else if (playerTwo.getNickname().equals(nickname)) {
             playerTwoWin = 2;
-            playerOneLp = 0;
-        }
-        else
+            playerOneLp.set(0);
+        } else
             throw new Exception("Nickname is invalid!");
         finishGame();
     }
@@ -618,9 +629,9 @@ public class GameController {
 
     public int getOpponentLp() {
         if (getOpponent() == playerOne) {
-            return playerOneLp;
+            return playerOneLp.getValue();
         }
-        return playerTwoLp;
+        return playerTwoLp.getValue();
     }
 
     public GamePhase getGamePhase() {
@@ -629,9 +640,9 @@ public class GameController {
 
     public int getCurrentLp() {
         if (getCurrentPlayer() == playerTwo) {
-            return playerTwoLp;
+            return playerTwoLp.getValue();
         }
-        return playerOneLp;
+        return playerOneLp.getValue();
     }
 
     public String nextPhase() throws Exception {
@@ -658,13 +669,6 @@ public class GameController {
         return false;
     }
 
-    public void decreasePlayerLP(int playerNum, int amount) {
-        if (playerNum == 1) {
-            playerOneLp -= amount;
-        } else {
-            playerTwoLp -= amount;
-        }
-    }
 
     public void resetChangedCard() {
         changedPositionCards.clear();
@@ -678,7 +682,8 @@ public class GameController {
         if (card == null) {
             System.err.println("TYPO DETECTED");
             return;
-        };
+        }
+        ;
         Card newCard;
         if (card instanceof MonsterCard) {
             newCard = (Card) ((MonsterCard) card).clone();
@@ -693,57 +698,57 @@ public class GameController {
     }
 
     public boolean isGameFinished() {
-        return playerOneLp <= 0 || playerTwoLp <= 0;
+        return playerOneLp.getValue() <= 0 || playerTwoLp.getValue() <= 0;
     }
 
     public String finishGame() throws NoActiveDeck, InvalidDeck, UsernameNotExists, InvalidRoundNumber, IOException {
         if (rounds == 1) {
-            if (playerOneLp <= 0) {
+            if (playerOneLp.getValue() <= 0) {
                 playerOne.increaseLoseRate();
                 playerTwo.increaseWinRate(1000);
                 playerOne.increaseMoney(100);
-                playerTwo.increaseMoney(1000 + playerTwoLp);
+                playerTwo.increaseMoney(1000 + playerTwoLp.getValue());
                 DatabaseController.updatePlayer(playerOne);
                 DatabaseController.updatePlayer(playerTwo);
                 HandleRequestType.currentMenu = Menu.MAIN_MENU;
                 return String.format("%s won the game and the score is: %d-%d",
-                        playerOneLp <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 100, 1000 + playerTwoLp);
+                        playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 100, 1000 + playerTwoLp.getValue());
             } else {
                 playerTwo.increaseLoseRate();
                 playerOne.increaseWinRate(1000);
                 playerTwo.increaseMoney(100);
-                playerOne.increaseMoney(1000 + playerOneLp);
+                playerOne.increaseMoney(1000 + playerOneLp.getValue());
                 DatabaseController.updatePlayer(playerOne);
                 DatabaseController.updatePlayer(playerTwo);
                 HandleRequestType.currentMenu = Menu.MAIN_MENU;
                 return String.format("%s won the game and the score is: %d-%d",
-                        playerOneLp <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 1000 + playerOneLp, 100);
+                        playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 1000 + playerOneLp.getValue(), 100);
             }
         } else {
             if (playerOneWin == 2 || playerTwoWin == 2) {
-                if (playerOneLp <= 0) {
+                if (playerOneLp.getValue() <= 0) {
                     playerOne.increaseLoseRate();
                     playerTwo.increaseWinRate(3000);
                     playerOne.increaseMoney(300);
-                    playerTwo.increaseMoney(3000 + 3 * playerTwoLp);
+                    playerTwo.increaseMoney(3000 + 3 * playerTwoLp.getValue());
                     DatabaseController.updatePlayer(playerOne);
                     DatabaseController.updatePlayer(playerTwo);
                     HandleRequestType.currentMenu = Menu.MAIN_MENU;
                     return String.format("%s won the game and the score is: %d-%d",
-                            playerOneLp <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 300, 3000 + playerTwoLp);
+                            playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 300, 3000 + playerTwoLp.getValue());
                 } else {
                     playerTwo.increaseLoseRate();
                     playerOne.increaseWinRate(3000);
                     playerTwo.increaseMoney(300);
-                    playerOne.increaseMoney(3000 + 3 * playerOneLp);
+                    playerOne.increaseMoney(3000 + 3 * playerOneLp.getValue());
                     DatabaseController.updatePlayer(playerOne);
                     DatabaseController.updatePlayer(playerTwo);
                     HandleRequestType.currentMenu = Menu.MAIN_MENU;
                     return String.format("%s won the game and the score is: %d-%d",
-                            playerOneLp <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 3000 + playerOneLp, 300);
+                            playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 3000 + playerOneLp.getValue(), 300);
                 }
             } else {
-                if (playerOneLp <= 0)
+                if (playerOneLp.getValue() <= 0)
                     playerTwoWin++;
                 else
                     playerOneWin++;
@@ -759,29 +764,5 @@ public class GameController {
         chainController.run();
     }
 }
-//    backup
-//    public void createChain() throws Exception {
-//        //fixme : test speed of instant traps
-//        ArrayList<Card> opponentSpellZone = getGameBoard().getCardInSpellZone(getOpponentPlayerNumber());
-//        chain = new Chain();
-//        Card counterTrap;
-//        GameView.showConsole("Its now " + getCurrentPlayer().getNickname() + "turn!");
-//        for (Card card : opponentSpellZone) {
-//            if (card.canActivate()) {
-//                chain.setNext(card);
-//                counterTrap = gameBoard.getCounterTraps(getCurrentPlayerNumber()); //TODO : MORE THAN 1 CARD
-//                if (counterTrap != null && !chain.doesExistInChain(counterTrap)) {
-//                    GameView.showConsole("do you want to activate" + counterTrap.getName());
-//                    if (GameView.getValidResponse()) {
-//                        GameView.showConsole("Its now " + getOpponent().getNickname() + "turn!");
-//                        chain.setNext(counterTrap);
-//                    }
-//                    GameView.showConsole("Its now " + getCurrentPlayer().getNickname() + "turn!");
-//                    gameBoard.showBoard();
-//                }
-//            }
-//        }
-//
-//    }
 
 
