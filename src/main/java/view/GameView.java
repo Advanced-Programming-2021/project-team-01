@@ -1,18 +1,18 @@
 package view;
 
+import console.menu.HandleRequestType;
 import controller.DatabaseController;
 import controller.GameController;
 import controller.RegisterController;
+import controller.exceptions.LevelFiveException;
+import controller.exceptions.LevelSevenException;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -56,6 +56,11 @@ public class GameView {
             gameController = GameController.getInstance();
             RegisterController.onlineUser = DatabaseController.getUserByName("ali");
             GameController.getInstance().startGame("username", 1);
+            //TODO: delete down
+//            gameController.nextPhase();
+            gameController.nextPhase();
+            gameController.nextPhase();
+            //TODO delete up
             playerOneHealthBar = createStackPane(300, 70, 0, 0);
             playerOneHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
             playerTwoHealthBar = createStackPane(300, 70, 0, HEIGHT - 117);
@@ -238,6 +243,72 @@ public class GameView {
 
         playerHealthBar.getChildren().add(vBox);
     }
+
+    public static void setCard(){
+        try {
+            GameController.getInstance().setCard();
+            System.out.println("set successfully");
+        } catch (Exception exp) {
+            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR,exp.getMessage());
+            myAlert.show();
+        }
+    }
+
+    public static void flipSummonCard() {
+        try {
+            GameController.getInstance().flipSummon();
+            System.out.println("flip summoned successfully");
+        } catch (Exception exp) {
+            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR,exp.getMessage());
+            myAlert.show();
+        }
+    }
+
+
+    public static void summonCard() {
+        try {
+            GameController.getInstance().summon();
+            System.out.println("summoned successfully");
+        }
+        //TODO ino graphici konim
+//        catch (LevelFiveException exception) {
+//            String input = HandleRequestType.scanner.nextLine();
+//            if (input.equals("cancel")) return;
+//            int index = Integer.parseInt(input);
+//            try {
+//                GameController.getInstance().tributeSummonLevel5(index);
+//                System.out.println("summoned successfully");
+//            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+//            }
+//        } catch (LevelSevenException levelSevenException) {
+//            String input = HandleRequestType.scanner.nextLine();
+//            if (input.equals("cancel")) return;
+//            int index1 = Integer.parseInt(input);
+//            int index2 = Integer.parseInt(HandleRequestType.scanner.nextLine());
+//            try {
+//                GameController.getInstance().tributeSummonLevel7(index1, index2);
+//                System.out.println("summoned successfully");
+//            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+        catch (Exception exp) {
+            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR,exp.getMessage());
+            myAlert.show();
+        }
+    }
+
+    public static void activateSpellCard() {
+        try {
+            GameController.getInstance().activateEffect();
+            System.out.println("spell activated");
+        } catch (Exception error) {
+            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR,error.getMessage());
+            myAlert.show();
+        }
+    }
+
 
     private StackPane createStackPane(int width, int height, int x, int y) {
         StackPane stackPane = new StackPane();

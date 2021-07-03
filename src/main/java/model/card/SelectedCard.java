@@ -1,5 +1,7 @@
 package model.card;
 
+import controller.GameController;
+import model.Board;
 import model.Player;
 
 
@@ -54,5 +56,16 @@ public class SelectedCard {
         setCardLocation(location);
         setPlayer(player);
         setIndex(index);
+    }
+    public void set(Card card){
+        setCard(card);
+        GameController gameController = GameController.getInstance();
+        if (gameController.getCurrentPlayerNumber() == gameController.getGameBoard().getOwnerOfCard(card))
+            setPlayer(GameController.getCurrentPlayer());
+        else
+            setPlayer(GameController.getOpponent());
+        Board board = gameController.getGameBoard();
+        setCardLocation(board.getCardLocation(card));
+        setIndex(board.getIndexOfCard(this));
     }
 }
