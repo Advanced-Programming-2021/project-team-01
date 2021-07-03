@@ -110,7 +110,7 @@ public class CardView extends Rectangle {
         else if (viewLocation == ViewLocation.HAND_MONSTER_NORMAL)
             contextMenu.getItems().addAll(addMenuItem("Defensive set"), addMenuItem("Normal summon"));
         else if (viewLocation == ViewLocation.HAND_SPELL)
-            contextMenu.getItems().addAll(addMenuItem("Set"));
+            contextMenu.getItems().addAll(addMenuItem("Set"), addMenuItem("Activate effect"));
         setOnContextMenuRequested(event -> {
             if (GameController.getInstance().getCurrentPlayerNumber() == cardOwner)
             contextMenu.show(this, event.getScreenX(), event.getScreenY());
