@@ -31,10 +31,10 @@ import model.card.Card;
 public class GameView {
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1366;
-    StackPane imageCard;
+    static StackPane imageCard;
     StackPane playerOneHealthBar;
     StackPane playerTwoHealthBar;
-    ScrollPane cardInformation;
+    static ScrollPane cardInformation;
     StackPane drawZonePlayer1;
     StackPane drawZonePlayer2;
     GridPane playerOneHand;
@@ -128,10 +128,16 @@ public class GameView {
         drawZonePlayer2 = new StackPane(imageView2, draw2);
         playerOneDrawZone.addListener((ListChangeListener<Card>) c -> {
             draw1.setText(String.valueOf(playerOneDrawZone.size()));
+            while (c.next()){
+                playerOneHand.addRow(1,new CardView(c.getRemoved().get(0),1,false,false));
+            }
             //TODO: drawAnimations
         });
         playerTwoDrawZone.addListener((ListChangeListener<Card>) c -> {
             draw2.setText(String.valueOf(playerTwoDrawZone.size()));
+            while (c.next()){
+                playerTwoHand.addRow(1,new CardView(c.getRemoved().get(0),1,false,true));
+            }
             //TODO: drawAnimations
         });
         drawZonePlayer1.setTranslateX(430);
@@ -145,7 +151,7 @@ public class GameView {
             playerTwoDrawZone.remove(0);
         });
         mainPane.getChildren().add(button);
-        button.setTranslateX(-300);
+        button.setTranslateX(-500);
     }
 
     private void setZoneInBoard() {
@@ -189,55 +195,17 @@ public class GameView {
     }
 
     private void setupHands() {
-        playerOneHand.setTranslateX(200);
+        playerOneHand.setTranslateX(100);
         playerOneHand.setTranslateY(HEIGHT - 100);
         Board board = gameController.getGameBoard();
         for (int i = 0; i < board.getPlayerOneHand().size(); i++) {
-            CardView cardView = new CardView(board.getPlayerOneHand().get(i), 1);
-            cardView.setImage(false, false);
-            cardView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    imageCard.getChildren().clear();
-                    imageCard.getChildren().add(new Rectangle(300, 400, cardView.getImage()));
-                    cardView.setScaleX(1.2);
-                    cardView.setScaleY(1.2);
-                    StackPane cardText = (StackPane) cardInformation.getContent();
-                    cardText.getChildren().clear();
-                    if (!cardView.isHidden()) {
-                        Text text = new Text();
-                        text.setFont(Font.font(20));
-                        text.setWrappingWidth(250);
-                        text.setText(cardView.getCard().getDescription());
-                        text.setFill(Color.WHITE);
-                        cardText.getChildren().add(text);
-                    }
-                }
-            });
+            CardView cardView = new CardView(board.getPlayerOneHand().get(i), 1, false, false);
             playerOneHand.add(cardView, i, 1);
         }
-        playerTwoHand.setTranslateX(200);
+        playerTwoHand.setTranslateX(100);
         playerTwoHand.setTranslateY(-100);
         for (int i = 0; i < board.getPlayerTwoHand().size(); i++) {
-            CardView cardView = new CardView(board.getPlayerOneHand().get(i), 2);
-            cardView.setImage(true, true);
-            cardView.setOnMouseEntered(event -> {
-                imageCard.getChildren().clear();
-                imageCard.getChildren().add(new Rectangle(300, 400, cardView.getImage()));
-                cardView.setScaleX(1.2);
-                cardView.setScaleY(1.2);
-
-                StackPane cardText = (StackPane) cardInformation.getContent();
-                cardText.getChildren().clear();
-                if (!cardView.isHidden()) {
-                    Text text = new Text();
-                    text.setFont(Font.font(20));
-                    text.setWrappingWidth(250);
-                    text.setText(cardView.getCard().getDescription());
-                    text.setFill(Color.WHITE);
-                    cardText.getChildren().add(text);
-                }
-            });
+            CardView cardView = new CardView(board.getPlayerOneHand().get(i), 2,true,true);
             playerTwoHand.add(cardView, i, 1);
         }
     }

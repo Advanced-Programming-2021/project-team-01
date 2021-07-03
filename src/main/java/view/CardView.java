@@ -5,8 +5,12 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import model.card.Card;
 import model.card.CardType;
 import model.card.MonsterCard;
@@ -49,7 +53,7 @@ public class CardView extends Rectangle {
         specialSummonView.setFitHeight(40);
     }
 
-    public CardView(Card card, int owner) {
+    public CardView(Card card, int owner,boolean isHidden, boolean is180) {
         super(421.0 / 3, 614.0 / 3);
         this.card = card;
         this.cardOwner = owner;
@@ -57,11 +61,33 @@ public class CardView extends Rectangle {
             setScaleX(1);
             setScaleY(1);
         });
+        setOnMouseEntered(event -> {
+            handleOnMouseEntered();
+        });
+        setImage(isHidden, is180);
         if (getCard() instanceof MonsterCard && ((MonsterCard) getCard()).getCardType() == CardType.EFFECT)
             setViewLocation(ViewLocation.HAND_MONSTER_EFFECT);
         else if (getCard() instanceof MonsterCard && ((MonsterCard) getCard()).getCardType() == CardType.NORMAL)
             setViewLocation(ViewLocation.HAND_MONSTER_NORMAL);
-        else if (getCard() instanceof SpellCard) setViewLocation(ViewLocation.HAND_SPELL);
+        else if (getCard() instanceof SpellCard)
+            setViewLocation(ViewLocation.HAND_SPELL);
+    }
+
+    private void handleOnMouseEntered() {
+        GameView.imageCard.getChildren().clear();
+        GameView.imageCard.getChildren().add(new Rectangle(300, 400, getImage()));
+        setScaleX(1.2);
+        setScaleY(1.2);
+        StackPane cardText = (StackPane) GameView.cardInformation.getContent();
+        cardText.getChildren().clear();
+        if (!isHidden()) {
+            Text text = new Text();
+            text.setFont(Font.font(20));
+            text.setWrappingWidth(250);
+            text.setText(getCard().getDescription());
+            text.setFill(Color.WHITE);
+            cardText.getChildren().add(text);
+        }
     }
 
     public boolean isHidden() {
