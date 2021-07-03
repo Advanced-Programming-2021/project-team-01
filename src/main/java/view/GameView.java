@@ -4,6 +4,7 @@ import controller.DatabaseController;
 import controller.GameController;
 import controller.RegisterController;
 import javafx.beans.property.IntegerProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
