@@ -17,6 +17,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -42,6 +44,8 @@ public class GameView {
     GameController gameController;
     GridPane playerOneCardsInBoard;
     GridPane playerTwoCardsInBoard;
+    MediaPlayer mediaPlayer;
+    boolean isPlaying = false;
 
     private static GameView instance;
 
@@ -71,6 +75,7 @@ public class GameView {
             gameController.nextPhase();
             gameController.nextPhase();
             //TODO delete up
+            setupMusic();
             playerOneHealthBar = createStackPane(300, 70, 0, 0);
             playerOneHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
             playerTwoHealthBar = createStackPane(300, 70, 0, HEIGHT - 117);
@@ -116,6 +121,14 @@ public class GameView {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private void setupMusic() {
+        Media media = new Media(getClass().getResource("/Assets/Music/main.mp3").toExternalForm());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+        isPlaying = true;
+        mediaPlayer.play();
     }
 
     private void setupDrawPhase() {
