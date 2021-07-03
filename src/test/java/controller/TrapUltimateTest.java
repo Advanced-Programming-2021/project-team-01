@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 
 class TrapUltimateTest {
@@ -35,7 +36,7 @@ class TrapUltimateTest {
     @DisplayName("PotOfGreed")
     void test1() throws Exception {
         gameController.cheater("Pot of Greed");
-        ArrayList<Card> hand;
+        List<Card> hand;
         if (gameController.getCurrentPlayerNumber() == 1) hand = board.getPlayerOneHand();
         else hand = board.getPlayerTwoHand();
         board.showBoard();

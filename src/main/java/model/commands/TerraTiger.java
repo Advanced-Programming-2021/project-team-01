@@ -7,6 +7,7 @@ import model.card.MonsterCard;
 import console.menu.GameView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TerraTiger extends Command implements Activate{
 
@@ -18,7 +19,7 @@ public class TerraTiger extends Command implements Activate{
     public void run() throws Exception {
         while (true) {
             int input = GameView.getValidNumber(1, GameController.getInstance().getGameBoard().getCurrentPlayerHand().size());
-            ArrayList<Card> hand =  GameController.getInstance().getGameBoard().getCurrentPlayerHand();
+            List<Card> hand =  GameController.getInstance().getGameBoard().getCurrentPlayerHand();
             if (!(hand.get(input - 1) instanceof MonsterCard)){
                 continue;
             }

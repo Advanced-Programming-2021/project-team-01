@@ -26,8 +26,8 @@ public class Board {
     private final ObservableList<Card> playerTwoDrawZone;
     private final ZoneSlot playerOneFieldZone;
     private final ZoneSlot playerTwoFieldZone;
-    private final ArrayList<Card> playerOneHand;
-    private final ArrayList<Card> playerTwoHand;
+    private final ObservableList<Card> playerOneHand;
+    private final ObservableList<Card> playerTwoHand;
 
 
     {
@@ -37,8 +37,8 @@ public class Board {
         playerTwoSpellZone = new ZoneSlot[6];
         playerOneGraveYard = new ArrayList<>();
         playerTwoGraveYard = new ArrayList<>();
-        playerOneHand = new ArrayList<>();
-        playerTwoHand = new ArrayList<>();
+        playerOneHand = FXCollections.observableArrayList();
+        playerTwoHand = FXCollections.observableArrayList();
         playerOneFieldZone = new ZoneSlot();
         playerTwoFieldZone = new ZoneSlot();
         for (int i = 1; i < 6; i++) {
@@ -420,7 +420,7 @@ public class Board {
         }
     }
 
-    private void setMonsterInBoard(MonsterCard card, ZoneSlot[] playerOneMonsterZone, ArrayList<Card> playerOneHand) {
+    private void setMonsterInBoard(MonsterCard card, ZoneSlot[] playerOneMonsterZone, List<Card> playerOneHand) {
         for (int i = 1; i < 6; i++) {
             if (playerOneMonsterZone[i].getCard() == null) {
                 playerOneMonsterZone[i].setDefending(true);
@@ -935,22 +935,22 @@ public class Board {
         return null;
     }
 
-    public ArrayList<Card> getPlayerOneHand() {
+    public List<Card> getPlayerOneHand() {
         return playerOneHand;
     }
 
-    public ArrayList<Card> getPlayerTwoHand() {
+    public List<Card> getPlayerTwoHand() {
         return playerTwoHand;
     }
 
-    public ArrayList<Card> getCurrentPlayerHand() {
+    public List<Card> getCurrentPlayerHand() {
         if (GameController.getInstance().getCurrentPlayerNumber() == 1) {
             return playerOneHand;
         }
         return playerTwoHand;
     }
 
-    public ArrayList<Card> getPlayerHand(int player) {
+    public List<Card> getPlayerHand(int player) {
         if (player == 1)
             return playerOneHand;
         else

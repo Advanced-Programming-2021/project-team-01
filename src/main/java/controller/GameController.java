@@ -11,6 +11,7 @@ import model.card.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GameController {
@@ -513,7 +514,7 @@ public class GameController {
 
     private void getRitualCard() throws Exception {
         ArrayList<Card> temp = new ArrayList<>();
-        ArrayList<Card> hand;
+        List<Card> hand;
         ArrayList<Card> monsterCards;
         if (getCurrentPlayerNumber() == 1) {
             hand = gameBoard.getPlayerOneHand();

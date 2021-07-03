@@ -25,6 +25,8 @@ import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
 
+import java.util.List;
+
 
 public class GameView {
     public static final int HEIGHT = 720;
@@ -44,6 +46,10 @@ public class GameView {
     GridPane playerTwoCardsInBoard;
     MediaPlayer mediaPlayer;
     boolean isPlaying = false;
+
+    private GameView() {
+
+    }
 
     public static GameView getInstance() {
         if (instance == null) instance = new GameView();
@@ -135,7 +141,7 @@ public class GameView {
             gameController.nextPhase();
             gameController.nextPhase();
             //TODO delete up
-//            setupMusic();
+            //setupMusic();
             playerOneHealthBar = createStackPane(300, 70, 0, 0);
             playerOneHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
             playerTwoHealthBar = createStackPane(300, 70, 0, HEIGHT - 117);
@@ -176,11 +182,44 @@ public class GameView {
             mainPane.getChildren().addAll(playerOneCardsInBoard, playerTwoCardsInBoard, playerOneHand, playerTwoHand);
             setupHealthBar();
             setupHands();
+            setupHandObservables();
             root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private void setupHandObservables() {
+        ObservableList<Card> playerOneLogicHand = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerHand(1);
+        ObservableList<Card> playerTwoLogicHand = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerHand(2);
+        listenOnHand(playerOneLogicHand, playerOneHand);
+        listenOnHand(playerTwoLogicHand, playerTwoHand);
+        Button button = new Button("Click Me");
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                playerOneLogicHand.remove(0,1);
+            }
+        });
+        mainPane.getChildren().add(button);
+
+    }
+
+    private void listenOnHand(ObservableList<Card> logicHand, GridPane playerHand) {
+        logicHand.addListener((ListChangeListener<Card>) c -> {
+            while (c.next()) {
+                for (Card card : c.getRemoved()) {
+                    for (int i = 0; i < playerHand.getChildren().size(); i++) {
+                        CardView cardView = (CardView) playerHand.getChildren().get(i);
+                        if (cardView.getCard().getName().equals(card.getName())){
+                            playerHand.getChildren().remove(cardView);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private void setupMusic() {
@@ -231,13 +270,6 @@ public class GameView {
         mainPane.getChildren().addAll(drawZonePlayer1, drawZonePlayer2);
         Button button = new Button("ERFAN VA DADBEH");
         button.setOnMouseClicked(event -> {
-            try {
-                for (int i = 0; i < 12; i++) {
-                    gameController.nextPhase();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             playerOneDrawZone.remove(0);
             playerTwoDrawZone.remove(0);
         });

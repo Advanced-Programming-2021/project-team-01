@@ -6,6 +6,7 @@ import model.card.Card;
 import console.menu.GameView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TwinTwisters extends Command implements Activate {
     Board board;
@@ -38,7 +39,7 @@ public class TwinTwisters extends Command implements Activate {
 
 
         if (canActivate && correctPhase) {
-            ArrayList<Card> cardsInHand = board.getPlayerHand(gameController.getCurrentPlayerNumber());
+            List<Card> cardsInHand = board.getPlayerHand(gameController.getCurrentPlayerNumber());
             cardsInHand.remove(myCard);
             GameView.printListOfCard(cardsInHand);
             int indexCardInHand = GameView.getValidNumber(0, cardsInHand.size() - 1);

@@ -8,6 +8,7 @@ import model.card.SpellCard;
 import console.menu.GameView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AiBasicController {
@@ -45,7 +46,7 @@ public class AiBasicController {
     }
 
     private void summonActions() throws Exception {
-        ArrayList<Card> hand = gameController.getGameBoard().getPlayerTwoHand();
+        List<Card> hand = gameController.getGameBoard().getPlayerTwoHand();
         for (int i = 0; i < hand.size(); i++) {
             if (hand.get(i) instanceof MonsterCard) {
                 if (gameController.gameBoard.numberOfMonsterCards(2) == 5) {
@@ -61,7 +62,7 @@ public class AiBasicController {
     }
 
     private void activateActions() throws Exception {
-        ArrayList<Card> hand = gameController.getGameBoard().getPlayerTwoHand();
+        List<Card> hand = gameController.getGameBoard().getPlayerTwoHand();
         for (int i = 0; i < hand.size(); i++) {
             if (hand.get(i).getName().equals("Pot of Greed")) {
                 int x = 3;

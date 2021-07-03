@@ -6,6 +6,7 @@ import model.card.Card;
 import console.menu.GameView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MindCrush extends Command implements Activate {
@@ -24,7 +25,7 @@ public class MindCrush extends Command implements Activate {
         while (Card.getCardByName(input) == null)
             input = GameView.prompt("Enter a valid Card Name: ");
         int currentPlayer = board.getOwnerOfCard(myCard);
-        ArrayList<Card> cardsInHand;
+        List<Card> cardsInHand;
         if (currentPlayer == 1)
             cardsInHand = board.getPlayerTwoHand();
         else

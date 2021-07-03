@@ -7,6 +7,7 @@ import model.card.MonsterCard;
 import console.menu.GameView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TheTricky extends Command implements Activate{
 
@@ -19,7 +20,7 @@ public class TheTricky extends Command implements Activate{
             throw new Exception("You cant activate this card");
         }
         Board board = GameController.getInstance().getGameBoard();
-        ArrayList<Card> hand;
+        List<Card> hand;
         if (gameController.getCurrentPlayerNumber() == 1){
             hand = board.getPlayerOneHand();
         }else {
@@ -43,7 +44,7 @@ public class TheTricky extends Command implements Activate{
 
     public boolean canActivate(){
         Board board = GameController.getInstance().getGameBoard();
-        ArrayList<Card> hand;
+        List<Card> hand;
         if (gameController.getCurrentPlayerNumber() == 1){
             hand = board.getPlayerOneHand();
         }else {

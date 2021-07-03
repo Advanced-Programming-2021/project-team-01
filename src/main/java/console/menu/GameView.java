@@ -13,6 +13,7 @@ import console.ConsoleCommands;
 import console.Menu;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class GameView {
@@ -299,7 +300,7 @@ public class GameView {
         System.out.println(input);
     }
 
-    public static void printListOfCard(ArrayList<Card> cards) {
+    public static void printListOfCard(List<Card> cards) {
         StringBuilder stringBuilder = new StringBuilder();
         int index = 0;
         for (Card card : cards) {
