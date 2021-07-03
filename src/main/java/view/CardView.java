@@ -48,4 +48,5 @@ public class CardView extends Rectangle {
         int currentPlayer = GameController.getInstance().getCurrentPlayerNumber();
 
     }
+
 }

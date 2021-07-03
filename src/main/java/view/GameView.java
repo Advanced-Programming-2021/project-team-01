@@ -8,9 +8,12 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -56,6 +59,7 @@ public class GameView {
             playerTwoHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
             imageCard = createStackPane(300, 400, 0, 70);
             imageCard.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+            createContextMenu();
             cardInformation = new ScrollPane();
             cardInformation.setTranslateY(470);
             cardInformation.prefHeight(133);
@@ -219,5 +223,18 @@ public class GameView {
         stackPane.setTranslateX(x);
         stackPane.setTranslateY(y);
         return stackPane;
+    }
+
+    private void createContextMenu() {
+        ContextMenu contextMenu = new ContextMenu();
+        contextMenu.setStyle("-fx-background-color: black;-fx-text-fill: white;");
+        MenuItem attackItem = new MenuItem("Attack");
+        MenuItem changePositonItem = new MenuItem("Change position");
+        attackItem.setGraphic(new ImageView(new Image(getClass().getResource("AttackIcon.png").toExternalForm())));
+        changePositonItem.setGraphic(new ImageView(new Image(getClass().getResource("changePositionIcon.png").toExternalForm())));
+        attackItem.setStyle("-fx-text-fill: white;");
+        changePositonItem.setStyle("-fx-text-fill: white;");
+        contextMenu.getItems().addAll(attackItem, changePositonItem);
+        imageCard.setOnContextMenuRequested(event -> contextMenu.show(imageCard, event.getScreenX(), event.getScreenY()));
     }
 }
