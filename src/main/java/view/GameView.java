@@ -1,13 +1,9 @@
 package view;
 
-import console.menu.HandleRequestType;
 import controller.DatabaseController;
 import controller.GameController;
 import controller.RegisterController;
-import controller.exceptions.LevelFiveException;
-import controller.exceptions.LevelSevenException;
 import javafx.beans.property.IntegerProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -34,6 +30,7 @@ public class GameView {
     public static final int WIDTH = 1366;
     static StackPane imageCard;
     static ScrollPane cardInformation;
+    private static GameView instance;
     StackPane playerOneHealthBar;
     StackPane playerTwoHealthBar;
     StackPane drawZonePlayer1;
@@ -46,8 +43,6 @@ public class GameView {
     GridPane playerTwoCardsInBoard;
     MediaPlayer mediaPlayer;
     boolean isPlaying = false;
-
-    private static GameView instance;
 
     public static GameView getInstance() {
         if (instance == null) instance = new GameView();
@@ -62,6 +57,70 @@ public class GameView {
             }
         }
         return null;
+    }
+
+    public static void setCard() {
+        try {
+            GameController.getInstance().setCard();
+            System.out.println("set successfully");
+        } catch (Exception exp) {
+            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
+            myAlert.show();
+        }
+    }
+
+    public static void flipSummonCard() {
+        try {
+            GameController.getInstance().flipSummon();
+            System.out.println("flip summoned successfully");
+        } catch (Exception exp) {
+            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
+            myAlert.show();
+        }
+    }
+
+    public static void summonCard() {
+        try {
+            GameController.getInstance().summon();
+            System.out.println("summoned successfully");
+        }
+        //TODO ino graphici konim
+//        catch (LevelFiveException exception) {
+//            String input = HandleRequestType.scanner.nextLine();
+//            if (input.equals("cancel")) return;
+//            int index = Integer.parseInt(input);
+//            try {
+//                GameController.getInstance().tributeSummonLevel5(index);
+//                System.out.println("summoned successfully");
+//            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+//            }
+//        } catch (LevelSevenException levelSevenException) {
+//            String input = HandleRequestType.scanner.nextLine();
+//            if (input.equals("cancel")) return;
+//            int index1 = Integer.parseInt(input);
+//            int index2 = Integer.parseInt(HandleRequestType.scanner.nextLine());
+//            try {
+//                GameController.getInstance().tributeSummonLevel7(index1, index2);
+//                System.out.println("summoned successfully");
+//            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+        catch (Exception exp) {
+            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
+            myAlert.show();
+        }
+    }
+
+    public static void activateSpellCard() {
+        try {
+            GameController.getInstance().activateEffect();
+            System.out.println("spell activated");
+        } catch (Exception error) {
+            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, error.getMessage());
+            myAlert.show();
+        }
     }
 
     public void init(Pane root) {
@@ -267,72 +326,6 @@ public class GameView {
         playerHealthBar.getChildren().add(vBox);
     }
 
-    public static void setCard(){
-        try {
-            GameController.getInstance().setCard();
-            System.out.println("set successfully");
-        } catch (Exception exp) {
-            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR,exp.getMessage());
-            myAlert.show();
-        }
-    }
-
-    public static void flipSummonCard() {
-        try {
-            GameController.getInstance().flipSummon();
-            System.out.println("flip summoned successfully");
-        } catch (Exception exp) {
-            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR,exp.getMessage());
-            myAlert.show();
-        }
-    }
-
-
-    public static void summonCard() {
-        try {
-            GameController.getInstance().summon();
-            System.out.println("summoned successfully");
-        }
-        //TODO ino graphici konim
-//        catch (LevelFiveException exception) {
-//            String input = HandleRequestType.scanner.nextLine();
-//            if (input.equals("cancel")) return;
-//            int index = Integer.parseInt(input);
-//            try {
-//                GameController.getInstance().tributeSummonLevel5(index);
-//                System.out.println("summoned successfully");
-//            } catch (Exception e) {
-//                System.out.println(e.getMessage());
-//            }
-//        } catch (LevelSevenException levelSevenException) {
-//            String input = HandleRequestType.scanner.nextLine();
-//            if (input.equals("cancel")) return;
-//            int index1 = Integer.parseInt(input);
-//            int index2 = Integer.parseInt(HandleRequestType.scanner.nextLine());
-//            try {
-//                GameController.getInstance().tributeSummonLevel7(index1, index2);
-//                System.out.println("summoned successfully");
-//            } catch (Exception e) {
-//                System.out.println(e.getMessage());
-//            }
-//        }
-        catch (Exception exp) {
-            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR,exp.getMessage());
-            myAlert.show();
-        }
-    }
-
-    public static void activateSpellCard() {
-        try {
-            GameController.getInstance().activateEffect();
-            System.out.println("spell activated");
-        } catch (Exception error) {
-            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR,error.getMessage());
-            myAlert.show();
-        }
-    }
-
-
     private StackPane createStackPane(int width, int height, int x, int y) {
         StackPane stackPane = new StackPane();
         stackPane.setPrefHeight(height);
@@ -344,19 +337,73 @@ public class GameView {
         return stackPane;
     }
 
-    public void observeZoneSlot(ZoneSlot zoneSlot,boolean isAdded) {
+    public void observeZoneSlot(ZoneSlot zoneSlot, Action action) {
         ZoneLocation zoneLocation = GameController.getInstance().getGameBoard().getZoneLocation(zoneSlot);
         int index = zoneLocation.getIndex();
         int playerNumber = zoneLocation.getPlayerNumber();
         CardLocation cardLocation = zoneLocation.getCardLocation();
-        if (cardLocation == CardLocation.MONSTER){
-            if (playerNumber == 1){
-                if (isAdded){
-                    System.out.println("hi");
-
+        switch (action) {
+            case SET: {
+                if (cardLocation == CardLocation.SPELL) {
+                    setSpell(index, playerNumber);
+                } else if (cardLocation == CardLocation.MONSTER) {
+                    setMonster(index, playerNumber);
+                } else if (cardLocation == CardLocation.FIELD) {
+                    setField(playerNumber);
                 }
-
+                break;
+            }
+            case SUMMON: {
+                summonMonsterCard(playerNumber, index);
+            }
+            case FLIP_SUMMON: {
+                flipSummon(playerNumber, index);
+            }
+            case ACTIVATE_SPELL: {
+                activateSpell(playerNumber, index);
+            }
+            case CHANGE_POSITION: {
+                changePosition(playerNumber, index);
+            }
+            case REMOVE_FROM_ZONE: {
+                removeFromZone(cardLocation,playerNumber,index);
             }
         }
+
+    }
+
+    private void removeFromZone(CardLocation cardLocation, int playerNumber, int index) {
+
+
+    }
+
+    private void changePosition(int playerNumber, int index) {
+
+    }
+
+    private void activateSpell(int playerNumber, int index) {
+
+    }
+
+    private void flipSummon(int playerNumber, int index) {
+
+    }
+
+    private void summonMonsterCard(int playerNumber, int index) {
+
+
+    }
+
+    private void setField(int playerNumber) {
+
+
+    }
+
+    private void setMonster(int index, int playerNumber) {
+
+    }
+
+    private void setSpell(int index, int playerNumber) {
+
     }
 }
