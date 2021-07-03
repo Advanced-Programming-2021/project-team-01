@@ -75,11 +75,10 @@ public class CardView extends Rectangle {
             setViewLocation(ViewLocation.HAND_SPELL);
     }
 
-    public void setToBoard(){
+    public void setToBoard() {
         setHeight(95);
         setWidth(75);
     }
-
     private void handleOnMouseEntered() {
         GameController.getInstance().getSelectedCard().set(card);
         GameView.imageCard.getChildren().clear();

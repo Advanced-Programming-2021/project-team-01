@@ -1,15 +1,13 @@
 package model;
 
-import controller.GameController;
 import controller.Effect;
+import controller.GameController;
 import model.card.Card;
 import model.card.MonsterCard;
 import model.card.SpellCard;
 import model.card.TrapCard;
 import view.Action;
 import view.GameView;
-
-import java.util.EventListener;
 
 public class ZoneSlot {
     private Card card;
@@ -26,6 +24,55 @@ public class ZoneSlot {
     public boolean isDefending() {
         return isDefending;
     }
+
+    public void setDefending(boolean defending) {
+        isDefending = defending;
+    }
+
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        if (card instanceof MonsterCard) {
+            if (isDefending && isHidden && !hidden) {
+                GameView.getInstance().observeZoneSlot(this, Action.FLIP);//DH to DO
+            } else if (!isDefending && isHidden && !hidden) {
+                GameView.getInstance().observeZoneSlot(this, Action.FLIP_SUMMON); //DH to OO
+            }else if (isDefending && (isHidden == hidden)) {
+                GameView.getInstance().observeZoneSlot(this, Action.CHANGE_POSITION); //OO to DO
+            }
+        }else {
+            if (isHidden != hidden) {
+                GameView.getInstance().observeZoneSlot(this, Action.CHANGE_POSITION); //H TO O
+            }
+        }
+        isHidden = hidden;
+    }
+
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+        if (card == null) {
+            GameView.getInstance().observeZoneSlot(this, Action.REMOVE_FROM_ZONE);
+            return;
+        }
+        if (card instanceof SpellCard || card instanceof TrapCard) {
+            if (isHidden)
+                GameView.getInstance().observeZoneSlot(this, Action.ACTIVATE_SPELL);
+        } else {
+            if (isDefending && isHidden) {
+                GameView.getInstance().observeZoneSlot(this, Action.SET);
+                return;
+            }
+            GameView.getInstance().observeZoneSlot(this, Action.SUMMON);
+        }
+
+    }
+
 
     public void setEquippedCard(Card card) {
         this.equippedCard = card;
@@ -87,29 +134,6 @@ public class ZoneSlot {
         return 0;
     }
 
-    public boolean isHidden() {
-        return isHidden;
-    }
-
-    public void setHidden(boolean hidden) {
-        isHidden = hidden;
-    }
-
-    public void setDefending(boolean defending) {
-        isDefending = defending;
-    }
-
-    public Card getCard() {
-        return card;
-    }
-
-    public void setCard(Card card) {
-        this.card = card;
-        if (card == null)
-            GameView.getInstance().observeZoneSlot(this, Action.REMOVE_FROM_ZONE);
-        else
-            GameView.getInstance().observeZoneSlot(this,Action.SUMMON);
-    }
 
     public String toString() {
         if (card == null) {

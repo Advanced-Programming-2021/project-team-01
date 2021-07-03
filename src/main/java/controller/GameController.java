@@ -438,6 +438,7 @@ public class GameController {
         changedPositionCards.add(selectedCard.getCard());
         if (newPosition.equals("defense")) {
             getZoneSlotSelectedCard().setDefending(true);
+            getZoneSlotSelectedCard().setHidden(false);
         } else if (newPosition.equals("attack")) {
             getZoneSlotSelectedCard().setDefending(false);
             getZoneSlotSelectedCard().setHidden(false);

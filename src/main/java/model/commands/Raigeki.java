@@ -19,8 +19,8 @@ public class Raigeki extends Command implements Activate{
             for (int i = 1; i < 6; i++) {
                 if (zoneSlot[i].getCard() != null) {
                     board.sendCardFromMonsterZoneToGraveyard(i, gameController.getOpponentPlayerNumber());
-                    zoneSlot[i].setHidden(false);
                     zoneSlot[i].setDefending(false);
+                    zoneSlot[i].setHidden(false);
                 }
             }
             board.sendCardFromSpellZoneToGraveyard(myCard);
@@ -29,8 +29,8 @@ public class Raigeki extends Command implements Activate{
             for (int i = 1; i < 6; i++) {
                 if (zoneSlot[i].getCard() != null) {
                     board.sendCardFromMonsterZoneToGraveyard(i, gameController.getOpponentPlayerNumber());
-                    zoneSlot[i].setHidden(false);
                     zoneSlot[i].setDefending(false);
+                    zoneSlot[i].setHidden(false);
                 }
             }
             board.sendCardFromSpellZoneToGraveyard(myCard);

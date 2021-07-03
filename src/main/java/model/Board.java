@@ -22,8 +22,6 @@ public class Board {
     private final ZoneSlot[] playerTwoSpellZone;
     private final ArrayList<Card> playerOneGraveYard;
     private final ArrayList<Card> playerTwoGraveYard;
-    private final ArrayList<Card> playerOneBanishedZone;
-    private final ArrayList<Card> playerTwoBanishedZone;
     private final ObservableList<Card> playerOneDrawZone;
     private final ObservableList<Card> playerTwoDrawZone;
     private final ZoneSlot playerOneFieldZone;
@@ -34,10 +32,8 @@ public class Board {
 
     {
         playerOneMonsterZone = new ZoneSlot[6];
-        playerOneBanishedZone = new ArrayList<>();
         playerOneSpellZone = new ZoneSlot[6];
-        playerTwoMonsterZone = new ZoneSlot[6];
-        playerTwoBanishedZone = new ArrayList<>();  //TODO: 1 start index
+        playerTwoMonsterZone = new ZoneSlot[6];  //TODO: 1 start index
         playerTwoSpellZone = new ZoneSlot[6];
         playerOneGraveYard = new ArrayList<>();
         playerTwoGraveYard = new ArrayList<>();
@@ -292,9 +288,9 @@ public class Board {
         if (player == 1) {
             for (int i = 1; i <= 5; i++) {
                 if (playerOneMonsterZone[i].getCard() == null) {
-                    playerOneMonsterZone[i].setCard(monsterCard);
-                    playerOneMonsterZone[i].setHidden(false);
                     playerOneMonsterZone[i].setDefending(false);
+                    playerOneMonsterZone[i].setHidden(false);
+                    playerOneMonsterZone[i].setCard(monsterCard);
                     playerOneHand.remove(monsterCard);
                     return;
                 }
@@ -302,9 +298,9 @@ public class Board {
         } else {
             for (int i = 1; i <= 5; i++) {
                 if (playerTwoMonsterZone[i].getCard() == null) {
-                    playerTwoMonsterZone[i].setCard(monsterCard);
-                    playerTwoMonsterZone[i].setHidden(false);
                     playerTwoMonsterZone[i].setDefending(false);
+                    playerTwoMonsterZone[i].setHidden(false);
+                    playerTwoMonsterZone[i].setCard(monsterCard);
                     playerTwoHand.remove(monsterCard);
                     return;
                 }
@@ -372,16 +368,16 @@ public class Board {
         if (player == 1) {
             Card card = playerOneMonsterZone[indexOfCard].getCard();
             playerOneGraveYard.add(card);
-            playerOneMonsterZone[indexOfCard].setCard(null);
-            playerOneMonsterZone[indexOfCard].setHidden(false);
             playerOneMonsterZone[indexOfCard].setDefending(false);
+            playerOneMonsterZone[indexOfCard].setHidden(false);
+            playerOneMonsterZone[indexOfCard].setCard(null);
             GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
         } else if (player == 2) {
             Card card = playerTwoMonsterZone[indexOfCard].getCard();
             playerTwoGraveYard.add(card);
-            playerTwoMonsterZone[indexOfCard].setCard(null);
-            playerTwoMonsterZone[indexOfCard].setHidden(false);
             playerTwoMonsterZone[indexOfCard].setDefending(false);
+            playerTwoMonsterZone[indexOfCard].setHidden(false);
+            playerTwoMonsterZone[indexOfCard].setCard(null);
             GameController.getInstance().getDestroyedCardsForPlayerTwo().add(card);
         }
     }
@@ -397,9 +393,9 @@ public class Board {
                 }
             }
             playerOneGraveYard.add(card);
-            playerOneMonsterZone[indexOfCard].setCard(null);
-            playerOneMonsterZone[indexOfCard].setHidden(false);
             playerOneMonsterZone[indexOfCard].setDefending(false);
+            playerOneMonsterZone[indexOfCard].setHidden(false);
+            playerOneMonsterZone[indexOfCard].setCard(null);
             GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
         } else if (player == 2) {
             for (int i = 1; i < 6; i++) {
@@ -409,9 +405,9 @@ public class Board {
                 }
             }
             playerTwoGraveYard.add(card);
-            playerTwoMonsterZone[indexOfCard].setCard(null);
-            playerTwoMonsterZone[indexOfCard].setHidden(false);
             playerTwoMonsterZone[indexOfCard].setDefending(false);
+            playerTwoMonsterZone[indexOfCard].setHidden(false);
+            playerTwoMonsterZone[indexOfCard].setCard(null);
             GameController.getInstance().getDestroyedCardsForPlayerTwo().add(card);
         }
     }
@@ -427,9 +423,9 @@ public class Board {
     private void setMonsterInBoard(MonsterCard card, ZoneSlot[] playerOneMonsterZone, ArrayList<Card> playerOneHand) {
         for (int i = 1; i < 6; i++) {
             if (playerOneMonsterZone[i].getCard() == null) {
-                playerOneMonsterZone[i].setCard(card);
                 playerOneMonsterZone[i].setDefending(true);
                 playerOneMonsterZone[i].setHidden(true);
+                playerOneMonsterZone[i].setCard(card);
                 playerOneHand.remove(card);
                 break;
             }
@@ -440,12 +436,12 @@ public class Board {
     public void setSpell(int playerNum, SpellCard card) throws SpellZoneFullError {
         if (card.getProperty() == Property.FIELD) {
             if (playerNum == 1 && playerOneFieldZone.getCard() == null) {
-                playerOneFieldZone.setCard(card);
                 playerOneFieldZone.setHidden(true);
+                playerOneFieldZone.setCard(card);
                 playerOneHand.remove(card);
             } else if (playerTwoFieldZone.getCard() == null) {
-                playerTwoFieldZone.setCard(card);
                 playerTwoFieldZone.setHidden(true);
+                playerTwoFieldZone.setCard(card);
                 playerTwoHand.remove(card);
             } else
                 throw new SpellZoneFullError();
@@ -461,8 +457,8 @@ public class Board {
                 throw new SpellZoneFullError();
             for (int i = 1; i < 6; i++) {
                 if (playerOneSpellZone[i].getCard() == null) {
-                    playerOneSpellZone[i].setCard(card);
                     playerOneSpellZone[i].setHidden(true);
+                    playerOneSpellZone[i].setCard(card);
                     playerOneHand.remove(card);
                     break;
                 }
@@ -476,8 +472,8 @@ public class Board {
                 throw new SpellZoneFullError();
             for (int i = 1; i < 6; i++) {
                 if (playerTwoSpellZone[i].getCard() == null) {
-                    playerTwoSpellZone[i].setCard(card);
                     playerTwoSpellZone[i].setHidden(true);
+                    playerTwoSpellZone[i].setCard(card);
                     playerTwoHand.remove(card);
                     break;
                 }
@@ -496,8 +492,8 @@ public class Board {
                 throw new SpellZoneFullError();
             for (int i = 1; i < 6; i++) {
                 if (playerOneSpellZone[i].getCard() == null) {
-                    playerOneSpellZone[i].setCard(card);
                     playerOneSpellZone[i].setHidden(true);
+                    playerOneSpellZone[i].setCard(card);
                     playerOneHand.remove(card);
                     break;
                 }
@@ -511,8 +507,8 @@ public class Board {
                 throw new SpellZoneFullError();
             for (int i = 1; i < 6; i++) {
                 if (playerTwoSpellZone[i].getCard() == null) {
-                    playerTwoSpellZone[i].setCard(card);
                     playerTwoSpellZone[i].setHidden(true);
+                    playerTwoSpellZone[i].setCard(card);
                     playerTwoHand.remove(card);
                     break;
                 }
@@ -626,14 +622,14 @@ public class Board {
         if (playerNumber == 1) {
             Card card = playerOneFieldZone.getCard();
             if (card != null) {
-                playerOneFieldZone.setCard(null);
                 playerOneGraveYard.add(card);
+                playerOneFieldZone.setCard(null);
             }
         } else {
             Card card = playerTwoFieldZone.getCard();
             if (card != null) {
-                playerTwoFieldZone.setCard(null);
                 playerTwoGraveYard.add(card);
+                playerTwoFieldZone.setCard(null);
             }
         }
 
@@ -870,9 +866,9 @@ public class Board {
                     playerOneMonsterZone[i].setCard(null);
                     for (int j = 1; j < 6; j++) {
                         if (playerTwoMonsterZone[j].getCard() == null) {
-                            playerTwoMonsterZone[j].setCard(card);
-                            playerTwoMonsterZone[j].setHidden(false);
                             playerTwoMonsterZone[j].setDefending(false);
+                            playerTwoMonsterZone[j].setHidden(false);
+                            playerTwoMonsterZone[j].setCard(card);
                             return;
                         }
                     }
@@ -884,9 +880,9 @@ public class Board {
                     playerTwoMonsterZone[i].setCard(null);
                     for (int j = 1; j < 6; j++) {
                         if (playerOneMonsterZone[j].getCard() == null) {
-                            playerOneMonsterZone[j].setCard(card);
-                            playerOneMonsterZone[j].setHidden(false);
                             playerOneMonsterZone[j].setDefending(false);
+                            playerOneMonsterZone[j].setHidden(false);
+                            playerOneMonsterZone[j].setCard(card);
                             return;
                         }
                     }

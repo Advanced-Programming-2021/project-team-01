@@ -6,5 +6,6 @@ public enum Action {
     CHANGE_POSITION,
     SET,
     ACTIVATE_SPELL,
+    FLIP,
     REMOVE_FROM_ZONE;
 }

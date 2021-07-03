@@ -2,7 +2,6 @@ package view;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -14,32 +13,30 @@ public class ViewSwitcher {
 
     public static void switchTo(View view) {
         Pane root = null;
+        FXMLLoader fxmlLoader = null;
         try {
-            root = FXMLLoader.load(Objects.requireNonNull(ViewSwitcher.class.getResource(view.getFileName())));
+            fxmlLoader = new FXMLLoader(Objects.requireNonNull(ViewSwitcher.class.getResource(view.getFileName())));
+            if (view == View.GAME_VIEW)
+                fxmlLoader.setController(GameView.getInstance());
+            root = fxmlLoader.load();
+            switch (view) {
+                case SCOREBOARD: {
+                    new ScoreboardView().init(root);
+                    break;
+                }
+                case IMPORTEXPORT: {
+                    new ImportExportView().init(root);
+                    break;
+                }
+                case LOGIN: {
+                    new LoginView().init(root);
+                }
+                case GAME_VIEW: {
+                    GameView.getInstance().init(root);
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        assert root != null;
-        switch (view) {
-            case SCOREBOARD: {
-                new ScoreboardView().init(root);
-                break;
-            }
-            case IMPORTEXPORT: {
-                new ImportExportView().init(root);
-                break;
-            }
-            case LOGIN: {
-                new LoginView().init(root);
-                break;
-            }
-            case GAME_VIEW: {
-                AnchorPane anchorPane = new AnchorPane();
-                anchorPane.setPrefHeight(720);
-                anchorPane.setPrefWidth(1368);
-                root = anchorPane;
-                GameView.getInstance().init(root);
-            }
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);
