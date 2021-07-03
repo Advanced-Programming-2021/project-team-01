@@ -8,20 +8,19 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Popup;
 import model.Board;
+import model.card.CardType;
+import model.card.MonsterCard;
+import model.card.SpellCard;
 
 public class GameView {
     public static final int HEIGHT = 720;
@@ -59,7 +58,6 @@ public class GameView {
             playerTwoHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
             imageCard = createStackPane(300, 400, 0, 70);
             imageCard.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-            createContextMenu();
             cardInformation = new ScrollPane();
             cardInformation.setTranslateY(470);
             cardInformation.prefHeight(133);
@@ -146,6 +144,11 @@ public class GameView {
         Board board = gameController.getGameBoard();
         for (int i = 0; i < board.getPlayerOneHand().size(); i++) {
             CardView cardView = new CardView(board.getPlayerOneHand().get(i), 1);
+            if (cardView.getCard() instanceof MonsterCard && ((MonsterCard) cardView.getCard()).getCardType() == CardType.EFFECT)
+                cardView.setViewLocation(ViewLocation.HAND_MONSTER_EFFECT);
+            else if (cardView.getCard() instanceof MonsterCard && ((MonsterCard) cardView.getCard()).getCardType() == CardType.NORMAL)
+                cardView.setViewLocation(ViewLocation.HAND_MONSTER_NORMAL);
+            else if (cardView.getCard() instanceof SpellCard) cardView.setViewLocation(ViewLocation.HAND_SPELL);
             cardView.setImage(false, false);
             cardView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                 @Override
@@ -172,6 +175,11 @@ public class GameView {
         playerTwoHand.setTranslateY(-100);
         for (int i = 0; i < board.getPlayerTwoHand().size(); i++) {
             CardView cardView = new CardView(board.getPlayerOneHand().get(i), 2);
+            if (cardView.getCard() instanceof MonsterCard && ((MonsterCard) cardView.getCard()).getCardType() == CardType.EFFECT)
+                cardView.setViewLocation(ViewLocation.HAND_MONSTER_EFFECT);
+            else if (cardView.getCard() instanceof MonsterCard && ((MonsterCard) cardView.getCard()).getCardType() == CardType.NORMAL)
+                cardView.setViewLocation(ViewLocation.HAND_MONSTER_NORMAL);
+            else if (cardView.getCard() instanceof SpellCard) cardView.setViewLocation(ViewLocation.HAND_SPELL);
             cardView.setImage(true, true);
             cardView.setOnMouseEntered(event -> {
                 imageCard.getChildren().clear();

@@ -46,7 +46,7 @@ public class CardView extends Rectangle {
         specialSummonView.setFitHeight(15);
     }
 
-    public CardView(Card card,int owner){
+    public CardView(Card card,int owner) {
         super(421.0/3,614.0/3);
         this.card = card;
         this.cardOwner = owner;
@@ -54,7 +54,6 @@ public class CardView extends Rectangle {
             setScaleX(1);
             setScaleY(1);
         });
-        setContext();
     }
 
     public boolean isHidden() {
@@ -80,19 +79,30 @@ public class CardView extends Rectangle {
         return card;
     }
 
+    public void setViewLocation(ViewLocation viewLocation) {
+        this.viewLocation = viewLocation;
+        //setContext();
+    }
+
+    public ViewLocation getViewLocation() {
+        return viewLocation;
+    }
+
     private void setContext(){
         int currentPlayer = GameController.getInstance().getCurrentPlayerNumber();
         contextMenu.setStyle("-fx-background-color: black;-fx-text-fill: white;");
         if (viewLocation == ViewLocation.MONSTER_OFFENSIVE)
             contextMenu.getItems().addAll(addMenuItem("Attack"), addMenuItem("Change position"));
-        if (viewLocation == ViewLocation.MONSTER_DEFENSIVE)
+        else if (viewLocation == ViewLocation.MONSTER_DEFENSIVE)
             contextMenu.getItems().addAll(addMenuItem("Change position"), addMenuItem("Flip summon"));
-        if (viewLocation == ViewLocation.SPELL_HIDDEN)
+        else if (viewLocation == ViewLocation.SPELL_HIDDEN)
             contextMenu.getItems().addAll(addMenuItem("Activate effect"));
-        if (viewLocation == ViewLocation.HAND_MONSTER_EFFECT)
+        else if (viewLocation == ViewLocation.HAND_MONSTER_EFFECT)
             contextMenu.getItems().addAll(addMenuItem("Special summon"), addMenuItem("Normal summon"), addMenuItem("Defensive summon"));
-        if (viewLocation == ViewLocation.HAND_MONSTER_NORMAL)
+        else if (viewLocation == ViewLocation.HAND_MONSTER_NORMAL)
             contextMenu.getItems().addAll(addMenuItem("Defensive summon"), addMenuItem("Normal summon"));
+        else if (viewLocation == ViewLocation.HAND_SPELL)
+            contextMenu.getItems().addAll(addMenuItem("Set"));
         setOnContextMenuRequested(event -> contextMenu.show(this, event.getScreenX(), event.getScreenY()));
     }
 
