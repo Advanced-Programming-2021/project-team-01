@@ -108,7 +108,7 @@ public class ZoneSlot {
         if (card == null)
             GameView.getInstance().observeZoneSlot(this, Action.REMOVE_FROM_ZONE);
         else
-            GameView.getInstance().observeZoneSlot(this,Action.SET );
+            GameView.getInstance().observeZoneSlot(this,Action.SUMMON);
     }
 
     public String toString() {

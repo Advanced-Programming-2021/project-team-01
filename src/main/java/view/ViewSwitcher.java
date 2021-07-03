@@ -2,6 +2,7 @@ package view;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -30,9 +31,14 @@ public class ViewSwitcher {
             }
             case LOGIN: {
                 new LoginView().init(root);
+                break;
             }
             case GAME_VIEW: {
-                new GameView().init(root);
+                AnchorPane anchorPane = new AnchorPane();
+                anchorPane.setPrefHeight(720);
+                anchorPane.setPrefWidth(1368);
+                root = anchorPane;
+                GameView.getInstance().init(root);
             }
         }
         Scene scene = new Scene(root);

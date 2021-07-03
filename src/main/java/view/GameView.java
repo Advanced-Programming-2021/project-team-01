@@ -16,7 +16,6 @@ import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.Board;
@@ -43,6 +42,10 @@ public class GameView {
     GridPane playerTwoCardsInBoard;
     MediaPlayer mediaPlayer;
     boolean isPlaying = false;
+
+    private GameView() {
+
+    }
 
     public static GameView getInstance() {
         if (instance == null) instance = new GameView();
@@ -239,13 +242,13 @@ public class GameView {
     }
 
     private void setZoneInBoard() {
-        playerOneCardsInBoard.setTranslateY(120);
-        playerOneCardsInBoard.setTranslateX(220);
+        playerTwoCardsInBoard.setTranslateY(120);
+        playerTwoCardsInBoard.setTranslateX(220);
         playerOneCardsInBoard.setVgap(25);
         playerOneCardsInBoard.setHgap(70);
 
-        playerTwoCardsInBoard.setTranslateY(385);
-        playerTwoCardsInBoard.setTranslateX(220);
+        playerOneCardsInBoard.setTranslateY(385);
+        playerOneCardsInBoard.setTranslateX(220);
         playerTwoCardsInBoard.setVgap(25);
         playerTwoCardsInBoard.setHgap(70);
 
@@ -257,13 +260,16 @@ public class GameView {
     }
 
     private void fillZones(GridPane playerCardsInBoard) {
+        playerCardsInBoard.getColumnConstraints().clear();
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
                 StackPane stackPane = new StackPane();
-                stackPane.prefHeight(100);
-                stackPane.prefWidth(75);
-                stackPane.getChildren().add(new Rectangle(75, 95));
-                playerCardsInBoard.add(stackPane, j, i);
+                GridPane.setRowIndex(stackPane, i);
+                GridPane.setColumnIndex(stackPane, j);
+                stackPane.maxHeight(100);
+                stackPane.maxWidth(75);
+                //stackPane.getChildren().add(new Rectangle(75, 95));
+                playerCardsInBoard.getChildren().add(stackPane);
             }
         }
     }
@@ -354,19 +360,24 @@ public class GameView {
                 break;
             }
             case SUMMON: {
-                summonMonsterCard(playerNumber, index);
+                summonMonsterCard(playerNumber, index, zoneSlot.getCard());
+                break;
             }
             case FLIP_SUMMON: {
                 flipSummon(playerNumber, index);
+                break;
             }
             case ACTIVATE_SPELL: {
                 activateSpell(playerNumber, index);
+                break;
             }
             case CHANGE_POSITION: {
                 changePosition(playerNumber, index);
+                break;
             }
             case REMOVE_FROM_ZONE: {
-                removeFromZone(cardLocation,playerNumber,index);
+                removeFromZone(cardLocation, playerNumber, index);
+                break;
             }
         }
 
@@ -389,8 +400,15 @@ public class GameView {
 
     }
 
-    private void summonMonsterCard(int playerNumber, int index) {
-
+    private void summonMonsterCard(int playerNumber, int index, Card card) {
+        if (playerNumber == 1) {
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
+            assert zone != null;
+            zone.getChildren().clear();
+            CardView cardView = new CardView(card, playerNumber, false, false);
+            cardView.setToBoard();
+            zone.getChildren().add(cardView);
+        }
 
     }
 
