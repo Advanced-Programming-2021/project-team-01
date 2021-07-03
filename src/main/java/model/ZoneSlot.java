@@ -6,6 +6,9 @@ import model.card.Card;
 import model.card.MonsterCard;
 import model.card.SpellCard;
 import model.card.TrapCard;
+import view.GameView;
+
+import java.util.EventListener;
 
 public class ZoneSlot {
     private Card card;
@@ -101,6 +104,8 @@ public class ZoneSlot {
 
     public void setCard(Card card) {
         this.card = card;
+        if (card != null)
+        GameView.getInstance().observeZoneSlot(this, true);
     }
 
     public String toString() {

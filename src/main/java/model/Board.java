@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import model.card.*;
 import model.commands.HeraldOfCreation;
 import model.commands.Scanner;
+import view.ZoneLocation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +30,7 @@ public class Board {
     private final ZoneSlot playerTwoFieldZone;
     private final ArrayList<Card> playerOneHand;
     private final ArrayList<Card> playerTwoHand;
+
 
     {
         playerOneMonsterZone = new ZoneSlot[6];
@@ -964,5 +966,35 @@ public class Board {
             return playerOneMonsterZone;
         }
         return playerTwoMonsterZone;
+    }
+
+    public ZoneLocation getZoneLocation(ZoneSlot zoneSlot) {
+        for (int i = 1; i < 6; i++) {
+            if (playerOneMonsterZone[i] == zoneSlot){
+                return new ZoneLocation(1,i,CardLocation.MONSTER);
+            }
+        }
+        for (int i = 1; i < 6; i++) {
+            if (playerTwoMonsterZone[i] == zoneSlot){
+                return new ZoneLocation(2,i,CardLocation.MONSTER);
+            }
+        }
+        for (int i = 1; i < 6; i++) {
+            if (playerOneSpellZone[i] == zoneSlot){
+                return new ZoneLocation(1,i,CardLocation.SPELL);
+            }
+        }
+        for (int i = 1; i < 6; i++) {
+            if (playerTwoSpellZone[i] == zoneSlot){
+                return new ZoneLocation(2,i,CardLocation.SPELL);
+            }
+        }
+        if (playerOneFieldZone == zoneSlot){
+            return new ZoneLocation(1,1,CardLocation.FIELD);
+        }
+        if (playerTwoFieldZone == zoneSlot){
+            return new ZoneLocation(2,1,CardLocation.FIELD);
+        }
+        return null;
     }
 }

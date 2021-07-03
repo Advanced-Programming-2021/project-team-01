@@ -12,7 +12,6 @@ public enum View {
     PRE_GAME("GamePreview.fxml"),
     GAME_VIEW("GameView.fxml");
 
-
     private String fileName;
 
     View(String fileName) {
