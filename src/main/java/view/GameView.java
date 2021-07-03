@@ -21,7 +21,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.Board;
+import model.ZoneSlot;
 import model.card.Card;
+import model.card.CardLocation;
 
 
 public class GameView {
@@ -39,6 +41,13 @@ public class GameView {
     GameController gameController;
     GridPane playerOneCardsInBoard;
     GridPane playerTwoCardsInBoard;
+
+    private static GameView instance;
+
+    public static GameView getInstance() {
+        if (instance == null) instance = new GameView();
+        return instance;
+    }
 
     public static Node getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
         ObservableList<Node> childrens = gridPane.getChildren();
@@ -248,5 +257,21 @@ public class GameView {
         stackPane.setTranslateX(x);
         stackPane.setTranslateY(y);
         return stackPane;
+    }
+
+    public void observeZoneSlot(ZoneSlot zoneSlot,boolean isAdded) {
+        ZoneLocation zoneLocation = GameController.getInstance().getGameBoard().getZoneLocation(zoneSlot);
+        int index = zoneLocation.getIndex();
+        int playerNumber = zoneLocation.getPlayerNumber();
+        CardLocation cardLocation = zoneLocation.getCardLocation();
+        if (cardLocation == CardLocation.MONSTER){
+            if (playerNumber == 1){
+                if (isAdded){
+                    System.out.println("hi");
+
+                }
+
+            }
+        }
     }
 }
