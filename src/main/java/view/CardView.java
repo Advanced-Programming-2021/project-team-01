@@ -15,8 +15,8 @@ public class CardView extends Rectangle {
     private int cardOwner;
     private ImagePattern image;
     private boolean isHidden;
-    private ContextMenu contextMenu;
-    private static ImageView attackView = new ImageView(new Image(CardView.class.getResource("AttackIcon.png").toExternalForm())),
+    private ContextMenu contextMenu = new ContextMenu();
+    private static final ImageView attackView = new ImageView(new Image(CardView.class.getResource("AttackIcon.png").toExternalForm())),
             changePositionView = new ImageView(new Image(CardView.class.getResource("ChangePositionIcon.png").toExternalForm())),
             activateEffectView = new ImageView(new Image(CardView.class.getResource("ActivateEffectIcon.png").toExternalForm())),
             defensiveSetView = new ImageView(new Image(CardView.class.getResource("DefensiveSetIcon.png").toExternalForm())),
@@ -26,28 +26,28 @@ public class CardView extends Rectangle {
             specialSummonView = new ImageView(new Image(CardView.class.getResource("SpecialSummonIcon.png").toExternalForm()));
 
     static {
-        attackView.setFitWidth(15);
-        attackView.setFitHeight(15);
-        changePositionView.setFitWidth(15);
-        changePositionView.setFitHeight(15);
-        activateEffectView.setFitWidth(15);
-        activateEffectView.setFitHeight(15);
-        activateEffectView.setFitWidth(15);
-        activateEffectView.setFitHeight(15);
-        defensiveSetView.setFitWidth(15);
-        defensiveSetView.setFitHeight(15);
-        setView.setFitWidth(15);
-        setView.setFitHeight(15);
-        flipSummonView.setFitWidth(15);
-        flipSummonView.setFitHeight(15);
-        normalSummonView.setFitWidth(15);
-        normalSummonView.setFitHeight(15);
-        specialSummonView.setFitWidth(15);
-        specialSummonView.setFitHeight(15);
+        attackView.setFitWidth(40);
+        attackView.setFitHeight(40);
+        changePositionView.setFitWidth(40);
+        changePositionView.setFitHeight(40);
+        activateEffectView.setFitWidth(40);
+        activateEffectView.setFitHeight(40);
+        activateEffectView.setFitWidth(40);
+        activateEffectView.setFitHeight(40);
+        defensiveSetView.setFitWidth(40);
+        defensiveSetView.setFitHeight(40);
+        setView.setFitWidth(40);
+        setView.setFitHeight(40);
+        flipSummonView.setFitWidth(40);
+        flipSummonView.setFitHeight(40);
+        normalSummonView.setFitWidth(40);
+        normalSummonView.setFitHeight(40);
+        specialSummonView.setFitWidth(40);
+        specialSummonView.setFitHeight(40);
     }
 
-    public CardView(Card card,int owner) {
-        super(421.0/3,614.0/3);
+    public CardView(Card card, int owner) {
+        super(421.0 / 3, 614.0 / 3);
         this.card = card;
         this.cardOwner = owner;
         this.setOnMouseExited(event -> {
@@ -60,9 +60,9 @@ public class CardView extends Rectangle {
         return isHidden;
     }
 
-    public void setImage(boolean isHidden, boolean is180){
+    public void setImage(boolean isHidden, boolean is180) {
         this.isHidden = isHidden;
-        if(isHidden)
+        if (isHidden)
             image = card.getBackImage();
         else
             image = card.getCardImage();
@@ -81,14 +81,14 @@ public class CardView extends Rectangle {
 
     public void setViewLocation(ViewLocation viewLocation) {
         this.viewLocation = viewLocation;
-        //setContext();
+        setContext();
     }
 
     public ViewLocation getViewLocation() {
         return viewLocation;
     }
 
-    private void setContext(){
+    private void setContext() {
         int currentPlayer = GameController.getInstance().getCurrentPlayerNumber();
         contextMenu.setStyle("-fx-background-color: black;-fx-text-fill: white;");
         if (viewLocation == ViewLocation.MONSTER_OFFENSIVE)
@@ -98,12 +98,15 @@ public class CardView extends Rectangle {
         else if (viewLocation == ViewLocation.SPELL_HIDDEN)
             contextMenu.getItems().addAll(addMenuItem("Activate effect"));
         else if (viewLocation == ViewLocation.HAND_MONSTER_EFFECT)
-            contextMenu.getItems().addAll(addMenuItem("Special summon"), addMenuItem("Normal summon"), addMenuItem("Defensive summon"));
+            contextMenu.getItems().addAll(addMenuItem("Special summon"), addMenuItem("Normal summon"), addMenuItem("Defensive set"));
         else if (viewLocation == ViewLocation.HAND_MONSTER_NORMAL)
-            contextMenu.getItems().addAll(addMenuItem("Defensive summon"), addMenuItem("Normal summon"));
+            contextMenu.getItems().addAll(addMenuItem("Defensive set"), addMenuItem("Normal summon"));
         else if (viewLocation == ViewLocation.HAND_SPELL)
             contextMenu.getItems().addAll(addMenuItem("Set"));
-        setOnContextMenuRequested(event -> contextMenu.show(this, event.getScreenX(), event.getScreenY()));
+        setOnContextMenuRequested(event -> {
+            if (GameController.getInstance().getCurrentPlayerNumber() == cardOwner)
+            contextMenu.show(this, event.getScreenX(), event.getScreenY());
+        });
     }
 
     private MenuItem addMenuItem(String menuName) {
@@ -112,20 +115,28 @@ public class CardView extends Rectangle {
         switch (menuName) {
             case "Attack":
                 menuItem.setGraphic(attackView);
+                break;
             case "Change position":
                 menuItem.setGraphic(changePositionView);
+                break;
             case "Activate effect":
                 menuItem.setGraphic(activateEffectView);
+                break;
             case "Set":
                 menuItem.setGraphic(setView);
+                break;
             case "Defensive set":
                 menuItem.setGraphic(defensiveSetView);
+                break;
             case "Flip summon":
                 menuItem.setGraphic(flipSummonView);
+                break;
             case "Special summon":
                 menuItem.setGraphic(specialSummonView);
+                break;
             case "Normal summon":
                 menuItem.setGraphic(normalSummonView);
+                break;
         }
         return menuItem;
     }
