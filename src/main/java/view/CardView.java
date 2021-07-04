@@ -2,6 +2,8 @@ package view;
 
 import controller.GameController;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
@@ -91,9 +93,8 @@ public class CardView extends Rectangle {
     }
 
 
-
     private void handleOnMouseEntered() {
-        if (GameController.getInstance().getSelectedCard().isLocked()){
+        if (GameController.getInstance().getSelectedCard().isLocked()) {
             return;
         }
         GameController.getInstance().getSelectedCard().set(card);
@@ -198,7 +199,11 @@ public class CardView extends Rectangle {
             case "Attack":
                 menuItem.setGraphic(attackView);
                 menuItem.setOnAction(event -> {
-                    GameView.getInstance().attackOnCard();
+                    GameView.getInstance().targetCard = null;
+                    new MyAlert(Alert.AlertType.INFORMATION, "select an opponent card").show();
+                    Platform.runLater(() -> {
+                        GameView.getInstance().attackOnCard();
+                    });
                 });
                 break;
             case "Change position":

@@ -156,10 +156,28 @@ public class GameView {
     }
 
     public void attackOnCard() {
-        new MyAlert(Alert.AlertType.INFORMATION, "select an opponent card").show();
-        isAttacking = true;
+        System.out.println("first check");
+        isAttacking = true;;
         GameController.getInstance().getSelectedCard().lock();
-
+        while (targetCard == null){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("hi");
+        try {
+            //int number = Integer.parseInt(matcher.group("number"));
+            String response = GameController.getInstance().attack(1);
+            System.out.println(response);
+        } catch (Exception exp) {
+            System.err.println(exp.getMessage());
+        } finally {
+            targetCard = null;
+            isAttacking = false;
+            GameController.getInstance().getSelectedCard().unlock();
+        }
 
     }
     public void showListOfCards(){
@@ -279,7 +297,7 @@ public class GameView {
                 break;
             }
             case MAIN_PHASE1: {
-                image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/4.png")).toExternalForm());
+                image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/3.png")).toExternalForm());
             }
         }
         phase = new ImageView(image);
