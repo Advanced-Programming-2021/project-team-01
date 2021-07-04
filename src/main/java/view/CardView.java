@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameController;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
@@ -13,6 +14,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import model.card.Card;
 import model.card.CardType;
 import model.card.MonsterCard;
@@ -110,6 +112,12 @@ public class CardView extends Rectangle {
         if (is180)
             this.rotateProperty().setValue(180);
         setFill(image);
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setNode(this);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.setDuration(Duration.millis(500));
+        fadeTransition.play();
     }
 
     public ImagePattern getImage() {

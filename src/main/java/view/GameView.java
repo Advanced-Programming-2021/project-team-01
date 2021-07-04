@@ -3,6 +3,7 @@ package view;
 import controller.DatabaseController;
 import controller.GameController;
 import controller.RegisterController;
+import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.ListChangeListener;
@@ -231,7 +232,15 @@ public class GameView {
                     for (int i = 0; i < playerHand.getChildren().size(); i++) {
                         CardView cardView = (CardView) playerHand.getChildren().get(i);
                         if (cardView.getCard().getName().equals(card.getName())) {
-                            playerHand.getChildren().remove(cardView);
+                            FadeTransition fadeTransition = new FadeTransition();
+                            fadeTransition.setNode(cardView);
+                            fadeTransition.setDuration(Duration.millis(500));
+                            fadeTransition.setFromValue(1);
+                            fadeTransition.setToValue(0);
+                            fadeTransition.play();
+                            fadeTransition.setOnFinished(event -> {
+                                playerHand.getChildren().remove(cardView);
+                            });
                             break;
                         }
                     }
@@ -531,7 +540,6 @@ public class GameView {
             CardView cardView = (CardView) zone.getChildren().get(0);
             cardView.setViewLocation(ViewLocation.SPELL_ACTIVATED);
             cardView.setImage(false, false);
-
         } else {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
