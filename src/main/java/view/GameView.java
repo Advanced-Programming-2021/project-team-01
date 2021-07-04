@@ -59,6 +59,7 @@ public class GameView {
     GridPane playerOneCardsInBoard;
     GridPane playerTwoCardsInBoard;
     MediaPlayer mediaPlayer;
+    CardView targetCard;
     boolean isPlaying = false;
     boolean isAttacking = false;
 
@@ -160,7 +161,11 @@ public class GameView {
         }
     }
 
-    public static void attackOnCard() {
+    public void attackOnCard() {
+        new MyAlert(Alert.AlertType.INFORMATION, "select an opponent card").show();
+        isAttacking = true;
+        GameController.getInstance().getSelectedCard().lock();
+
 
     }
 
@@ -805,5 +810,9 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.SPELL_HIDDEN);
             zone.getChildren().add(cardView);
         }
+    }
+
+    public void addTargetCard(CardView cardView) {
+        targetCard = cardView;
     }
 }

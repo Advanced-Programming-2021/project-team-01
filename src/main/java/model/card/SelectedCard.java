@@ -10,6 +10,19 @@ public class SelectedCard {
     int index;
     Player player;
     Card card;
+    boolean isLocked = false;
+
+    public void lock(){
+        isLocked = true;
+    }
+
+    public void unlock(){
+        isLocked = false;
+    }
+
+    public boolean isLocked() {
+        return isLocked;
+    }
 
     public CardLocation getCardLocation() {
         return cardLocation;
