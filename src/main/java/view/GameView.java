@@ -55,6 +55,7 @@ public class GameView {
     GridPane playerTwoCardsInBoard;
     MediaPlayer mediaPlayer;
     boolean isPlaying = false;
+    boolean isAttacking = false;
 
     private GameView() {
 
@@ -382,7 +383,7 @@ public class GameView {
         playerTwoDrawZone.addListener((ListChangeListener<Card>) c -> {
             draw2.setText(String.valueOf(playerTwoDrawZone.size()));
             while (c.next()) {
-                playerTwoHand.addRow(1, new CardView(c.getRemoved().get(0), 1, false, true));
+                playerTwoHand.addRow(1, new CardView(c.getRemoved().get(0), 2, false, true));
             }
             //TODO: drawAnimations
         });
