@@ -464,16 +464,23 @@ public class GameView {
     }
 
     private void flipCard(int playerNumber, int index) {
+        FlipAnimation flipAnimation = new FlipAnimation();
+        flipAnimation.setUpsideDown(true);
+        flipAnimation.setFrontToBack(false);
         if (playerNumber == 1) {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
+            flipAnimation.setNode(cardView);
+            flipAnimation.play();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             cardView.setImage(false, false);
         } else {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
+            flipAnimation.setNode(cardView);
+            flipAnimation.play();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             cardView.setImage(false, true);
         }
