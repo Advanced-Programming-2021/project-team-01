@@ -8,6 +8,8 @@ import javafx.animation.RotateTransition;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -24,10 +26,10 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import model.Board;
+import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
-import view.transions.FlipAnimation;
 
 
 public class GameView {
@@ -36,6 +38,8 @@ public class GameView {
     static StackPane imageCard;
     static ScrollPane cardInformation;
     private static GameView instance;
+    ImageView phase;
+    ImageView nextPhaseButton;
     StackPane playerOneHealthBar;
     StackPane playerTwoHealthBar;
     StackPane drawZonePlayer1;
@@ -198,12 +202,81 @@ public class GameView {
 //            mainPane.getChildren().addAll(playerOneHand, playerTwoHand);
             setupHealthBar();
             setupHands();
+            setupPhaseButtons();
             setupHandObservables();
             root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private void setupPhaseButtons() {
+        Image image = new Image(getClass().getResource("/view/nextt.png").toExternalForm());
+        nextPhaseButton = new ImageView(image);
+        nextPhaseButton.getStyleClass().add("next");
+        nextPhaseButton.setFitHeight(50);
+        nextPhaseButton.setFitWidth(80);
+        nextPhaseButton.setTranslateX(-480);
+        nextPhaseButton.setTranslateY(-330);
+        phase = new ImageView();
+        //phase.setTranslateX(-480);
+        //phase.setTranslateY(-280);
+        nextPhaseButton.setOnMouseClicked(event -> {
+            GameController gameController = GameController.getInstance();
+            try {
+                gameController.nextPhase();
+                setNextPhaseImage();
+            } catch (Exception e) {
+                new MyAlert(Alert.AlertType.ERROR, e.getMessage()).show();
+            }
+        });
+        mainPane.getChildren().addAll(nextPhaseButton, phase);
+
+    }
+
+    private void setNextPhaseImage() {
+        GamePhase current = GameController.getInstance().getPhaseController().getGamePhase();
+        Image image = null;
+        switch (current) {
+            case END_PHASE: {
+                image = new Image(getClass().getResource("/Assets/Battle/6.png").toExternalForm());
+                break;
+            }
+            case DRAW_PHASE: {
+                image = new Image(getClass().getResource("/Assets/Battle/1.dds.png").toExternalForm());
+                break;
+            }
+            case STANDBY_PHASE: {
+                image = new Image(getClass().getResource("/Assets/Battle/2.png").toExternalForm());
+                break;
+            }
+            case BATTLE_PHASE: {
+                image = new Image(getClass().getResource("/Assets/Battle/4.png").toExternalForm());
+                break;
+            }
+            case MAIN_PHASE2: {
+                image = new Image(getClass().getResource("/Assets/Battle/5.png").toExternalForm());
+                break;
+            }
+            case MAIN_PHASE1: {
+                image = new Image(getClass().getResource("/Assets/Battle/4.png").toExternalForm());
+            }
+        }
+        phase = new ImageView(image);
+        mainPane.getChildren().add(phase);
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setNode(phase);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+        fadeTransition.setOnFinished(event -> {
+            fadeTransition.setFromValue(1);
+            fadeTransition.setToValue(0);
+            fadeTransition.play();
+            fadeTransition.setOnFinished(event1 -> mainPane.getChildren().remove(phase));
+        });
     }
 
     private void setupHandObservables() {
@@ -524,7 +597,8 @@ public class GameView {
             } else {
                 cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
                 rotateTransition.setByAngle(-90);
-                rotateTransition.play();            }
+                rotateTransition.play();
+            }
         } else {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
             assert zone != null;

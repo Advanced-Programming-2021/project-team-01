@@ -144,7 +144,7 @@ public class EffectController {
         int counter = 0;
         for (int i = 1; i <= 5; i++) {
             if (!board.getZoneSlotByLocation(CardLocation.MONSTER, i, gameController.getCurrentPlayerNumber()).isHidden() &&
-                    board.getZoneSlotByLocation(CardLocation.MONSTER, i, gameController.getCurrentPlayerNumber()).getCard() == null) {
+                    board.getZoneSlotByLocation(CardLocation.MONSTER, i, gameController.getCurrentPlayerNumber()).getCard() != null) {
                 counter++;
             }
         }
