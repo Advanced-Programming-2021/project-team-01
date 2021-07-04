@@ -1,4 +1,4 @@
-.scroll-pane{
+.scroll-pane {
     -fx-background-color: transparent;
 }
 
@@ -58,15 +58,21 @@
 }
 
 #lpText {
-    -fx-font:30px Tahoma;
-    -fx-fill: linear-gradient(to right,red, #00a6ff);
+    -fx-font: 30px Tahoma;
+    -fx-fill: linear-gradient(to right, red, #00a6ff);
     -fx-stroke: black;
     -fx-stroke-width: 1;
 }
 
+#profileText {
+    -fx-font: 20px Tahoma;
+    -fx-fill: orangered;
+}
+
+
 .context-menu {
-  -fx-background-color: #006699;
-  -fx-text-fill: white;
+    -fx-background-color: #006699;
+    -fx-text-fill: white;
 }
 
 .next:hover {

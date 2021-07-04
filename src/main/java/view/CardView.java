@@ -2,8 +2,6 @@ package view;
 
 import controller.GameController;
 import javafx.animation.FadeTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
@@ -21,12 +19,6 @@ import model.card.MonsterCard;
 import model.card.SpellCard;
 
 public class CardView extends Rectangle {
-    private Card card;
-    private ViewLocation viewLocation;
-    private int cardOwner;
-    private ImagePattern image;
-    private boolean isHidden;
-    private ContextMenu contextMenu = new ContextMenu();
     private static final ImageView attackView = new ImageView(new Image(CardView.class.getResource("AttackIcon.png").toExternalForm())),
             changePositionView = new ImageView(new Image(CardView.class.getResource("ChangePositionIcon.png").toExternalForm())),
             activateEffectView = new ImageView(new Image(CardView.class.getResource("ActivateEffectIcon.png").toExternalForm())),
@@ -57,7 +49,14 @@ public class CardView extends Rectangle {
         specialSummonView.setFitHeight(40);
     }
 
-    public CardView(Card card, int owner,boolean isHidden, boolean is180) {
+    private Card card;
+    private ViewLocation viewLocation;
+    private int cardOwner;
+    private ImagePattern image;
+    private boolean isHidden;
+    private ContextMenu contextMenu = new ContextMenu();
+
+    public CardView(Card card, int owner, boolean isHidden, boolean is180) {
         super(421.0 / 3, 614.0 / 3);
         this.card = card;
         this.cardOwner = owner;
@@ -81,6 +80,7 @@ public class CardView extends Rectangle {
         setHeight(95);
         setWidth(75);
     }
+
     private void handleOnMouseEntered() {
         GameController.getInstance().getSelectedCard().set(card);
         GameView.imageCard.getChildren().clear();
@@ -89,11 +89,24 @@ public class CardView extends Rectangle {
         setScaleY(1.2);
         StackPane cardText = (StackPane) GameView.cardInformation.getContent();
         cardText.getChildren().clear();
-        if (!isHidden() || (cardOwner==GameController.getInstance().getCurrentPlayerNumber())) {
+        if (!isHidden() || (cardOwner == GameController.getInstance().getCurrentPlayerNumber())) {
             Text text = new Text();
-            text.setFont(Font.font(20));
+            String power = "";
+            if (card instanceof MonsterCard) {
+                int attack;
+                int defence;
+                try {
+                    attack = GameController.getInstance().getGameBoard().getZoneSlotByCard(card).getAttack();
+                    defence = GameController.getInstance().getGameBoard().getZoneSlotByCard(card).getDefence();
+                } catch (Exception e) {
+                    attack = ((MonsterCard) card).getAttack();
+                    defence = ((MonsterCard) card).getDefense();
+                }
+                power = "Attack : " + attack + " Defence : " + defence + '\n';
+            }
+            text.setFont(Font.font(18));
             text.setWrappingWidth(250);
-            text.setText(getCard().getDescription());
+            text.setText(power + getCard().getDescription());
             text.setFill(Color.WHITE);
             cardText.getChildren().add(text);
         }
@@ -132,13 +145,13 @@ public class CardView extends Rectangle {
         return card;
     }
 
+    public ViewLocation getViewLocation() {
+        return viewLocation;
+    }
+
     public void setViewLocation(ViewLocation viewLocation) {
         this.viewLocation = viewLocation;
         setContext();
-    }
-
-    public ViewLocation getViewLocation() {
-        return viewLocation;
     }
 
     private void setContext() {
@@ -170,6 +183,9 @@ public class CardView extends Rectangle {
         switch (menuName) {
             case "Attack":
                 menuItem.setGraphic(attackView);
+                menuItem.setOnAction(event -> {
+                    GameView.attackOnCard();
+                });
                 break;
             case "Change position":
                 menuItem.setGraphic(changePositionView);

@@ -8,8 +8,6 @@ import javafx.animation.RotateTransition;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -31,7 +29,6 @@ import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
 import view.transions.FlipAnimation;
-
 import java.util.Objects;
 
 
@@ -47,6 +44,8 @@ public class GameView {
     StackPane playerTwoHealthBar;
     StackPane drawZonePlayer1;
     StackPane drawZonePlayer2;
+    StackPane profileDetails1;
+    StackPane profileDetails2;
     GridPane playerOneHand;
     GridPane playerTwoHand;
     StackPane mainPane;
@@ -150,8 +149,16 @@ public class GameView {
             GameController.getInstance().changeCardPosition(newPosition);
             System.out.println("monster card position changed successfully");
         } catch (Exception exp) {
-            System.err.println(exp.getMessage());
+            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
+            myAlert.show();
         }
+    }
+
+    public static void attackOnCard() {
+
+    }
+    public void showListOfCards(){
+
     }
 
     public void init(Pane root) {
@@ -182,6 +189,9 @@ public class GameView {
             playerOneHand.setTranslateX(500);
             playerTwoHand = new GridPane();
             playerTwoHand.setTranslateX(500);
+            profileDetails1 = new StackPane();
+            profileDetails2 = new StackPane();
+            setupProfile();
             playerOneCardsInBoard = new GridPane();
             playerTwoCardsInBoard = new GridPane();
             mainPane = new StackPane();
@@ -202,7 +212,8 @@ public class GameView {
             mainPane.setTranslateX(300);
             mainPane.setPrefWidth(WIDTH - 300);
             mainPane.setPrefHeight(HEIGHT);
-            mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard);
+            mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
+                    profileDetails1, profileDetails2);
 //            mainPane.getChildren().addAll(playerOneHand, playerTwoHand);
             setupHealthBar();
             setupHands();
@@ -224,8 +235,6 @@ public class GameView {
         nextPhaseButton.setTranslateX(-480);
         nextPhaseButton.setTranslateY(-330);
         phase = new ImageView();
-        //phase.setTranslateX(-480);
-        //phase.setTranslateY(-280);
         nextPhaseButton.setOnMouseClicked(event -> {
             GameController gameController = GameController.getInstance();
             try {
@@ -303,6 +312,42 @@ public class GameView {
         }
     }
 
+    private void setupProfile() {
+        profileDetails1.setMaxHeight(170);
+        profileDetails1.setMaxWidth(120);
+        profileDetails1.setTranslateX(-430);
+        profileDetails1.setTranslateY(190);
+        VBox vBoxPlayer1 = new VBox();
+        setBackgroundImage(vBoxPlayer1, "/view/profileTextBackground.png", 120, 170);
+        vBoxPlayer1.setAlignment(Pos.CENTER);
+        Text username1Txt = new Text();
+        username1Txt.setText(GameController.getPlayerOne().getUsername());
+        username1Txt.setId("profileText");
+        Text nickname1Txt = new Text();
+        nickname1Txt.setText(GameController.getPlayerOne().getNickname());
+        nickname1Txt.setId("profileText");
+        Rectangle profileImage1 = new Rectangle(50, 50, Color.BLACK);
+        vBoxPlayer1.getChildren().addAll(profileImage1, username1Txt, nickname1Txt);
+        profileDetails1.getChildren().add(vBoxPlayer1);
+
+        profileDetails2.setMaxWidth(120);
+        profileDetails2.setMaxHeight(170);
+        profileDetails2.setTranslateX(460);
+        profileDetails2.setTranslateY(-195);
+        VBox vBoxPlayer2 = new VBox();
+        setBackgroundImage(vBoxPlayer2, "/view/profileTextBackground.png", 120, 170);
+        vBoxPlayer2.setAlignment(Pos.CENTER);
+        Text username2Txt = new Text();
+        username2Txt.setText(GameController.getPlayerTwo().getUsername());
+        username2Txt.setId("profileText");
+        Text nickname2Txt = new Text();
+        nickname2Txt.setText(GameController.getPlayerTwo().getNickname());
+        nickname2Txt.setId("profileText");
+        Rectangle profileImage2 = new Rectangle(50, 50, Color.BLACK);
+        vBoxPlayer2.getChildren().addAll(profileImage2, username2Txt, nickname2Txt);
+        profileDetails2.getChildren().add(vBoxPlayer2);
+    }
+
     private void setupHandObservables() {
         ObservableList<Card> playerOneLogicHand = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerHand(1);
         ObservableList<Card> playerTwoLogicHand = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerHand(2);
@@ -310,7 +355,7 @@ public class GameView {
         listenOnHand(playerTwoLogicHand, playerTwoHand);
         Button button = new Button("Click Me");
         button.setOnMouseClicked(event -> {
-            for (int i = 0; i < 12; i++) {
+            for (int i = 0; i < 6; i++) {
                 try {
                     gameController.nextPhase();
                 } catch (Exception e) {
@@ -631,7 +676,7 @@ public class GameView {
                 rotateTransition.play();
             }
         } else {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             cardView.setViewLocation(ViewLocation.SPELL_ACTIVATED);
@@ -646,7 +691,7 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.SPELL_ACTIVATED);
             cardView.setImage(false, false);
         } else {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             cardView.setViewLocation(ViewLocation.SPELL_ACTIVATED);
@@ -673,7 +718,7 @@ public class GameView {
             cardView.setImage(false, false);
             cardView.setRotate(0);
         } else {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             rotateTransition.setNode(cardView);
@@ -695,7 +740,7 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             zone.getChildren().add(cardView);
         } else {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             zone.getChildren().clear();
             CardView cardView = new CardView(card, playerNumber, false, true);
@@ -712,21 +757,24 @@ public class GameView {
 
     private void setMonster(int index, int playerNumber, Card card) {
         if (playerNumber == 1) {
-            fillMonsterZone(index, playerNumber, card, playerOneCardsInBoard);
+            StackPane zone = (StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard);
+            assert zone != null;
+            zone.getChildren().clear();
+            CardView cardView = new CardView(card, playerNumber, true, false);
+            cardView.setToBoard();
+            cardView.setViewLocation(ViewLocation.MONSTER_DEFENSIVE);
+            zone.getChildren().add(cardView);
+            cardView.setRotate(90);
         } else {
-            fillMonsterZone(index, playerNumber, card, playerTwoCardsInBoard);
+            StackPane zone = (StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard);
+            assert zone != null;
+            zone.getChildren().clear();
+            CardView cardView = new CardView(card, playerNumber, true, false);
+            cardView.setToBoard();
+            cardView.setViewLocation(ViewLocation.MONSTER_DEFENSIVE);
+            zone.getChildren().add(cardView);
+            cardView.setRotate(90);
         }
-    }
-
-    private void fillMonsterZone(int index, int playerNumber, Card card, GridPane playerOneCardsInBoard) {
-        StackPane zone = (StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard);
-        assert zone != null;
-        zone.getChildren().clear();
-        CardView cardView = new CardView(card, playerNumber, true, false);
-        cardView.setToBoard();
-        cardView.setViewLocation(ViewLocation.MONSTER_DEFENSIVE);
-        zone.getChildren().add(cardView);
-        cardView.setRotate(90);
     }
 
     private void setSpell(int index, int playerNumber, Card card) {
@@ -739,7 +787,7 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.SPELL_HIDDEN);
             zone.getChildren().add(cardView);
         } else {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             zone.getChildren().clear();
             CardView cardView = new CardView(card, playerNumber, true, true);
