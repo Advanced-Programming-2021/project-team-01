@@ -3,6 +3,7 @@ package view;
 import controller.DatabaseController;
 import controller.GameController;
 import controller.RegisterController;
+import javafx.animation.RotateTransition;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -19,10 +20,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 import model.Board;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
+import view.transions.FlipAnimation;
 
 
 public class GameView {
@@ -448,7 +452,6 @@ public class GameView {
                 flipCard(playerNumber, index);
                 break;
         }
-
     }
 
     private void flipCard(int playerNumber, int index) {
@@ -501,13 +504,18 @@ public class GameView {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
+            RotateTransition rotateTransition = new RotateTransition();
+            rotateTransition.setNode(cardView);
+            rotateTransition.setAxis(Rotate.Z_AXIS);
+            rotateTransition.setDuration(Duration.millis(1000));
             if (gameController.getZoneSlotSelectedCard().isDefending()) {
                 cardView.setViewLocation(ViewLocation.MONSTER_DEFENSIVE);
-                cardView.setRotate(90);
+                rotateTransition.setByAngle(90);
+                rotateTransition.play();
             } else {
                 cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
-                cardView.setRotate(0);
-            }
+                rotateTransition.setByAngle(-90);
+                rotateTransition.play();            }
         } else {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
             assert zone != null;
