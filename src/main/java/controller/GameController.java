@@ -61,6 +61,8 @@ public class GameController {
         return instance;
     }
 
+
+
     public static Player getCurrentPlayer() {
         return currentPlayer;
     }

@@ -30,9 +30,11 @@ public class ViewSwitcher {
                 }
                 case LOGIN: {
                     new LoginView().init(root);
+                    break;
                 }
                 case GAME_VIEW: {
                     GameView.getInstance().init(root);
+                    break;
                 }
             }
         } catch (IOException e) {

@@ -60,7 +60,7 @@ public class PhaseController {
         gameController.effectController.doEffects();
         gameController.setSummonedCard(null);
         gameController.resetChangedCard();
-        GameController.currentPlayer = GameController.getOpponent();
+        GameController.getInstance().changeTurn();
         if (canDraw) {
             Card card = gameController.getGameBoard().drawCard(GameController.currentPlayer == GameController.playerOne ? 1 : 2);
             result = String.format("phase: draw phase\nnew card added to the hand : %s", card.getName());
