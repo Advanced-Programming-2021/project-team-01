@@ -30,6 +30,9 @@ import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
+import view.transions.FlipAnimation;
+
+import java.util.Objects;
 
 
 public class GameView {
@@ -240,27 +243,28 @@ public class GameView {
         Image image = null;
         switch (current) {
             case END_PHASE: {
-                image = new Image(getClass().getResource("/Assets/Battle/6.png").toExternalForm());
+                drawPhaseGraphicActions();
+                image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/6.png")).toExternalForm());
                 break;
             }
             case DRAW_PHASE: {
-                image = new Image(getClass().getResource("/Assets/Battle/1.dds.png").toExternalForm());
+                image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/1.dds.png")).toExternalForm());
                 break;
             }
             case STANDBY_PHASE: {
-                image = new Image(getClass().getResource("/Assets/Battle/2.png").toExternalForm());
+                image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/2.png")).toExternalForm());
                 break;
             }
             case BATTLE_PHASE: {
-                image = new Image(getClass().getResource("/Assets/Battle/4.png").toExternalForm());
+                image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/4.png")).toExternalForm());
                 break;
             }
             case MAIN_PHASE2: {
-                image = new Image(getClass().getResource("/Assets/Battle/5.png").toExternalForm());
+                image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/5.png")).toExternalForm());
                 break;
             }
             case MAIN_PHASE1: {
-                image = new Image(getClass().getResource("/Assets/Battle/4.png").toExternalForm());
+                image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/4.png")).toExternalForm());
             }
         }
         phase = new ImageView(image);
@@ -277,6 +281,25 @@ public class GameView {
             fadeTransition.play();
             fadeTransition.setOnFinished(event1 -> mainPane.getChildren().remove(phase));
         });
+    }
+
+    private void drawPhaseGraphicActions() {
+        int opponentNumber = GameController.getInstance().getOpponentPlayerNumber();
+        if (opponentNumber == 2){
+            for (Node child : playerOneHand.getChildren()) {
+                ((CardView) child).setImage(true,false);
+            }
+            for (Node child : playerTwoHand.getChildren()) {
+                ((CardView) child).setImage(false,false);
+            }
+        }else {
+            for (Node child : playerOneHand.getChildren()) {
+                ((CardView) child).setImage(false,false);
+            }
+            for (Node child : playerTwoHand.getChildren()) {
+                ((CardView) child).setImage(true,false);
+            }
+        }
     }
 
     private void setupHandObservables() {
