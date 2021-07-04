@@ -54,4 +54,8 @@ public class ViewSwitcher {
     public static void setStage(Stage primaryStage) {
         stage = primaryStage;
     }
+
+    public static Stage getStage() {
+        return stage;
+    }
 }

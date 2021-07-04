@@ -20,6 +20,8 @@ import model.card.CardType;
 import model.card.MonsterCard;
 import model.card.SpellCard;
 
+import java.util.ArrayList;
+
 public class CardView extends Rectangle {
     private static final ImageView attackView = new ImageView(new Image(CardView.class.getResource("AttackIcon.png").toExternalForm())),
             changePositionView = new ImageView(new Image(CardView.class.getResource("ChangePositionIcon.png").toExternalForm())),
@@ -149,7 +151,7 @@ public class CardView extends Rectangle {
     }
 
     public ImagePattern getImage() {
-        boolean isOwnerTurn = cardOwner == GameController.getInstance().getCurrentPlayerNumber();
+        boolean isOwnerTurn = cardOwner == GameController.getInstance().getCurrentPlayerNumber() || !isHidden;
         if (isOwnerTurn)
             return card.getCardImage();
         else

@@ -6,6 +6,7 @@ import controller.RegisterController;
 import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.beans.property.IntegerProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -22,13 +23,18 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Popup;
 import javafx.util.Duration;
 import model.Board;
 import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
+import view.transions.CustomPopup;
 import view.transions.FlipAnimation;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -180,8 +186,9 @@ public class GameView {
         }
 
     }
-    public void showListOfCards(){
 
+    public static CustomPopup showListOfCards(List<Card> cards) {
+        return new CustomPopup(cards);
     }
 
     public void init(Pane root) {
@@ -193,6 +200,11 @@ public class GameView {
             //TODO: delete down
             gameController.nextPhase();
             gameController.nextPhase();
+            Popup popup = new Popup();
+            popup.getContent().add(new Rectangle(100, 290));
+            popup.setX(400);
+            popup.setAnchorY(400);
+            popup.show(ViewSwitcher.getStage());
             //TODO delete up
             //setupMusic();
             playerOneHealthBar = createStackPane(300, 70, 0, 0);
@@ -318,19 +330,19 @@ public class GameView {
 
     private void drawPhaseGraphicActions() {
         int opponentNumber = GameController.getInstance().getOpponentPlayerNumber();
-        if (opponentNumber == 2){
+        if (opponentNumber == 2) {
             for (Node child : playerOneHand.getChildren()) {
-                ((CardView) child).setImage(true,false);
+                ((CardView) child).setImage(true, false);
             }
             for (Node child : playerTwoHand.getChildren()) {
-                ((CardView) child).setImage(false,false);
+                ((CardView) child).setImage(false, false);
             }
-        }else {
+        } else {
             for (Node child : playerOneHand.getChildren()) {
-                ((CardView) child).setImage(false,false);
+                ((CardView) child).setImage(false, false);
             }
             for (Node child : playerTwoHand.getChildren()) {
-                ((CardView) child).setImage(true,false);
+                ((CardView) child).setImage(true, false);
             }
         }
     }
@@ -378,13 +390,11 @@ public class GameView {
         listenOnHand(playerTwoLogicHand, playerTwoHand);
         Button button = new Button("Click Me");
         button.setOnMouseClicked(event -> {
-            for (int i = 0; i < 6; i++) {
-                try {
-                    gameController.nextPhase();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            List<Card> cardList = FXCollections.observableArrayList();
+            ObservableList<Card> cards = (ObservableList<Card>) cardList;
+            cards.addAll(playerOneLogicHand.get(1),playerOneLogicHand.get(0),playerOneLogicHand.get(2),playerOneLogicHand.get(3));
+            CustomPopup popup = showListOfCards(cards);
+            popup.show(ViewSwitcher.getStage());
         });
         mainPane.getChildren().add(button);
 
