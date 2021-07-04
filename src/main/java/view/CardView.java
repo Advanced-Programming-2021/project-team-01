@@ -67,6 +67,9 @@ public class CardView extends Rectangle {
         setOnMouseEntered(event -> {
             handleOnMouseEntered();
         });
+        setOnMouseClicked(event -> {
+            handleClicked();
+        });
         setImage(isHidden, is180);
         if (getCard() instanceof MonsterCard && ((MonsterCard) getCard()).getCardType() == CardType.EFFECT)
             setViewLocation(ViewLocation.HAND_MONSTER_EFFECT);
@@ -76,12 +79,23 @@ public class CardView extends Rectangle {
             setViewLocation(ViewLocation.HAND_SPELL);
     }
 
+    private void handleClicked() {
+        GameView.getInstance().addTargetCard(this);
+
+
+    }
+
     public void setToBoard() {
         setHeight(95);
         setWidth(75);
     }
 
+
+
     private void handleOnMouseEntered() {
+        if (GameController.getInstance().getSelectedCard().isLocked()){
+            return;
+        }
         GameController.getInstance().getSelectedCard().set(card);
         GameView.imageCard.getChildren().clear();
         GameView.imageCard.getChildren().add(new Rectangle(300, 400, getImage()));
@@ -184,7 +198,7 @@ public class CardView extends Rectangle {
             case "Attack":
                 menuItem.setGraphic(attackView);
                 menuItem.setOnAction(event -> {
-                    GameView.attackOnCard();
+                    GameView.getInstance().attackOnCard();
                 });
                 break;
             case "Change position":
