@@ -550,10 +550,20 @@ public class GameView {
     }
 
     private void flipSummon(int playerNumber, int index) {
+        RotateTransition rotateTransition = new RotateTransition();
+        FlipAnimation flipAnimation = new FlipAnimation();
+        rotateTransition.setDuration(Duration.millis(1));
+        flipAnimation.setFrontToBack(false);
+        flipAnimation.setUpsideDown(false);
         if (playerNumber == 1) {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
+            rotateTransition.setNode(cardView);
+            flipAnimation.setNode(cardView);
+            rotateTransition.setByAngle(-90);
+            rotateTransition.play();
+            flipAnimation.play();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             cardView.setImage(false, false);
             cardView.setRotate(0);
@@ -561,6 +571,9 @@ public class GameView {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
+            rotateTransition.setNode(cardView);
+            rotateTransition.setByAngle(90);
+            rotateTransition.play();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             cardView.setImage(false, true);
             cardView.setRotate(0);
