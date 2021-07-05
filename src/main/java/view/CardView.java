@@ -8,6 +8,8 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -20,7 +22,6 @@ import model.card.CardType;
 import model.card.MonsterCard;
 import model.card.SpellCard;
 
-import java.util.ArrayList;
 
 public class CardView extends Rectangle {
     private static final ImageView attackView = new ImageView(new Image(CardView.class.getResource("AttackIcon.png").toExternalForm())),
@@ -72,7 +73,7 @@ public class CardView extends Rectangle {
             handleOnMouseEntered();
         });
         setOnMouseClicked(event -> {
-            handleClicked();
+            handleClicked(event);
         });
         setImage(isHidden, is180);
         if (getCard() instanceof MonsterCard && ((MonsterCard) getCard()).getCardType() == CardType.EFFECT)
@@ -83,9 +84,11 @@ public class CardView extends Rectangle {
             setViewLocation(ViewLocation.HAND_SPELL);
     }
 
-    private void handleClicked() {
-        GameView.getInstance().addTargetCard(this);
-
+    private void handleClicked(MouseEvent event) {
+        if (event.getButton() == MouseButton.PRIMARY && GameView.getInstance().isAttacking) {
+            GameView.getInstance().addTargetCard(this);
+            GameView.getInstance().attackOnCard();
+        }
 
     }
 
@@ -96,10 +99,9 @@ public class CardView extends Rectangle {
 
 
     private void handleOnMouseEntered() {
-        if (GameController.getInstance().getSelectedCard().isLocked()) {
-            return;
+        if (!GameController.getInstance().getSelectedCard().isLocked()) {
+            GameController.getInstance().getSelectedCard().set(card);
         }
-        GameController.getInstance().getSelectedCard().set(card);
         GameView.imageCard.getChildren().clear();
         GameView.imageCard.getChildren().add(new Rectangle(300, 400, getImage()));
         setScaleX(1.2);
@@ -201,11 +203,10 @@ public class CardView extends Rectangle {
             case "Attack":
                 menuItem.setGraphic(attackView);
                 menuItem.setOnAction(event -> {
+                    GameController.getInstance().getSelectedCard().lock();
                     GameView.getInstance().targetCard = null;
                     new MyAlert(Alert.AlertType.INFORMATION, "select an opponent card").show();
-                    Platform.runLater(() -> {
-                        GameView.getInstance().attackOnCard();
-                    });
+                    GameView.getInstance().isAttacking = true;
                 });
                 break;
             case "Change position":

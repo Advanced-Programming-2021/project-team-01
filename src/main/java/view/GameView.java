@@ -33,7 +33,6 @@ import model.card.CardLocation;
 import view.transions.CustomPopup;
 import view.transions.FlipAnimation;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -162,27 +161,17 @@ public class GameView {
     }
 
     public void attackOnCard() {
-        System.out.println("first check");
-        isAttacking = true;;
-        GameController.getInstance().getSelectedCard().lock();
-        while (targetCard == null){
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("hi");
         try {
-            //int number = Integer.parseInt(matcher.group("number"));
+            //TODO: setIndexUsingTargetCard
             String response = GameController.getInstance().attack(1);
             System.out.println(response);
         } catch (Exception exp) {
-            System.err.println(exp.getMessage());
+            new MyAlert(Alert.AlertType.WARNING,exp.getMessage()).show();
         } finally {
             targetCard = null;
             isAttacking = false;
             GameController.getInstance().getSelectedCard().unlock();
+            GameController.getInstance().getGameBoard().showBoard();
         }
 
     }
@@ -207,9 +196,9 @@ public class GameView {
             popup.show(ViewSwitcher.getStage());
             //TODO delete up
             //setupMusic();
-            playerOneHealthBar = createStackPane(300, 70, 0, 0);
+            playerOneHealthBar = createStackPane(300, 70, 0, HEIGHT - 117);
             playerOneHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-            playerTwoHealthBar = createStackPane(300, 70, 0, HEIGHT - 117);
+            playerTwoHealthBar = createStackPane(300, 70, 0, 0);
             playerTwoHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
             imageCard = createStackPane(300, 400, 0, 70);
             imageCard.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -392,7 +381,7 @@ public class GameView {
         button.setOnMouseClicked(event -> {
             List<Card> cardList = FXCollections.observableArrayList();
             ObservableList<Card> cards = (ObservableList<Card>) cardList;
-            cards.addAll(playerOneLogicHand.get(1),playerOneLogicHand.get(0),playerOneLogicHand.get(2),playerOneLogicHand.get(3));
+            cards.addAll(playerOneLogicHand.get(1), playerOneLogicHand.get(0), playerOneLogicHand.get(2), playerOneLogicHand.get(3));
             CustomPopup popup = showListOfCards(cards);
             popup.show(ViewSwitcher.getStage());
         });
@@ -676,12 +665,12 @@ public class GameView {
             }
         } else {
             if (cardLocation == CardLocation.MONSTER) {
-                StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
+                StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
                 assert zone != null;
                 zone.getChildren().clear();
                 zone.getChildren().add(new Rectangle(100, 100, Color.TRANSPARENT));
             } else if (cardLocation == CardLocation.SPELL) {
-                StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
+                StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
                 assert zone != null;
                 zone.getChildren().clear();
                 zone.getChildren().add(new Rectangle(100, 100, Color.TRANSPARENT));
