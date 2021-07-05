@@ -7,5 +7,5 @@ public enum ViewLocation {
     SPELL_ACTIVATED,
     HAND_MONSTER_NORMAL,
     HAND_SPELL,
-    HAND_MONSTER_EFFECT
+    HAND_MONSTER_EFFECT;
 }

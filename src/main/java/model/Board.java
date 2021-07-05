@@ -435,16 +435,19 @@ public class Board {
 
     public void setSpell(int playerNum, SpellCard card) throws SpellZoneFullError {
         if (card.getProperty() == Property.FIELD) {
-            if (playerNum == 1 && playerOneFieldZone.getCard() == null) {
+            if (playerNum == 1) {
+                if (playerOneFieldZone.getCard() != null)
+                    getGraveyard(1).add(playerOneFieldZone.getCard());
                 playerOneFieldZone.setHidden(true);
                 playerOneFieldZone.setCard(card);
                 playerOneHand.remove(card);
-            } else if (playerTwoFieldZone.getCard() == null) {
+            } else if (playerNum == 2) {
+                if (playerTwoFieldZone.getCard() != null)
+                    getGraveyard(2).add(playerTwoFieldZone.getCard());
                 playerTwoFieldZone.setHidden(true);
                 playerTwoFieldZone.setCard(card);
                 playerTwoHand.remove(card);
-            } else
-                throw new SpellZoneFullError();
+            }
             return;
         }
         int counter = 0;

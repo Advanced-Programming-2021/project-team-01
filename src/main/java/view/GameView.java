@@ -31,6 +31,8 @@ import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
+import model.card.Property;
+import model.card.SpellCard;
 import view.transions.FlipAnimation;
 import view.transions.GraveyardPopUp;
 import view.transions.Setting;
@@ -97,6 +99,7 @@ public class GameView {
     public static void setCard() {
         try {
             GameController.getInstance().setCard();
+            GameController.getInstance().getGameBoard().showBoard();
             System.out.println("set successfully");
         } catch (Exception exp) {
             MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
@@ -152,6 +155,7 @@ public class GameView {
         try {
             GameController.getInstance().activateEffect();
             System.out.println("spell activated");
+            GameController.getInstance().getGameBoard().showBoard();
         } catch (Exception error) {
             MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, error.getMessage());
             myAlert.show();
@@ -227,11 +231,15 @@ public class GameView {
             setupBackgroundImages(cardText);
             setMainPaneSize();
             setupHealthBar();
+            gameController.nextPhase();
+            gameController.nextPhase();
+            gameController.cheater("Yami");
+            gameController.cheater("Umiiruka");
             setupHands();
             setupPhaseButtons();
             setupHandObservables();
             mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
-                    profileDetails1, profileDetails2, graveyardPlayer1, graveyardPlayer2);
+                    profileDetails1, profileDetails2, graveyardPlayer1, graveyardPlayer2, playerFieldZone1, playerFieldZone2);
             root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -240,7 +248,18 @@ public class GameView {
     }
 
     private void setupFieldZone() {
-
+        playerFieldZone1 = createStackPane(100, 120, -430, 60);
+        playerFieldZone2 = createStackPane(100, 120, 460, -75);
+//        ZoneSlot fieldZonePlayerOne = GameController.getInstance().getGameBoard().getPlayerFieldZone(1);
+//        ZoneSlot fieldZonePlayerTwo = GameController.getInstance().getGameBoard().getPlayerFieldZone(2);
+//        if (fieldZonePlayerOne.getCard() != null){
+//            CardView cardView = new CardView(fieldZonePlayerOne.getCard(),1,false,false);
+//            playerFieldZone1.getChildren().add(cardView);
+//        }
+//        if (fieldZonePlayerTwo.getCard() != null){
+//            CardView cardView = new CardView(fieldZonePlayerOne.getCard(),1,false,false);
+//            playerFieldZone1.getChildren().add(cardView);
+//        }
     }
 
     private void setupImageCard() {
@@ -685,7 +704,8 @@ public class GameView {
                 break;
             }
             case ACTIVATE_SPELL: {
-                activateSpell(playerNumber, index);
+                if (cardLocation != CardLocation.HAND)
+                    activateSpell(playerNumber, index, zoneSlot.getCard());
                 break;
             }
             case CHANGE_POSITION: {
@@ -737,6 +757,9 @@ public class GameView {
                 assert zone != null;
                 zone.getChildren().clear();
                 zone.getChildren().add(new Rectangle(100, 100, Color.TRANSPARENT));
+            } else if (cardLocation == CardLocation.FIELD) {
+                playerFieldZone1.getChildren().clear();
+                setFieldBackground(gameController.getGameBoard().getPlayerFieldZone(2).getCard());
             }
         } else {
             if (cardLocation == CardLocation.MONSTER) {
@@ -749,6 +772,9 @@ public class GameView {
                 assert zone != null;
                 zone.getChildren().clear();
                 zone.getChildren().add(new Rectangle(100, 100, Color.TRANSPARENT));
+            } else if (cardLocation == CardLocation.FIELD) {
+                playerFieldZone2.getChildren().clear();
+                setFieldBackground(gameController.getGameBoard().getPlayerFieldZone(1).getCard());
             }
         }
 
@@ -766,12 +792,11 @@ public class GameView {
             if (gameController.getZoneSlotSelectedCard().isDefending()) {
                 cardView.setViewLocation(ViewLocation.MONSTER_DEFENSIVE);
                 rotateTransition.setByAngle(90);
-                rotateTransition.play();
             } else {
                 cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
                 rotateTransition.setByAngle(-90);
-                rotateTransition.play();
             }
+            rotateTransition.play();
         } else {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
@@ -780,19 +805,50 @@ public class GameView {
         }
     }
 
-    private void activateSpell(int playerNumber, int index) {
+    private void activateSpell(int playerNumber, int index, Card card) {
         if (playerNumber == 1) {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerOneCardsInBoard));
+            StackPane zone;
+            if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.FIELD) {
+                zone = playerFieldZone1;
+                setFieldBackground(card);
+            } else
+                zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerOneCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             cardView.setViewLocation(ViewLocation.SPELL_ACTIVATED);
             cardView.setImage(false, false);
         } else {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
+            StackPane zone;
+            if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.FIELD) {
+                zone = playerFieldZone2;
+                setFieldBackground(card);
+            } else
+                zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             cardView.setViewLocation(ViewLocation.SPELL_ACTIVATED);
             cardView.setImage(false, true);
+        }
+    }
+
+    private void setFieldBackground(Card card) {
+        if (card == null) {
+            setBackgroundImage(mainPane, "/Assets/Field/fie_normal.bmp", 1050, HEIGHT);
+            return;
+        }
+        switch (card.getName()) {
+            case "Yami":
+                setBackgroundImage(mainPane, "/Assets/Field/fie_yami.bmp", 1050, HEIGHT);
+                break;
+            case "Forest":
+                setBackgroundImage(mainPane, "/Assets/Field/fie_mori.bmp", 1050, HEIGHT);
+                break;
+            case "Closed Forest":
+                setBackgroundImage(mainPane, "/Assets/Field/fie_gaia.bmp", 1050, HEIGHT);
+                break;
+            case "Umiiruka":
+                setBackgroundImage(mainPane, "/Assets/Field/fie_umi.bmp", 1050, HEIGHT);
+                break;
         }
     }
 
@@ -848,8 +904,21 @@ public class GameView {
     }
 
     private void setField(int playerNumber) {
-
-
+        if (playerNumber == 1) {
+            ZoneSlot fieldZonePlayerOne = GameController.getInstance().getGameBoard().getPlayerFieldZone(1);
+            playerFieldZone1.getChildren().clear();
+            CardView cardView = new CardView(fieldZonePlayerOne.getCard(), playerNumber, true, false);
+            cardView.setToBoard();
+            cardView.setViewLocation(ViewLocation.SPELL_HIDDEN);
+            playerFieldZone1.getChildren().add(cardView);
+        } else {
+            ZoneSlot fieldZonePlayerOne = GameController.getInstance().getGameBoard().getPlayerFieldZone(2);
+            playerFieldZone2.getChildren().clear();
+            CardView cardView = new CardView(fieldZonePlayerOne.getCard(), playerNumber, true, true);
+            cardView.setToBoard();
+            cardView.setViewLocation(ViewLocation.SPELL_HIDDEN);
+            playerFieldZone2.getChildren().add(cardView);
+        }
     }
 
     private void setMonster(int index, int playerNumber, Card card) {
