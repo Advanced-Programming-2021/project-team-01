@@ -234,6 +234,7 @@ public class GameView {
             gameController.nextPhase();
             gameController.nextPhase();
             gameController.cheater("Yami");
+            gameController.cheater("Umiiruka");
             setupHands();
             setupPhaseButtons();
             setupHandObservables();
