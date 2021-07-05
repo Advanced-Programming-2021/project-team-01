@@ -2,7 +2,7 @@ package view;
 
 import controller.GameController;
 import javafx.animation.FadeTransition;
-import javafx.application.Platform;
+import javafx.animation.TranslateTransition;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -89,7 +89,6 @@ public class CardView extends Rectangle {
             GameView.getInstance().addTargetCard(this);
             GameView.getInstance().attackOnCard();
         }
-
     }
 
     public void setToBoard() {
@@ -199,14 +198,21 @@ public class CardView extends Rectangle {
     private MenuItem addMenuItem(String menuName) {
         MenuItem menuItem = new MenuItem(menuName);
         menuItem.setStyle("-fx-text-fill: white;");
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(100), this);
+        translateTransition.setByX(15);
+        translateTransition.setCycleCount(8);
+        translateTransition.setAutoReverse(true);
         switch (menuName) {
             case "Attack":
                 menuItem.setGraphic(attackView);
                 menuItem.setOnAction(event -> {
-                    GameController.getInstance().getSelectedCard().lock();
-                    GameView.getInstance().targetCard = null;
-                    new MyAlert(Alert.AlertType.INFORMATION, "select an opponent card").show();
-                    GameView.getInstance().isAttacking = true;
+                    translateTransition.setOnFinished(e -> {
+                        GameController.getInstance().getSelectedCard().lock();
+                        GameView.getInstance().targetCard = null;
+                        new MyAlert(Alert.AlertType.INFORMATION, "select an opponent card").show();
+                        GameView.getInstance().isAttacking = true;
+                    });
+                    translateTransition.play();
                 });
                 break;
             case "Change position":
