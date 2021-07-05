@@ -2,21 +2,37 @@
     -fx-background-image: url("dadtav.png");
 }
 .tab2 {
-    -fx-pref-width: 1000px;
+    -fx-pref-width: 600px;
     -fx-max-width: 1000px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-alignment: center;
     -fx-background-color: transparent;
 }
+
+.tab3 {
+    -fx-pref-width: 400px;
+    -fx-max-width: 1000px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-alignment: center;
+    -fx-background-color: transparent;
+}
+
+.tabTop3 {
+    -fx-max-width: 600px;
+    -fx-pref-width: 400;
+    -fx-background-color: black;
+}
+
 .tab-header-background {
     -fx-background-color: black;
     -fx-background-radius: 10px;
 }
 
 .tabTop2 {
-    -fx-max-width: 400px;
-    -fx-pref-width: 400px;
+    -fx-max-width: 200px;
+    -fx-pref-width: 280;
     -fx-background-color: black;
 }
 
