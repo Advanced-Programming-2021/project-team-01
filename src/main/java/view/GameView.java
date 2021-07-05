@@ -5,6 +5,7 @@ import controller.GameController;
 import controller.RegisterController;
 import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -161,6 +162,10 @@ public class GameView {
     }
 
     public void attackOnCard() {
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(100), targetCard);
+        translateTransition.setByX(15);
+        translateTransition.setCycleCount(8);
+        translateTransition.setAutoReverse(true);
         try {
             Card card = targetCard.getCard();
             ZoneSlot[] monsterZone1 = GameController.getInstance().getGameBoard().getPlayerOneMonsterZone();
@@ -179,14 +184,13 @@ public class GameView {
             String response = GameController.getInstance().attack(index);
             System.out.println(response);
         } catch (Exception exp) {
-            new MyAlert(Alert.AlertType.WARNING,exp.getMessage()).show();
+            new MyAlert(Alert.AlertType.WARNING, exp.getMessage()).show();
         } finally {
             targetCard = null;
             isAttacking = false;
             GameController.getInstance().getSelectedCard().unlock();
             GameController.getInstance().getGameBoard().showBoard();
         }
-
     }
 
     public static CustomPopup showListOfCards(List<Card> cards) {
