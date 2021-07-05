@@ -7,6 +7,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.IntegerProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -34,6 +35,7 @@ import model.card.Property;
 import model.card.SpellCard;
 import view.transions.FlipAnimation;
 import view.transions.GraveyardPopUp;
+import view.transions.SelectCardPopup;
 import view.transions.Setting;
 
 import java.util.List;
@@ -177,6 +179,18 @@ public class GameView {
 
     public static GraveyardPopUp showListOfCards(List<Card> cards) {
         return new GraveyardPopUp(cards);
+    }
+
+    public static List<Card> getNeededCards() {
+        ObservableList<Card> playerOneLogicHand = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerHand(1);
+        List<Card> cards = FXCollections.observableArrayList();
+        cards.add(playerOneLogicHand.get(0));
+        cards.add(playerOneLogicHand.get(1));
+        cards.add(playerOneLogicHand.get(2));
+        SelectCardPopup selectCardPopup = new SelectCardPopup(cards, 2);
+        selectCardPopup.show(ViewSwitcher.getStage());
+        return selectCardPopup.getSelectedCards();
+
     }
 
     public void attackOnCard() {
@@ -444,14 +458,10 @@ public class GameView {
         listenOnHand(playerOneLogicHand, playerOneHand);
         listenOnHand(playerTwoLogicHand, playerTwoHand);
         Button button = new Button("Click Me");
-        button.setOnMouseEntered(event -> {
-            System.out.println("entered");
-        });
         button.setOnMouseClicked(event -> {
-            System.out.println("clicked");
+            getNeededCards();
         });
         mainPane.getChildren().add(button);
-
     }
 
     private void listenOnHand(ObservableList<Card> logicHand, GridPane playerHand) {
@@ -480,7 +490,7 @@ public class GameView {
                         cardView = new CardView(card, gameController.getGameBoard().getOwnerOfCard(card), false, false);
                     else
                         cardView = new CardView(card, gameController.getGameBoard().getOwnerOfCard(card), false, true);
-                playerHand.addRow(1,cardView);
+                    playerHand.addRow(1, cardView);
                 }
             }
         });
