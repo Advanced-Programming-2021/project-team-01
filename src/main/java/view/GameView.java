@@ -977,4 +977,14 @@ public class GameView {
         mediaPlayer.muteProperty().setValue(!mediaPlayer.muteProperty().get());
         isPlaying = !isPlaying;
     }
+
+    public static String getChoiceBox(String header, String... items){
+        ChoiceDialog<String> choiceDialog = new ChoiceDialog<>();
+        choiceDialog.setHeaderText(header);
+        choiceDialog.getItems().addAll(items);
+        choiceDialog.showAndWait();
+        return choiceDialog.getSelectedItem();
+    }
+
 }
+

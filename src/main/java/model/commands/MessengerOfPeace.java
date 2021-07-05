@@ -21,10 +21,11 @@ public class MessengerOfPeace extends Command implements Activate{
         board = gameController.getGameBoard();
         if (gameController.getGamePhase() == GamePhase.STANDBY_PHASE &&
                 gameController.getCurrentPlayerNumber() == board.getOwnerOfCard(myCard)) {
-            String response = GameView.prompt("1- Lose 100 of your life point\n2- Destroy the card\nchoose a valid option");
-            if (response.equals("1"))
+            String response = view.GameView.getChoiceBox("Hi i am the messenger of Peace choose your fate!",
+                    "Lose 100 of your life point","Destroy the card");
+            if (response.equals("Lose 100 of your life point"))
                 gameController.decreasePlayerLP(board.getOwnerOfCard(myCard), 100);
-            else if (response.equals("2"))
+            else if (response.equals("Destroy the card"))
                 board.sendCardFromSpellZoneToGraveyard(myCard);
             else
                 throw new Exception("Invalid option");
