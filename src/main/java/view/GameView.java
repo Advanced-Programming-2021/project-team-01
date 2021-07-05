@@ -33,9 +33,11 @@ import model.card.Card;
 import model.card.CardLocation;
 import view.transions.FlipAnimation;
 import view.transions.GraveyardPopUp;
+import view.transions.Setting;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 
 public class GameView {
@@ -894,5 +896,15 @@ public class GameView {
 
     public void addTargetCard(CardView cardView) {
         targetCard = cardView;
+    }
+
+    public void setupEscPressed() {
+        System.out.println("setting pressed ");
+        new Setting().show(ViewSwitcher.getStage());
+    }
+
+    public void mute() {
+        mediaPlayer.muteProperty().setValue(!mediaPlayer.muteProperty().get());
+        isPlaying = !isPlaying;
     }
 }
