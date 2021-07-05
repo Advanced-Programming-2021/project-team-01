@@ -10,6 +10,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -38,8 +39,10 @@ import view.transions.GraveyardPopUp;
 import view.transions.SelectCardPopup;
 import view.transions.Setting;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class GameView {
@@ -459,7 +462,12 @@ public class GameView {
         listenOnHand(playerTwoLogicHand, playerTwoHand);
         Button button = new Button("Click Me");
         button.setOnMouseClicked(event -> {
-            getNeededCards();
+            List<Card> cards = FXCollections.observableArrayList();
+            cards.add(playerOneLogicHand.get(0));
+            cards.add(playerOneLogicHand.get(1));
+            cards.add(playerOneLogicHand.get(2));
+            SelectCardPopup selectCardPopup = new SelectCardPopup(cards, 2);
+            selectCardPopup.show(ViewSwitcher.getStage());
         });
         mainPane.getChildren().add(button);
     }
