@@ -199,7 +199,7 @@ public class GameController {
             playerOneWin = 0;
             playerTwoWin = 0;
         }
-        Collections.shuffle(playerOneDeck.getMainDeck());
+//        Collections.shuffle(playerOneDeck.getMainDeck());
         playerOneLp = new SimpleIntegerProperty();
         playerTwoLp = new SimpleIntegerProperty();
         playerOneLp.set(8000);
@@ -683,7 +683,6 @@ public class GameController {
             System.err.println("TYPO DETECTED");
             return;
         }
-        ;
         Card newCard;
         if (card instanceof MonsterCard) {
             newCard = (Card) ((MonsterCard) card).clone();

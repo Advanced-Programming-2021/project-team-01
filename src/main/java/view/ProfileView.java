@@ -1,13 +1,28 @@
 package view;
 
 import controller.DatabaseController;
+import controller.GameController;
 import controller.ProfileController;
 import controller.RegisterController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 public class ProfileView {
+    public ImageView profileImage;
+    public Text username;
+    public Text nickname;
+
+    public void initialize(){
+        Image image = new Image(getClass().getResource("/Assets/ProfileDatabase/Chara001.dds" + RegisterController.onlineUser.getProfile() + ".png").toExternalForm());
+        profileImage.setImage(image);
+        username.setText(RegisterController.onlineUser.getUsername());
+        nickname.setText(RegisterController.onlineUser.getNickname());
+    }
+
     public void changeNickname(MouseEvent event) {
         TextInputDialog inputDialog = new TextInputDialog();
         inputDialog.setHeaderText("enter new nickname");

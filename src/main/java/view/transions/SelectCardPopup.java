@@ -6,18 +6,20 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Popup;
 import model.Board;
 import model.card.Card;
 import view.CardView;
 import view.GameView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+public class SelectCardPopup extends Popup {
+    public ArrayList<Card> selectedCards;
 
-public class GraveyardPopUp extends Popup {
-    public GraveyardPopUp(List<Card> cards) {
+    public SelectCardPopup(List<Card> cards) {
+        selectedCards = new ArrayList<>();
         centerOnScreen();
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.TOP_CENTER);

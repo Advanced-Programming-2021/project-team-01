@@ -90,9 +90,7 @@ public class GamePreview implements Initializable {
     }
 
     private boolean isNumberOfRoundsValid(String roundNum) {
-        if (roundNum.equals("1") || roundNum.equals("3"))
-            return true;
-        return false;
+        return roundNum.equals("1") || roundNum.equals("3");
     }
 
     private int generateRandomNumber() {

@@ -10,12 +10,14 @@ import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -39,7 +41,6 @@ import view.transions.Setting;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 
 public class GameView {
@@ -231,12 +232,8 @@ public class GameView {
             setupBackgroundImages(cardText);
             setMainPaneSize();
             setupHealthBar();
-            gameController.nextPhase();
-            gameController.nextPhase();
-            gameController.cheater("Yami");
-            gameController.cheater("Umiiruka");
-            setupHands();
             setupPhaseButtons();
+            setupHands();
             setupHandObservables();
             mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
                     profileDetails1, profileDetails2, graveyardPlayer1, graveyardPlayer2, playerFieldZone1, playerFieldZone2);
@@ -356,7 +353,7 @@ public class GameView {
                 break;
             }
             case DRAW_PHASE: {
-                image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/1.dds.png")).toExternalForm());
+                image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/1.png")).toExternalForm());
                 break;
             }
             case STANDBY_PHASE: {
@@ -459,14 +456,11 @@ public class GameView {
         listenOnHand(playerOneLogicHand, playerOneHand);
         listenOnHand(playerTwoLogicHand, playerTwoHand);
         Button button = new Button("Click Me");
+        button.setOnMouseEntered(event -> {
+            System.out.println("entered");
+        });
         button.setOnMouseClicked(event -> {
-            List<Card> cardList = FXCollections.observableArrayList();
-            ObservableList<Card> cards = (ObservableList<Card>) cardList;
-            cards.addAll(playerOneLogicHand.get(1), playerOneLogicHand.get(0), playerOneLogicHand.get(2), playerOneLogicHand.get(3));
-            cards.addAll(playerTwoLogicHand.get(1), playerTwoLogicHand.get(0), playerTwoLogicHand.get(2), playerTwoLogicHand.get(3));
-            GraveyardPopUp popup = showListOfCards(cards);
-            gameController.getSelectedCard().lock();
-            popup.show(ViewSwitcher.getStage());
+            System.out.println("clicked");
         });
         mainPane.getChildren().add(button);
 
@@ -625,7 +619,7 @@ public class GameView {
         playerTwoHand.setTranslateX(100);
         playerTwoHand.setTranslateY(-100);
         for (int i = 0; i < board.getPlayerTwoHand().size(); i++) {
-            CardView cardView = new CardView(board.getPlayerOneHand().get(i), 2, true, true);
+            CardView cardView = new CardView(board.getPlayerTwoHand().get(i), 2, true, true);
             playerTwoHand.add(cardView, i, 1);
         }
     }
