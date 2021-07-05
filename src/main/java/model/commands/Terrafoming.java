@@ -6,7 +6,7 @@ import model.GamePhase;
 import model.card.Card;
 import model.card.Property;
 import model.card.SpellCard;
-import console.menu.GameView;
+import view.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +29,7 @@ public class Terrafoming extends Command implements Activate {
             if (((SpellCard) card).getProperty() == Property.FIELD)
                 fieldSpells.add(card);
         }
-        if (fieldSpells.size() == 0)
-            throw new NoFieldSpellInDeck();
-        GameView.printListOfCard(fieldSpells);
-        int index = GameView.getValidNumber(0, fieldSpells.size() - 1);
-        Card card = fieldSpells.get(index);
+        Card card = GameView.getNeededCards(fieldSpells,1).get(0);
         board.addCardFromDeckToHand(gameController.getCurrentPlayerNumber(), card);
         board.sendCardFromSpellZoneToGraveyard(myCard);
     }
@@ -53,6 +49,6 @@ public class Terrafoming extends Command implements Activate {
         boolean correctPhase = gameController.getGamePhase() == GamePhase.MAIN_PHASE1 ||
                 gameController.getGamePhase() == GamePhase.MAIN_PHASE2 ||
                 gameController.getGamePhase() == GamePhase.BATTLE_PHASE;
-        return correctPhase && canActivate;//TODO : phase ha doroste ya na
+        return correctPhase && canActivate;
     }
 }

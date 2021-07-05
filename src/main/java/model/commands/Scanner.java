@@ -5,7 +5,8 @@ import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.MonsterCard;
-import console.menu.GameView;
+import view.GameView;
+
 
 import java.util.ArrayList;
 
@@ -23,8 +24,6 @@ public class Scanner extends Command implements Activate {
     @Override
     public void run() throws Exception {
         board = gameController.getGameBoard();
-
-
         tempMyCard = (MonsterCard) ((MonsterCard) myCard).clone();
         index = gameController.getSelectedCard().getIndex();
         if (gameController.getCurrentPlayerNumber() == 1)
@@ -42,9 +41,7 @@ public class Scanner extends Command implements Activate {
         }
         if (monsterCardsInGraveYard.size() == 0)
             throw new Exception("Graveyard is empty.");
-        GameView.printListOfCard(monsterCardsInGraveYard);
-        int indexOfCard = GameView.getValidNumber(0, monsterCardsInGraveYard.size() - 1);
-        card = monsterCardsInGraveYard.get(indexOfCard);
+        card = GameView.getNeededCards(monsterCardsInGraveYard,1).get(0);
         copyCard((MonsterCard) card, (MonsterCard) myCard);
     }
 
@@ -74,10 +71,8 @@ public class Scanner extends Command implements Activate {
                 }
                 if (monsterCardsInGraveYard.size() == 0)
                     return;
-                GameView.showConsole("Select card for scanner:");
-                GameView.printListOfCard(monsterCardsInGraveYard);
-                int indexOfCard = GameView.getValidNumber(0, monsterCardsInGraveYard.size() - 1);
-                card = monsterCardsInGraveYard.get(indexOfCard);
+                GameView.showAlert("Select card for scanner");
+                card = GameView.getNeededCards(monsterCardsInGraveYard,1).get(0);
                 copyCard((MonsterCard) card, (MonsterCard) myCard);
             }
         }

@@ -3,7 +3,7 @@ package model.commands;
 import model.Board;
 import model.GamePhase;
 import model.card.Card;
-import console.menu.GameView;
+import view.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,11 @@ public class MindCrush extends Command implements Activate {
     public void run() throws Exception {
         board = gameController.getGameBoard();
         board.setSpellFaceUp(myCard);
-        String input = GameView.prompt("Enter a Card Name: ");
-        while (Card.getCardByName(input) == null)
-            input = GameView.prompt("Enter a valid Card Name: ");
+        List<String> nameOfAllCards = new ArrayList<>();
+        for (Card card : Card.getAllCards().values()) {
+             nameOfAllCards.add(card.getName());
+        }
+        String nameOfCard = GameView.getChoiceBox(nameOfAllCards,"Choose a name Card");
         int currentPlayer = board.getOwnerOfCard(myCard);
         List<Card> cardsInHand;
         if (currentPlayer == 1)
@@ -32,7 +34,7 @@ public class MindCrush extends Command implements Activate {
             cardsInHand = board.getPlayerOneHand();
         ArrayList<Card> cardsShouldBeRemove = new ArrayList<>();
         for (Card card : cardsInHand) {
-            if (card.getName().equals(input))
+            if (card.getName().equals(nameOfCard))
                 cardsShouldBeRemove.add(card);
         }
         if (!cardsShouldBeRemove.isEmpty()) {
@@ -49,7 +51,7 @@ public class MindCrush extends Command implements Activate {
             int index = random.nextInt(upperBound);
             Card card = cardsInHand.get(index);
             board.sendCardFromHandToGraveYard(board.getOwnerOfCard(card), card);
-            GameView.showConsole(card.getName() + " send to graveyard.");
+            GameView.showAlert(card.getName() + " send to graveyard.");
         }
         board.sendCardFromSpellZoneToGraveyard(myCard);
     }

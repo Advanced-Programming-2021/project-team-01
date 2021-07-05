@@ -183,8 +183,10 @@ public class GameView {
 
     public static List<Card> getNeededCards(List<Card> cards ,int number) {
         SelectCardPopup selectCardPopup = new SelectCardPopup(cards, number);
+        GameController.getInstance().getSelectedCard().lock();
         selectCardPopup.showAndWait();
         selectCardPopup.close();
+        GameController.getInstance().getSelectedCard().unlock();
         return selectCardPopup.getSelectedCards();
     }
 
@@ -218,6 +220,18 @@ public class GameView {
             GameController.getInstance().getSelectedCard().unlock();
             GameController.getInstance().getGameBoard().showBoard();
         }
+    }
+
+    public static String getChoiceBox(List<String> items,String header){
+        ChoiceDialog<String> choiceDialog = new ChoiceDialog<>();
+        choiceDialog.setHeaderText(header);
+        choiceDialog.getItems().addAll(items);
+        choiceDialog.showAndWait();
+        return choiceDialog.getSelectedItem();
+    }
+
+    public static void showAlert(String message){
+        new MyAlert(Alert.AlertType.INFORMATION,message).show();
     }
 
     public void init(Pane root) {
@@ -455,7 +469,7 @@ public class GameView {
         Button button = new Button("Click Me");
         button.setOnMouseClicked(event -> {
             try {
-                gameController.cheater("Change of Heart");
+                gameController.cheater("Monster Reborn");
             } catch (Exception e) {
                 e.printStackTrace();
             }

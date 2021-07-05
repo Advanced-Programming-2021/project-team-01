@@ -5,11 +5,12 @@ import controller.exceptions.MonsterZoneFull;
 import model.Board;
 import model.GamePhase;
 import model.card.Card;
-import console.menu.GameView;
+import view.GameView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class    MonsterReborn extends Command implements Activate {
+public class MonsterReborn extends Command implements Activate {
     Board board;
 
     public MonsterReborn(Card card) {
@@ -19,25 +20,13 @@ public class    MonsterReborn extends Command implements Activate {
     @Override
     public void run() throws InvalidCommandException, MonsterZoneFull {
         board = gameController.getGameBoard();
-        String grave = GameView.prompt("player/opponent");
-        ArrayList<Card> graveYard;
-        if (grave.equals("player")) {
-            if (gameController.getCurrentPlayerNumber() == 1) graveYard = (ArrayList<Card>) board.getPlayerOneGraveYard();
-            else graveYard = (ArrayList<Card>) board.getPlayerTwoGraveYard();
-        } else if (grave.equals("opponent")) {
-            if (gameController.getCurrentPlayerNumber() == 1) graveYard = (ArrayList<Card>) board.getPlayerTwoGraveYard();
-            else graveYard = (ArrayList<Card>) board.getPlayerOneGraveYard();
-        } else {
-            throw new InvalidCommandException();
-        }
-        int index = 0;
-        GameView.printListOfCard(graveYard);
-        System.out.println();
-        int cardIndex = Integer.parseInt(GameView.prompt("chose specified index"));
-        if (cardIndex > index) throw new InvalidCommandException();
-        Card card = graveYard.get(cardIndex);
+        List<Card> graveYard = new ArrayList<>();
+        graveYard.addAll(board.getPlayerOneGraveYard());
+        graveYard.addAll(board.getPlayerTwoGraveYard());
+        Card card = GameView.getNeededCards(graveYard, 1).get(0);
         board.addCardFromGraveYardToField(gameController.getCurrentPlayerNumber(), card);
-        graveYard.remove(card);
+        board.getGraveyard(1).remove(card);
+        board.getGraveyard(2).remove(card);
         board.sendCardFromSpellZoneToGraveyard(myCard);
     }
 

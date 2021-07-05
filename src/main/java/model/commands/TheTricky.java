@@ -4,7 +4,7 @@ import controller.GameController;
 import model.Board;
 import model.card.Card;
 import model.card.MonsterCard;
-import console.menu.GameView;
+import view.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,6 @@ public class TheTricky extends Command implements Activate{
     }
 
     public void run() throws Exception {
-        if (!canActivate()){
-            throw new Exception("You cant activate this card");
-        }
         Board board = GameController.getInstance().getGameBoard();
         List<Card> hand;
         if (gameController.getCurrentPlayerNumber() == 1){
@@ -26,20 +23,10 @@ public class TheTricky extends Command implements Activate{
         }else {
             hand = board.getPlayerTwoHand();
         }
-        while (true) {
-            int input = Integer.parseInt(GameView.prompt("Choose a monster from your hand"));
-            if (input > hand.size()){
-                GameView.showConsole("invalid selection");
-                continue;
-            }
-            if (!(hand.get(input - 1) instanceof MonsterCard)){
-                GameView.showConsole("Please choose a monster!");
-                continue;
-            }
-            board.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(),hand.get(input - 1));
-            board.summonCard((MonsterCard) myCard, gameController.getCurrentPlayerNumber());
-            break;
-        }
+        hand.remove(myCard);
+        List<Card> selected = GameView.getNeededCards(hand,1);
+        board.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(),selected.get(0));
+        board.summonCard((MonsterCard) myCard, gameController.getCurrentPlayerNumber());
     }
 
     public boolean canActivate(){

@@ -69,6 +69,7 @@ public class Board {
             for (int i = 1; i <= 5; i++) {
                 if (playerOneMonsterZone[i].getCard() == null) {
                     playerOneMonsterZone[i].setCard(card);
+                    break;
                 }
             }
             return;
@@ -79,6 +80,7 @@ public class Board {
         for (int i = 1; i <= 5; i++) {
             if (playerTwoMonsterZone[i].getCard() == null) {
                 playerTwoMonsterZone[i].setCard(card);
+                break;
             }
         }
     }

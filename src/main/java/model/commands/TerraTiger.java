@@ -4,12 +4,11 @@ import controller.GameController;
 import model.State;
 import model.card.Card;
 import model.card.MonsterCard;
-import console.menu.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TerraTiger extends Command implements Activate{
+public class TerraTiger extends Command implements Activate {
 
     public TerraTiger(Card card) {
         super(card);
@@ -17,25 +16,25 @@ public class TerraTiger extends Command implements Activate{
 
     @Override
     public void run() throws Exception {
-        while (true) {
-            int input = GameView.getValidNumber(1, GameController.getInstance().getGameBoard().getCurrentPlayerHand().size());
-            List<Card> hand =  GameController.getInstance().getGameBoard().getCurrentPlayerHand();
-            if (!(hand.get(input - 1) instanceof MonsterCard)){
+
+        List<Card> hand = GameController.getInstance().getGameBoard().getCurrentPlayerHand();
+        hand.remove(myCard);
+        List<Card> appropriateCards = new ArrayList<>();
+        for (Card card : hand) {
+            if (!(card instanceof MonsterCard))
                 continue;
-            }
-            if (((MonsterCard) hand.get(input - 1)).getLevel() > 4){
-                GameView.showConsole("Level error");
+            if (((MonsterCard) card).getLevel() > 4)
                 continue;
-            }
-            GameController.getInstance().setState(State.SPECIAL_SUMMON);
-            GameController.getInstance().getGameBoard().summonCard((MonsterCard) hand.get(input - 1), gameController.getCurrentPlayerNumber());
-            GameController.getInstance().setState(State.NONE);
-            break;
+            appropriateCards.add(card);
         }
+        GameController.getInstance().setState(State.SPECIAL_SUMMON);
+        GameController.getInstance().getGameBoard().summonCard((MonsterCard) appropriateCards.get(0), gameController.getCurrentPlayerNumber());
+        GameController.getInstance().setState(State.NONE);
+
     }
 
     @Override
-    public boolean canActivate(){
+    public boolean canActivate() {
         return true;
     }
 }

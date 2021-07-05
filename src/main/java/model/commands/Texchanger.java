@@ -6,7 +6,7 @@ import model.card.Card;
 import model.card.CardType;
 import model.card.MonsterCard;
 import model.card.MonsterType;
-import console.menu.GameView;
+import view.GameView;
 
 import java.util.ArrayList;
 
@@ -59,34 +59,16 @@ public class Texchanger extends Command implements Activate {
                         ((MonsterCard) card).getCardType() != CardType.NORMAL)
                     deck.add(card);
         }
-        ArrayList<String> groups = new ArrayList<>();
-        if (!deck.isEmpty()) groups.add("Deck");
-        if (!hand.isEmpty()) groups.add("Hand");
-        if (!graveyard.isEmpty()) groups.add("Graveyard");
+        ArrayList<Card> groups = new ArrayList<>();
+        groups.addAll(deck);
+        groups.addAll(hand);
+        groups.addAll(graveyard);
         if (groups.isEmpty()) {
             canSummon = false;
             return true;
         }
         canSummon = true;
-        String selected = GameView.selectGroups(groups);
-        int index;
-        switch (selected) {
-            case "Deck":
-                GameView.printListOfCard(deck);
-                index = GameView.getValidNumber(0, deck.size() - 1);
-                shouldSummon = deck.get(index);
-                break;
-            case "Graveyard":
-                GameView.printListOfCard(graveyard);
-                index = GameView.getValidNumber(0, graveyard.size() - 1);
-                shouldSummon = graveyard.get(index);
-                break;
-            case "Hand":
-                GameView.printListOfCard(hand);
-                index = GameView.getValidNumber(0, hand.size() - 1);
-                shouldSummon = hand.get(index);
-                break;
-        }
+        shouldSummon = GameView.getNeededCards(groups,1).get(0);
         return true;
     }
 }
