@@ -64,6 +64,12 @@ public class GameView {
     boolean isPlaying = false;
     boolean isAttacking = false;
 
+    {
+        mainPane = new StackPane();
+        playerOneCardsInBoard = new GridPane();
+        playerTwoCardsInBoard = new GridPane();
+    }
+
     private GameView() {
 
     }
@@ -204,68 +210,59 @@ public class GameView {
             gameController = GameController.getInstance();
             RegisterController.onlineUser = DatabaseController.getUserByName("ali");
             GameController.getInstance().startGame("username", 1);
-            //TODO: delete down
-            gameController.nextPhase();
-            gameController.nextPhase();
-            Popup popup = new Popup();
-            popup.getContent().add(new Rectangle(100, 290));
-            popup.setX(400);
-            popup.setAnchorY(400);
-            popup.show(ViewSwitcher.getStage());
-            //TODO delete up
-            //setupMusic();
-            playerOneHealthBar = createStackPane(300, 70, 0, HEIGHT - 117);
-            playerOneHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-            playerTwoHealthBar = createStackPane(300, 70, 0, 0);
-            playerTwoHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-            imageCard = createStackPane(300, 400, 0, 70);
-            imageCard.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-            cardInformation = new ScrollPane();
-            cardInformation.setTranslateY(470);
-            cardInformation.prefHeight(133);
-            cardInformation.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            StackPane cardText = createStackPane(300, 133, 0, 0);
-            cardText.setId("cardText");
-            cardInformation.setContent(cardText);
-            playerOneHand = new GridPane();
-            playerOneHand.setTranslateX(500);
-            playerTwoHand = new GridPane();
-            playerTwoHand.setTranslateX(500);
-            profileDetails1 = new StackPane();
-            profileDetails2 = new StackPane();
+            setupMusic();
+            setupImageCard();
+            StackPane cardText = setupCardInformation();
             setupProfile();
-            playerOneCardsInBoard = new GridPane();
-            playerTwoCardsInBoard = new GridPane();
-            mainPane = new StackPane();
             setZoneInBoard();
             setupDrawPhase();
             setupGamePane();
-            playerTwoHand.setTranslateY(HEIGHT);
-            BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/view/card_information.png").toExternalForm()),
-                    BackgroundRepeat.REPEAT,
-                    BackgroundRepeat.REPEAT,
-                    BackgroundPosition.DEFAULT,
-                    new BackgroundSize(300, 133, false, false, false, false));
-            cardText.setBackground(new Background(backgroundimage));
-            setBackgroundImage(imageCard, "/Cards/Unknown.jpg", 300, 400);
-            setBackgroundImage(mainPane, "/Assets/Field/fie_normal.bmp", 1050, HEIGHT);
-            setBackgroundImage(playerOneHealthBar, "/view/lp_background.png", 300, 70);
-            setBackgroundImage(playerTwoHealthBar, "/view/lp_background.png", 300, 70);
-            mainPane.setTranslateX(300);
-            mainPane.setPrefWidth(WIDTH - 300);
-            mainPane.setPrefHeight(HEIGHT);
-            mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
-                    profileDetails1, profileDetails2);
-//            mainPane.getChildren().addAll(playerOneHand, playerTwoHand);
+            setupBackgroundImages(cardText);
+            setMainPaneSize();
             setupHealthBar();
             setupHands();
             setupPhaseButtons();
             setupHandObservables();
+            mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
+                    profileDetails1, profileDetails2);
             root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private void setupImageCard() {
+        imageCard = createStackPane(300, 400, 0, 70);
+        imageCard.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+
+    private void setupBackgroundImages(StackPane cardText) {
+        BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/view/card_information.png").toExternalForm()),
+                BackgroundRepeat.REPEAT,
+                BackgroundRepeat.REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(300, 133, false, false, false, false));
+        cardText.setBackground(new Background(backgroundimage));
+        setBackgroundImage(imageCard, "/Cards/Unknown.jpg", 300, 400);
+        setBackgroundImage(mainPane, "/Assets/Field/fie_normal.bmp", 1050, HEIGHT);
+    }
+
+    private void setMainPaneSize() {
+        mainPane.setTranslateX(300);
+        mainPane.setPrefWidth(WIDTH - 300);
+        mainPane.setPrefHeight(HEIGHT);
+    }
+
+    private StackPane setupCardInformation() {
+        cardInformation = new ScrollPane();
+        cardInformation.setTranslateY(470);
+        cardInformation.prefHeight(133);
+        cardInformation.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        StackPane cardText = createStackPane(300, 133, 0, 0);
+        cardText.setId("cardText");
+        cardInformation.setContent(cardText);
+        return cardText;
     }
 
     private void setupPhaseButtons() {
@@ -355,6 +352,8 @@ public class GameView {
     }
 
     private void setupProfile() {
+        profileDetails1 = new StackPane();
+        profileDetails2 = new StackPane();
         profileDetails1.setMaxHeight(170);
         profileDetails1.setMaxWidth(120);
         profileDetails1.setTranslateX(-430);
@@ -371,7 +370,6 @@ public class GameView {
         Rectangle profileImage1 = new Rectangle(50, 50, Color.BLACK);
         vBoxPlayer1.getChildren().addAll(profileImage1, username1Txt, nickname1Txt);
         profileDetails1.getChildren().add(vBoxPlayer1);
-
         profileDetails2.setMaxWidth(120);
         profileDetails2.setMaxHeight(170);
         profileDetails2.setTranslateX(460);
@@ -553,6 +551,11 @@ public class GameView {
     }
 
     private void setupHands() {
+        playerOneHand = new GridPane();
+        playerOneHand.setTranslateX(500);
+        playerTwoHand = new GridPane();
+        playerTwoHand.setTranslateX(500);
+        playerTwoHand.setTranslateY(HEIGHT);
         playerOneHand.setTranslateX(100);
         playerOneHand.setTranslateY(HEIGHT - 100);
         Board board = gameController.getGameBoard();
@@ -569,6 +572,12 @@ public class GameView {
     }
 
     public void setupHealthBar() {
+        playerOneHealthBar = createStackPane(300, 70, 0, HEIGHT - 117);
+        playerOneHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+        playerTwoHealthBar = createStackPane(300, 70, 0, 0);
+        playerTwoHealthBar.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+        setBackgroundImage(playerOneHealthBar, "/view/lp_background.png", 300, 70);
+        setBackgroundImage(playerTwoHealthBar, "/view/lp_background.png", 300, 70);
         IntegerProperty playerOneLp = gameController.getPlayerOneLp();
         setupHealthBarPlayer(playerOneLp, playerOneHealthBar);
         IntegerProperty playerTwoLp = gameController.getPlayerTwoLp();
