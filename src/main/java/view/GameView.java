@@ -162,8 +162,21 @@ public class GameView {
 
     public void attackOnCard() {
         try {
-            //TODO: setIndexUsingTargetCard
-            String response = GameController.getInstance().attack(1);
+            Card card = targetCard.getCard();
+            ZoneSlot[] monsterZone1 = GameController.getInstance().getGameBoard().getPlayerOneMonsterZone();
+            ZoneSlot[] monsterZone2 = GameController.getInstance().getGameBoard().getPlayerTwoMonsterZone();
+            int index = -1;
+            for (int i = 1; i < 6; i++) {
+                if (monsterZone1[i].getCard() == card){
+                    index = i;
+                }
+            }
+            for (int i = 1; i < 6; i++){
+                if (monsterZone2[i].getCard() == card){
+                    index = i;
+                }
+            }
+            String response = GameController.getInstance().attack(index);
             System.out.println(response);
         } catch (Exception exp) {
             new MyAlert(Alert.AlertType.WARNING,exp.getMessage()).show();
