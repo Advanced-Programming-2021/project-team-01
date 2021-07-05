@@ -20,8 +20,8 @@ public class Board {
     private final ZoneSlot[] playerTwoMonsterZone;
     private final ZoneSlot[] playerOneSpellZone;
     private final ZoneSlot[] playerTwoSpellZone;
-    private final ArrayList<Card> playerOneGraveYard;
-    private final ArrayList<Card> playerTwoGraveYard;
+    private final ObservableList<Card> playerOneGraveYard;
+    private final ObservableList<Card> playerTwoGraveYard;
     private final ObservableList<Card> playerOneDrawZone;
     private final ObservableList<Card> playerTwoDrawZone;
     private final ZoneSlot playerOneFieldZone;
@@ -35,8 +35,8 @@ public class Board {
         playerOneSpellZone = new ZoneSlot[6];
         playerTwoMonsterZone = new ZoneSlot[6];  //TODO: 1 start index
         playerTwoSpellZone = new ZoneSlot[6];
-        playerOneGraveYard = new ArrayList<>();
-        playerTwoGraveYard = new ArrayList<>();
+        playerOneGraveYard = FXCollections.observableArrayList();
+        playerTwoGraveYard = FXCollections.observableArrayList();
         playerOneHand = FXCollections.observableArrayList();
         playerTwoHand = FXCollections.observableArrayList();
         playerOneFieldZone = new ZoneSlot();
@@ -357,7 +357,7 @@ public class Board {
         return null;
     }
 
-    public ArrayList<Card> getGraveyard(int player) {
+    public List<Card> getGraveyard(int player) {
         if (player == 1)
             return playerOneGraveYard;
         else
@@ -538,7 +538,7 @@ public class Board {
         return result.toString();
     }
 
-    private void getGraveyardList(StringBuilder result, ArrayList<Card> playerGraveYard) {
+    private void getGraveyardList(StringBuilder result, List<Card> playerGraveYard) {
         if (playerGraveYard.size() == 0)
             result.append("graveyard empty");
         else {
@@ -635,11 +635,11 @@ public class Board {
 
     }
 
-    public ArrayList<Card> getPlayerOneGraveYard() {
+    public List<Card> getPlayerOneGraveYard() {
         return playerOneGraveYard;
     }
 
-    public ArrayList<Card> getPlayerTwoGraveYard() {
+    public List<Card> getPlayerTwoGraveYard() {
         return playerTwoGraveYard;
     }
 
@@ -951,30 +951,30 @@ public class Board {
 
     public ZoneLocation getZoneLocation(ZoneSlot zoneSlot) {
         for (int i = 1; i < 6; i++) {
-            if (playerOneMonsterZone[i] == zoneSlot){
-                return new ZoneLocation(1,i,CardLocation.MONSTER);
+            if (playerOneMonsterZone[i] == zoneSlot) {
+                return new ZoneLocation(1, i, CardLocation.MONSTER);
             }
         }
         for (int i = 1; i < 6; i++) {
-            if (playerTwoMonsterZone[i] == zoneSlot){
-                return new ZoneLocation(2,i,CardLocation.MONSTER);
+            if (playerTwoMonsterZone[i] == zoneSlot) {
+                return new ZoneLocation(2, i, CardLocation.MONSTER);
             }
         }
         for (int i = 1; i < 6; i++) {
-            if (playerOneSpellZone[i] == zoneSlot){
-                return new ZoneLocation(1,i,CardLocation.SPELL);
+            if (playerOneSpellZone[i] == zoneSlot) {
+                return new ZoneLocation(1, i, CardLocation.SPELL);
             }
         }
         for (int i = 1; i < 6; i++) {
-            if (playerTwoSpellZone[i] == zoneSlot){
-                return new ZoneLocation(2,i,CardLocation.SPELL);
+            if (playerTwoSpellZone[i] == zoneSlot) {
+                return new ZoneLocation(2, i, CardLocation.SPELL);
             }
         }
-        if (playerOneFieldZone == zoneSlot){
-            return new ZoneLocation(1,1,CardLocation.FIELD);
+        if (playerOneFieldZone == zoneSlot) {
+            return new ZoneLocation(1, 1, CardLocation.FIELD);
         }
-        if (playerTwoFieldZone == zoneSlot){
-            return new ZoneLocation(2,1,CardLocation.FIELD);
+        if (playerTwoFieldZone == zoneSlot) {
+            return new ZoneLocation(2, 1, CardLocation.FIELD);
         }
         return null;
     }

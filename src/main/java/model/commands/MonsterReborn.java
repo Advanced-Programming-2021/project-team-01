@@ -22,11 +22,11 @@ public class    MonsterReborn extends Command implements Activate {
         String grave = GameView.prompt("player/opponent");
         ArrayList<Card> graveYard;
         if (grave.equals("player")) {
-            if (gameController.getCurrentPlayerNumber() == 1) graveYard = board.getPlayerOneGraveYard();
-            else graveYard = board.getPlayerTwoGraveYard();
+            if (gameController.getCurrentPlayerNumber() == 1) graveYard = (ArrayList<Card>) board.getPlayerOneGraveYard();
+            else graveYard = (ArrayList<Card>) board.getPlayerTwoGraveYard();
         } else if (grave.equals("opponent")) {
-            if (gameController.getCurrentPlayerNumber() == 1) graveYard = board.getPlayerTwoGraveYard();
-            else graveYard = board.getPlayerOneGraveYard();
+            if (gameController.getCurrentPlayerNumber() == 1) graveYard = (ArrayList<Card>) board.getPlayerTwoGraveYard();
+            else graveYard = (ArrayList<Card>) board.getPlayerOneGraveYard();
         } else {
             throw new InvalidCommandException();
         }

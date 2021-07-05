@@ -25,15 +25,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
-import javafx.stage.Popup;
 import javafx.util.Duration;
 import model.Board;
 import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
-import view.transions.GraveyardPopUp;
 import view.transions.FlipAnimation;
+import view.transions.GraveyardPopUp;
 
 import java.util.List;
 import java.util.Objects;
@@ -51,6 +50,10 @@ public class GameView {
     StackPane playerTwoHealthBar;
     StackPane drawZonePlayer1;
     StackPane drawZonePlayer2;
+    StackPane playerFieldZone1;
+    StackPane playerFieldZone2;
+    StackPane graveyardPlayer1;
+    StackPane graveyardPlayer2;
     StackPane profileDetails1;
     StackPane profileDetails2;
     GridPane playerOneHand;
@@ -168,6 +171,10 @@ public class GameView {
         }
     }
 
+    public static GraveyardPopUp showListOfCards(List<Card> cards) {
+        return new GraveyardPopUp(cards);
+    }
+
     public void attackOnCard() {
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(100), targetCard);
         translateTransition.setByX(15);
@@ -179,12 +186,12 @@ public class GameView {
             ZoneSlot[] monsterZone2 = GameController.getInstance().getGameBoard().getPlayerTwoMonsterZone();
             int index = -1;
             for (int i = 1; i < 6; i++) {
-                if (monsterZone1[i].getCard() == card){
+                if (monsterZone1[i].getCard() == card) {
                     index = i;
                 }
             }
-            for (int i = 1; i < 6; i++){
-                if (monsterZone2[i].getCard() == card){
+            for (int i = 1; i < 6; i++) {
+                if (monsterZone2[i].getCard() == card) {
                     index = i;
                 }
             }
@@ -200,10 +207,6 @@ public class GameView {
         }
     }
 
-    public static GraveyardPopUp showListOfCards(List<Card> cards) {
-        return new GraveyardPopUp(cards);
-    }
-
     public void init(Pane root) {
         try {
             root.getStylesheets().add(getClass().getResource("/view/game.css").toExternalForm());
@@ -215,8 +218,10 @@ public class GameView {
             StackPane cardText = setupCardInformation();
             setupProfile();
             setZoneInBoard();
+            setupGraveYard();
             setupDrawPhase();
             setupGamePane();
+            setupFieldZone();
             setupBackgroundImages(cardText);
             setMainPaneSize();
             setupHealthBar();
@@ -224,11 +229,15 @@ public class GameView {
             setupPhaseButtons();
             setupHandObservables();
             mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
-                    profileDetails1, profileDetails2);
+                    profileDetails1, profileDetails2, graveyardPlayer1, graveyardPlayer2);
             root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+    }
+
+    private void setupFieldZone() {
 
     }
 
@@ -263,6 +272,35 @@ public class GameView {
         cardText.setId("cardText");
         cardInformation.setContent(cardText);
         return cardText;
+    }
+
+    private void setupGraveYard() {
+        graveyardPlayer1 = createStackPane(70, 80, 430, 70);
+        graveyardPlayer2 = createStackPane(70, 80, -420, -75);
+        setBackgroundImage(graveyardPlayer1, "/view/graveyardIcon.png", 70, 80);
+        setBackgroundImage(graveyardPlayer2, "/view/graveyardIcon.png", 70, 80);
+        ObservableList<Card> playerOneGraveYard = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerOneGraveYard();
+        ObservableList<Card> playerTwoGraveYard = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerTwoGraveYard();
+        graveyardPlayer1.setOnMouseClicked(event -> {
+            if (playerOneGraveYard.isEmpty()) {
+                MyAlert myAlert = new MyAlert(Alert.AlertType.INFORMATION, "Graveyard is empty.");
+                myAlert.show();
+                return;
+            }
+            GraveyardPopUp popup = showListOfCards(playerOneGraveYard);
+            gameController.getSelectedCard().lock();
+            popup.show(ViewSwitcher.getStage());
+        });
+        graveyardPlayer2.setOnMouseClicked(event -> {
+            if (playerTwoGraveYard.isEmpty()) {
+                MyAlert myAlert = new MyAlert(Alert.AlertType.INFORMATION, "Graveyard is empty.");
+                myAlert.show();
+                return;
+            }
+            GraveyardPopUp popup = showListOfCards(playerTwoGraveYard);
+            gameController.getSelectedCard().lock();
+            popup.show(ViewSwitcher.getStage());
+        });
     }
 
     private void setupPhaseButtons() {
@@ -381,13 +419,13 @@ public class GameView {
         username2Txt.setText(GameController.getPlayerTwo().getUsername());
         username2Txt.setId("profileText");
         Text nickname2Txt = new Text();
-        Image image1 = new Image(getClass().getResource("/Assets/ProfileDatabase/Chara001.dds"+GameController.getPlayerOne().getProfile()+".png").toExternalForm());
+        Image image1 = new Image(getClass().getResource("/Assets/ProfileDatabase/Chara001.dds" + GameController.getPlayerOne().getProfile() + ".png").toExternalForm());
         ImagePattern imagePattern = new ImagePattern(image1);
         profileImage1.setFill(imagePattern);
         nickname2Txt.setText(GameController.getPlayerTwo().getNickname());
         nickname2Txt.setId("profileText");
         Rectangle profileImage2 = new Rectangle(50, 50);
-        Image image2 = new Image(getClass().getResource("/Assets/ProfileDatabase/Chara001.dds"+GameController.getPlayerTwo().getProfile()+".png").toExternalForm());
+        Image image2 = new Image(getClass().getResource("/Assets/ProfileDatabase/Chara001.dds" + GameController.getPlayerTwo().getProfile() + ".png").toExternalForm());
         ImagePattern imagePattern2 = new ImagePattern(image2);
         profileImage2.setFill(imagePattern2);
         vBoxPlayer2.getChildren().addAll(profileImage2, username2Txt, nickname2Txt);
