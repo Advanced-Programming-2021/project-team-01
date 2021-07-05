@@ -439,7 +439,7 @@ public class Board {
                 playerOneFieldZone.setHidden(true);
                 playerOneFieldZone.setCard(card);
                 playerOneHand.remove(card);
-            } else if (playerTwoFieldZone.getCard() == null) {
+            } else if (playerNum ==2 &&playerTwoFieldZone.getCard() == null) {
                 playerTwoFieldZone.setHidden(true);
                 playerTwoFieldZone.setCard(card);
                 playerTwoHand.remove(card);

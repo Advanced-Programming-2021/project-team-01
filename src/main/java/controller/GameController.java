@@ -199,7 +199,7 @@ public class GameController {
             playerOneWin = 0;
             playerTwoWin = 0;
         }
-//        Collections.shuffle(playerOneDeck.getMainDeck());
+        Collections.shuffle(playerOneDeck.getMainDeck());
         playerOneLp = new SimpleIntegerProperty();
         playerTwoLp = new SimpleIntegerProperty();
         playerOneLp.set(8000);
