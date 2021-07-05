@@ -57,13 +57,13 @@ public class DeckView implements Initializable {
         pane.setHgap(10);
         pane.setAlignment(Pos.CENTER);
         ArrayList<Card> mainDeck = DatabaseController.getDeckByName(currentDeck.getDeckName()).getMainDeck();
-        for (int i = 0; i < Math.round((double) mainDeck.size() / 6); i++) {
-            for (int j = 0; j < (Math.min((mainDeck.size() - 6 * i), 6)); j++) {
-                ShopCardView rectangle = new ShopCardView(mainDeck.get(6 * i + j));
+        for (int i = 0; i < Math.round((double) mainDeck.size() / 5); i++) {
+            for (int j = 0; j < (Math.min((mainDeck.size() - 5 * i), 5)); j++) {
+                ShopCardView rectangle = new ShopCardView(mainDeck.get(5 * i + j));
                 rectangle.setHeight(250);
                 rectangle.setWidth(150);
                 rectangle.getStyleClass().add("but");
-                rectangle.setFill(mainDeck.get(6 * i + j).getCardImage());
+                rectangle.setFill(mainDeck.get(5 * i + j).getCardImage());
                 rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -73,7 +73,7 @@ public class DeckView implements Initializable {
                             child.getStyleClass().remove("butoo");
                         }
                         rectangle.getStyleClass().add("butoo");
-                        Rectangle rectangle1 = new Rectangle(250, 450);
+                        Rectangle rectangle1 = new Rectangle(200, 360);
                         rectangle1.setFill(selectedCard.getCard().getCardImage());
                         imageBar.getChildren().clear();
                         imageBar.getChildren().add(rectangle1);
@@ -110,7 +110,7 @@ public class DeckView implements Initializable {
                             child.getStyleClass().remove("butoo");
                         }
                         rectangle.getStyleClass().add("butoo");
-                        Rectangle rectangle1 = new Rectangle(250, 450);
+                        Rectangle rectangle1 = new Rectangle(200, 360);
                         rectangle1.setFill(selectedCard.getCard().getCardImage());
                         imageBar.getChildren().clear();
                         imageBar.getChildren().add(rectangle1);
@@ -132,13 +132,13 @@ public class DeckView implements Initializable {
         ArrayList<Card> cards = new ArrayList<>();
         for (String card : RegisterController.onlineUser.getPlayerCards())
             cards.add(Card.getCardByName(card));
-        for (int i = 0; i < Math.round((double) cards.size() / 2); i++) {
-            for (int j = 0; j < (Math.min((cards.size() - 2 * i), 2)); j++) {
-                ShopCardView rectangle = new ShopCardView(cards.get(2 * i + j));
+        for (int i = 0; i < Math.round((double) cards.size()); i++) {
+            for (int j = 0; j < (Math.min((cards.size() - 1 * i), 1)); j++) {
+                ShopCardView rectangle = new ShopCardView(cards.get(i + j));
                 rectangle.setHeight(250);
                 rectangle.setWidth(150);
                 rectangle.getStyleClass().add("but");
-                rectangle.setFill(cards.get(2 * i + j).getCardImage());
+                rectangle.setFill(cards.get(i + j).getCardImage());
                 rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -148,7 +148,7 @@ public class DeckView implements Initializable {
                             child.getStyleClass().remove("butoo");
                         }
                         rectangle.getStyleClass().add("butoo");
-                        Rectangle rectangle1 = new Rectangle(250, 450);
+                        Rectangle rectangle1 = new Rectangle(200, 360);
                         rectangle1.setFill(selectedCard.getCard().getCardImage());
                         imageBar.getChildren().clear();
                         imageBar.getChildren().add(rectangle1);
