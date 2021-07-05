@@ -1,5 +1,7 @@
 package model;
 
+import controller.DatabaseController;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -98,6 +100,7 @@ public class Player {
 
     public void addCardToPlayerCards(String cardName) {
         playerCards.add(cardName);
+        DatabaseController.updatePlayer(this);
     }
 
     public void increaseLoseRate() {

@@ -8,19 +8,26 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <BorderPane styleClass="background" fx:id="mainPane" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.ShopView"
-            prefHeight="1366.0" prefWidth="1366.0">
+            prefHeight="720.0" prefWidth="1366.0">
     <stylesheets>
         <URL value="@shop.css"/>
     </stylesheets>
-    <left>
-        <VBox>
-            <StackPane fx:id="imageBar"/>
-        </VBox>
-    </left>
+    <HBox>
+        <Pane fx:id="imageBar" translateX="60" translateY="50"/>
+    </HBox>
 
+    <center>
+        <JFXTabPane styleClass="tab3" translateX="300">
+            <Tab styleClass="tabTop3" fx:id="playerTab" text="Player's card">
+                <ScrollPane fx:id="playerScroll" styleClass="scroll-pane"/>
+            </Tab>
+        </JFXTabPane>
+    </center>
 
     <right>
         <JFXTabPane styleClass="tab2">
