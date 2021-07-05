@@ -7,6 +7,7 @@ import model.card.MonsterCard;
 import console.menu.GameView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GateGuardian extends Command implements Activate {
     Board board;
@@ -22,23 +23,21 @@ public class GateGuardian extends Command implements Activate {
         if (board.numberOfMonsterCards(player) < 3)
             throw new Exception("You don't have enough Monster!");
         ArrayList<Card> monsterCards = board.getCardInMonsterZone(player);
-        GameView.printListOfCard(monsterCards);
-        int index1 = -1;
-        int index2 = -1;
-        int index3 = -1;
-        index1 = GameView.getValidNumber(0, monsterCards.size() - 1);
-        do {
-            index2 = GameView.getValidNumber(0, monsterCards.size() - 1);
-        } while (index2 == index1);
-        do {
-            index3 = GameView.getValidNumber(0, monsterCards.size() - 1);
-        } while (index3 == index1 || index3 == index2);
-        board.sendCardFromMonsterZoneToGraveyard(index1 + 1, player);
-        board.sendCardFromMonsterZoneToGraveyard(index2 + 1, player);
-        board.sendCardFromMonsterZoneToGraveyard(index3 + 1, player);
+        monsterCards.remove(myCard);
+        List<Card> cards = view.GameView.getNeededCards(monsterCards, 3);
+        board.sendCardFromMonsterZoneToGraveyard(cards.get(0));
+        board.sendCardFromMonsterZoneToGraveyard(cards.get(1));
+        board.sendCardFromMonsterZoneToGraveyard(cards.get(2));
         State temp = gameController.getState();
         gameController.setState(State.SPECIAL_SUMMON);
         board.summonCard((MonsterCard) myCard, player);
         gameController.setState(temp);
+    }
+
+    @Override
+    public boolean canActivate() throws Exception {
+        board = gameController.getGameBoard();
+        int player = board.getOwnerOfCard(myCard);
+        return  (board.numberOfMonsterCards(player) < 3);
     }
 }

@@ -36,9 +36,8 @@ public class HeraldOfCreation extends Command implements Activate {
             }
             if (highLevel.isEmpty())
                 return;
+            shouldSummon = (MonsterCard) view.GameView.getNeededCards(highLevel, 1).get(0);
             GameView.printListOfCard(highLevel);
-            int index = GameView.getValidNumber(0, highLevel.size() - 1);
-            shouldSummon = (MonsterCard) highLevel.get(index);
             State temp = gameController.getState();
             gameController.setState(State.SPECIAL_SUMMON);
             board.summonCard(shouldSummon, player);
