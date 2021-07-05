@@ -1,5 +1,6 @@
 package view.transions;
 
+import controller.GameController;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,6 +8,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Popup;
 import view.GameView;
+import view.View;
+import view.ViewSwitcher;
 
 import java.util.Objects;
 
@@ -41,6 +44,24 @@ public class Setting extends Popup {
         imageView.setOnMouseClicked(event -> {
             GameView.getInstance().mute();
         });
-        root.getChildren().add(imageView);
+        ImageView imageView1 = new ImageView(new Image(getClass().getResource("/Assets/exit.png").toExternalForm()));
+        imageView1.setTranslateY(300);
+        imageView1.setTranslateX(100);
+        imageView1.setFitHeight(100);
+        imageView1.setFitWidth(100);
+        imageView1.setOnMouseEntered(event -> {
+            imageView1.setScaleX(1.2);
+            imageView1.setScaleY(1.2);
+        });
+        imageView1.setOnMouseExited(event -> {
+            imageView1.setScaleX(1);
+            imageView1.setScaleY(1);
+        });
+        imageView1.setOnMouseClicked(event -> {
+            hide();
+            GameView.getInstance().mute();
+            ViewSwitcher.switchTo(View.MAIN);
+        });
+        root.getChildren().addAll(imageView, imageView1);
     }
 }
