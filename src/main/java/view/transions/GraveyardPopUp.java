@@ -4,22 +4,20 @@ import controller.GameController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Popup;
 import model.Board;
 import model.card.Card;
 import view.CardView;
+import view.GameView;
 
-import java.awt.*;
 import java.util.List;
 
 
-public class CustomPopup extends Popup {
-    public CustomPopup(List<Card> cards) {
+public class GraveyardPopUp extends Popup {
+    public GraveyardPopUp(List<Card> cards) {
         setAnchorX(700);
         setAnchorY(200);
         GridPane gridPane = new GridPane();
@@ -29,9 +27,16 @@ public class CustomPopup extends Popup {
         gridPane.setVgap(10);
         gridPane.setHgap(25);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+        GameView.getInstance().setBackgroundImage(gridPane,"/view/graveyardPopUpBackground.jpeg",600,600);
+        BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/view/graveyardPopUpBackground.jpeg").toExternalForm()),
+                BackgroundRepeat.REPEAT,
+                BackgroundRepeat.REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(600, 600, false, false, false, false));
+        gridPane.setBackground(new Background(backgroundimage));
         gridPane.setOnMouseClicked(event -> {
             hide();
+            GameController.getInstance().getSelectedCard().unlock();
         });
         Board board = GameController.getInstance().getGameBoard();
         for (int i = 0; i < cards.size(); i++) {
@@ -44,6 +49,7 @@ public class CustomPopup extends Popup {
         }
         javafx.scene.control.ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(gridPane);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         getContent().add(scrollPane);
         requestFocus();
     }

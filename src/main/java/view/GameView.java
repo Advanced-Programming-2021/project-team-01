@@ -32,7 +32,7 @@ import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
-import view.transions.CustomPopup;
+import view.transions.GraveyardPopUp;
 import view.transions.FlipAnimation;
 
 import java.util.List;
@@ -194,8 +194,8 @@ public class GameView {
         }
     }
 
-    public static CustomPopup showListOfCards(List<Card> cards) {
-        return new CustomPopup(cards);
+    public static GraveyardPopUp showListOfCards(List<Card> cards) {
+        return new GraveyardPopUp(cards);
     }
 
     public void init(Pane root) {
@@ -406,7 +406,9 @@ public class GameView {
             List<Card> cardList = FXCollections.observableArrayList();
             ObservableList<Card> cards = (ObservableList<Card>) cardList;
             cards.addAll(playerOneLogicHand.get(1), playerOneLogicHand.get(0), playerOneLogicHand.get(2), playerOneLogicHand.get(3));
-            CustomPopup popup = showListOfCards(cards);
+            cards.addAll(playerTwoLogicHand.get(1), playerTwoLogicHand.get(0), playerTwoLogicHand.get(2), playerTwoLogicHand.get(3));
+            GraveyardPopUp popup = showListOfCards(cards);
+            gameController.getSelectedCard().lock();
             popup.show(ViewSwitcher.getStage());
         });
         mainPane.getChildren().add(button);
@@ -540,7 +542,7 @@ public class GameView {
         }
     }
 
-    private void setBackgroundImage(Pane pane, String address, int width, int height) {
+    public void setBackgroundImage(Pane pane, String address, int width, int height) {
         Image image = new Image(getClass().getResource(address).toExternalForm());
         BackgroundImage backgroundimage = new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT,
