@@ -3,10 +3,12 @@ package view.transions;
 import controller.GameController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.stage.Popup;
 import model.Board;
 import model.card.Card;
 import view.CardView;
@@ -15,14 +17,13 @@ import view.GameView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectCardPopup extends Popup {
+public class SelectCardPopup extends Dialog<ArrayList<Card>> {
     public ArrayList<Card> selectedCards;
     public int numberOfNeededCard;
 
     public SelectCardPopup(List<Card> cards, int numberOfNeededCard) {
         this.numberOfNeededCard = numberOfNeededCard;
         selectedCards = new ArrayList<>();
-        centerOnScreen();
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.TOP_CENTER);
         gridPane.setPrefWidth(600);
@@ -46,9 +47,11 @@ public class SelectCardPopup extends Popup {
                 selectedCards.add(cardView.getCard());
                 gridPane.getChildren().remove(cardView);
                 decreaseNumberOfNeededCard();
-                if (getNumberOfNeededCard() == 0)
-                    hide();
-                GameController.getInstance().getSelectedCard().unlock();
+                if (getNumberOfNeededCard() == 0) {
+                    setResult(selectedCards);
+                    close();
+                    GameController.getInstance().getSelectedCard().unlock();
+                }
             });
             GridPane.setRowIndex(cardView, row);
             GridPane.setColumnIndex(cardView, column);
@@ -57,8 +60,9 @@ public class SelectCardPopup extends Popup {
         javafx.scene.control.ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(gridPane);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        getContent().add(scrollPane);
-        requestFocus();
+        DialogPane dialogPane = new DialogPane();
+        dialogPane.setContent(scrollPane);
+        setDialogPane(dialogPane);
     }
 
     public int getNumberOfNeededCard() {
@@ -70,6 +74,6 @@ public class SelectCardPopup extends Popup {
     }
 
     public void decreaseNumberOfNeededCard() {
-        this.numberOfNeededCard--;
+        this.numberOfNeededCard -= 1;
     }
 }

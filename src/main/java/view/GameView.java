@@ -10,7 +10,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -39,10 +38,8 @@ import view.transions.GraveyardPopUp;
 import view.transions.SelectCardPopup;
 import view.transions.Setting;
 
-import java.sql.Time;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 public class GameView {
@@ -184,16 +181,11 @@ public class GameView {
         return new GraveyardPopUp(cards);
     }
 
-    public static List<Card> getNeededCards() {
-        ObservableList<Card> playerOneLogicHand = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerHand(1);
-        List<Card> cards = FXCollections.observableArrayList();
-        cards.add(playerOneLogicHand.get(0));
-        cards.add(playerOneLogicHand.get(1));
-        cards.add(playerOneLogicHand.get(2));
-        SelectCardPopup selectCardPopup = new SelectCardPopup(cards, 2);
-        selectCardPopup.show(ViewSwitcher.getStage());
+    public static List<Card> getNeededCards(List<Card> cards ,int number) {
+        SelectCardPopup selectCardPopup = new SelectCardPopup(cards, number);
+        selectCardPopup.showAndWait();
+        selectCardPopup.close();
         return selectCardPopup.getSelectedCards();
-
     }
 
     public void attackOnCard() {
@@ -249,8 +241,7 @@ public class GameView {
             setupPhaseButtons();
             setupHands();
             mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
-                    profileDetails1, profileDetails2, playerFieldZone1, playerFieldZone2);
-            ;//, graveyardPlayer1, graveyardPlayer2);//
+                    profileDetails1, profileDetails2, playerFieldZone1, playerFieldZone2, graveyardPlayer1, graveyardPlayer2);
             setupHandObservables();
             root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
         } catch (Exception e) {
@@ -302,6 +293,7 @@ public class GameView {
         graveyardPlayer2 = createStackPane(70, 80, -420, -75);
         setBackgroundImage(graveyardPlayer1, "/view/graveyardIcon.png", 70, 80);
         setBackgroundImage(graveyardPlayer2, "/view/graveyardIcon.png", 70, 80);
+        graveyardPlayer2.setRotate(180);
         ObservableList<Card> playerOneGraveYard = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerOneGraveYard();
         ObservableList<Card> playerTwoGraveYard = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerTwoGraveYard();
         graveyardPlayer1.setOnMouseClicked(event -> {
@@ -462,12 +454,11 @@ public class GameView {
         listenOnHand(playerTwoLogicHand, playerTwoHand);
         Button button = new Button("Click Me");
         button.setOnMouseClicked(event -> {
-            List<Card> cards = FXCollections.observableArrayList();
-            cards.add(playerOneLogicHand.get(0));
-            cards.add(playerOneLogicHand.get(1));
-            cards.add(playerOneLogicHand.get(2));
-            SelectCardPopup selectCardPopup = new SelectCardPopup(cards, 2);
-            selectCardPopup.show(ViewSwitcher.getStage());
+            try {
+                gameController.cheater("Change of Heart");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
         mainPane.getChildren().add(button);
     }

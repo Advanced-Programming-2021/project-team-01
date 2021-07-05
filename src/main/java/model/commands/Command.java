@@ -3,7 +3,8 @@ package model.commands;
 import controller.GameController;
 import model.card.Card;
 
-public abstract class Command implements Activate { //Constructor:
+public abstract class
+Command implements Activate { //Constructor:
     GameController gameController = GameController.getInstance();
     Card myCard;
 

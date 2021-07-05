@@ -8,6 +8,7 @@ import model.card.MonsterCard;
 import console.menu.GameView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChangeOfHeart extends Command implements Activate {
     Card target;
@@ -26,9 +27,8 @@ public class ChangeOfHeart extends Command implements Activate {
             throw new Exception("Monster Zone of your opponent is Empty");
         board.getZoneSlotByCard(myCard).setHidden(false);
         ArrayList<Card> monsterCards = board.getCardInMonsterZone(gameController.getOpponentPlayerNumber());
-        GameView.printListOfCardOpponent(monsterCards);
-        int index = GameView.getValidNumber(0, monsterCards.size() - 1);
-        target = monsterCards.get(index);
+        List<Card> result = view.GameView.getNeededCards(monsterCards,1);
+        target = result.get(0);
         board.sendCardFromMonsterZoneToAnother(target, gameController.getOpponentPlayerNumber()
                 , gameController.getCurrentPlayerNumber());
     }
