@@ -4,10 +4,15 @@ import console.Menu;
 import console.menu.GameView;
 import console.menu.HandleRequestType;
 import controller.exceptions.*;
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.control.Alert;
 import model.*;
 import model.card.*;
+import view.MyAlert;
+import view.ViewSwitcher;
+import view.transions.SelectCardPopup;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -766,6 +771,18 @@ public class GameController {
     public void endJunit(){
         HandleRequestType.currentMenu = Menu.REGISTER_MENU;
         RegisterController.onlineUser = null;
+    }
+
+    public void doAction() {
+        System.out.println(Thread.currentThread().getName());
+        for (int i = 0; i < 5; i++){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("hello");
     }
 }
 

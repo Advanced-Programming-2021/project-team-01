@@ -18,8 +18,7 @@ public class ManEaterBug extends Command implements Activate{
         board = gameController.getGameBoard();
         ArrayList<Card> monsterCards = board.getCardInMonsterZone(gameController.getOpponentPlayerNumber());
         GameView.printListOfCardOpponent(monsterCards);
-        int index = GameView.getValidNumber(0, monsterCards.size() - 1);
-        Card card = monsterCards.get(index);
+        Card card = view.GameView.getNeededCards(monsterCards, 1).get(0);
         board.sendCardFromMonsterZoneToGraveyard(card);
     }
 

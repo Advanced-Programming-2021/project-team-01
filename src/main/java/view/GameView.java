@@ -240,7 +240,7 @@ public class GameView {
             gameController = GameController.getInstance();
             RegisterController.onlineUser = DatabaseController.getUserByName("ali");
             GameController.getInstance().startGame("username", 1);
-            setupMusic();
+            //setupMusic();
             setupImageCard();
             StackPane cardText = setupCardInformation();
             setupProfile();
@@ -469,7 +469,7 @@ public class GameView {
         Button button = new Button("Click Me");
         button.setOnMouseClicked(event -> {
             try {
-                gameController.cheater("Monster Reborn");
+                gameController.cheater("Change of Heart");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -989,4 +989,14 @@ public class GameView {
         mediaPlayer.muteProperty().setValue(!mediaPlayer.muteProperty().get());
         isPlaying = !isPlaying;
     }
+
+    public static String getChoiceBox(String header, String... items){
+        ChoiceDialog<String> choiceDialog = new ChoiceDialog<>();
+        choiceDialog.setHeaderText(header);
+        choiceDialog.getItems().addAll(items);
+        choiceDialog.showAndWait();
+        return choiceDialog.getSelectedItem();
+    }
+
 }
+
