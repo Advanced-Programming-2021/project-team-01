@@ -12,6 +12,7 @@ public class Player {
     private String activeDeck;
     private final ArrayList<String> playerDecks = new ArrayList<>();
     private final ArrayList<String> playerCards = new ArrayList<>();
+    private int profile;
     private int winRate;
     private int loseRate;
 
@@ -22,6 +23,14 @@ public class Player {
         this.winRate = 0;
         this.loseRate = 0;
         this.money = 1000000;
+    }
+
+    public void setPictureNumber(int pictureNumber) {
+        this.profile = pictureNumber;
+    }
+
+    public int getProfile() {
+        return profile;
     }
 
     public String getNickname() {

@@ -20,6 +20,7 @@ import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -382,9 +383,15 @@ public class GameView {
         username2Txt.setText(GameController.getPlayerTwo().getUsername());
         username2Txt.setId("profileText");
         Text nickname2Txt = new Text();
+        Image image1 = new Image(getClass().getResource("/Assets/ProfileDatabase/Chara001.dds"+GameController.getPlayerOne().getProfile()+".png").toExternalForm());
+        ImagePattern imagePattern = new ImagePattern(image1);
+        profileImage1.setFill(imagePattern);
         nickname2Txt.setText(GameController.getPlayerTwo().getNickname());
         nickname2Txt.setId("profileText");
-        Rectangle profileImage2 = new Rectangle(50, 50, Color.BLACK);
+        Rectangle profileImage2 = new Rectangle(50, 50);
+        Image image2 = new Image(getClass().getResource("/Assets/ProfileDatabase/Chara001.dds"+GameController.getPlayerTwo().getProfile()+".png").toExternalForm());
+        ImagePattern imagePattern2 = new ImagePattern(image2);
+        profileImage2.setFill(imagePattern2);
         vBoxPlayer2.getChildren().addAll(profileImage2, username2Txt, nickname2Txt);
         profileDetails2.getChildren().add(vBoxPlayer2);
     }

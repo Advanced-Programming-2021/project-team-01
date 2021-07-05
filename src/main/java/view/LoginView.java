@@ -11,6 +11,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
+import java.util.Random;
+
 public class LoginView {
 
 
@@ -64,4 +66,5 @@ public class LoginView {
             loginLabel.setText(exception.getMessage());
         }
     }
+
 }
