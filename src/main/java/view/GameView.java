@@ -7,17 +7,14 @@ import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.IntegerProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -234,9 +231,10 @@ public class GameView {
             setupHealthBar();
             setupPhaseButtons();
             setupHands();
-            setupHandObservables();
             mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
-                    profileDetails1, profileDetails2, graveyardPlayer1, graveyardPlayer2, playerFieldZone1, playerFieldZone2);
+                    profileDetails1, profileDetails2, playerFieldZone1, playerFieldZone2);
+            ;//, graveyardPlayer1, graveyardPlayer2);//
+            setupHandObservables();
             root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -247,16 +245,6 @@ public class GameView {
     private void setupFieldZone() {
         playerFieldZone1 = createStackPane(100, 120, -430, 60);
         playerFieldZone2 = createStackPane(100, 120, 460, -75);
-//        ZoneSlot fieldZonePlayerOne = GameController.getInstance().getGameBoard().getPlayerFieldZone(1);
-//        ZoneSlot fieldZonePlayerTwo = GameController.getInstance().getGameBoard().getPlayerFieldZone(2);
-//        if (fieldZonePlayerOne.getCard() != null){
-//            CardView cardView = new CardView(fieldZonePlayerOne.getCard(),1,false,false);
-//            playerFieldZone1.getChildren().add(cardView);
-//        }
-//        if (fieldZonePlayerTwo.getCard() != null){
-//            CardView cardView = new CardView(fieldZonePlayerOne.getCard(),1,false,false);
-//            playerFieldZone1.getChildren().add(cardView);
-//        }
     }
 
     private void setupImageCard() {
@@ -486,6 +474,14 @@ public class GameView {
                         }
                     }
                 }
+                for (Card card : c.getAddedSubList()) {
+                    CardView cardView;
+                    if (playerHand == playerOneHand)
+                        cardView = new CardView(card, gameController.getGameBoard().getOwnerOfCard(card), false, false);
+                    else
+                        cardView = new CardView(card, gameController.getGameBoard().getOwnerOfCard(card), false, true);
+                playerHand.addRow(1,cardView);
+                }
             }
         });
     }
@@ -519,16 +515,16 @@ public class GameView {
         drawZonePlayer2 = new StackPane(imageView2, draw2);
         playerOneDrawZone.addListener((ListChangeListener<Card>) c -> {
             draw1.setText(String.valueOf(playerOneDrawZone.size()));
-            while (c.next()) {
-                playerOneHand.addRow(1, new CardView(c.getRemoved().get(0), 1, false, false));
-            }
+//            while (c.next()) {
+//                playerOneHand.addRow(1, new CardView(c.getRemoved().get(0), 1, false, false));
+//            }
             //TODO: drawAnimations
         });
         playerTwoDrawZone.addListener((ListChangeListener<Card>) c -> {
             draw2.setText(String.valueOf(playerTwoDrawZone.size()));
-            while (c.next()) {
-                playerTwoHand.addRow(1, new CardView(c.getRemoved().get(0), 2, false, true));
-            }
+//            while (c.next()) {
+//                playerTwoHand.addRow(1, new CardView(c.getRemoved().get(0), 2, false, true));
+//            }
             //TODO: drawAnimations
         });
         drawZonePlayer1.setTranslateX(430);
