@@ -114,20 +114,11 @@ public class DatabaseController {
             }
         }
         for (Card card : sideDeck) {
-            if (card instanceof MonsterCard){
+            if (card instanceof MonsterCard) {
                 card.setType("monster");
-            }else if (card instanceof TrapCard){
+            } else if (card instanceof TrapCard) {
                 card.setType("trap");
-            }else{
-                card.setType("spell");
-            }
-        }
-        for (Card card : sideDeck) {
-            if (card instanceof MonsterCard){
-                card.setType("monster");
-            }else if (card instanceof TrapCard){
-                card.setType("trap");
-            }else{
+            } else {
                 card.setType("spell");
             }
         }

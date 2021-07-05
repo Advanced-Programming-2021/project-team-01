@@ -33,7 +33,6 @@ public abstract class Card {
 
 
     public ImagePattern getCardImage() {
-        System.out.println(name);
         if (cardImage == null)
             cardImage = cachedImage.get(buildImage());
        return new ImagePattern(cardImage);
