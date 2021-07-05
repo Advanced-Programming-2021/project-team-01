@@ -8,6 +8,9 @@ import model.card.MonsterCard;
 import model.card.MonsterType;
 import console.menu.GameView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EquipWarrior extends Command implements Activate{
     Board board = gameController.getGameBoard();
 
@@ -17,17 +20,22 @@ public class EquipWarrior extends Command implements Activate{
 
     @Override
     public void run() throws Exception {
+        Board board = gameController.getGameBoard();
         if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0) {
             throw new Exception("no monster card");
         }
-        int indexOfMonster = Integer.parseInt(GameView.prompt("please choose a monster!"));
-        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER, indexOfMonster, gameController.getCurrentPlayerNumber());
-        if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
-        if (!((MonsterCard) zoneSlot.getCard()).getMonsterTypes().contains(MonsterType.WARRIOR)) {
-            throw new Exception("only warrior type monsters are allowed");
+        ArrayList<Card> monsters = new ArrayList<>();
+        ZoneSlot[] monsterZone = board.getPlayerMonsterZone(gameController.getCurrentPlayerNumber());
+        for (int i = 1; i < 6; i++) {
+            if (monsterZone[i].getCard() == null)
+                continue;
+            if (((MonsterCard) monsterZone[i].getCard()).getMonsterTypes().contains(MonsterType.WARRIOR))
+                monsters.add(monsterZone[i].getCard());
         }
-        zoneSlot.setEquippedCard(gameController.getSelectedCard().getCard());
-        board.setSpellFaceUp( gameController.getSelectedCard().getCard());
+        List<Card> result = view.GameView.getNeededCards(monsters, 1);
+        Card selected = result.get(0);
+        board.getZoneSlotByCard(selected).setEquippedCard(gameController.getSelectedCard().getCard());
+        board.setSpellFaceUp(gameController.getSelectedCard().getCard());
     }
 
     public boolean canActivate() throws Exception {

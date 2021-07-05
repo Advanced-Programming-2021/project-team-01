@@ -5,6 +5,11 @@ import model.ZoneSlot;
 import model.card.Card;
 import model.card.CardLocation;
 import console.menu.GameView;
+import model.card.MonsterCard;
+import model.card.MonsterType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EquipNormal extends Command implements Activate {
 
@@ -18,10 +23,17 @@ public class EquipNormal extends Command implements Activate {
         if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 0) {
             throw new Exception("no monster card");
         }
-        int indexOfMonster = Integer.parseInt(GameView.prompt("please choose a monster!"));
-        ZoneSlot zoneSlot = board.getZoneSlotByLocation(CardLocation.MONSTER, indexOfMonster, gameController.getCurrentPlayerNumber());
-        if (zoneSlot.getCard() == null) throw new Exception("there is no monster here!");
-        zoneSlot.setEquippedCard(gameController.getSelectedCard().getCard());
+        ArrayList<Card> monsters = new ArrayList<>();
+        ZoneSlot[] monsterZone = board.getPlayerMonsterZone(gameController.getCurrentPlayerNumber());
+        for (int i = 1; i < 6; i++) {
+            if (monsterZone[i].getCard() == null)
+                continue;
+            monsters.add(monsterZone[i].getCard());
+        }
+        List<Card> result = view.GameView.getNeededCards(monsters, 1);
+        Card selected = result.get(0);
+        board.getZoneSlotByCard(selected).setEquippedCard(gameController.getSelectedCard().getCard());
+        System.out.println(gameController.getSelectedCard().getCard().getName());
         board.setSpellFaceUp(gameController.getSelectedCard().getCard());
     }
 

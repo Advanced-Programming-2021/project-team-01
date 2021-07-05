@@ -183,8 +183,10 @@ public class GameView {
 
     public static List<Card> getNeededCards(List<Card> cards ,int number) {
         SelectCardPopup selectCardPopup = new SelectCardPopup(cards, number);
+        GameController.getInstance().getSelectedCard().lock();
         selectCardPopup.showAndWait();
         selectCardPopup.close();
+        GameController.getInstance().getSelectedCard().unlock();
         return selectCardPopup.getSelectedCards();
     }
 
@@ -226,7 +228,7 @@ public class GameView {
             gameController = GameController.getInstance();
             RegisterController.onlineUser = DatabaseController.getUserByName("ali");
             GameController.getInstance().startGame("username", 1);
-            setupMusic();
+            //setupMusic();
             setupImageCard();
             StackPane cardText = setupCardInformation();
             setupProfile();
@@ -455,7 +457,7 @@ public class GameView {
         Button button = new Button("Click Me");
         button.setOnMouseClicked(event -> {
             try {
-                gameController.cheater("Change of Heart");
+                gameController.cheater("Black Pendant");
             } catch (Exception e) {
                 e.printStackTrace();
             }
