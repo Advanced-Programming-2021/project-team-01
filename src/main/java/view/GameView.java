@@ -13,6 +13,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -41,6 +42,7 @@ import view.transions.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.TimerTask;
 
 
 public class GameView {
@@ -261,7 +263,8 @@ public class GameView {
             gameController = GameController.getInstance();
             RegisterController.onlineUser = DatabaseController.getUserByName("ali");
             GameController.getInstance().startGame("username", 1);
-            //setupMusic();
+            setupPiecePlayer();
+            setupMusic();
             setupImageCard();
             StackPane cardText = setupCardInformation();
             setupProfile();
@@ -284,6 +287,13 @@ public class GameView {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private void setupPiecePlayer() {
+        Media media = new Media(getClass().getResource("/Assets/sound/timeto.mp3").toExternalForm());
+        piecePlayer = new MediaPlayer(media);
+        piecePlayer.setOnEndOfMedia(piecePlayer::stop);
+        piecePlayer.play();
     }
 
     private void setupEndGameCondition() {
@@ -565,6 +575,13 @@ public class GameView {
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
         isPlaying = true;
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                mediaPlayer.play();
+            }
+        };
+        task.run();
         mediaPlayer.play();
     }
 
