@@ -3,8 +3,7 @@ package view;
 import controller.GameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -45,6 +44,12 @@ public class ViewSwitcher {
                         if(event.getCode() == KeyCode.ESCAPE){
                             GameView.getInstance().setupEscPressed();
                         }
+                    });
+                    KeyCombination cheatKeyCombination = new KeyCodeCombination(KeyCode.C,
+                            KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN);
+                    scene.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+                        if (cheatKeyCombination.match(event))
+                            GameView.getInstance().setupCheatScene();
                     });
                     break;
                 }

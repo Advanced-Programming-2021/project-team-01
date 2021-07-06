@@ -43,8 +43,6 @@ public class GameController {
 
     }
 
-
-
     public static Player getPlayerOne() {
         return playerOne;
     }
@@ -59,8 +57,6 @@ public class GameController {
         }
         return instance;
     }
-
-
 
     public static Player getCurrentPlayer() {
         return currentPlayer;

@@ -17,6 +17,10 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -34,10 +38,7 @@ import model.card.Card;
 import model.card.CardLocation;
 import model.card.Property;
 import model.card.SpellCard;
-import view.transions.FlipAnimation;
-import view.transions.GraveyardPopUp;
-import view.transions.SelectCardPopup;
-import view.transions.Setting;
+import view.transions.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -69,6 +70,7 @@ public class GameView {
     GridPane playerTwoCardsInBoard;
     MediaPlayer mediaPlayer;
     CardView targetCard;
+    KeyCombination cheatKeyCombination;
     boolean isPlaying = false;
     boolean isAttacking = false;
 
@@ -1002,5 +1004,9 @@ public class GameView {
         isPlaying = !isPlaying;
     }
 
+    public void setupCheatScene() {
+        CheatPopUp cheatPopUp = new CheatPopUp();
+        cheatPopUp.show(ViewSwitcher.getStage());
+    }
 }
 
