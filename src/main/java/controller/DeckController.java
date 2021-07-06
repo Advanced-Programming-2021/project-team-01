@@ -27,6 +27,7 @@ public class DeckController {
             Deck deck = new Deck(name);
             DatabaseController.updateDeck(deck);
             onlineUser.addDeck(name);
+            DatabaseController.updatePlayer(onlineUser);
         } else
             throw new DeckExists(name);
     }

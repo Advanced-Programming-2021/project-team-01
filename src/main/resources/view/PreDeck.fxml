@@ -9,13 +9,17 @@
 <?import java.net.URL?>
 <BorderPane styleClass="background" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.DeckPreview"
+            fx:controller="view.DeckPreView"
             prefHeight="400.0" prefWidth="600.0">
     <stylesheets>
         <URL value="@predeck.css"/>
     </stylesheets>
     <center>
         <HBox alignment="CENTER" spacing="30">
+            <VBox translateX="-50">
+                <Label fx:id="sizeLabel" text="Size:" translateY="180"/>
+                <Label fx:id="activeDeckLabel" translateY="200"/>
+            </VBox>
             <VBox spacing="15" alignment="CENTER">
                 <ChoiceBox prefWidth="100" fx:id="deckBar"/>
                 <Button styleClass="but" prefWidth="100" text="Delete deck" onMouseClicked="#deleteDeck"/>

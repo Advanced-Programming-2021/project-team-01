@@ -13,4 +13,10 @@
 
 .choice-box {
     -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.label {
+    -fx-text-fill: white;
+    -fx-font: 20px "Arial";
 }
