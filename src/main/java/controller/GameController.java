@@ -1,13 +1,13 @@
 package controller;
 
 import console.Menu;
-import console.menu.GameView;
 import console.menu.HandleRequestType;
 import controller.exceptions.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import model.*;
 import model.card.*;
+import view.GameView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -497,8 +497,11 @@ public class GameController {
                     decreasePlayerLP(getOpponentPlayerNumber(), -500);
             }
         } else if (selectedCard.getCard() instanceof TrapCard) {
-            state = State.NONE;
-            throw new Exception("You cant activate this card");
+            TrapCard trapCard = (TrapCard) selectedCard.getCard();
+            if (!trapCard.getName().equals((Effect.MIND_CRUSH).toString())) {
+                state = State.NONE;
+                throw new Exception("You cant activate this card");
+            }
         }
         createChain(selectedCard.getCard());
         chain.run();
@@ -524,11 +527,16 @@ public class GameController {
             }
         }
         checkRitualLevel(temp, monsterCards);
-        MonsterCard dedicated = (MonsterCard) view.GameView.getNeededCards(temp,1).get(0);
-        GameView.printListOfCard(temp);
-        String[] monsters = GameView.getValidRitual(dedicated.getLevel());
-        for (String monster : monsters) {
-            gameBoard.sendCardFromMonsterZoneToGraveyard(Integer.parseInt(monster), getCurrentPlayerNumber());
+        MonsterCard dedicated = (MonsterCard) view.GameView.getNeededCards(temp, 1).get(0);
+        List<Card> selectedMonsters = GameView.selectedCardsWithSelectableDialog(monsterCards);
+        int levelOfMonsters = 0;
+        for (Card selectedMonster : selectedMonsters) {
+            levelOfMonsters += ((MonsterCard) selectedMonster).getLevel();
+        }
+        if (dedicated.getLevel() > levelOfMonsters)
+            throw new Exception("selected monsters dont match with ritual monsters");
+        for (Card monster : selectedMonsters) {
+            gameBoard.sendCardFromMonsterZoneToGraveyard(monster);
         }
         gameBoard.setSpell(getCurrentPlayerNumber(), (SpellCard) selectedCard.getCard());
         gameBoard.setSpellFaceUp(selectedCard.getCard());

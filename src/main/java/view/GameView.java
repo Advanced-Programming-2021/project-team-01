@@ -74,7 +74,6 @@ public class GameView {
     MediaPlayer mediaPlayer;
     MediaPlayer piecePlayer;
     CardView targetCard;
-    KeyCombination cheatKeyCombination;
     boolean isPlaying = false;
     boolean isAttacking = false;
 
@@ -265,8 +264,8 @@ public class GameView {
             gameController = GameController.getInstance();
             RegisterController.onlineUser = DatabaseController.getUserByName("ali");
             GameController.getInstance().startGame("username", 1);
-            setupPiecePlayer();
-            setupMusic();
+//            setupPiecePlayer();
+//            setupMusic();
             setupImageCard();
             StackPane cardText = setupCardInformation();
             setupProfile();
@@ -462,7 +461,7 @@ public class GameView {
         });
     }
 
-    private void drawPhaseGraphicActions() {
+    public void drawPhaseGraphicActions() {
         int opponentNumber = GameController.getInstance().getOpponentPlayerNumber();
         if (opponentNumber == 2) {
             for (Node child : playerOneHand.getChildren()) {
@@ -529,17 +528,14 @@ public class GameView {
         ObservableList<Card> playerTwoLogicHand = (ObservableList<Card>) GameController.getInstance().getGameBoard().getPlayerHand(2);
         listenOnHand(playerOneLogicHand, playerOneHand);
         listenOnHand(playerTwoLogicHand, playerTwoHand);
-        Button button = new Button("Click Me");
-        button.setOnMouseClicked(event -> {
-            List<Card> cards = FXCollections.observableArrayList();
-            cards.add(playerOneLogicHand.get(0));
-            cards.add(playerOneLogicHand.get(1));
-            cards.add(playerOneLogicHand.get(2));
-            cards.add(playerOneLogicHand.get(3));
-            SelectableDialog selectableDialog = new SelectableDialog(cards);
-            selectableDialog.showAndWait();
-        });
-        mainPane.getChildren().add(button);
+    }
+
+    public static List<Card> selectedCardsWithSelectableDialog(List<Card> cards){
+        GameController.getInstance().getSelectedCard().lock();
+        SelectableDialog selectableDialog = new SelectableDialog(cards);
+        selectableDialog.showAndWait();
+        GameController.getInstance().getSelectedCard().unlock();
+        return selectableDialog.getResult();
     }
 
     private void listenOnHand(ObservableList<Card> logicHand, GridPane playerHand) {

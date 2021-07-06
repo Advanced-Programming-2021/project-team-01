@@ -14,7 +14,6 @@ import javafx.stage.StageStyle;
 import model.Board;
 import model.card.Card;
 import view.CardView;
-import view.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +37,8 @@ public class SelectableDialog extends Dialog<List<Card>> {
         gridPaneSelectedCards.setVgap(10);
         gridPaneSelectedCards.setHgap(25);
 
-        gridPaneAllCars.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT,CornerRadii.EMPTY, Insets.EMPTY)));
-        gridPaneSelectedCards.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT,CornerRadii.EMPTY, Insets.EMPTY)));
+        gridPaneAllCars.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+        gridPaneSelectedCards.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
 
 
         Board board = GameController.getInstance().getGameBoard();
@@ -52,7 +51,7 @@ public class SelectableDialog extends Dialog<List<Card>> {
 //                    GridPane.setColumnIndex(cardView, selectedCards.size());
                     selectedCards.add(cardView.getCard());
                     gridPaneSelectedCards.getChildren().add(cardView);
-                }else if (gridPaneSelectedCards.getChildren().contains(cardView)){
+                } else if (gridPaneSelectedCards.getChildren().contains(cardView)) {
                     gridPaneSelectedCards.getChildren().remove(cardView);
 //                    GridPane.setRowIndex(cardView, 0);
 //                    GridPane.setColumnIndex(cardView, gridPaneAllCars.getChildren().size());
@@ -63,7 +62,7 @@ public class SelectableDialog extends Dialog<List<Card>> {
 //            GridPane.setRowIndex(cardView, 0);
 //            GridPane.setColumnIndex(cardView, i);
 //            gridPaneAllCars.getChildren().add(cardView);
-            gridPaneAllCars.add(cardView,i,0);
+            gridPaneAllCars.add(cardView, i, 0);
         }
         initModality(Modality.APPLICATION_MODAL);
         initStyle(StageStyle.TRANSPARENT);
@@ -93,11 +92,13 @@ public class SelectableDialog extends Dialog<List<Card>> {
         button.setPrefWidth(100);
         button.setText("Done!");
         button.setOnMouseClicked(event -> {
-            setResult(selectedCards);
-            close();
+            if (!selectedCards.isEmpty()) {
+                setResult(selectedCards);
+                close();
+            }
         });
 
-        vBox.getChildren().addAll(button,scrollPaneAllCards, scrollPaneSelectedCards);
+        vBox.getChildren().addAll(button, scrollPaneAllCards, scrollPaneSelectedCards);
         BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/view/graveyardPopUpBackground.jpeg").toExternalForm()),
                 BackgroundRepeat.REPEAT,
                 BackgroundRepeat.REPEAT,

@@ -27,7 +27,7 @@ public class ChainController {
         }
         ChainView.printTurn(GameController.getCurrentPlayer());
         GameController.getInstance().getGameBoard().showBoard();
-        if (!view.GameView.getYesOrNo("Do you want to activate your trap and spell?")) {
+        if (!view.GameView.getYesOrNo(GameController.currentPlayer.getNickname() + ",Do you want to activate your trap and spell?")) {
             back();
             return;
         }
