@@ -380,7 +380,7 @@ public class GameController {
     }
 
     public void tributeSummonLevel7(Card card1, Card card2) throws Exception {
-        tribute(card1,card2);
+        tribute(card1, card2);
         createChain();
         chainController.chain.run();
         state = State.NONE;
@@ -400,7 +400,7 @@ public class GameController {
         selectedCard.reset();
     }
 
-    public void tribute(Card card1 ,Card card2) throws Exception {
+    public void tribute(Card card1, Card card2) throws Exception {
         gameBoard.sendCardFromMonsterZoneToGraveyard(card1);
         gameBoard.sendCardFromMonsterZoneToGraveyard(card2);
         gameBoard.summonCard((MonsterCard) selectedCard.getCard(), getCurrentPlayerNumber());
@@ -496,6 +496,9 @@ public class GameController {
                 if (gameBoard.getCardInSpellZone(getOpponentPlayerNumber()).get(i).getName().equals("Spell Absorption"))
                     decreasePlayerLP(getOpponentPlayerNumber(), -500);
             }
+        } else if (selectedCard.getCard() instanceof TrapCard) {
+            state = State.NONE;
+            throw new Exception("You cant activate this card");
         }
         createChain(selectedCard.getCard());
         chain.run();
@@ -749,14 +752,14 @@ public class GameController {
         chainController.run();
     }
 
-    public void endJunit(){
+    public void endJunit() {
         HandleRequestType.currentMenu = Menu.REGISTER_MENU;
         RegisterController.onlineUser = null;
     }
 
     public void doAction() {
         System.out.println(Thread.currentThread().getName());
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

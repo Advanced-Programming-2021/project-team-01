@@ -17,10 +17,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import model.card.Card;
-import model.card.CardType;
-import model.card.MonsterCard;
-import model.card.SpellCard;
+import model.card.*;
 
 
 public class CardView extends Rectangle {
@@ -72,15 +69,13 @@ public class CardView extends Rectangle {
         setOnMouseEntered(event -> {
             handleOnMouseEntered();
         });
-        setOnMouseClicked(event -> {
-            handleClicked(event);
-        });
+        setOnMouseClicked(this::handleClicked);
         setImage(isHidden, is180);
         if (getCard() instanceof MonsterCard && ((MonsterCard) getCard()).getCardType() == CardType.EFFECT)
             setViewLocation(ViewLocation.HAND_MONSTER_EFFECT);
         else if (getCard() instanceof MonsterCard && ((MonsterCard) getCard()).getCardType() == CardType.NORMAL)
             setViewLocation(ViewLocation.HAND_MONSTER_NORMAL);
-        else if (getCard() instanceof SpellCard)
+        else if (getCard() instanceof SpellCard || getCard() instanceof TrapCard)
             setViewLocation(ViewLocation.HAND_SPELL);
     }
 

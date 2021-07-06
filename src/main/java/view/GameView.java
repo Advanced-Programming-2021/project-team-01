@@ -213,6 +213,13 @@ public class GameView {
         return choiceDialog.getSelectedItem();
     }
 
+    public static boolean getYesOrNo(String prompt) {
+        YesNoDialog yesNoDialog = new YesNoDialog(prompt);
+        yesNoDialog.showAndWait();
+        return yesNoDialog.getResult();
+    }
+
+
     public void attackOnCard() {
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(100), targetCard);
         translateTransition.setByX(15);
@@ -480,7 +487,7 @@ public class GameView {
         Button button = new Button("Click Me");
         button.setOnMouseClicked(event -> {
             try {
-                new MyAlert(Alert.AlertType.INFORMATION,"hello there").show();
+                new MyAlert(Alert.AlertType.INFORMATION, "hello there").show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
