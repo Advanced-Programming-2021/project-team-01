@@ -20,7 +20,6 @@ public class CheatPopUp extends Popup {
             setWinnerButton = new Button("Set winner");
 
     public CheatPopUp() {
-        System.out.println("shit");
         centerOnScreen();
         Pane pane = new Pane();
         pane.setPrefHeight(600);

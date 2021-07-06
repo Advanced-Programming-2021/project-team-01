@@ -20,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import model.card.Card;
 import model.card.MonsterCard;
+import view.transions.ShopCheatPopup;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -36,6 +37,10 @@ public class ShopView implements Initializable {
     public Pane imageBar;
     public ScrollPane monsterScroll, spellScroll;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        init();
+    }
 
     public void init() {
         RegisterController.onlineUser = DatabaseController.getUserByName("username");
@@ -188,8 +193,8 @@ public class ShopView implements Initializable {
         new MyAlert(Alert.AlertType.CONFIRMATION, "Card is bought").show();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        init();
+    public static void setupCheatScene() {
+        ShopCheatPopup shopCheatPopup = new ShopCheatPopup();
+        shopCheatPopup.show(ViewSwitcher.getStage());
     }
 }

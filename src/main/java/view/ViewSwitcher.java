@@ -19,6 +19,8 @@ public class ViewSwitcher {
         Pane root = null;
         FXMLLoader fxmlLoader = null;
         Scene scene = null;
+        KeyCombination cheatKeyCombination = new KeyCodeCombination(KeyCode.C,
+                KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN);
         try {
             fxmlLoader = new FXMLLoader(Objects.requireNonNull(ViewSwitcher.class.getResource(view.getFileName())));
             if (view == View.GAME_VIEW)
@@ -26,6 +28,12 @@ public class ViewSwitcher {
             root = fxmlLoader.load();
             scene = new Scene(root);
             switch (view) {
+                case SHOP: {
+                    scene.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+                        if (cheatKeyCombination.match(event))
+                            ShopView.setupCheatScene();
+                    });
+                }
                 case SCOREBOARD: {
                     new ScoreboardView().init(root);
                     break;
@@ -45,8 +53,6 @@ public class ViewSwitcher {
                             GameView.getInstance().setupEscPressed();
                         }
                     });
-                    KeyCombination cheatKeyCombination = new KeyCodeCombination(KeyCode.C,
-                            KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN);
                     scene.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
                         if (cheatKeyCombination.match(event))
                             GameView.getInstance().setupCheatScene();
