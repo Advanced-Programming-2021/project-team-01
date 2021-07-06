@@ -2,15 +2,16 @@ package view;
 
 import controller.RegisterController;
 import controller.ScoreBoardController;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import model.Player;
 
 import java.util.ArrayList;
@@ -19,19 +20,20 @@ import java.util.List;
 public class ScoreboardView {
     public void init(Pane root) {
         ListView<String> scoreTable = new ListView<>();
-        Observable scores = FXCollections.observableArrayList(getSortedScoreBoard());
-        scoreTable.setItems((ObservableList<String>) scores);
+        ObservableList<String> scores = FXCollections.observableArrayList(getSortedScoreBoard());
+        scoreTable.setItems(scores);
         scoreTable.setCellFactory(cell -> new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item != null) {
                     setText(item);
-                    setFont(Font.font(16));
+                    setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
                     String regex = "\\d+- (" + RegisterController.onlineUser.getUsername() + ") : \\d+";
                     if (getIndex() < 20 && item.matches(regex)) {
-                        setTextFill(Color.BLUE);
-                        setFont(Font.font(22));
+                        setTextFill(Color.WHITE);
+                        setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+                        setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
                     }
                 }
             }

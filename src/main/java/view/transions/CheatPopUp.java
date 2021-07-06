@@ -5,6 +5,7 @@ import controller.GameController;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -59,12 +60,13 @@ public class CheatPopUp extends Popup {
     }
 
     private void setupButtons(Pane pane) {
-        lpButton.setStyle("-fx-background-color: #3c2f0b;-fx-text-fill: yellow;-fx-pref-width: 100px;");
-        forceHandButton.setStyle("-fx-background-color: #3c2f0b;-fx-text-fill: yellow;-fx-pref-width: 100px;");
-        setWinnerButton.setStyle("-fx-background-color: #3c2f0b;-fx-text-fill: yellow;-fx-pref-width: 100px;");
+        lpButton.setStyle("-fx-background-color: #3c2f0b;-fx-text-fill: yellow;-fx-min-width: 100px;");
+        forceHandButton.setStyle("-fx-background-color: #3c2f0b;-fx-text-fill: yellow;-fx-min-width: 100px;");
+        setWinnerButton.setStyle("-fx-background-color: #3c2f0b;-fx-text-fill: yellow;-fx-min-width: 100px;");
         VBox vBox = new VBox();
         vBox.getChildren().addAll(lpButton, forceHandButton, setWinnerButton);
         vBox.setSpacing(45);
+        vBox.setAlignment(Pos.CENTER);
         pane.getChildren().add(vBox);
         setupButtonsFunctionality();
         setupFields(pane, vBox);
@@ -85,12 +87,14 @@ public class CheatPopUp extends Popup {
         slider.setId("slider");
         label.textProperty().bind(Bindings.format("%.0f", slider.valueProperty()));
         pane.getChildren().add(label);
-        label.setTranslateX(530);
-        label.setTranslateY(220);
+        label.setTranslateX(550);
+        label.setTranslateY(240);
         VBox vBox = new VBox();
         vBox.getChildren().addAll(slider, cardsChoiceBox, nicknameChoiceBox);
-        vBox.setSpacing(45);
+        vBox.setSpacing(65);
+        vBox.setAlignment(Pos.CENTER);
         HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
         hBox.getChildren().addAll(buttonVBox, vBox);
         hBox.setTranslateX(50);
         hBox.setTranslateY(230);
