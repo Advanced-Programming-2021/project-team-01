@@ -115,5 +115,30 @@
 
 .button Text {
     -fx-fill: white;
-    -fx-effect: dropshadow(gaussian, #a30000, 0, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, #185a9d, 0, 0, 0, 2);
+}
+
+.choice-box .context-menu {
+    -fx-background-color: black;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #006699;
+}
+
+.choice-box .menu-item > .label {
+    -fx-text-fill: white;
+}
+
+.choice-box .menu-item:focused > .label {
+    -fx-text-fill: black;
+}
+
+.choice-box {
+    -fx-background-color: black;
+    -fx-mark-color: blue;
+}
+
+.choice-box > .label {
+    -fx-text-fill: white;
 }
