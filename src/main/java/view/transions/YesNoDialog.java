@@ -36,8 +36,8 @@ public class YesNoDialog extends Dialog<Boolean> {
 
         yesButton.setTranslateY(100);
         yesButton.setTranslateX(300);
-        yesButton.setPrefWidth(50);
-        yesButton.setPrefHeight(20);
+        yesButton.setPrefWidth(80);
+        yesButton.setPrefHeight(40);
         yesButton.setOnMouseClicked(event -> {
             setResult(true);
             close();
@@ -45,8 +45,8 @@ public class YesNoDialog extends Dialog<Boolean> {
 
         noButton.setTranslateY(100);
         noButton.setTranslateX(100);
-        noButton.setPrefWidth(50);
-        noButton.setPrefHeight(20);
+        noButton.setPrefWidth(80);
+        noButton.setPrefHeight(40);
         noButton.setOnMouseClicked(event -> {
             setResult(false);
             close();
