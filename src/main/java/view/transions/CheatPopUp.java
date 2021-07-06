@@ -2,6 +2,8 @@ package view.transions;
 
 import controller.GameController;
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,12 +12,14 @@ import javafx.stage.Popup;
 import model.card.Card;
 import view.MyAlert;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class CheatPopUp extends Popup {
     Slider slider = new Slider();
     ChoiceBox<String> cardsChoiceBox = new ChoiceBox<>();
-    TextField nicknameTextField = new TextField();
+    ChoiceBox<String> nicknameChoiceBox = new ChoiceBox<>();
     Button lpButton = new Button("Increase LP"),
             forceHandButton = new Button("Add card"),
             setWinnerButton = new Button("Set winner");
@@ -66,8 +70,11 @@ public class CheatPopUp extends Popup {
 
     private void setupFields(Pane pane, VBox buttonVBox) {
         Label  label  = new Label();
-        nicknameTextField.setPrefWidth(100);
-        nicknameTextField.setText("Enter winner's nickname:");
+        nicknameChoiceBox.setPrefWidth(100);
+        ObservableList<String> names = FXCollections.observableArrayList();
+        names.add(GameController.getPlayerOne().getNickname());
+        names.add(GameController.getPlayerTwo().getNickname());
+        nicknameChoiceBox.setItems(names);
         for (Map.Entry<String, Card> entry : Card.getAllCards().entrySet()) {
             cardsChoiceBox.getItems().add(entry.getKey());
         }
@@ -78,7 +85,7 @@ public class CheatPopUp extends Popup {
         label.setTranslateX(530);
         label.setTranslateY(220);
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(slider, cardsChoiceBox, nicknameTextField);
+        vBox.getChildren().addAll(slider, cardsChoiceBox, nicknameChoiceBox);
         vBox.setSpacing(45);
         HBox hBox = new HBox();
         hBox.getChildren().addAll(buttonVBox, vBox);
@@ -104,13 +111,13 @@ public class CheatPopUp extends Popup {
                 new MyAlert(Alert.AlertType.WARNING, "No card is chosen!").show();
         });
         setWinnerButton.setOnMouseClicked(event -> {
-            if (nicknameTextField.getText().equals(""))
+            if (nicknameChoiceBox.getValue().equals(""))
                 new MyAlert(Alert.AlertType.WARNING, "Field is blank").show();
             else {
-                if (GameController.getPlayerOne().getNickname().equals(nicknameTextField.getText()) ||
-                        GameController.getPlayerTwo().getNickname().equals(nicknameTextField.getText())) {
+                if (GameController.getPlayerOne().getNickname().equals(nicknameChoiceBox.getValue()) ||
+                        GameController.getPlayerTwo().getNickname().equals(nicknameChoiceBox.getValue())) {
                     try {
-                        GameController.getInstance().setWinner(nicknameTextField.getText());
+                        GameController.getInstance().setWinner(nicknameChoiceBox.getValue());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
