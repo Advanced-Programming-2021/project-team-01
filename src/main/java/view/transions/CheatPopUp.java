@@ -1,5 +1,6 @@
 package view.transions;
 
+import com.jfoenix.controls.JFXSlider;
 import controller.GameController;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CheatPopUp extends Popup {
-    Slider slider = new Slider();
+    JFXSlider slider = new JFXSlider();
     ChoiceBox<String> cardsChoiceBox = new ChoiceBox<>();
     ChoiceBox<String> nicknameChoiceBox = new ChoiceBox<>();
     Button lpButton = new Button("Increase LP"),

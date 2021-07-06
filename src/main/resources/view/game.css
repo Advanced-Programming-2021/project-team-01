@@ -80,8 +80,9 @@
     -fx-scale-x: 1.2;
     -fx-scale-y: 1.2;
 }
-.next{
-    -fx-effect: dropshadow(gaussian, rgba(110,10,133,0.83), 20, 0.3, -5, -5);
+
+.next {
+    -fx-effect: dropshadow(gaussian, rgba(110, 10, 133, 0.83), 20, 0.3, -5, -5);
     -fx-scale-x: 1.2;
     -fx-scale-y: 1.2;
 }
@@ -141,4 +142,32 @@
 
 .choice-box > .label {
     -fx-text-fill: white;
+}
+
+.jfx-slider-colored {
+    -jfx-default-thumb: #5264AE;
+    -jfx-default-track: #212121;
+}
+
+.jfx-slider-style {
+    -jfx-indicator-position: right;
+}
+
+.jfx-slider-style > .thumb {
+    -fx-background-color: #03a9f4;
+}
+
+.jfx-slider-style .track {
+    -fx-background-color: #ff5252;
+    -fx-pref-height: 5px;
+    -fx-pref-width: 5px;
+}
+
+.jfx-slider-style .animated-thumb {
+    -fx-background-color: darkorange;
+}
+
+.jfx-slider-style .sliderValue {
+    -fx-stroke: WHITE;
+    -fx-font-size: 10.0;
 }

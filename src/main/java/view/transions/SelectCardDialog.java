@@ -6,9 +6,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
 import model.Board;
 import model.card.Card;
 import view.CardView;
@@ -17,11 +18,11 @@ import view.GameView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectCardPopup extends Dialog<ArrayList<Card>> {
+public class SelectCardDialog extends Dialog<ArrayList<Card>> {
     public ArrayList<Card> selectedCards;
     public int numberOfNeededCard;
 
-    public SelectCardPopup(List<Card> cards, int numberOfNeededCard) {
+    public SelectCardDialog(List<Card> cards, int numberOfNeededCard) {
         this.numberOfNeededCard = numberOfNeededCard;
         selectedCards = new ArrayList<>();
         GridPane gridPane = new GridPane();
@@ -30,7 +31,6 @@ public class SelectCardPopup extends Dialog<ArrayList<Card>> {
         gridPane.setPrefHeight(600);
         gridPane.setVgap(10);
         gridPane.setHgap(25);
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
         GameView.getInstance().setBackgroundImage(gridPane, "/view/graveyardPopUpBackground.jpeg", 600, 600);
         BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/view/graveyardPopUpBackground.jpeg").toExternalForm()),
                 BackgroundRepeat.REPEAT,
@@ -57,12 +57,13 @@ public class SelectCardPopup extends Dialog<ArrayList<Card>> {
             GridPane.setColumnIndex(cardView, column);
             gridPane.getChildren().add(cardView);
         }
-        javafx.scene.control.ScrollPane scrollPane = new ScrollPane();
+        initModality(Modality.APPLICATION_MODAL);
+        initStyle(StageStyle.TRANSPARENT);
+        ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(gridPane);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        DialogPane dialogPane = new DialogPane();
-        dialogPane.setContent(scrollPane);
-        setDialogPane(dialogPane);
+        getDialogPane().setContent(scrollPane);
+        getDialogPane().getStylesheets().add(getClass().getResource("/view/game.css").toExternalForm());
     }
 
     public int getNumberOfNeededCard() {

@@ -17,10 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -188,12 +185,12 @@ public class GameView {
     }
 
     public static List<Card> getNeededCards(List<Card> cards, int number) {
-        SelectCardPopup selectCardPopup = new SelectCardPopup(cards, number);
+        SelectCardDialog selectCardDialog = new SelectCardDialog(cards, number);
         GameController.getInstance().getSelectedCard().lock();
-        selectCardPopup.showAndWait();
-        selectCardPopup.close();
+        selectCardDialog.showAndWait();
+        selectCardDialog.close();
         GameController.getInstance().getSelectedCard().unlock();
-        return selectCardPopup.getSelectedCards();
+        return selectCardDialog.getSelectedCards();
     }
 
     public static String getChoiceBox(List<String> items, String header) {

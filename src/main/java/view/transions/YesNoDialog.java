@@ -1,6 +1,5 @@
 package view.transions;
 
-import com.jfoenix.controls.JFXDialog;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
@@ -16,13 +15,14 @@ import javafx.stage.StageStyle;
 
 public class YesNoDialog extends Dialog<Boolean> {
 
-    public YesNoDialog(String prompt){
+    public YesNoDialog(String prompt) {
         Pane pane = new Pane();
         BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/Assets/50061.png").toExternalForm()),
                 BackgroundRepeat.REPEAT,
                 BackgroundRepeat.REPEAT,
                 BackgroundPosition.DEFAULT,
-                new BackgroundSize(450, 180, false, false, false, false));        pane.setBackground(new Background(backgroundimage));
+                new BackgroundSize(450, 180, false, false, false, false));
+        pane.setBackground(new Background(backgroundimage));
         pane.setPrefWidth(450);
         pane.setPrefHeight(180);
         pane.setBackground(new Background(backgroundimage));
@@ -31,11 +31,9 @@ public class YesNoDialog extends Dialog<Boolean> {
         initStyle(StageStyle.TRANSPARENT);
         getDialogPane().getStylesheets().add(getClass().getResource("/view/game.css").toExternalForm());
 
-        Button yesButton = new Button("yes");
-        Button noButton = new Button("no");
+        Button yesButton = new Button("Yes");
+        Button noButton = new Button("No");
 
-        yesButton.setTranslateY(100);
-        yesButton.setTranslateX(300);
         yesButton.setPrefWidth(80);
         yesButton.setPrefHeight(40);
         yesButton.setOnMouseClicked(event -> {
@@ -43,8 +41,6 @@ public class YesNoDialog extends Dialog<Boolean> {
             close();
         });
 
-        noButton.setTranslateY(100);
-        noButton.setTranslateX(100);
         noButton.setPrefWidth(80);
         noButton.setPrefHeight(40);
         noButton.setOnMouseClicked(event -> {
@@ -53,16 +49,33 @@ public class YesNoDialog extends Dialog<Boolean> {
         });
 
         Label label = new Label(prompt);
-
-        label.setTranslateY(50);
-        label.setTranslateX(180);
-
         label.setTextFill(Color.WHITE);
 
-        label.setFont(Font.font("Tahoma",FontWeight.BOLD,20));
+        label.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
         label.setAlignment(Pos.CENTER);
 
-        pane.getChildren().addAll(yesButton, noButton, label);
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.getChildren().add(noButton);
+
+        Region region = new Region();
+        region.setPrefWidth(80);
+        hBox.getChildren().add(region);
+
+        hBox.getChildren().add(yesButton);
+
+
+        VBox vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
+
+        Region region2 = new Region();
+        region2.setPrefHeight(40);
+
+        vBox.getChildren().addAll(label, region2, hBox);
+        vBox.setPrefWidth(450);
+        vBox.setPrefHeight(180);
+
+        pane.getChildren().addAll(vBox);
 
     }
 
