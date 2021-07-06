@@ -19,7 +19,6 @@ import javafx.scene.shape.Rectangle;
 import model.card.Card;
 import model.card.MonsterCard;
 import view.transions.ShopCheatPopup;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
@@ -35,6 +34,7 @@ public class ShopView implements Initializable {
     public BorderPane mainPane;
     public Pane imageBar;
     public ScrollPane monsterScroll, spellScroll;
+    private Rectangle draggableRectangle = new Rectangle(150, 270);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -90,6 +90,7 @@ public class ShopView implements Initializable {
                     label.setStyle("-fx-text-fill: #fcba03;-fx-font: 30px \"Arial\";");
                     imageBar.getChildren().add(label);
                 });
+                setupDragAndDrop(rectangle);
                 pane.add(rectangle, j, i);
             }
         }
@@ -130,6 +131,7 @@ public class ShopView implements Initializable {
                         imageBar.getChildren().add(label);
                     }
                 });
+                setupDragAndDrop(rectangle);
                 pane.add(rectangle, j, i);
             }
         }
@@ -202,12 +204,30 @@ public class ShopView implements Initializable {
         new MyAlert(Alert.AlertType.CONFIRMATION, "Card is bought").show();
     }
 
+    public void exitMenu(MouseEvent mouseEvent) {
+        ViewSwitcher.switchTo(View.MAIN);
+    }
+
+    public void setupDragAndDrop(ShopCardView cardView) {
+        cardView.setOnMouseDragged(event -> {
+            mainPane.getChildren().remove(draggableRectangle);
+            draggableRectangle.setFill(cardView.getCard().getCardImage());
+            draggableRectangle.setTranslateX(event.getSceneX());
+            draggableRectangle.setTranslateY(event.getSceneY());
+            mainPane.getChildren().add(draggableRectangle);
+        });
+        cardView.setOnMouseReleased(event -> {
+            mainPane.getChildren().remove(draggableRectangle);
+            if (event.getSceneX() >= 325 && event.getSceneX() <= 760 &&
+                event.getSceneY() >= 35 && event.getSceneY() <= 600) {
+                selectedCard = cardView;
+                buyCard();
+            }
+        });
+    }
+
     public static void setupCheatScene() {
         ShopCheatPopup shopCheatPopup = new ShopCheatPopup();
         shopCheatPopup.show(ViewSwitcher.getStage());
-    }
-
-    public void exitMenu(MouseEvent mouseEvent) {
-        ViewSwitcher.switchTo(View.MAIN);
     }
 }
