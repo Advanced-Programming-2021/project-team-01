@@ -8,9 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -31,6 +29,7 @@ import java.util.TreeMap;
 public class ShopView implements Initializable {
     public Tab playerTab;
     public ScrollPane playerScroll;
+    public Button exitButton;
     private ShopCardView selectedCard = null;
     public Tab monsterTab, spellTab;
     public BorderPane mainPane;
@@ -50,7 +49,7 @@ public class ShopView implements Initializable {
         imageBar.setPadding(new Insets(40, 40, 40, 40));
         ImageView button = new ImageView(new Image(getClass().getResource("k1.png").toExternalForm()));
         button.setFitWidth(100);
-        button.setTranslateX(100);
+        button.setTranslateX(77);
         button.setTranslateY(500);
         button.setFitHeight(100);
         button.setOnMouseClicked(event -> buyCard());
@@ -85,6 +84,11 @@ public class ShopView implements Initializable {
                     rectangle1.setFill(selectedCard.getCard().getCardImage());
                     imageBar.getChildren().clear();
                     imageBar.getChildren().add(rectangle1);
+                    Label label = new Label("Amount: " + RegisterController.onlineUser.getNumberOfCards(rectangle.getCard().getName()));
+                    label.setTranslateX(30);
+                    label.setTranslateY(400);
+                    label.setStyle("-fx-text-fill: #fcba03;-fx-font: 30px \"Arial\";");
+                    imageBar.getChildren().add(label);
                 });
                 pane.add(rectangle, j, i);
             }
@@ -119,6 +123,11 @@ public class ShopView implements Initializable {
                         rectangle1.setFill(selectedCard.getCard().getCardImage());
                         imageBar.getChildren().clear();
                         imageBar.getChildren().add(rectangle1);
+                        Label label = new Label("Amount: " + RegisterController.onlineUser.getNumberOfCards(rectangle.getCard().getName()));
+                        label.setTranslateX(30);
+                        label.setTranslateY(400);
+                        label.setStyle("-fx-text-fill: #fcba03;-fx-font: 30px \"Arial\";");
+                        imageBar.getChildren().add(label);
                     }
                 });
                 pane.add(rectangle, j, i);
@@ -186,7 +195,7 @@ public class ShopView implements Initializable {
         try {
             ShopController.getInstance().buyCard(cardName);
         } catch (Exception exception) {
-            System.err.println(exception.getMessage());
+            new MyAlert(Alert.AlertType.WARNING, exception.getMessage()).show();
             return;
         }
         setupPlayersCard();
@@ -196,5 +205,9 @@ public class ShopView implements Initializable {
     public static void setupCheatScene() {
         ShopCheatPopup shopCheatPopup = new ShopCheatPopup();
         shopCheatPopup.show(ViewSwitcher.getStage());
+    }
+
+    public void exitMenu(MouseEvent mouseEvent) {
+        ViewSwitcher.switchTo(View.MAIN);
     }
 }
