@@ -39,6 +39,7 @@ public class CheatPopUp extends Popup {
         setupExitButton(pane);
         getContent().add(pane);
         requestFocus();
+        pane.getStylesheets().add(getClass().getResource("/view/game.css").toExternalForm());
     }
 
     private void setupExitButton(Pane pane) {
