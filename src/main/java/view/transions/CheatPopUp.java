@@ -114,7 +114,7 @@ public class CheatPopUp extends Popup {
                 new MyAlert(Alert.AlertType.WARNING, "No card is chosen!").show();
         });
         setWinnerButton.setOnMouseClicked(event -> {
-            if (nicknameChoiceBox.getValue().equals(""))
+            if (nicknameChoiceBox.getValue() == null)
                 new MyAlert(Alert.AlertType.WARNING, "Field is blank").show();
             else {
                 if (GameController.getPlayerOne().getNickname().equals(nicknameChoiceBox.getValue()) ||
