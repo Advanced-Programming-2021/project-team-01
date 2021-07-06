@@ -82,6 +82,7 @@ public class CheatPopUp extends Popup {
         }
         slider.setMax(500);
         slider.setMin(0);
+        slider.setId("slider");
         label.textProperty().bind(Bindings.format("%.0f", slider.valueProperty()));
         pane.getChildren().add(label);
         label.setTranslateX(530);
