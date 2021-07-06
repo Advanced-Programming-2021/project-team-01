@@ -9,19 +9,14 @@ import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.IntegerProperty;
-import javafx.collections.FXCollections;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -67,6 +62,7 @@ public class GameView {
     StackPane profileDetails2;
     GridPane playerOneHand;
     GridPane playerTwoHand;
+    VBox nameOfPhases;
     StackPane mainPane;
     GameController gameController;
     GridPane playerOneCardsInBoard;
@@ -225,6 +221,13 @@ public class GameView {
         return yesNoDialog.getResult();
     }
 
+    public static List<Card> selectedCardsWithSelectableDialog(List<Card> cards) {
+        GameController.getInstance().getSelectedCard().lock();
+        SelectableDialog selectableDialog = new SelectableDialog(cards);
+        selectableDialog.showAndWait();
+        GameController.getInstance().getSelectedCard().unlock();
+        return selectableDialog.getResult();
+    }
 
     public void attackOnCard() {
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(100), targetCard);
@@ -280,13 +283,45 @@ public class GameView {
             setupPhaseButtons();
             setupHands();
             setupEndGameCondition();
-            mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
+            setupPhaseNames();
+            mainPane.getChildren().addAll(nameOfPhases, playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
                     profileDetails1, profileDetails2, playerFieldZone1, playerFieldZone2, graveyardPlayer1, graveyardPlayer2);
             setupHandObservables();
             root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+    }
+
+    private void setupPhaseNames() {
+        nameOfPhases = new VBox();
+        nameOfPhases.setMaxHeight(520);
+        nameOfPhases.setMaxWidth(30);
+
+        Rectangle drawPhaseImage = new Rectangle(30, 50, Color.WHITE);
+        drawPhaseImage.setFill(new ImagePattern(new Image(getClass().getResource("/Assets/phase/draw.png").toExternalForm())));
+        drawPhaseImage.getStyleClass().add("butoo");
+
+        Rectangle standbyPhaseImage = new Rectangle(30, 50, Color.WHITE);
+        standbyPhaseImage.setFill(new ImagePattern(new Image(getClass().getResource("/Assets/phase/standby.png").toExternalForm())));
+
+        Rectangle mainPhase1Image = new Rectangle(30, 50, Color.WHITE);
+        mainPhase1Image.setFill(new ImagePattern(new Image(getClass().getResource("/Assets/phase/main1.png").toExternalForm())));
+
+        Rectangle battlePhaseImage = new Rectangle(30, 50, Color.WHITE);
+        battlePhaseImage.setFill(new ImagePattern(new Image(getClass().getResource("/Assets/phase/battle.png").toExternalForm())));
+
+        Rectangle mainPhase2Image = new Rectangle(30, 50, Color.WHITE);
+        mainPhase2Image.setFill(new ImagePattern(new Image(getClass().getResource("/Assets/phase/main2.png").toExternalForm())));
+
+        Rectangle endPhaseImage = new Rectangle(30, 50, Color.WHITE);
+        endPhaseImage.setFill(new ImagePattern(new Image(getClass().getResource("/Assets/phase/end.png").toExternalForm())));
+
+        nameOfPhases.setSpacing(40);
+        nameOfPhases.getChildren().addAll(drawPhaseImage, standbyPhaseImage, mainPhase1Image, battlePhaseImage, mainPhase2Image, endPhaseImage);
+        nameOfPhases.setTranslateX(-509);
+        nameOfPhases.setTranslateY(10);
 
     }
 
@@ -301,25 +336,25 @@ public class GameView {
         IntegerProperty playerOneLp = GameController.getInstance().getPlayerOneLp();
         IntegerProperty playerTwoLp = GameController.getInstance().getPlayerOneLp();
         playerOneLp.addListener((observable, oldValue, newValue) -> {
-            if(playerOneLp.get() <= 0){
+            if (playerOneLp.get() <= 0) {
                 try {
                     GameController.getInstance().finishGame();
                     reset();
-                    new MyAlert(Alert.AlertType.CONFIRMATION,"player one win!");
+                    new MyAlert(Alert.AlertType.CONFIRMATION, "player one win!");
                     ViewSwitcher.switchTo(View.MAIN);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
         playerTwoLp.addListener((observable, oldValue, newValue) -> {
-            if (playerTwoLp.get() <= 0){
+            if (playerTwoLp.get() <= 0) {
                 try {
                     GameController.getInstance().finishGame();
                     reset();
-                    new MyAlert(Alert.AlertType.CONFIRMATION,"player two win!");
+                    new MyAlert(Alert.AlertType.CONFIRMATION, "player two win!");
                     ViewSwitcher.switchTo(View.MAIN);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -423,26 +458,32 @@ public class GameView {
             case END_PHASE: {
                 drawPhaseGraphicActions();
                 image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/6.png")).toExternalForm());
+                setCurrentPhase(5);
                 break;
             }
             case DRAW_PHASE: {
                 image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/1.png")).toExternalForm());
+                setCurrentPhase(0);
                 break;
             }
             case STANDBY_PHASE: {
                 image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/2.png")).toExternalForm());
+                setCurrentPhase(1);
                 break;
             }
             case BATTLE_PHASE: {
                 image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/4.png")).toExternalForm());
+                setCurrentPhase(3);
                 break;
             }
             case MAIN_PHASE2: {
                 image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/5.png")).toExternalForm());
+                setCurrentPhase(4);
                 break;
             }
             case MAIN_PHASE1: {
                 image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/3.png")).toExternalForm());
+                setCurrentPhase(2);
             }
         }
         phase = new ImageView(image);
@@ -459,6 +500,16 @@ public class GameView {
             fadeTransition.play();
             fadeTransition.setOnFinished(event1 -> mainPane.getChildren().remove(phase));
         });
+    }
+
+    private void setCurrentPhase(int i) {
+        Rectangle rectangle;
+        for (int j = 0; j < 6; j++) {
+            rectangle = (Rectangle) nameOfPhases.getChildren().get(j);
+            rectangle.getStyleClass().clear();
+        }
+        rectangle = (Rectangle) nameOfPhases.getChildren().get(i);
+        rectangle.getStyleClass().add("butoo");
     }
 
     public void drawPhaseGraphicActions() {
@@ -530,14 +581,6 @@ public class GameView {
         listenOnHand(playerTwoLogicHand, playerTwoHand);
     }
 
-    public static List<Card> selectedCardsWithSelectableDialog(List<Card> cards){
-        GameController.getInstance().getSelectedCard().lock();
-        SelectableDialog selectableDialog = new SelectableDialog(cards);
-        selectableDialog.showAndWait();
-        GameController.getInstance().getSelectedCard().unlock();
-        return selectableDialog.getResult();
-    }
-
     private void listenOnHand(ObservableList<Card> logicHand, GridPane playerHand) {
         logicHand.addListener((ListChangeListener<Card>) c -> {
             while (c.next()) {
@@ -581,7 +624,7 @@ public class GameView {
                         mediaPlayer.setAutoPlay(true);
                         mediaPlayer.play();
                     }
-                },5000
+                }, 5000
         );
     }
 
