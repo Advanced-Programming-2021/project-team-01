@@ -10,8 +10,11 @@ import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -40,6 +43,8 @@ import view.transions.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class GameView {
@@ -67,6 +72,7 @@ public class GameView {
     GridPane playerOneCardsInBoard;
     GridPane playerTwoCardsInBoard;
     MediaPlayer mediaPlayer;
+    MediaPlayer piecePlayer;
     CardView targetCard;
     KeyCombination cheatKeyCombination;
     boolean isPlaying = false;
@@ -259,7 +265,8 @@ public class GameView {
             gameController = GameController.getInstance();
             RegisterController.onlineUser = DatabaseController.getUserByName("ali");
             GameController.getInstance().startGame("username", 1);
-            //setupMusic();
+            setupPiecePlayer();
+            setupMusic();
             setupImageCard();
             StackPane cardText = setupCardInformation();
             setupProfile();
@@ -273,6 +280,7 @@ public class GameView {
             setupHealthBar();
             setupPhaseButtons();
             setupHands();
+            setupEndGameCondition();
             mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
                     profileDetails1, profileDetails2, playerFieldZone1, playerFieldZone2, graveyardPlayer1, graveyardPlayer2);
             setupHandObservables();
@@ -281,6 +289,42 @@ public class GameView {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private void setupPiecePlayer() {
+        Media media = new Media(getClass().getResource("/Assets/sound/timeto.mp3").toExternalForm());
+        piecePlayer = new MediaPlayer(media);
+        piecePlayer.setOnEndOfMedia(piecePlayer::stop);
+        piecePlayer.play();
+    }
+
+    private void setupEndGameCondition() {
+        IntegerProperty playerOneLp = GameController.getInstance().getPlayerOneLp();
+        IntegerProperty playerTwoLp = GameController.getInstance().getPlayerOneLp();
+        playerOneLp.addListener((observable, oldValue, newValue) -> {
+            if(playerOneLp.get() <= 0){
+                try {
+                    GameController.getInstance().finishGame();
+                    reset();
+                    new MyAlert(Alert.AlertType.CONFIRMATION,"player one win!");
+                    ViewSwitcher.switchTo(View.MAIN);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        playerTwoLp.addListener((observable, oldValue, newValue) -> {
+            if (playerTwoLp.get() <= 0){
+                try {
+                    GameController.getInstance().finishGame();
+                    reset();
+                    new MyAlert(Alert.AlertType.CONFIRMATION,"player two win!");
+                    ViewSwitcher.switchTo(View.MAIN);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setupFieldZone() {
@@ -533,9 +577,16 @@ public class GameView {
     private void setupMusic() {
         Media media = new Media(getClass().getResource("/Assets/Music/main.mp3").toExternalForm());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        isPlaying = true;
-        mediaPlayer.play();
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        isPlaying = true;
+                        mediaPlayer.setAutoPlay(true);
+                        mediaPlayer.play();
+                    }
+                },5000
+        );
     }
 
     private void setupDrawPhase() {
@@ -1014,6 +1065,12 @@ public class GameView {
     public void setupCheatScene() {
         CheatPopUp cheatPopUp = new CheatPopUp();
         cheatPopUp.show(ViewSwitcher.getStage());
+    }
+
+    public void reset() {
+        mediaPlayer.stop();
+        isPlaying = false;
+
     }
 }
 

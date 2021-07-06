@@ -524,12 +524,8 @@ public class GameController {
             }
         }
         checkRitualLevel(temp, monsterCards);
+        MonsterCard dedicated = (MonsterCard) view.GameView.getNeededCards(temp,1).get(0);
         GameView.printListOfCard(temp);
-        int target = Integer.parseInt(GameView.prompt("choose a card"));
-        if (target > temp.size()) {
-            throw new Exception("Invalid Number");
-        }
-        MonsterCard dedicated = (MonsterCard) temp.get(target);
         String[] monsters = GameView.getValidRitual(dedicated.getLevel());
         for (String monster : monsters) {
             gameBoard.sendCardFromMonsterZoneToGraveyard(Integer.parseInt(monster), getCurrentPlayerNumber());

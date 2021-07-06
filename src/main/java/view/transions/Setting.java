@@ -59,7 +59,7 @@ public class Setting extends Popup {
         });
         imageView1.setOnMouseClicked(event -> {
             hide();
-            GameView.getInstance().mute();
+            GameView.getInstance().reset();
             ViewSwitcher.switchTo(View.MAIN);
         });
         root.getChildren().addAll(imageView, imageView1);
