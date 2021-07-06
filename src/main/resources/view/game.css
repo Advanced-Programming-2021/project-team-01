@@ -143,3 +143,6 @@
 .choice-box > .label {
     -fx-text-fill: white;
 }
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}

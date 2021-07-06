@@ -9,6 +9,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.IntegerProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -486,11 +487,13 @@ public class GameView {
         listenOnHand(playerTwoLogicHand, playerTwoHand);
         Button button = new Button("Click Me");
         button.setOnMouseClicked(event -> {
-            try {
-                new MyAlert(Alert.AlertType.INFORMATION, "hello there").show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            List<Card> cards = FXCollections.observableArrayList();
+            cards.add(playerOneLogicHand.get(0));
+            cards.add(playerOneLogicHand.get(1));
+            cards.add(playerOneLogicHand.get(2));
+            cards.add(playerOneLogicHand.get(3));
+            SelectableDialog selectableDialog = new SelectableDialog(cards);
+            selectableDialog.showAndWait();
         });
         mainPane.getChildren().add(button);
     }

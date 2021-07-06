@@ -1,12 +1,11 @@
 package controller;
 
+import console.ChainView;
 import model.Chain;
 import model.card.Card;
 import model.card.Property;
 import model.card.SpellCard;
 import model.card.TrapCard;
-import console.ChainView;
-import console.menu.GameView;
 
 public class ChainController {
     GameController gameController = GameController.getInstance();
@@ -21,7 +20,6 @@ public class ChainController {
     }
 
     protected void run() throws Exception {
-        //fixme: hand Checker
         gameController.changeTurn();
         if (gameController.getGameBoard().getCounterTraps(gameController.getOpponentPlayerNumber()) == null) {
             gameController.changeTurn();
@@ -41,7 +39,7 @@ public class ChainController {
     public void activeEffect() throws Exception {
         Card card = gameController.getSelectedCard().getCard();
         if (card instanceof TrapCard) {
-            if (gameController.effectController.isMirageDragoon()){
+            if (gameController.effectController.isMirageDragoon()) {
                 throw new Exception("Mirage Dragon Stopped You!");
             }
             if (chain.doesExistInChain(card))
@@ -54,12 +52,11 @@ public class ChainController {
             if (property == Property.QUICK_PLAY || property == Property.COUNTER) {
                 if (chain.doesExistInChain(card))
                     throw new Exception("Card activated before");
-                else if (card.canActivate()){
+                else if (card.canActivate()) {
                     GameController.getInstance().getGameBoard().setSpell(gameController.getCurrentPlayerNumber(), (SpellCard) card);
                     GameController.getInstance().getGameBoard().setSpellFaceUp(card);
                     chain.setNext(card);
-                }
-                else throw new Exception("you cant activate this card");
+                } else throw new Exception("you cant activate this card");
             }
         } else {
             throw new Exception("it’s not your turn to play this kind of moves");

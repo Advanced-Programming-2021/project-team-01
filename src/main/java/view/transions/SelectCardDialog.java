@@ -18,8 +18,8 @@ import view.GameView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectCardDialog extends Dialog<ArrayList<Card>> {
-    public ArrayList<Card> selectedCards;
+public class SelectCardDialog extends Dialog<List<Card>> {
+    public List<Card> selectedCards;
     public int numberOfNeededCard;
 
     public SelectCardDialog(List<Card> cards, int numberOfNeededCard) {
@@ -70,7 +70,7 @@ public class SelectCardDialog extends Dialog<ArrayList<Card>> {
         return numberOfNeededCard;
     }
 
-    public ArrayList<Card> getSelectedCards() {
+    public List<Card> getSelectedCards() {
         return selectedCards;
     }
 

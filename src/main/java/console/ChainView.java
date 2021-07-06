@@ -3,6 +3,7 @@ package console;
 import controller.GameController;
 import model.Player;
 import console.menu.HandleRequestType;
+import view.GameView;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -46,17 +47,18 @@ public class ChainView {
     }
 
     public void start() throws Exception {
-        Scanner scanner = HandleRequestType.scanner;
-        String input = "";
-        while (true){
-            if (scanner.hasNext())
-                input = scanner.nextLine();
-            if (input.equals("back")){
-                GameController.getInstance().getChainController().back();
-                break;
-            }
-            run(input);
-        }
+//        Scanner scanner = HandleRequestType.scanner;
+//        String input = "";
+//        while (true){
+//            if (scanner.hasNext())
+//                input = scanner.nextLine();
+//            if (input.equals("back")){
+//                GameController.getInstance().getChainController().back();
+//                break;
+//            }
+//            run(input);
+//        }
+
     }
 
     private void forbiddenCommand(){
