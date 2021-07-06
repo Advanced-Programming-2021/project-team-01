@@ -4,6 +4,7 @@ import controller.GameController;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Popup;
 import model.card.Card;
@@ -29,13 +30,26 @@ public class CheatPopUp extends Popup {
                 BackgroundRepeat.REPEAT,
                 BackgroundPosition.DEFAULT,
                 new BackgroundSize(600, 600, false, false, false, false));
-        pane.setOnMouseClicked(event -> {
-            hide();
-        });
         pane.setBackground(new Background(backgroundimage));
         setupButtons(pane);
+        setupExitButton(pane);
         getContent().add(pane);
         requestFocus();
+    }
+
+    private void setupExitButton(Pane pane) {
+        Image image = new Image((getClass().getResource("/Assets/exit2.png")).toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(50);
+        imageView.setFitWidth(50);
+        imageView.setTranslateX(550);
+        imageView.setTranslateY(20);
+        imageView.setOnMouseClicked(event -> {
+            imageView.setScaleX(1.2);
+            imageView.setScaleY(1.2);
+            this.hide();
+        });
+        pane.getChildren().add(imageView);
     }
 
     private void setupButtons(Pane pane) {

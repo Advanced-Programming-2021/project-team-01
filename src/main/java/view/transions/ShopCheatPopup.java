@@ -7,12 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import view.MyAlert;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class ShopCheatPopup extends Popup {
     Slider slider = new Slider();
@@ -28,6 +30,7 @@ public class ShopCheatPopup extends Popup {
                 BackgroundRepeat.REPEAT,
                 BackgroundPosition.DEFAULT,
                 new BackgroundSize(600, 600, false, false, false, false));
+        setupExitButton();
         pane.setOnMouseClicked(event -> {
             hide();
         });
@@ -35,6 +38,11 @@ public class ShopCheatPopup extends Popup {
         setupButtonAndSlider(pane);
         getContent().add(pane);
         requestFocus();
+    }
+
+    private void setupExitButton() {
+        Image image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/exit.gif")).toExternalForm());
+        ImageView imageView = new ImageView(image);
     }
 
     private void setupButtonAndSlider(Pane pane) {
