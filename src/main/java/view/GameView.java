@@ -70,7 +70,7 @@ public class GameView {
     MediaPlayer mediaPlayer;
     MediaPlayer piecePlayer;
     CardView targetCard;
-    boolean isPlaying = false;
+    boolean isPlaying;
     boolean isAttacking = false;
 
     {
@@ -251,6 +251,7 @@ public class GameView {
             }
             String response = GameController.getInstance().attack(index);
             System.out.println(response);
+            MyMusicPlayer.attack();
         } catch (Exception exp) {
             new MyAlert(Alert.AlertType.WARNING, exp.getMessage()).show();
         } finally {
@@ -267,8 +268,8 @@ public class GameView {
             gameController = GameController.getInstance();
             RegisterController.onlineUser = DatabaseController.getUserByName("ali");
             GameController.getInstance().startGame("username", 1);
-//            setupPiecePlayer();
-//            setupMusic();
+            setupPiecePlayer();
+            //setupMusic();
             setupImageCard();
             StackPane cardText = setupCardInformation();
             setupProfile();
@@ -867,6 +868,7 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             cardView.setImage(false, true);
         }
+        MyMusicPlayer.flip();
     }
 
     private void removeFromPlayerZone(CardLocation cardLocation, int playerNumber, int index) {
@@ -901,6 +903,7 @@ public class GameView {
                 setFieldBackground(gameController.getGameBoard().getPlayerFieldZone(1).getCard());
             }
         }
+        MyMusicPlayer.destroyMonster();
 
     }
 
@@ -927,6 +930,7 @@ public class GameView {
             CardView cardView = (CardView) zone.getChildren().get(0);
             cardView.setViewLocation(ViewLocation.SPELL_ACTIVATED);
         }
+        MyMusicPlayer.flip();
     }
 
     private void activateSpell(int playerNumber, int index, Card card) {
@@ -953,6 +957,7 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.SPELL_ACTIVATED);
             cardView.setImage(false, true);
         }
+        MyMusicPlayer.blip();
     }
 
     private void setFieldBackground(Card card) {
@@ -994,6 +999,7 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             cardView.setImage(false, false);
             cardView.setRotate(0);
+            MyMusicPlayer.flip();
         } else {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
@@ -1004,6 +1010,7 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             cardView.setImage(false, true);
             cardView.setRotate(0);
+            MyMusicPlayer.flip();
         }
     }
 
@@ -1016,6 +1023,7 @@ public class GameView {
             cardView.setToBoard();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             zone.getChildren().add(cardView);
+            MyMusicPlayer.spawn();
         } else {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
@@ -1024,6 +1032,7 @@ public class GameView {
             cardView.setToBoard();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             zone.getChildren().add(cardView);
+            MyMusicPlayer.spawn();
         }
     }
 
@@ -1043,6 +1052,7 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.SPELL_HIDDEN);
             playerFieldZone2.getChildren().add(cardView);
         }
+        MyMusicPlayer.setCard();
     }
 
     private void setMonster(int index, int playerNumber, Card card) {
@@ -1065,6 +1075,7 @@ public class GameView {
             zone.getChildren().add(cardView);
             cardView.setRotate(90);
         }
+        MyMusicPlayer.setCard();
     }
 
     private void setSpell(int index, int playerNumber, Card card) {
@@ -1085,6 +1096,7 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.SPELL_HIDDEN);
             zone.getChildren().add(cardView);
         }
+        MyMusicPlayer.setCard();
     }
 
     public void addTargetCard(CardView cardView) {
@@ -1109,7 +1121,7 @@ public class GameView {
     public void reset() {
         mediaPlayer.stop();
         isPlaying = false;
-
     }
+
 }
 
