@@ -483,7 +483,9 @@ public class GameView {
         Button button = new Button("Click Me");
         button.setOnMouseClicked(event -> {
             try {
-                new YesNoDialog("content").show();
+                YesNoDialog x = new YesNoDialog("content fasjl; fd a;dfjal;");
+                x.showAndWait();
+                System.out.println(x.getResult());
             } catch (Exception e) {
                 e.printStackTrace();
             }
