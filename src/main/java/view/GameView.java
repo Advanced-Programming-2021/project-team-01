@@ -483,7 +483,7 @@ public class GameView {
         Button button = new Button("Click Me");
         button.setOnMouseClicked(event -> {
             try {
-                gameController.cheater("The Tricky");
+                new YesNoDialog("content").show();
             } catch (Exception e) {
                 e.printStackTrace();
             }

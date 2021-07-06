@@ -85,3 +85,7 @@
     -fx-scale-x: 1.2;
     -fx-scale-y: 1.2;
 }
+
+.dialog-pane > .button-bar > .container {
+    -fx-padding: 0;
+}
