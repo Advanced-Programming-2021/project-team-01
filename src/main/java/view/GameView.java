@@ -928,7 +928,18 @@ public class GameView {
             StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
-            cardView.setViewLocation(ViewLocation.SPELL_ACTIVATED);
+            RotateTransition rotateTransition = new RotateTransition();
+            rotateTransition.setNode(cardView);
+            rotateTransition.setAxis(Rotate.Z_AXIS);
+            rotateTransition.setDuration(Duration.millis(1000));
+            if (gameController.getZoneSlotSelectedCard().isDefending()) {
+                cardView.setViewLocation(ViewLocation.MONSTER_DEFENSIVE);
+                rotateTransition.setByAngle(-90);
+            } else {
+                cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
+                rotateTransition.setByAngle(+90);
+            }
+            rotateTransition.play();
         }
         MyMusicPlayer.flip();
     }
