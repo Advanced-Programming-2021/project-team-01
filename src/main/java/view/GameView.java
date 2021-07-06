@@ -42,6 +42,7 @@ import view.transions.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
 import java.util.TimerTask;
 
 
@@ -573,16 +574,16 @@ public class GameView {
     private void setupMusic() {
         Media media = new Media(getClass().getResource("/Assets/Music/main.mp3").toExternalForm());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        isPlaying = true;
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                mediaPlayer.play();
-            }
-        };
-        task.run();
-        mediaPlayer.play();
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        isPlaying = true;
+                        mediaPlayer.setAutoPlay(true);
+                        mediaPlayer.play();
+                    }
+                },5000
+        );
     }
 
     private void setupDrawPhase() {
