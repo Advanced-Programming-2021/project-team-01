@@ -1,14 +1,23 @@
 package console;
 
 import controller.GameController;
+import javafx.collections.FXCollections;
+import model.Board;
 import model.Player;
-import console.menu.HandleRequestType;
+import model.card.Card;
+import model.card.Property;
+import model.card.SpellCard;
+import model.card.TrapCard;
 import view.GameView;
 
-import java.util.Scanner;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class ChainView {
+    public static void printTurn(Player player) {
+        System.out.println("now it will be " + player.getUsername() + "'s turn");
+    }
+
     public void run(String input) throws Exception {
         Matcher matcher;
         if ((matcher = ConsoleCommands.getMatcher(ConsoleCommands.SELECT_PLAYER_CARD_CHAIN, input)) != null) {
@@ -33,7 +42,7 @@ public class ChainView {
             forbiddenCommand();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SHOW_SELECTED_CARD, input)) != null) {
             showCard();
-        }else if ((ConsoleCommands.getMatcher(ConsoleCommands.SURRENDER, input)) != null) {
+        } else if ((ConsoleCommands.getMatcher(ConsoleCommands.SURRENDER, input)) != null) {
             forbiddenCommand();
         } else if ((ConsoleCommands.getMatcher(ConsoleCommands.NEXT_PHASE, input)) != null) {
             forbiddenCommand();
@@ -47,21 +56,27 @@ public class ChainView {
     }
 
     public void start() throws Exception {
-//        Scanner scanner = HandleRequestType.scanner;
-//        String input = "";
-//        while (true){
-//            if (scanner.hasNext())
-//                input = scanner.nextLine();
-//            if (input.equals("back")){
-//                GameController.getInstance().getChainController().back();
-//                break;
-//            }
-//            run(input);
-//        }
-
+        List<Card> cards = FXCollections.observableArrayList();
+        List<Card> playerCards = FXCollections.observableArrayList();
+        Board board = GameController.getInstance().getGameBoard();
+        int player = GameController.getInstance().getCurrentPlayerNumber();
+        playerCards.addAll(board.getPlayerHand(player));
+        playerCards.addAll(board.getCardInSpellZone(player));
+        for (Card card : playerCards) {
+            if (card instanceof TrapCard || (card instanceof SpellCard &&
+                    (((SpellCard) card).getProperty() == Property.QUICK_PLAY || ((SpellCard) card).getProperty() == Property.COUNTER)))
+                cards.add(card);
+        }
+        List<Card> selectedCards = GameView.selectedCardsWithSelectableDialog(cards);
+        for (Card selectedCard : selectedCards) {
+            GameController.getInstance().getSelectedCard().unlock();
+            GameController.getInstance().getSelectedCard().set(selectedCard);
+            GameController.getInstance().getChainController().activeEffect();
+        }
+        GameController.getInstance().getChainController().back();
     }
 
-    private void forbiddenCommand(){
+    private void forbiddenCommand() {
         System.out.println("it’s not your turn to play this kind of moves");
     }
 
@@ -105,10 +120,6 @@ public class ChainView {
         } catch (Exception exp) {
             System.err.println(exp.getMessage());
         }
-    }
-
-    public static void printTurn(Player player){
-        System.out.println("now it will be "+player.getUsername()+"'s turn");
     }
 
 
