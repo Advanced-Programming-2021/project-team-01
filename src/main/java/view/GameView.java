@@ -9,6 +9,8 @@ import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -66,6 +68,7 @@ public class GameView {
     GridPane playerOneCardsInBoard;
     GridPane playerTwoCardsInBoard;
     MediaPlayer mediaPlayer;
+    MediaPlayer piecePlayer;
     CardView targetCard;
     KeyCombination cheatKeyCombination;
     boolean isPlaying = false;
@@ -272,6 +275,7 @@ public class GameView {
             setupHealthBar();
             setupPhaseButtons();
             setupHands();
+            setupEndGameCondition();
             mainPane.getChildren().addAll(playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
                     profileDetails1, profileDetails2, playerFieldZone1, playerFieldZone2, graveyardPlayer1, graveyardPlayer2);
             setupHandObservables();
@@ -280,6 +284,35 @@ public class GameView {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private void setupEndGameCondition() {
+        IntegerProperty playerOneLp = GameController.getInstance().getPlayerOneLp();
+        IntegerProperty playerTwoLp = GameController.getInstance().getPlayerOneLp();
+        playerOneLp.addListener((observable, oldValue, newValue) -> {
+            if(playerOneLp.get() <= 0){
+                try {
+                    GameController.getInstance().finishGame();
+                    reset();
+                    new MyAlert(Alert.AlertType.CONFIRMATION,"player one win!");
+                    ViewSwitcher.switchTo(View.MAIN);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        playerTwoLp.addListener((observable, oldValue, newValue) -> {
+            if (playerTwoLp.get() <= 0){
+                try {
+                    GameController.getInstance().finishGame();
+                    reset();
+                    new MyAlert(Alert.AlertType.CONFIRMATION,"player two win!");
+                    ViewSwitcher.switchTo(View.MAIN);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setupFieldZone() {
@@ -1011,6 +1044,12 @@ public class GameView {
     public void setupCheatScene() {
         CheatPopUp cheatPopUp = new CheatPopUp();
         cheatPopUp.show(ViewSwitcher.getStage());
+    }
+
+    public void reset() {
+        mediaPlayer.stop();
+        isPlaying = false;
+
     }
 }
 
