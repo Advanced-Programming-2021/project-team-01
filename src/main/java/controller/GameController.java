@@ -4,19 +4,13 @@ import console.Menu;
 import console.menu.GameView;
 import console.menu.HandleRequestType;
 import controller.exceptions.*;
-import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.control.Alert;
 import model.*;
 import model.card.*;
-import view.MyAlert;
-import view.ViewSwitcher;
-import view.transions.SelectCardPopup;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -389,39 +383,30 @@ public class GameController {
         }
     }
 
-    public void tributeSummonLevel7(int indexOfCard1, int indexOfCard2) throws Exception {
-        if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) < 2)
-            throw new NotEnoughTribute();
-        if (gameBoard.getCardFromMonsterZone(indexOfCard1, getCurrentPlayerNumber()) == null ||
-                gameBoard.getCardFromMonsterZone(indexOfCard2, getCurrentPlayerNumber()) == null)
-            throw new NoMonsterInMultiplePositions();
-        tribute(indexOfCard1, indexOfCard2);
+    public void tributeSummonLevel7(Card card1, Card card2) throws Exception {
+        tribute(card1,card2);
         createChain();
         chainController.chain.run();
         state = State.NONE;
     }
 
-    public void tributeSummonLevel5(int indexOfCard) throws Exception {
-        if (gameBoard.numberOfMonsterCards(getCurrentPlayerNumber()) == 0)
-            throw new NotEnoughTribute();
-        if (gameBoard.getCardFromMonsterZone(indexOfCard, getCurrentPlayerNumber()) == null)
-            throw new NoMonsterInPosition();
-        tribute(indexOfCard);
+    public void tributeSummonLevel5(Card card) throws Exception {
+        tribute(card);
         createChain();
-        chainController.chain.run();
+        chain.run();
         state = State.NONE;
     }
 
-    public void tribute(int indexOfCard) throws Exception {
-        gameBoard.sendCardFromMonsterZoneToGraveyard(indexOfCard, getCurrentPlayerNumber());
+    public void tribute(Card card) throws Exception {
+        gameBoard.sendCardFromMonsterZoneToGraveyard(card);
         gameBoard.summonCard((MonsterCard) selectedCard.getCard(), getCurrentPlayerNumber());
         setSummonedCard(selectedCard.getCard());
         selectedCard.reset();
     }
 
-    public void tribute(int indexOfCard1, int indexOfCard2) throws Exception {
-        gameBoard.sendCardFromMonsterZoneToGraveyard(indexOfCard1, getCurrentPlayerNumber());
-        gameBoard.sendCardFromMonsterZoneToGraveyard(indexOfCard2, getCurrentPlayerNumber());
+    public void tribute(Card card1 ,Card card2) throws Exception {
+        gameBoard.sendCardFromMonsterZoneToGraveyard(card1);
+        gameBoard.sendCardFromMonsterZoneToGraveyard(card2);
         gameBoard.summonCard((MonsterCard) selectedCard.getCard(), getCurrentPlayerNumber());
         setSummonedCard(selectedCard.getCard());
         selectedCard.reset();

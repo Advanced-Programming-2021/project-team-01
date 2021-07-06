@@ -29,6 +29,12 @@ public class ZoneSlot {
         isDefending = defending;
     }
 
+    public void reset(){
+        isDefending = false;
+        isHidden = false;
+        card = null;
+    }
+
     public boolean isHidden() {
         return isHidden;
     }

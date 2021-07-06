@@ -370,16 +370,14 @@ public class Board {
         if (player == 1) {
             Card card = playerOneMonsterZone[indexOfCard].getCard();
             playerOneGraveYard.add(card);
-            playerOneMonsterZone[indexOfCard].setDefending(false);
-            playerOneMonsterZone[indexOfCard].setHidden(false);
             playerOneMonsterZone[indexOfCard].setCard(null);
+            playerOneMonsterZone[indexOfCard].reset();
             GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
         } else if (player == 2) {
             Card card = playerTwoMonsterZone[indexOfCard].getCard();
             playerTwoGraveYard.add(card);
-            playerTwoMonsterZone[indexOfCard].setDefending(false);
-            playerTwoMonsterZone[indexOfCard].setHidden(false);
             playerTwoMonsterZone[indexOfCard].setCard(null);
+            playerTwoMonsterZone[indexOfCard].reset();
             GameController.getInstance().getDestroyedCardsForPlayerTwo().add(card);
         }
     }
@@ -395,9 +393,8 @@ public class Board {
                 }
             }
             playerOneGraveYard.add(card);
-            playerOneMonsterZone[indexOfCard].setDefending(false);
-            playerOneMonsterZone[indexOfCard].setHidden(false);
             playerOneMonsterZone[indexOfCard].setCard(null);
+            playerOneMonsterZone[indexOfCard].reset();
             GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
         } else if (player == 2) {
             for (int i = 1; i < 6; i++) {
@@ -407,9 +404,8 @@ public class Board {
                 }
             }
             playerTwoGraveYard.add(card);
-            playerTwoMonsterZone[indexOfCard].setDefending(false);
-            playerTwoMonsterZone[indexOfCard].setHidden(false);
             playerTwoMonsterZone[indexOfCard].setCard(null);
+            playerTwoMonsterZone[indexOfCard].reset();
             GameController.getInstance().getDestroyedCardsForPlayerTwo().add(card);
         }
     }
@@ -982,5 +978,21 @@ public class Board {
             return new ZoneLocation(2, 1, CardLocation.FIELD);
         }
         return null;
+    }
+
+    public boolean isCardInMonsterZone(Card card) {
+        int player = getOwnerOfCard(card);
+        if (player == 1) {
+            for (int i = 1; i < 6; i++) {
+                if (playerOneMonsterZone[i].getCard() == card)
+                    return true;
+            }
+        } else if (player == 2) {
+            for (int i = 1; i < 6; i++) {
+                if (playerOneMonsterZone[i].getCard() == card)
+                    return true;
+            }
+        }
+        return false;
     }
 }

@@ -16,7 +16,6 @@ public class MonsterReborn extends Command implements Activate {
     public MonsterReborn(Card card) {
         super(card);
     }
-
     @Override
     public void run() throws InvalidCommandException, MonsterZoneFull {
         board = gameController.getGameBoard();

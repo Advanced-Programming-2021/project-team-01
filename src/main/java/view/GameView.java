@@ -3,11 +3,12 @@ package view;
 import controller.DatabaseController;
 import controller.GameController;
 import controller.RegisterController;
+import controller.exceptions.LevelFiveException;
+import controller.exceptions.LevelSevenException;
 import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.IntegerProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -118,37 +119,40 @@ public class GameView {
     }
 
     public static void summonCard() {
+        Board board = GameController.getInstance().getGameBoard();
+        int player = GameController.getInstance().getCurrentPlayerNumber();
         try {
             GameController.getInstance().summon();
             System.out.println("summoned successfully");
-        }
-        //TODO ino graphici konim
-//        catch (LevelFiveException exception) {
-//            String input = HandleRequestType.scanner.nextLine();
-//            if (input.equals("cancel")) return;
-//            int index = Integer.parseInt(input);
-//            try {
-//                GameController.getInstance().tributeSummonLevel5(index);
-//                System.out.println("summoned successfully");
-//            } catch (Exception e) {
-//                System.out.println(e.getMessage());
-//            }
-//        } catch (LevelSevenException levelSevenException) {
-//            String input = HandleRequestType.scanner.nextLine();
-//            if (input.equals("cancel")) return;
-//            int index1 = Integer.parseInt(input);
-//            int index2 = Integer.parseInt(HandleRequestType.scanner.nextLine());
-//            try {
-//                GameController.getInstance().tributeSummonLevel7(index1, index2);
-//                System.out.println("summoned successfully");
-//            } catch (Exception e) {
-//                System.out.println(e.getMessage());
-//            }
-//        }
-        catch (Exception exp) {
+        } catch (LevelFiveException exception) {
+            try {
+                if (board.numberOfMonsterCards(player) == 0)
+                    throw new Exception("you have not monster");
+                List<Card> cardsInMonsterZone = board.getCardInMonsterZone(player);
+                Card card = getNeededCards(cardsInMonsterZone, 1).get(0);
+                GameController.getInstance().tributeSummonLevel5(card);
+                System.out.println("summoned successfully");
+            } catch (Exception e) {
+                MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, e.getMessage());
+                myAlert.show();
+            }
+        } catch (LevelSevenException levelSevenException) {
+            try {
+                if (board.numberOfMonsterCards(player) < 2)
+                    throw new Exception("you have not enough monsters");
+                List<Card> cardsInMonsterZone = board.getCardInMonsterZone(player);
+                List<Card> selectedCards = getNeededCards(cardsInMonsterZone, 2);
+                GameController.getInstance().tributeSummonLevel7(selectedCards.get(0), selectedCards.get(1));
+                System.out.println("summoned successfully");
+            } catch (Exception e) {
+                MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, e.getMessage());
+                myAlert.show();
+            }
+        } catch (Exception exp) {
             MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
             myAlert.show();
         }
+
     }
 
     public static void activateSpellCard() {
@@ -181,13 +185,33 @@ public class GameView {
         return new GraveyardPopUp(cards);
     }
 
-    public static List<Card> getNeededCards(List<Card> cards ,int number) {
+    public static List<Card> getNeededCards(List<Card> cards, int number) {
         SelectCardPopup selectCardPopup = new SelectCardPopup(cards, number);
         GameController.getInstance().getSelectedCard().lock();
         selectCardPopup.showAndWait();
         selectCardPopup.close();
         GameController.getInstance().getSelectedCard().unlock();
         return selectCardPopup.getSelectedCards();
+    }
+
+    public static String getChoiceBox(List<String> items, String header) {
+        ChoiceDialog<String> choiceDialog = new ChoiceDialog<>();
+        choiceDialog.setHeaderText(header);
+        choiceDialog.getItems().addAll(items);
+        choiceDialog.showAndWait();
+        return choiceDialog.getSelectedItem();
+    }
+
+    public static void showAlert(String message) {
+        new MyAlert(Alert.AlertType.INFORMATION, message).show();
+    }
+
+    public static String getChoiceBox(String header, String... items) {
+        ChoiceDialog<String> choiceDialog = new ChoiceDialog<>();
+        choiceDialog.setHeaderText(header);
+        choiceDialog.getItems().addAll(items);
+        choiceDialog.showAndWait();
+        return choiceDialog.getSelectedItem();
     }
 
     public void attackOnCard() {
@@ -220,18 +244,6 @@ public class GameView {
             GameController.getInstance().getSelectedCard().unlock();
             GameController.getInstance().getGameBoard().showBoard();
         }
-    }
-
-    public static String getChoiceBox(List<String> items,String header){
-        ChoiceDialog<String> choiceDialog = new ChoiceDialog<>();
-        choiceDialog.setHeaderText(header);
-        choiceDialog.getItems().addAll(items);
-        choiceDialog.showAndWait();
-        return choiceDialog.getSelectedItem();
-    }
-
-    public static void showAlert(String message){
-        new MyAlert(Alert.AlertType.INFORMATION,message).show();
     }
 
     public void init(Pane root) {
@@ -469,7 +481,7 @@ public class GameView {
         Button button = new Button("Click Me");
         button.setOnMouseClicked(event -> {
             try {
-                gameController.cheater("Change of Heart");
+                gameController.cheater("The Tricky");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -988,14 +1000,6 @@ public class GameView {
     public void mute() {
         mediaPlayer.muteProperty().setValue(!mediaPlayer.muteProperty().get());
         isPlaying = !isPlaying;
-    }
-
-    public static String getChoiceBox(String header, String... items){
-        ChoiceDialog<String> choiceDialog = new ChoiceDialog<>();
-        choiceDialog.setHeaderText(header);
-        choiceDialog.getItems().addAll(items);
-        choiceDialog.showAndWait();
-        return choiceDialog.getSelectedItem();
     }
 
 }
