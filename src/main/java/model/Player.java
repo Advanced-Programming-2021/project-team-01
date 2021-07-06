@@ -112,6 +112,15 @@ public class Player {
         winRate++;
     }
 
+    public int getNumberOfCards(String cardName) {
+        int counter = 0;
+        for (String playerCard : playerCards) {
+            if (playerCard.equals(cardName))
+                counter++;
+        }
+        return counter;
+    }
+
     public static class SortByScore implements Comparator<Player> {
         public int compare(Player player1, Player player2) {
             if (player1.getScore() != player2.getScore())
