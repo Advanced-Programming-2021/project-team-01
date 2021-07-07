@@ -1,16 +1,15 @@
 package view.transions;
 
 import controller.GameController;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import model.Board;
+import model.ZoneSlot;
 import model.card.Card;
 import view.CardView;
 import view.GameView;
@@ -42,10 +41,28 @@ public class SelectCardDialog extends Dialog<List<Card>> {
         for (int i = 0; i < cards.size(); i++) {
             int column = i % 3;
             int row = i / 3;
-            CardView cardView = new CardView(cards.get(i), board.getOwnerOfCard(cards.get(i)), false, false);
+            CardView cardView = null;
+            Card card = cards.get(i);
+            ZoneSlot zoneSlot = board.getZoneSlotByCard(card);
+            if (zoneSlot != null) {
+                if (board.getOwnerOfCard(card) == GameController.getInstance().getOpponentPlayerNumber()) {
+                    if (zoneSlot.isHidden())
+                        cardView = new CardView(cards.get(i), board.getOwnerOfCard(cards.get(i)), true, false);
+                    else
+                        cardView = new CardView(cards.get(i), board.getOwnerOfCard(cards.get(i)), false, false);
+                } else
+                    cardView = new CardView(cards.get(i), board.getOwnerOfCard(cards.get(i)), false, false);
+            } else if (board.isCardInHand(card)) {
+                if (board.getOwnerOfCard(card) == GameController.getInstance().getCurrentPlayerNumber()) {
+                    cardView = new CardView(card, board.getOwnerOfCard(card), false, false);
+                } else
+                    cardView = new CardView(card, board.getOwnerOfCard(card), true, false);
+            } else
+                cardView = new CardView(card, board.getOwnerOfCard(card), false, false);
+            CardView finalCardView = cardView;
             cardView.setOnMouseClicked(event -> {
-                selectedCards.add(cardView.getCard());
-                gridPane.getChildren().remove(cardView);
+                selectedCards.add(finalCardView.getCard());
+                gridPane.getChildren().remove(finalCardView);
                 decreaseNumberOfNeededCard();
                 if (getNumberOfNeededCard() == 0) {
                     setResult(selectedCards);
