@@ -59,6 +59,7 @@ public class LoginView {
         }
         try {
             RegisterController.getInstance().loginUser(username, password);
+            mediaView.getMediaPlayer().stop();
             ViewSwitcher.switchTo(View.MAIN);
             registerLabel.setText("");
             System.out.println("user logged in successfully!");

@@ -5,9 +5,7 @@ import controller.GameController;
 import controller.RegisterController;
 import controller.exceptions.LevelFiveException;
 import controller.exceptions.LevelSevenException;
-import javafx.animation.FadeTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -227,6 +225,19 @@ public class GameView {
         selectableDialog.showAndWait();
         GameController.getInstance().getSelectedCard().unlock();
         return selectableDialog.getResult();
+    }
+
+    public void showDirectAttack() {
+        Image image = new Image(getClass().getResource("/view/2.gif").toExternalForm());
+        ImageView imageView = new ImageView(image);
+        mainPane.getChildren().add(imageView);
+        imageView.setFitWidth(700);
+        imageView.setFitHeight(500);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(2000), event -> {
+            mainPane.getChildren().remove(imageView);
+        });
+        Timeline timeline = new Timeline(keyFrame);
+        timeline.play();
     }
 
     public void attackOnCard() {

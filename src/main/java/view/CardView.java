@@ -207,6 +207,7 @@ public class CardView extends Rectangle {
                         if(GameController.getInstance().getGameBoard().getCardInMonsterZone(GameController.getInstance().getOpponentPlayerNumber()).size() == 0){
                             try {
                                 GameController.getInstance().directAttack();
+                                GameView.getInstance().showDirectAttack();
                             } catch (Exception exception) {
                                 new MyAlert(Alert.AlertType.ERROR, exception.getMessage()).show();
                             }
