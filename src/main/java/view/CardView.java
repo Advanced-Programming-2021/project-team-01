@@ -204,8 +204,17 @@ public class CardView extends Rectangle {
                     translateTransition.setOnFinished(e -> {
                         GameController.getInstance().getSelectedCard().lock();
                         GameView.getInstance().targetCard = null;
-                        new MyAlert(Alert.AlertType.INFORMATION, "select an opponent card").show();
-                        GameView.getInstance().isAttacking = true;
+                        if(GameController.getInstance().getGameBoard().getCardInMonsterZone(GameController.getInstance().getOpponentPlayerNumber()).size() == 0){
+                            try {
+                                GameController.getInstance().directAttack();
+                            } catch (Exception exception) {
+                                new MyAlert(Alert.AlertType.ERROR, exception.getMessage()).show();
+                            }
+                            GameController.getInstance().getSelectedCard().unlock();
+                        }else {
+                            new MyAlert(Alert.AlertType.INFORMATION, "select an opponent card").show();
+                            GameView.getInstance().isAttacking = true;
+                        }
                     });
                     translateTransition.play();
                 });
