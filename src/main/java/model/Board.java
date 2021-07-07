@@ -896,7 +896,9 @@ public class Board {
             }
             for (Card card : playerOneHand) {
                 if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.QUICK_PLAY) {
-                    return card;
+                    if (card.canActivate()) {
+                        return card;
+                    }
                 }
             }
         } else {
@@ -908,13 +910,17 @@ public class Board {
                 } else if (card instanceof SpellCard) {
                     Property property = ((SpellCard) card).getProperty();
                     if (property == Property.QUICK_PLAY || property == Property.COUNTER) {
-                        return card;
+                        if (card.canActivate()) {
+                            return card;
+                        }
                     }
                 }
             }
             for (Card card : playerTwoHand) {
                 if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.QUICK_PLAY) {
-                    return card;
+                    if (card.canActivate()) {
+                        return card;
+                    }
                 }
             }
         }

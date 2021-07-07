@@ -11,6 +11,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import model.Player;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -76,7 +77,8 @@ public class GamePreview implements Initializable {
                 coinStackPane.getChildren().add(tailImage);
             }
         }
-        GameController.getInstance().isReversed = isUserFirstPlayer;
+        if (!isUserFirstPlayer)
+            GameController.getInstance().reverse();
     }
 
     @FXML
@@ -93,6 +95,8 @@ public class GamePreview implements Initializable {
                 coinStackPane.getChildren().add(tailImage);
             }
         }
+        if (!isUserFirstPlayer)
+            GameController.getInstance().reverse();
     }
 
     private boolean isNumberOfRoundsValid(String roundNum) {

@@ -11,6 +11,7 @@ import view.GameView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -169,6 +170,8 @@ public class GameController {
     public void startGame(String username, int numberOfRounds) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber, IOException {
         playerTwo = DatabaseController.getUserByName(username);
         playerOne = RegisterController.onlineUser;
+        if (isReversed)
+            swapPlayer();
         if (playerTwo == null) {
             throw new UsernameNotExists();
         } else if (playerOne.getActiveDeck() == null) {
@@ -195,7 +198,8 @@ public class GameController {
             playerOneWin = 0;
             playerTwoWin = 0;
         }
-//        Collections.shuffle(playerOneDeck.getMainDeck());
+        Collections.shuffle(playerOneDeck.getMainDeck());
+        Collections.shuffle(playerTwoDeck.getMainDeck());
         playerOneLp = new SimpleIntegerProperty();
         playerTwoLp = new SimpleIntegerProperty();
         playerOneLp.set(8000);
@@ -768,6 +772,17 @@ public class GameController {
             }
         }
         System.out.println("hello");
+    }
+
+    public void reverse() {
+        isReversed = true;
+
+    }
+
+    public void swapPlayer(){
+        Player temp = playerOne;
+        playerOne = playerTwo;
+        playerTwo = temp;
     }
 }
 

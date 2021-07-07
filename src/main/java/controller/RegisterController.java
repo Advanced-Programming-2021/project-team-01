@@ -30,7 +30,7 @@ public class RegisterController {
         }
         Player player = new Player(username, password, nickname);
         player.setPictureNumber(getRandomPicture());
-        DatabaseController.updatePlayer(new Player(username, password, nickname));
+        DatabaseController.updatePlayer(player);
     }
 
     public void loginUser(String username, String password) throws Exception {

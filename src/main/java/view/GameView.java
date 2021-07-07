@@ -71,12 +71,6 @@ public class GameView {
     boolean isPlaying = true;
     boolean isAttacking = false;
 
-    {
-        mainPane = new StackPane();
-        playerOneCardsInBoard = new GridPane();
-        playerTwoCardsInBoard = new GridPane();
-    }
-
     private GameView() {
 
     }
@@ -280,8 +274,9 @@ public class GameView {
             gameController = GameController.getInstance();
 //            RegisterController.onlineUser = DatabaseController.getUserByName("ali"); //TODO: used for testing
 //            GameController.getInstance().startGame("username", 1);
+            resetPanes();
             setupPiecePlayer();
-            //setupMusic();
+            setupMusic();
             setupImageCard();
             StackPane cardText = setupCardInformation();
             setupProfile();
@@ -297,10 +292,6 @@ public class GameView {
             setupHands();
             setupEndGameCondition();
             setupPhaseNames();
-            if (GameController.getInstance().isReversed){
-                drawPhaseGraphicActions();
-                GameController.getInstance().changeTurn();
-            }
             mainPane.getChildren().addAll(nameOfPhases, playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
                     profileDetails1, profileDetails2, playerFieldZone1, playerFieldZone2, graveyardPlayer1, graveyardPlayer2);
             setupHandObservables();
@@ -309,6 +300,12 @@ public class GameView {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private void resetPanes() {
+        mainPane = new StackPane();
+        playerOneCardsInBoard = new GridPane();
+        playerTwoCardsInBoard = new GridPane();
     }
 
     private void setupPhaseNames() {
@@ -875,7 +872,7 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             cardView.setImage(false, false);
         } else {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             flipAnimation.setNode(cardView);
