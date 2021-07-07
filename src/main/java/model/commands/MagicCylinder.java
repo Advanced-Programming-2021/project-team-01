@@ -7,7 +7,6 @@ import model.card.Card;
 public class MagicCylinder extends Command implements Activate{
     Board board;
     Card target;
-    Card myCard;
 
     public MagicCylinder(Card card) {
         super(card);
@@ -22,18 +21,13 @@ public class MagicCylinder extends Command implements Activate{
         board.sendCardFromSpellZoneToGraveyard(myCard);
     }
 
-    @Override
-    public void runContinuous() throws Exception {
-
-    }
 
     @Override
     public boolean canActivate() throws Exception {
         board = gameController.getGameBoard();
-        myCard = gameController.getSelectedCard().getCard();
         return gameController.getState() == State.ATTACK &&
-                board.getOwnerOfCard(gameController.getAttackController().getAttacker()) ==
-                        gameController.getAttackController().getAttackerNumber();
+                board.getOwnerOfCard(gameController.getAttackController().getAttacker()) !=
+                        board.getOwnerOfCard(myCard);
     }
 
 

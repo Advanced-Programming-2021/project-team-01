@@ -28,7 +28,7 @@ public class TerraTiger extends Command implements Activate {
             appropriateCards.add(card);
         }
         GameController.getInstance().setState(State.SPECIAL_SUMMON);
-        GameController.getInstance().getGameBoard().summonCard((MonsterCard) appropriateCards.get(0), gameController.getCurrentPlayerNumber());
+        GameController.getInstance().getGameBoard().setMonster(gameController.getCurrentPlayerNumber(),(MonsterCard) appropriateCards.get(0));
         GameController.getInstance().setState(State.NONE);
 
     }
