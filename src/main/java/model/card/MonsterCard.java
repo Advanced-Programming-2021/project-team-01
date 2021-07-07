@@ -22,6 +22,9 @@ public class MonsterCard extends Card {
         this.monsterTypes = monsterTypes;
         this.attribute = attribute;
         this.level = level;
+        if (name.equals("Bitron")){
+            System.out.println("fsdfsd");
+        }
     }
 
     public int getAttack() {
