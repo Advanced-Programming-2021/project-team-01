@@ -68,7 +68,6 @@ public class GameView {
     MediaPlayer mediaPlayer;
     MediaPlayer piecePlayer;
     CardView targetCard;
-    CardView selectedCardView;
     boolean isPlaying = true;
     boolean isAttacking = false;
 
