@@ -251,6 +251,7 @@ public class GameView {
             }
             String response = GameController.getInstance().attack(index);
             System.out.println(response);
+            new MyAlert(Alert.AlertType.INFORMATION,response).show();
             MyMusicPlayer.attack();
         } catch (Exception exp) {
             new MyAlert(Alert.AlertType.WARNING, exp.getMessage()).show();
@@ -829,8 +830,7 @@ public class GameView {
                 break;
             }
             case ACTIVATE_SPELL: {
-                if (cardLocation != CardLocation.HAND)
-                    activateSpell(playerNumber, index, zoneSlot.getCard());
+                activateSpell(playerNumber, index, zoneSlot.getCard());
                 break;
             }
             case CHANGE_POSITION: {
@@ -962,7 +962,7 @@ public class GameView {
                 zone = playerFieldZone2;
                 setFieldBackground(card);
             } else
-                zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
+                zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             cardView.setViewLocation(ViewLocation.SPELL_ACTIVATED);
@@ -998,8 +998,9 @@ public class GameView {
         rotateTransition.setDuration(Duration.millis(1));
         flipAnimation.setFrontToBack(false);
         flipAnimation.setUpsideDown(false);
+        StackPane zone;
         if (playerNumber == 1) {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
+            zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             rotateTransition.setNode(cardView);
@@ -1010,9 +1011,8 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             cardView.setImage(false, false);
             cardView.setRotate(0);
-            MyMusicPlayer.flip();
         } else {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
+            zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             rotateTransition.setNode(cardView);
@@ -1021,30 +1021,30 @@ public class GameView {
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             cardView.setImage(false, true);
             cardView.setRotate(0);
-            MyMusicPlayer.flip();
         }
+        MyMusicPlayer.flip();
     }
 
     private void summonMonsterCard(int playerNumber, int index, Card card) {
+        StackPane zone;
         if (playerNumber == 1) {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
+            zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
             assert zone != null;
             zone.getChildren().clear();
             CardView cardView = new CardView(card, playerNumber, false, false);
             cardView.setToBoard();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             zone.getChildren().add(cardView);
-            MyMusicPlayer.spawn();
         } else {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
+            zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             zone.getChildren().clear();
             CardView cardView = new CardView(card, playerNumber, false, true);
             cardView.setToBoard();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             zone.getChildren().add(cardView);
-            MyMusicPlayer.spawn();
         }
+        MyMusicPlayer.spawn();
     }
 
     private void setField(int playerNumber) {

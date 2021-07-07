@@ -7,7 +7,6 @@ import model.card.Card;
 import model.card.MonsterCard;
 import view.GameView;
 
-
 import java.util.ArrayList;
 
 public class Scanner extends Command implements Activate {
@@ -30,10 +29,13 @@ public class Scanner extends Command implements Activate {
             monsterZones = board.getPlayerOneMonsterZone();
         else
             monsterZones = board.getPlayerTwoMonsterZone();
-
-
-        ArrayList<Card> graveyards = new ArrayList<>(board.getPlayerOneGraveYard());
-        graveyards.addAll(board.getPlayerTwoGraveYard());
+        int owner = board.getOwnerOfCard(myCard);
+        int opponent;
+        if (owner == 1)
+            opponent = 2;
+        else
+            opponent = 1;
+        ArrayList<Card> graveyards = new ArrayList<>(board.getGraveyard(opponent));
         ArrayList<Card> monsterCardsInGraveYard = new ArrayList<>();
         for (Card card1 : graveyards) {
             if (card1 instanceof MonsterCard)
@@ -41,7 +43,7 @@ public class Scanner extends Command implements Activate {
         }
         if (monsterCardsInGraveYard.size() == 0)
             throw new Exception("Graveyard is empty.");
-        card = GameView.getNeededCards(monsterCardsInGraveYard,1).get(0);
+        card = GameView.getNeededCards(monsterCardsInGraveYard, 1).get(0);
         copyCard((MonsterCard) card, (MonsterCard) myCard);
     }
 
@@ -58,23 +60,27 @@ public class Scanner extends Command implements Activate {
 
     @Override
     public void runContinuous() throws Exception {
-        if (board.getOwnerOfCard(myCard) == gameController.getCurrentPlayerNumber()) {
-            if (gameController.getGamePhase() == GamePhase.END_PHASE) {
-                copyCard(tempMyCard, (MonsterCard) myCard);
-            } else if (gameController.getGamePhase() == GamePhase.STANDBY_PHASE) {
-                ArrayList<Card> graveyards = new ArrayList<>(board.getPlayerOneGraveYard());
-                graveyards.addAll(board.getPlayerTwoGraveYard());
-                ArrayList<Card> monsterCardsInGraveYard = new ArrayList<>();
-                for (Card card1 : graveyards) {
-                    if (card1 instanceof MonsterCard)
-                        monsterCardsInGraveYard.add(card1);
-                }
-                if (monsterCardsInGraveYard.size() == 0)
-                    return;
-                GameView.showAlert("Select card for scanner");
-                card = GameView.getNeededCards(monsterCardsInGraveYard,1).get(0);
-                copyCard((MonsterCard) card, (MonsterCard) myCard);
+        if (gameController.getGamePhase() == GamePhase.END_PHASE) {
+            copyCard(tempMyCard, (MonsterCard) myCard);
+        } else if (gameController.getGamePhase() == GamePhase.STANDBY_PHASE) {
+            int owner = board.getOwnerOfCard(myCard);
+            int opponent;
+            if (owner == 1)
+                opponent = 2;
+            else
+                opponent = 1;
+            ArrayList<Card> graveyards = new ArrayList<>(board.getGraveyard(opponent));
+            ArrayList<Card> monsterCardsInGraveYard = new ArrayList<>();
+            for (Card card1 : graveyards) {
+                if (card1 instanceof MonsterCard)
+                    monsterCardsInGraveYard.add(card1);
             }
+            if (monsterCardsInGraveYard.size() == 0)
+                return;
+            card = GameView.getNeededCards(monsterCardsInGraveYard, 1).get(0);
+            GameView.showAlert("Card selected for scanner");
+            copyCard((MonsterCard) card, (MonsterCard) myCard);
         }
     }
+
 }
