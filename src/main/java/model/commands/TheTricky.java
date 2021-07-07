@@ -1,6 +1,7 @@
 package model.commands;
 
 import controller.GameController;
+import javafx.collections.FXCollections;
 import model.Board;
 import model.card.Card;
 import model.card.MonsterCard;
@@ -24,7 +25,12 @@ public class TheTricky extends Command implements Activate{
             hand = board.getPlayerTwoHand();
         }
         hand.remove(myCard);
-        List<Card> selected = GameView.getNeededCards(hand,1);
+        List<Card> appropriateCards = FXCollections.observableArrayList();
+        for (Card card : hand) {
+            if (card instanceof MonsterCard)
+                appropriateCards.add(card);
+        }
+        List<Card> selected = GameView.getNeededCards(appropriateCards,1);
         board.sendCardFromHandToGraveYard(gameController.getCurrentPlayerNumber(),selected.get(0));
         board.summonCard((MonsterCard) myCard, gameController.getCurrentPlayerNumber());
     }
