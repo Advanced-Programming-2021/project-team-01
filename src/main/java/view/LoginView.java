@@ -23,7 +23,7 @@ public class LoginView {
     public JFXTextField nicknameField;
     public JFXPasswordField passwordField;
     public Label loginLabel;
-    private static MediaView mediaView;
+    public static MediaView mediaView;
 
     @FXML
     public void init(Pane root){

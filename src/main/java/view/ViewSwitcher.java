@@ -47,10 +47,13 @@ public class ViewSwitcher {
                     break;
                 }
                 case MAIN: {
+                    LoginView.mediaView.getMediaPlayer().stop();
+                    LoginView.mediaView.getMediaPlayer().play();
                     new MainView().init(root);
                     break;
                 }
                 case GAME_VIEW: {
+                    LoginView.mediaView.getMediaPlayer().stop();
                     GameView.getInstance().init(root);
                     scene.setOnKeyPressed(event -> {
                         if(event.getCode() == KeyCode.ESCAPE){

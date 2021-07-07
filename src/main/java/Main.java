@@ -18,6 +18,5 @@ public class Main extends Application {
         GameController.getInstance();
         ViewSwitcher.setStage(primaryStage);
         ViewSwitcher.switchTo(View.LOGIN);
-        new MyAlert(Alert.AlertType.WARNING,"this is a warning").show();
     }
 }
