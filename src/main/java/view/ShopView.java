@@ -42,7 +42,6 @@ public class ShopView implements Initializable {
     }
 
     public void init() {
-        RegisterController.onlineUser = DatabaseController.getUserByName("username");
         setupMonsterTab();
         setupSpellTrapTab();
         setupPlayersCard();

@@ -31,8 +31,6 @@ public class DeckView implements Initializable {
     public Tab mainDeckTab, sideDeckTab;
 
     public void init() throws Exception {
-        currentDeck = DatabaseController.getDeckByName("tribute");
-        RegisterController.onlineUser = DatabaseController.getUserByName("mamaaad");
         setupMainDeckTab();
         setupSideDeckTab();
         setupCardsSection();
