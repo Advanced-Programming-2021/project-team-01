@@ -1,18 +1,12 @@
 .main{
-    -fx-background-image: url("MainMenuBackground.gif");
+    -fx-background-image: url("main1.jpg");
     -fx-background-size: cover
 }
 
-.button{
-    -fx-border-radius: 4px;
-    -fx-background-color: #e6ed21;
-    -fx-border: none;
-    -fx-text-align: center;
-    -fx-font-size: 15px;
-    -fx-padding: 10px;
-}
 
 .button:hover{
-    -fx-background-color: #4da8c9;
-    -fx-background-radius: 14px;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(gaussian, aqua, 20, 0.3, 0, 0);
+
 }

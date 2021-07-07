@@ -46,6 +46,10 @@ public class ViewSwitcher {
                     new LoginView().init(root);
                     break;
                 }
+                case MAIN: {
+                    new MainView().init(root);
+                    break;
+                }
                 case GAME_VIEW: {
                     GameView.getInstance().init(root);
                     scene.setOnKeyPressed(event -> {

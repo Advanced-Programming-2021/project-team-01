@@ -22,7 +22,6 @@ public class DeckPreView implements Initializable {
     public Label activeDeckLabel;
 
     public void init() {
-        RegisterController.onlineUser = DatabaseController.getUserByName("mamaaad");
         activeDeckLabel.setText("Active deck: " + (RegisterController.onlineUser.getActiveDeck() == null ? "None" :
                 RegisterController.onlineUser.getActiveDeck()));
         deckBar.setOnAction(event -> {
