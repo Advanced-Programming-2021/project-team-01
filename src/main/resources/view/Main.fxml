@@ -15,19 +15,19 @@
     </stylesheets>
     <VBox spacing="10" translateX="40" translateY="50">
         <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startGamePreview">
-            <Image url="@optionbox.png"/>
+            <Image url="@duelbox.png"/>
         </ImageView>
         <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startScoreboardView">
-            <Image url="@optionbox.png"/>
+            <Image url="@scoreboardbox.png"/>
         </ImageView>
         <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startDeckView">
-            <Image url="@optionbox.png"/>
+            <Image url="@deckbox.png"/>
         </ImageView>
         <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startProfileView">
-            <Image url="@optionbox.png"/>
+            <Image url="@profilebox.png"/>
         </ImageView>
         <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startImportExportView">
-            <Image url="@optionbox.png"/>
+            <Image url="@importexportbox.png"/>
         </ImageView>
 
         <ImageView fitWidth="90" fitHeight="90" translateX="1100" translateY="-20" styleClass="button" onMouseClicked="#logout">
