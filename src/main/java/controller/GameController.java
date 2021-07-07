@@ -219,10 +219,6 @@ public class GameController {
         }
     }
 
-    private int tossCoin() {
-        return new Random().nextInt(2) + 1;
-    }
-
     public Card getSummonedCard() {
         return summonedCard;
     }

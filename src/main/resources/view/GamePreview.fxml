@@ -28,7 +28,7 @@
         <Tab text="MultiPlayer" styleClass="tabTop">
             <VBox styleClass="vBoxTop" spacing="15">
                 <JFXTextField fx:id="opponentUsername" styleClass="writeBox" promptText="Opponent's username:" prefWidth="100"/>
-                <JFXTextField fx:id="roundNumMultiplayer" styleClass="writeBox" promptText="Opponent's username:" prefWidth="100"/>
+                <ChoiceBox fx:id="roundChoiceBox" prefWidth="200" styleClass="choice-box"/>
                 <HBox translateX="30" spacing="20">
                     <JFXButton fx:id="headButton" buttonType="RAISED" text="Head" styleClass="button1" onMouseClicked="#tossCoinHead"/>
                     <JFXButton fx:id="tailButton" buttonType="RAISED" text="Tail" styleClass="button1" onMouseClicked="#tossCoinTail"/>

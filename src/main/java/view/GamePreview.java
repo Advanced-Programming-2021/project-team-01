@@ -7,6 +7,7 @@ import controller.GameController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -23,42 +24,42 @@ public class GamePreview implements Initializable {
     public JFXButton tailButton;
     public JFXButton playWithOpponentButton;
     public JFXTextField roundNumAI;
-    public JFXTextField roundNumMultiplayer;
     public StackPane coinStackPane;
+    public ChoiceBox<String> roundChoiceBox;
     private boolean isCoinTossed = false, isUserFirstPlayer;
     private ImageView headImage = new ImageView(new Image(getClass().getResource("HeadToss.gif").toExternalForm()));
     private ImageView tailImage = new ImageView(new Image(getClass().getResource("TailToss.gif").toExternalForm()));
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { }
+    public void initialize(URL location, ResourceBundle resources) {
+        roundChoiceBox.getItems().addAll("1", "3");
+    }
     
     @FXML
     private void startGameWithAI() throws Exception {
         if (isNumberOfRoundsValid(roundNumAI.getText())) {
             GameController.getInstance().startGame("AI", Integer.parseInt(roundNumAI.getText()));
-            //ViewSwitcher.switchTo(View.GAME);
         } else
             new MyAlert(Alert.AlertType.WARNING, "Number of rounds not supported.").show();
     }
 
     @FXML
     private void startGameWithOpponent() throws Exception {
-        if (isNumberOfRoundsValid(roundNumMultiplayer.getText())) {
+        if (roundChoiceBox.getValue() != null) {
             if (isCoinTossed) {
                 if (DatabaseController.doesUserExists(opponentUsername.getText())) {
                     try {
-                        GameController.getInstance().startGame(opponentUsername.getText(), Integer.parseInt(roundNumMultiplayer.getText()));
-                    }catch (Exception e){
+                        GameController.getInstance().startGame(opponentUsername.getText(), Integer.parseInt(roundChoiceBox.getValue()));
+                    } catch (Exception e) {
                         new MyAlert(Alert.AlertType.WARNING, e.getMessage()).show();
                     }
                     ViewSwitcher.switchTo(View.GAME_VIEW);
                 } else
                     new MyAlert(Alert.AlertType.WARNING, "No such username.").show();
-            } else {
-
-            }
+            } else
+                new MyAlert(Alert.AlertType.WARNING, "Coin haven't been tossed!").show();
         } else
-            new MyAlert(Alert.AlertType.WARNING, "Number of rounds not supported.").show();
+            new MyAlert(Alert.AlertType.WARNING, "Choose a round number").show();
     }
 
     @FXML
@@ -87,7 +88,7 @@ public class GamePreview implements Initializable {
                 isUserFirstPlayer = false;
                 coinStackPane.getChildren().add(headImage);
             } else {
-                isCoinTossed = true;
+                isUserFirstPlayer = true;
                 coinStackPane.getChildren().add(tailImage);
             }
         }
