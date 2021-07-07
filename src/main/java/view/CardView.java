@@ -201,23 +201,24 @@ public class CardView extends Rectangle {
             case "Attack":
                 menuItem.setGraphic(attackView);
                 menuItem.setOnAction(event -> {
-                    translateTransition.setOnFinished(e -> {
+                    if(GameController.getInstance().getGameBoard().getCardInMonsterZone(GameController.getInstance().getOpponentPlayerNumber()).size() == 0) {
                         GameController.getInstance().getSelectedCard().lock();
-                        GameView.getInstance().targetCard = null;
-                        if(GameController.getInstance().getGameBoard().getCardInMonsterZone(GameController.getInstance().getOpponentPlayerNumber()).size() == 0){
-                            try {
-                                GameView.getInstance().showDirectAttack();
-                                GameController.getInstance().directAttack();
-                            } catch (Exception exception) {
-                                new MyAlert(Alert.AlertType.ERROR, exception.getMessage()).show();
-                            }
-                            GameController.getInstance().getSelectedCard().unlock();
-                        }else {
+                        try {
+                            GameView.getInstance().showDirectAttack();
+                            GameController.getInstance().directAttack();
+                        } catch (Exception exception) {
+                            new MyAlert(Alert.AlertType.ERROR, exception.getMessage()).show();
+                        }
+                        GameController.getInstance().getSelectedCard().unlock();
+                    } else {
+                        translateTransition.setOnFinished(e -> {
+                            GameController.getInstance().getSelectedCard().lock();
+                            GameView.getInstance().targetCard = null;
                             new MyAlert(Alert.AlertType.INFORMATION, "select an opponent card").show();
                             GameView.getInstance().isAttacking = true;
-                        }
-                    });
-                    translateTransition.play();
+                        });
+                        translateTransition.play();
+                    }
                 });
                 break;
             case "Change position":

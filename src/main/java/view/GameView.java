@@ -365,7 +365,7 @@ public class GameView {
                 try {
                     GameController.getInstance().finishGame();
                     reset();
-                    new MyAlert(Alert.AlertType.CONFIRMATION, "player one win!");
+                    new MyAlert(Alert.AlertType.CONFIRMATION, "player one win!").show();
                     ViewSwitcher.switchTo(View.MAIN);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -377,7 +377,7 @@ public class GameView {
                 try {
                     GameController.getInstance().finishGame();
                     reset();
-                    new MyAlert(Alert.AlertType.CONFIRMATION, "player two win!");
+                    new MyAlert(Alert.AlertType.CONFIRMATION, "player two win!").show();
                     ViewSwitcher.switchTo(View.MAIN);
                 } catch (Exception e) {
                     e.printStackTrace();
