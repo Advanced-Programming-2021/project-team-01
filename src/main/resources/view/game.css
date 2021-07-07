@@ -112,7 +112,7 @@
 .button:hover {
     -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #006699 0%, #19547b 100%),
     #4D4C4F,
-    radial-gradient(center 50% 50%, radius 100%, #185a9d, #0db2b6);
+    radial-gradient(center 50% 50%, radius 100%, #7efbff, #106699);
 }
 
 .button:pressed {

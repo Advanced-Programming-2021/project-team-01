@@ -46,8 +46,12 @@ public class GamePreview implements Initializable {
         if (isNumberOfRoundsValid(roundNumMultiplayer.getText())) {
             if (isCoinTossed) {
                 if (DatabaseController.doesUserExists(opponentUsername.getText())) {
-                    GameController.getInstance().startGame(opponentUsername.getText(), Integer.parseInt(roundNumMultiplayer.getText()));
-                    //ViewSwitcher.switchTo(View.GAME);
+                    try {
+                        GameController.getInstance().startGame(opponentUsername.getText(), Integer.parseInt(roundNumMultiplayer.getText()));
+                    }catch (Exception e){
+                        new MyAlert(Alert.AlertType.WARNING, e.getMessage()).show();
+                    }
+                    ViewSwitcher.switchTo(View.GAME_VIEW);
                 } else
                     new MyAlert(Alert.AlertType.WARNING, "No such username.").show();
             } else {

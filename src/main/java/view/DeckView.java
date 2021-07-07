@@ -62,20 +62,17 @@ public class DeckView implements Initializable {
                 rectangle.setWidth(150);
                 rectangle.getStyleClass().add("but");
                 rectangle.setFill(mainDeck.get(5 * i + j).getCardImage());
-                rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        selectedCard = rectangle;
-                        selectedCard.setDeckViewLocation(DeckViewLocation.MAIN_DECK);
-                        for (Node child : pane.getChildren()) {
-                            child.getStyleClass().remove("butoo");
-                        }
-                        rectangle.getStyleClass().add("butoo");
-                        Rectangle rectangle1 = new Rectangle(200, 360);
-                        rectangle1.setFill(selectedCard.getCard().getCardImage());
-                        imageBar.getChildren().clear();
-                        imageBar.getChildren().add(rectangle1);
+                rectangle.setOnMouseClicked(event -> {
+                    selectedCard = rectangle;
+                    selectedCard.setDeckViewLocation(DeckViewLocation.MAIN_DECK);
+                    for (Node child : pane.getChildren()) {
+                        child.getStyleClass().remove("butoo");
                     }
+                    rectangle.getStyleClass().add("butoo");
+                    Rectangle rectangle1 = new Rectangle(200, 360);
+                    rectangle1.setFill(selectedCard.getCard().getCardImage());
+                    imageBar.getChildren().clear();
+                    imageBar.getChildren().add(rectangle1);
                 });
                 pane.add(rectangle, j, i);
             }
