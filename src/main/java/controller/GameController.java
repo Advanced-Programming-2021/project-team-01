@@ -38,6 +38,7 @@ public class GameController {
     protected State state;
     protected Chain chain;
     protected ChainController chainController;
+    public boolean isReversed = false;
 
     private GameController() {
 

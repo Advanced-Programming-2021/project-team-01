@@ -278,8 +278,8 @@ public class GameView {
         try {
             root.getStylesheets().add(getClass().getResource("/view/game.css").toExternalForm());
             gameController = GameController.getInstance();
-            RegisterController.onlineUser = DatabaseController.getUserByName("ali");
-            GameController.getInstance().startGame("username", 1);
+//            RegisterController.onlineUser = DatabaseController.getUserByName("ali"); //TODO: used for testing
+//            GameController.getInstance().startGame("username", 1);
             setupPiecePlayer();
             //setupMusic();
             setupImageCard();
@@ -297,6 +297,10 @@ public class GameView {
             setupHands();
             setupEndGameCondition();
             setupPhaseNames();
+            if (GameController.getInstance().isReversed){
+                drawPhaseGraphicActions();
+                GameController.getInstance().changeTurn();
+            }
             mainPane.getChildren().addAll(nameOfPhases, playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
                     profileDetails1, profileDetails2, playerFieldZone1, playerFieldZone2, graveyardPlayer1, graveyardPlayer2);
             setupHandObservables();

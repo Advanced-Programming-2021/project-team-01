@@ -50,10 +50,10 @@ public class GamePreview implements Initializable {
                 if (DatabaseController.doesUserExists(opponentUsername.getText())) {
                     try {
                         GameController.getInstance().startGame(opponentUsername.getText(), Integer.parseInt(roundChoiceBox.getValue()));
+                        ViewSwitcher.switchTo(View.GAME_VIEW);
                     } catch (Exception e) {
                         new MyAlert(Alert.AlertType.WARNING, e.getMessage()).show();
                     }
-                    ViewSwitcher.switchTo(View.GAME_VIEW);
                 } else
                     new MyAlert(Alert.AlertType.WARNING, "No such username.").show();
             } else
@@ -76,6 +76,7 @@ public class GamePreview implements Initializable {
                 coinStackPane.getChildren().add(tailImage);
             }
         }
+        GameController.getInstance().isReversed = isUserFirstPlayer;
     }
 
     @FXML
