@@ -22,7 +22,7 @@ import java.util.Timer;
 public class MainView {
     Pane mainPane;
     ImagePattern beneathIcon = new ImagePattern(new Image(getClass().getResource("/Assets/Main/beneath.png").toExternalForm()));
-    Rectangle characterRectangle = new Rectangle(300, 470);
+    Rectangle characterRectangle = new Rectangle(300, 500);
 
     public void init(Pane root) {
         mainPane = root;

@@ -11,7 +11,7 @@ public class Lighting extends Transition {
     private Rectangle brick;
     public Lighting(Rectangle brick) {
         this.brick = brick;
-        setCycleDuration(Duration.millis(300));
+        setCycleDuration(Duration.millis(250));
         setCycleCount(2);
     }
 
