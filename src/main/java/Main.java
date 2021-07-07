@@ -1,7 +1,9 @@
 import controller.DatabaseController;
 import controller.GameController;
 import javafx.application.Application;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import view.MyAlert;
 import view.View;
 import view.ViewSwitcher;
 
@@ -16,5 +18,6 @@ public class Main extends Application {
         GameController.getInstance();
         ViewSwitcher.setStage(primaryStage);
         ViewSwitcher.switchTo(View.LOGIN);
+        new MyAlert(Alert.AlertType.WARNING,"this is a warning").show();
     }
 }

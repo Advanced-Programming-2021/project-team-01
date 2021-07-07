@@ -20,7 +20,7 @@ public class MyAlert extends Dialog<String> {
                 BackgroundRepeat.REPEAT,
                 BackgroundRepeat.REPEAT,
                 BackgroundPosition.DEFAULT,
-                new BackgroundSize(450, 180, false, false, false, false));        pane.setBackground(new Background(backgroundimage));
+                new BackgroundSize(500, 180, false, false, false, false));        pane.setBackground(new Background(backgroundimage));
         pane.setPrefWidth(450);
         pane.setPrefHeight(180);
         pane.setBackground(new Background(backgroundimage));
@@ -33,7 +33,7 @@ public class MyAlert extends Dialog<String> {
         text.setFont(Font.font("Helvetica", FontWeight.BOLD,20));
         text.setWrappingWidth(400);
         text.setFill(Color.WHITE);
-        text.setTranslateX(-40);
+        text.setTranslateX(+15);
         pane.setCenter(text);
 
         Button ok = new Button("ok");
