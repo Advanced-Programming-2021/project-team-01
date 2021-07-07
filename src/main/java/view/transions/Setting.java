@@ -1,13 +1,13 @@
 package view.transions;
 
 import controller.GameController;
-import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Popup;
 import view.GameView;
+import view.MyAlert;
 import view.View;
 import view.ViewSwitcher;
 
@@ -62,6 +62,25 @@ public class Setting extends Popup {
             GameView.getInstance().reset();
             ViewSwitcher.switchTo(View.MAIN);
         });
-        root.getChildren().addAll(imageView, imageView1);
+        ImageView imageView2 = new ImageView(new Image(getClass().getResource("/view/Surrender.png").toExternalForm()));
+        imageView2.setTranslateX(350);
+        imageView2.setTranslateY(175);
+        imageView2.setFitWidth(200);
+        imageView2.setFitHeight(100);
+        imageView2.setOnMouseEntered(event -> {
+            imageView2.setScaleX(1.2);
+            imageView2.setScaleY(1.2);
+        });
+        imageView2.setOnMouseExited(event -> {
+            imageView2.setScaleX(1);
+            imageView2.setScaleY(1);
+        });
+        imageView2.setOnMouseClicked(event -> {
+            hide();
+            GameController.getInstance().surrender();
+            ViewSwitcher.switchTo(View.MAIN);
+            new MyAlert(Alert.AlertType.INFORMATION, "Player surrendered").show();
+        });
+        root.getChildren().addAll(imageView, imageView1, imageView2);
     }
 }
