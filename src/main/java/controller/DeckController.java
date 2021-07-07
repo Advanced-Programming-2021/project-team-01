@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import static controller.RegisterController.onlineUser;
 
@@ -56,6 +57,8 @@ public class DeckController {
                     if (deck.getMainDeck().size() < 60) {
                         if (onlineUser.getPlayerCards().contains(cardName)) {
                             if (deck.checkCardsLimit(card)) {
+                                if (!doesHaveEnoughCards(cardName,deck, getPlayerNumberOfCards(cardName)))
+                                    throw new Exception("you dont have enough cards");
                               deck.addCardToMainDeck(card);
                               DatabaseController.updateDeck(deck);
                             } else
@@ -81,6 +84,16 @@ public class DeckController {
                 throw new DeckNotExists(deckName);
         } else
             throw new CardNameNotExists(cardName);
+    }
+
+    private int getPlayerNumberOfCards(String cardName) {
+        int counter = 0;
+        for (String playerCard : onlineUser.getPlayerCards()) {
+            if (cardName.equals(playerCard)){
+                counter++;
+            }
+        }
+        return counter;
     }
 
     public void removeCardFromDeck(String cardName, String deckName, boolean isMainDeck) throws CardNameNotExists,
@@ -155,5 +168,16 @@ public class DeckController {
         public int compare(Deck deck1, Deck deck2) {
             return deck1.getDeckName().compareTo(deck2.getDeckName());
         }
+    }
+
+    private boolean doesHaveEnoughCards(String cardName,Deck deck, int playerNum){
+        List<Card> mainDeck = deck.getMainDeck();
+        int counter = 0;
+        for (Card card : mainDeck) {
+            if (card.getName().equals(cardName)){
+                counter++;
+            }
+        }
+        return playerNum > counter;
     }
 }
