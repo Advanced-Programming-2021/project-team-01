@@ -145,7 +145,7 @@ public class ShopView implements Initializable {
         pane.setHgap(10);
         pane.setAlignment(Pos.CENTER);
         ArrayList<Card> playerCards = getPlayerCards();
-        for (int i = 0; i < Math.round((double) playerCards.size() / 3); i++) {
+        for (int i = 0; i < Math.ceil((double) playerCards.size() / 3); i++) {
             for (int j = 0; j < (Math.min((playerCards.size() - 3 * i), 3)); j++) {
                 ShopCardView rectangle = new ShopCardView(playerCards.get(3 * i + j));
                 rectangle.setHeight(250);
