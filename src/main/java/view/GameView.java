@@ -235,10 +235,10 @@ public class GameView {
     }
 
     public void attackOnCard() {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(100), targetCard);
-        translateTransition.setByX(15);
-        translateTransition.setCycleCount(8);
-        translateTransition.setAutoReverse(true);
+//        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(100), targetCard);
+//        translateTransition.setByX(15);
+//        translateTransition.setCycleCount(8);
+//        translateTransition.setAutoReverse(true);
         try {
             Card card = targetCard.getCard();
             ZoneSlot[] monsterZone1 = GameController.getInstance().getGameBoard().getPlayerOneMonsterZone();
