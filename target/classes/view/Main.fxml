@@ -4,20 +4,38 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.MainView"
-            prefHeight="400.0" prefWidth="600.0" styleClass="main">
+            prefHeight="720.0" prefWidth="1366.0" styleClass="main">
     <stylesheets>
         <URL value="@main.css"/>
     </stylesheets>
     <VBox spacing="10" translateX="40" translateY="50">
-        <Button prefWidth="100" text="Duel" styleClass="button" onMouseClicked="#startGamePreview"/>
-        <Button prefWidth="100" text="Scoreboard" styleClass="button" onMouseClicked="#startScoreboardView"/>
-        <Button prefWidth="100" text="Deck" styleClass="button" onMouseClicked="#startDeckView"/>
-        <Button prefWidth="100" text="Profile" styleClass="button" onMouseClicked="#startProfileView"/>
-        <Button prefWidth="100" text="Shop" styleClass="button" onMouseClicked="#startShopView"/>
-        <Button prefWidth="100" text="Import/Export" styleClass="button" onMouseClicked="#startImportExportView"/>
-        <Button prefWidth="100" text="Logout" styleClass="button" onMouseClicked="#logout"/>
+        <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startGamePreview">
+            <Image url="@optionbox.png"/>
+        </ImageView>
+        <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startScoreboardView">
+            <Image url="@optionbox.png"/>
+        </ImageView>
+        <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startDeckView">
+            <Image url="@optionbox.png"/>
+        </ImageView>
+        <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startProfileView">
+            <Image url="@optionbox.png"/>
+        </ImageView>
+        <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startImportExportView">
+            <Image url="@optionbox.png"/>
+        </ImageView>
+
+        <ImageView fitWidth="90" fitHeight="90" translateX="1100" translateY="-20" styleClass="button" onMouseClicked="#logout">
+            <Image url="@icons8-shutdown-80.png"/>
+        </ImageView>
+        <ImageView fitWidth="100" fitHeight="99" translateX="950" translateY="-120" styleClass="button" onMouseClicked="#startShopView">
+            <Image url="@icons8-buy-100.png"/>
+        </ImageView>
+
     </VBox>
 </AnchorPane>

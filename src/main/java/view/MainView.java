@@ -17,16 +17,16 @@ import java.util.Random;
 public class MainView {
     Pane mainPane;
     ImagePattern beneathIcon = new ImagePattern(new Image(getClass().getResource("/Assets/Main/beneath.png").toExternalForm()));
-    Rectangle characterRectangle = new Rectangle(200, 384);
+    Rectangle characterRectangle = new Rectangle(300, 470);
 
     public void init(Pane root) {
         mainPane = root;
-        Rectangle rectangle = new Rectangle(160, 40);
+        Rectangle rectangle = new Rectangle(400, 70);
         rectangle.setFill(beneathIcon);
-        rectangle.setTranslateX(400);
-        rectangle.setTranslateY(340);
-        characterRectangle.setTranslateX(380);
-        characterRectangle.setTranslateY(-30);
+        rectangle.setTranslateX(800);
+        rectangle.setTranslateY(450);
+        characterRectangle.setTranslateX(850);
+        characterRectangle.setTranslateY(0);
         mainPane.getChildren().addAll(rectangle, characterRectangle);
         fadeInAndOut();
     }
