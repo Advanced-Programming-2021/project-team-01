@@ -39,7 +39,7 @@ public abstract class Card {
     }
 
     public ImagePattern getBackImage() {
-        Image image = new Image(getClass().getResource("/Cards/" + "unknown.jpg").toExternalForm());
+        Image image = new Image(getClass().getResource("/Cards/unknown.jpg").toExternalForm());
         return new ImagePattern(image);
     }
 
