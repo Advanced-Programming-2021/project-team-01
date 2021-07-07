@@ -252,6 +252,9 @@ public class CardView extends Rectangle {
                 break;
             case "Special summon":
                 menuItem.setGraphic(specialSummonView);
+                menuItem.setOnAction(event -> {
+                    GameView.specialSummon();
+                });
                 break;
             case "Normal summon":
                 menuItem.setGraphic(normalSummonView);

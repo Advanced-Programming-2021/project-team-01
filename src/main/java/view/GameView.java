@@ -221,6 +221,17 @@ public class GameView {
         return selectableDialog.getResult();
     }
 
+    public static void specialSummon() {
+        try {
+            GameController.getInstance().activateEffect();
+            System.out.println("effect activated");
+            GameController.getInstance().getGameBoard().showBoard();
+        } catch (Exception error) {
+            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, error.getMessage());
+            myAlert.show();
+        }
+    }
+
     public void showDirectAttack() {
         Image image = new Image(getClass().getResource("/view/2.gif").toExternalForm());
         ImageView imageView = new ImageView(image);
