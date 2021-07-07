@@ -81,8 +81,15 @@ public class CardView extends Rectangle {
 
     private void handleClicked(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY && GameView.getInstance().isAttacking) {
-            GameView.getInstance().addTargetCard(this);
-            GameView.getInstance().attackOnCard();
+            TranslateTransition translateTransition = new TranslateTransition(Duration.millis(100), GameView.getInstance().selectedCardView);
+            translateTransition.setByX(15);
+            translateTransition.setCycleCount(8);
+            translateTransition.setAutoReverse(true);
+            translateTransition.setOnFinished(event1 -> {
+                GameView.getInstance().addTargetCard(this);
+                GameView.getInstance().attackOnCard();
+            });
+            translateTransition.play();
         }
     }
 
@@ -193,32 +200,28 @@ public class CardView extends Rectangle {
     private MenuItem addMenuItem(String menuName) {
         MenuItem menuItem = new MenuItem(menuName);
         menuItem.setStyle("-fx-text-fill: white;");
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(100), this);
-        translateTransition.setByX(15);
-        translateTransition.setCycleCount(8);
-        translateTransition.setAutoReverse(true);
         switch (menuName) {
             case "Attack":
                 menuItem.setGraphic(attackView);
                 menuItem.setOnAction(event -> {
-                    translateTransition.setOnFinished(e -> {
-                        GameController.getInstance().getSelectedCard().lock();
-                        GameView.getInstance().targetCard = null;
-                        if(GameController.getInstance().getGameBoard().getCardInMonsterZone(GameController.getInstance().getOpponentPlayerNumber()).size() == 0){
-                            try {
-                                GameController.getInstance().directAttack();
-                                GameView.getInstance().showDirectAttack();
-                            } catch (Exception exception) {
-                                new MyAlert(Alert.AlertType.ERROR, exception.getMessage()).show();
-                            }
-                            GameController.getInstance().getSelectedCard().unlock();
-                        }else {
-                            new MyAlert(Alert.AlertType.INFORMATION, "select an opponent card").show();
-                            GameView.getInstance().isAttacking = true;
+                    GameController.getInstance().getSelectedCard().lock();
+                    GameView.getInstance().targetCard = null;
+                    if (GameController.getInstance().getGameBoard().getCardInMonsterZone(GameController.getInstance().getOpponentPlayerNumber()).size() == 0) {
+                        try {
+                            GameView.getInstance().selectedCardView = this;
+                            GameController.getInstance().directAttack();
+                            GameView.getInstance().showDirectAttack();
+                        } catch (Exception exception) {
+                            new MyAlert(Alert.AlertType.ERROR, exception.getMessage()).show();
                         }
-                    });
-                    translateTransition.play();
+                        GameController.getInstance().getSelectedCard().unlock();
+                    } else {
+                        GameView.getInstance().selectedCardView = this;
+                        new MyAlert(Alert.AlertType.INFORMATION, "select an opponent card").show();
+                        GameView.getInstance().isAttacking = true;
+                    }
                 });
+
                 break;
             case "Change position":
                 menuItem.setGraphic(changePositionView);
