@@ -31,6 +31,7 @@ public class MyAlert extends Dialog<String> {
 
         Text text = new Text(message);
         text.setFont(Font.font("Helvetica", FontWeight.BOLD,20));
+        text.setWrappingWidth(400);
         text.setFill(Color.WHITE);
         text.setTranslateX(-40);
         pane.setCenter(text);
