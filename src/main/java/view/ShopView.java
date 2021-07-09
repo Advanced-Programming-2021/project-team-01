@@ -1,5 +1,6 @@
 package view;
 
+import controller.DatabaseController;
 import controller.RegisterController;
 import controller.ShopController;
 import javafx.event.EventHandler;
@@ -24,7 +25,6 @@ import javafx.scene.text.FontWeight;
 import model.card.Card;
 import model.card.MonsterCard;
 import view.transions.ShopCheatPopup;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
@@ -41,6 +41,7 @@ public class ShopView implements Initializable {
     public Pane imageBar;
     private Label money;
     public ScrollPane monsterScroll, spellScroll;
+    private ImagePattern priceImage = new ImagePattern(new Image(getClass().getResource("/view/sb.png").toExternalForm()));
     private Rectangle draggableRectangle = new Rectangle(150, 270);
 
     @Override
@@ -103,6 +104,7 @@ public class ShopView implements Initializable {
                     label.setTranslateX(30);
                     label.setTranslateY(400);
                     label.setStyle("-fx-text-fill: #fcba03;-fx-font: 30px \"Arial\";");
+                    setupPriceLabel();
                     imageBar.getChildren().add(label);
                 });
                 setupDragAndDrop(rectangle);
@@ -143,6 +145,7 @@ public class ShopView implements Initializable {
                         label.setTranslateX(30);
                         label.setTranslateY(400);
                         label.setStyle("-fx-text-fill: #fcba03;-fx-font: 30px \"Arial\";");
+                        setupPriceLabel();
                         imageBar.getChildren().add(label);
                     }
                 });
@@ -245,5 +248,19 @@ public class ShopView implements Initializable {
     public static void setupCheatScene() {
         ShopCheatPopup shopCheatPopup = new ShopCheatPopup();
         shopCheatPopup.show(ViewSwitcher.getStage());
+    }
+
+    private void setupPriceLabel() {
+        Rectangle rectangle = new Rectangle();
+        rectangle.setFill(priceImage);
+        rectangle.setWidth(100);
+        rectangle.setHeight(30);
+        rectangle.setTranslateY(340);
+        rectangle.setTranslateX(50);
+        Label label = new Label(String.valueOf(selectedCard.getCard().getPrice()));
+        label.setStyle("-fx-text-fill: white;-fx-font: 16px \"Arial\";");
+        label.setTranslateX(80);
+        label.setTranslateY(345);
+        imageBar.getChildren().addAll(rectangle, label);
     }
 }
