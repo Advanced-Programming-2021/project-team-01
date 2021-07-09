@@ -1,6 +1,7 @@
 package model.card;
 
 import controller.GameController;
+import model.commands.Command;
 
 import java.util.ArrayList;
 
@@ -80,8 +81,10 @@ public class MonsterCard extends Card {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return new MonsterCard(getName(), getDescription(), getPrice(), getAttack(), getDefense(), getCardType(),
+        MonsterCard monsterCard = new MonsterCard(getName(), getDescription(), getPrice(), getAttack(), getDefense(), getCardType(),
                 getMonsterTypes(), getAttribute(), getLevel());
+        monsterCard.commands = this.commands;
+        return monsterCard;
     }
 }
 

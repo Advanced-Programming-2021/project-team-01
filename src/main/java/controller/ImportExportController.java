@@ -69,15 +69,19 @@ public class ImportExportController {
             switch (effects.get(i)) {
                 case SUIJIN: {
                     monsterCards.get(i).addCommands(new Suijin(monsterCards.get(i)));
+                    break;
                 }
                 case TERATIGER: {
                     monsterCards.get(i).addCommands(new TerraTiger(monsterCards.get(i)));
+                    break;
                 }
                 case TRICKY: {
                     monsterCards.get(i).addCommands(new TheTricky(monsterCards.get(i)));
+                    break;
                 }
                 case GATE_GUARDIAN: {
                     monsterCards.get(i).addCommands(new GateGuardian(monsterCards.get(i)));
+                    break;
                 }
             }
             monsterCards.get(i).addImage();

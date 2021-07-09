@@ -115,6 +115,7 @@
                         <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Price :" fx:id="price"/>
                         <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="0"/>
                         <JFXButton translateY="50" mnemonicParsing="false" text="Create" onMouseClicked="#createCard"/>
+                        <JFXButton translateX="-400" translateY="50" mnemonicParsing="false" text="Back" onMouseClicked="#back"/>
                     </children>
                 </HBox>
             </children>

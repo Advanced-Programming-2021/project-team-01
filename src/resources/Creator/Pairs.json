@@ -1,1 +1,1 @@
-{"monsterCards":[{"level":1,"cardType":"NORMAL","monsterTypes":["DRAGON"],"attribute":"EARTH","attack":4000,"defense":4000,"name":"Dadbeh","description":"Agha dadbeh","type":"monster","price":8000}],"effects":["SUIJIN"]}
+{"monsterCards":[{"level":5,"cardType":"EFFECT","monsterTypes":["DRAGON"],"attribute":"WIND","attack":4000,"defense":4000,"name":"ElementalHero","description":"Coming from neo space","type":"monster","price":8000}],"effects":["TRICKY"]}

@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
+import controller.DatabaseController;
 import controller.Effect;
+import controller.RegisterController;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.Initializable;
@@ -15,10 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
-import model.card.Attribute;
-import model.card.CardType;
-import model.card.MonsterCard;
-import model.card.MonsterType;
+import model.card.*;
 import model.commands.Suijin;
 
 import java.io.FileWriter;
@@ -76,8 +75,17 @@ public class CardCreator implements Initializable {
         }
         ArrayList<MonsterType> arrayList = new ArrayList<>();
         arrayList.add(MonsterType.DRAGON);
-        MonsterCard monsterCard = new MonsterCard(name, description, price, attack, defense, CardType.NORMAL,arrayList,attribute,level);
-        addPairToJSON(new Pair<>(monsterCard, effect));
+        if (RegisterController.onlineUser.getMoney() < price){
+            new MyAlert(Alert.AlertType.WARNING, "You dont have enough money").show();
+            return;
+        }
+        CardType cardType = CardType.NORMAL;
+        if (effect != null) cardType = CardType.EFFECT;
+        RegisterController.onlineUser.decreaseMoney(price);
+        RegisterController.onlineUser.getPlayerCards().add(name);
+        DatabaseController.updatePlayer(RegisterController.onlineUser);
+        MonsterCard monsterCard = new MonsterCard(name, description, price, attack, defense, cardType,arrayList,attribute,level);
+        DatabaseController.loadGameCards();
     }
 
     public void init(Pane pane) {
@@ -98,10 +106,7 @@ public class CardCreator implements Initializable {
         fileWriter.close();
     }
 
-    public static void main(String[] args) throws Exception {
-        ArrayList<MonsterType> monsterTypes = new ArrayList<>();
-        monsterTypes.add(MonsterType.MACHINE);
-        MonsterCard dadbeh = new MonsterCard("dadbeh", "aaa", 300, 3000, 4000, CardType.NORMAL, monsterTypes, Attribute.EARTH, 4);
-        CardCreator.addPairToJSON(new Pair<>(dadbeh, Effect.SUIJIN));
+    public void back(MouseEvent event) {
+        ViewSwitcher.switchTo(View.MAIN);
     }
 }
