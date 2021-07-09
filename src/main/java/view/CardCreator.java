@@ -88,6 +88,7 @@ public class CardCreator implements Initializable {
             FileWriter fileWriter = new FileWriter("src/resources/Creator/Pairs.json");
             Gson gson = new Gson();
             gson.toJson(new CustomCard(),fileWriter);
+            fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
