@@ -217,6 +217,9 @@ public class ShopView implements Initializable {
         }
         String cardName = selectedCard.getCard().getName();
         try {
+            if (selectedCard.getCard().getPrice() > RegisterController.onlineUser.getMoney()){
+                return;
+            }
             ShopController.getInstance().buyCard(cardName);
         } catch (Exception exception) {
             new MyAlert(Alert.AlertType.WARNING, exception.getMessage()).show();
