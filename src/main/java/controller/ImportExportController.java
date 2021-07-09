@@ -80,6 +80,7 @@ public class ImportExportController {
                     monsterCards.get(i).addCommands(new GateGuardian(monsterCards.get(i)));
                 }
             }
+            monsterCards.get(i).addImage();
             Card.addCardToDatabase(monsterCards.get(i));
         }
     }

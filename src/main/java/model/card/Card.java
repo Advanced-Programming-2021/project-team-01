@@ -43,7 +43,7 @@ public abstract class Card {
         return new ImagePattern(image);
     }
 
-    private void addImage() {
+    public void addImage() {
         String imageName = buildImage();
         if (cachedImage.containsKey(imageName)) return;
         Image image = null;

@@ -361,7 +361,7 @@ public class GameView {
         IntegerProperty playerOneLp = GameController.getInstance().getPlayerOneLp();
         IntegerProperty playerTwoLp = GameController.getInstance().getPlayerTwoLp();
         playerOneLp.addListener((observable, oldValue, newValue) -> {
-            if (newValue.intValue() < 0) {
+            if (newValue.intValue() <= 0) {
                 try {
                     GameController.getInstance().finishGame();
                 } catch (Exception e) {
@@ -370,7 +370,7 @@ public class GameView {
             }
         });
         playerTwoLp.addListener((observable, oldValue, newValue) -> {
-            if (newValue.intValue() < 0) {
+            if (newValue.intValue() <= 0) {
                 try {
                     GameController.getInstance().finishGame();
                 } catch (Exception e) {
