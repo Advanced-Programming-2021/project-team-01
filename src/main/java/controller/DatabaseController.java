@@ -42,6 +42,7 @@ public class DatabaseController {
         }
         fileReader.close();
         reader.close();
+        addExportFolderFiles();
     }
 
     private static String getUserDirectory(String username) {
@@ -171,5 +172,12 @@ public class DatabaseController {
             }
         }
         return players;
+    }
+
+    public static void addExportFolderFiles() throws IOException {
+        File folder = new File("src/resources/export");
+        for (File file : folder.listFiles()) {
+            ImportExportController.importCard(file.getName().split("\\.")[0]);
+        }
     }
 }
