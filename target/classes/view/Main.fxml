@@ -28,7 +28,7 @@
             <Image url="@importexportbox.png"/>
         </ImageView>
         <ImageView fitWidth="90" fitHeight="90" translateX="810" translateY="-20" styleClass="button"
-                   onMouseClicked="#startShopView">
+                   onMouseClicked="#startCardCreator">
             <Image url="@hammer.png"/>
         </ImageView>
         <ImageView fitWidth="90" fitHeight="90" translateX="1100" translateY="-130" styleClass="button"

@@ -153,3 +153,8 @@
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
+
+.text {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+}

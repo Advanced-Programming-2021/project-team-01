@@ -67,7 +67,7 @@ public class ViewSwitcher {
                     break;
                 }
                 case CARD_CREATOR: {
-                    new CardCreator().init();
+                    new CardCreator().init(root);
                     break;
                 }
             }

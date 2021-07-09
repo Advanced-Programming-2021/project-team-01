@@ -1,5 +1,6 @@
 package view;
 
+import com.google.gson.Gson;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
 import controller.Effect;
@@ -8,7 +9,9 @@ import javafx.beans.property.StringProperty;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 import model.card.Attribute;
@@ -16,6 +19,8 @@ import model.card.CardType;
 import model.card.MonsterCard;
 import model.card.MonsterType;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -72,7 +77,19 @@ public class CardCreator implements Initializable {
         return new Pair<>(monsterCard, effect);
     }
 
-    public void init() {
+    public void init(Pane pane) {
+        Image image = new Image(getClass().getResource("/Assets/gx.jpg").toExternalForm());
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.CENTER,BackgroundSize.DEFAULT);
+        pane.setBackground(new Background(backgroundImage));
+    }
 
+    public static void main(String[] args) {
+        try {
+            FileWriter fileWriter = new FileWriter("src/resources/Creator/Pairs.json");
+            Gson gson = new Gson();
+            gson.toJson(new CustomCard(),fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

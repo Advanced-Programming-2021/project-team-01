@@ -115,6 +115,6 @@ public class MainView {
     private void startGamePreview() { ViewSwitcher.switchTo(View.PRE_GAME); }
 
     public void startCardCreator(MouseEvent event) {
-
+        ViewSwitcher.switchTo(View.CARD_CREATOR);
     }
 }

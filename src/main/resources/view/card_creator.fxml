@@ -11,27 +11,31 @@
 <?import java.lang.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import controller.Effect?>
+<?import java.net.URL?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
             prefWidth="1366.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="view.CardCreator">
+    <stylesheets>
+        <URL value="@game.css"/>
+    </stylesheets>
     <children>
         <VBox prefHeight="720.0" prefWidth="1366.0">
             <children>
                 <HBox alignment="CENTER" prefHeight="61.0" prefWidth="1366.0">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name :"/>
+                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Name :"/>
                         <JFXTextField fx:id="name"/>
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="62.0" prefWidth="1366.0">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:"/>
+                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:"/>
                         <JFXTextField fx:id="description"/>
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="68.0" prefWidth="1366.0">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Level :"/>
+                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Level :"/>
                         <ChoiceBox fx:id="choiceBox" prefWidth="150.0">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
@@ -52,7 +56,7 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="68.0" prefWidth="1366.0">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Attributes"/>
+                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Attributes"/>
                         <ChoiceBox fx:id="attribute" prefWidth="150.0">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
@@ -70,24 +74,24 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="48.0" prefWidth="1366.0">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="selected attributes :"/>
+                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="selected attributes :"/>
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="52.0" prefWidth="1366.0">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="attack :"/>
+                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="attack :"/>
                         <JFXSlider fx:id="attackSlider"/>
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="52.0" prefWidth="1366.0">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="defence :"/>
+                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="defence :"/>
                         <JFXSlider fx:id="defenseSlider"/>
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="62.0" prefWidth="1366.0">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Effect :"/>
+                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Effect :"/>
                         <ChoiceBox fx:id="effect" prefWidth="150.0">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
@@ -103,13 +107,13 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="46.0" prefWidth="1366.0">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="selected Effects :"/>
+                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="selected Effects :"/>
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="75.0" prefWidth="1366.0">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price :" fx:id="price"/>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0"/>
+                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Price :" fx:id="price"/>
+                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="0"/>
                         <JFXButton translateY="50" mnemonicParsing="false" text="Create" onMouseClicked="#createCard"/>
                     </children>
                 </HBox>
