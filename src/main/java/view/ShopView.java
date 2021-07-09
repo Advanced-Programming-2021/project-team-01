@@ -61,15 +61,18 @@ public class ShopView implements Initializable {
         button.setFitHeight(100);
         button.setOnMouseClicked(event -> buyCard());
         button.getStyleClass().add("but");
-        mainPane.getChildren().addAll(button, money);
+        mainPane.getChildren().addAll(button);
     }
 
     private void setupMoneyBar() {
         money = new Label(String.valueOf(RegisterController.onlineUser.getMoney()));
         money.setTextFill(Color.ORANGE);
         money.setLayoutX(0);
-        money.setLayoutY(0);
+        money.setLayoutY(400);
         money.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        money.setTranslateX(40);
+        money.setTranslateY(20);
+        imageBar.getChildren().add(money);
     }
 
     private void setupMonsterTab() {
