@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="720.0" prefWidth="1366.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="61.0" prefWidth="1366.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name :" />
+                  <TextField />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="62.0" prefWidth="1366.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
+                  <TextField />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="68.0" prefWidth="1366.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Level :" />
+                  <ChoiceBox prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="68.0" prefWidth="1366.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Attributes" />
+                  <ChoiceBox prefWidth="150.0" />
+                  <Button mnemonicParsing="false" text="Add" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="1366.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="selected attributes :" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="52.0" prefWidth="1366.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="attack :" />
+                  <Slider />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="52.0" prefWidth="1366.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="defence :" />
+                  <Slider />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="62.0" prefWidth="1366.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Effect :" />
+                  <ChoiceBox prefWidth="150.0" />
+                  <Button mnemonicParsing="false" text="Add" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="1366.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="selected Effects :" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="1366.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price :" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                  <Button mnemonicParsing="false" text="Create" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
