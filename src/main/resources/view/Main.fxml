@@ -27,14 +27,17 @@
         <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startImportExportView">
             <Image url="@importexportbox.png"/>
         </ImageView>
-        <ImageView fitWidth="90" fitHeight="90" translateX="1100" translateY="-20" styleClass="button"
+        <ImageView fitWidth="90" fitHeight="90" translateX="810" translateY="-20" styleClass="button"
+                   onMouseClicked="#startShopView">
+            <Image url="@hammer.png"/>
+        </ImageView>
+        <ImageView fitWidth="90" fitHeight="90" translateX="1100" translateY="-130" styleClass="button"
                    onMouseClicked="#logout">
             <Image url="@icons8-shutdown-80.png"/>
         </ImageView>
-        <ImageView fitWidth="100" fitHeight="99" translateX="950" translateY="-120" styleClass="button"
+        <ImageView fitWidth="100" fitHeight="99" translateX="950" translateY="-230" styleClass="button"
                    onMouseClicked="#startShopView">
             <Image url="@icons8-buy-100.png"/>
         </ImageView>
-
     </VBox>
 </AnchorPane>
