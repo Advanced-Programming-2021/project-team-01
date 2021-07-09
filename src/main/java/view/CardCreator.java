@@ -1,6 +1,7 @@
 package view;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
 import controller.Effect;
@@ -18,9 +19,11 @@ import model.card.Attribute;
 import model.card.CardType;
 import model.card.MonsterCard;
 import model.card.MonsterType;
+import model.commands.Suijin;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -43,7 +46,7 @@ public class CardCreator implements Initializable {
         price.textProperty().bind(StringProperty.stringExpression(IntegerProperty.integerExpression(attackSlider.valueProperty().add(defenseSlider.valueProperty()))));
     }
 
-    public Pair<MonsterCard, Effect> createCard(MouseEvent event) {
+    public void createCard(MouseEvent event) throws Exception {
         String name;
         String description;
         int defense;
@@ -59,7 +62,7 @@ public class CardCreator implements Initializable {
             attribute = (Attribute) (this.attribute.getValue());
         }catch (Exception e){
             new MyAlert(Alert.AlertType.WARNING, "Why are your field empty?").show();
-            return null;
+            return;
         }
         Effect effect;
         try {
@@ -74,7 +77,7 @@ public class CardCreator implements Initializable {
         ArrayList<MonsterType> arrayList = new ArrayList<>();
         arrayList.add(MonsterType.DRAGON);
         MonsterCard monsterCard = new MonsterCard(name, description, price, attack, defense, CardType.NORMAL,arrayList,attribute,level);
-        return new Pair<>(monsterCard, effect);
+        addPairToJSON(new Pair<>(monsterCard, effect));
     }
 
     public void init(Pane pane) {
@@ -83,14 +86,22 @@ public class CardCreator implements Initializable {
         pane.setBackground(new Background(backgroundImage));
     }
 
-    public static void main(String[] args) {
-        try {
-            FileWriter fileWriter = new FileWriter("src/resources/Creator/Pairs.json");
-            Gson gson = new Gson();
-            gson.toJson(new CustomCard(),fileWriter);
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private static void addPairToJSON(Pair<MonsterCard, Effect> pair) throws Exception {
+        FileReader fileReader = new FileReader(new File("src/resources/Creator/Pairs.json"));
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        CustomCard customCard = gsonBuilder.create().fromJson(fileReader, CustomCard.class);
+        customCard.addMonsterCard(pair.getKey(), pair.getValue());
+        fileReader.close();
+        FileWriter fileWriter = new FileWriter(new File("src/resources/Creator/Pairs.json"));
+        Gson gson = new Gson();
+        gson.toJson(customCard, fileWriter);
+        fileWriter.close();
+    }
+
+    public static void main(String[] args) throws Exception {
+        ArrayList<MonsterType> monsterTypes = new ArrayList<>();
+        monsterTypes.add(MonsterType.MACHINE);
+        MonsterCard dadbeh = new MonsterCard("dadbeh", "aaa", 300, 3000, 4000, CardType.NORMAL, monsterTypes, Attribute.EARTH, 4);
+        CardCreator.addPairToJSON(new Pair<>(dadbeh, Effect.SUIJIN));
     }
 }

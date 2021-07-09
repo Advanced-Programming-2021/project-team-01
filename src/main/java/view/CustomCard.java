@@ -14,4 +14,12 @@ public class CustomCard{
         monsterCards.add(monsterCard);
         effects.add(effect);
     }
+
+    public List<Effect> getEffects() {
+        return effects;
+    }
+
+    public List<MonsterCard> getMonsterCards() {
+        return monsterCards;
+    }
 }

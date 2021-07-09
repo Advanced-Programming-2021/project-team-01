@@ -175,9 +175,9 @@ public class DatabaseController {
     }
 
     public static void addExportFolderFiles() throws IOException {
-        File folder = new File("src/resources/export");
+        File folder = new File("src/resources/Creator");
         for (File file : folder.listFiles()) {
-            ImportExportController.importCard(file.getName().split("\\.")[0]);
+            ImportExportController.importCardCreators(file.getName().split("\\.")[0]);
         }
     }
 }
