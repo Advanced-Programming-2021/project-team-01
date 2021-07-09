@@ -124,6 +124,7 @@ public class CheatPopUp extends Popup {
                 if (GameController.getPlayerOne().getNickname().equals(nicknameChoiceBox.getValue()) ||
                         GameController.getPlayerTwo().getNickname().equals(nicknameChoiceBox.getValue())) {
                     try {
+                        this.hide();
                         GameController.getInstance().setWinner(nicknameChoiceBox.getValue());
                     } catch (Exception e) {
                         e.printStackTrace();

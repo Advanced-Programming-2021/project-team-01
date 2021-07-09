@@ -69,11 +69,9 @@ public class ShopView implements Initializable {
     private void setupMoneyBar() {
         money = new Label(String.valueOf(RegisterController.onlineUser.getMoney()));
         money.setTextFill(Color.ORANGE);
-        money.setLayoutX(0);
-        money.setLayoutY(400);
         money.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         money.setTranslateX(40);
-        money.setTranslateY(20);
+        money.setTranslateY(410);
         imageBar.getChildren().add(money);
     }
 
@@ -110,6 +108,7 @@ public class ShopView implements Initializable {
                     label.setStyle("-fx-text-fill: #fcba03;-fx-font: 30px \"Arial\";");
                     setupPriceLabel();
                     imageBar.getChildren().add(label);
+                    imageBar.getChildren().add(money);
                 });
                 setupDragAndDrop(rectangle);
                 pane.add(rectangle, j, i);
@@ -151,6 +150,7 @@ public class ShopView implements Initializable {
                         label.setStyle("-fx-text-fill: #fcba03;-fx-font: 30px \"Arial\";");
                         setupPriceLabel();
                         imageBar.getChildren().add(label);
+                        imageBar.getChildren().add(money);
                     }
                 });
                 setupDragAndDrop(rectangle);

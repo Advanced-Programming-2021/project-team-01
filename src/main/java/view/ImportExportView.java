@@ -14,7 +14,9 @@ import javafx.scene.layout.Pane;
 public class ImportExportView {
     public void init(Pane root) {
         HBox importHBox = new HBox(), exportHBox = new HBox();
-        TextField importTextField = new TextField("Import card name:"), exportTextField = new TextField("Export card name:");
+        TextField importTextField = new TextField(), exportTextField = new TextField();
+        exportTextField.setPromptText("Export card name:");
+        importTextField.setPromptText("Import card name:");
         Button importButton = new Button();
         importButton.setStyle(getClass().getResource("/view/importexport.css").toExternalForm());
         importButton.setPrefWidth(80);
@@ -34,7 +36,11 @@ public class ImportExportView {
         importHBox.setAlignment(Pos.CENTER);
         exportHBox.setAlignment(Pos.CENTER);
         addEventToButton(importButton, exportButton, importTextField, exportTextField);
-        root.getChildren().addAll(exportHBox, importHBox);
+        Button exitButton = new Button("exit");
+        exitButton.setOnMouseClicked(event -> {
+            ViewSwitcher.switchTo(View.MAIN);
+        });
+        root.getChildren().addAll(exportHBox, importHBox, exitButton);
     }
 
     private void addEventToButton(Button importButton, Button exportButton, TextField importField, TextField exportField) {

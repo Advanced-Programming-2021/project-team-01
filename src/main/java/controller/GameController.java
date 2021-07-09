@@ -5,9 +5,13 @@ import console.menu.HandleRequestType;
 import controller.exceptions.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.control.Alert;
 import model.*;
 import model.card.*;
 import view.GameView;
+import view.MyAlert;
+import view.View;
+import view.ViewSwitcher;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -190,9 +194,6 @@ public class GameController {
         }
         setup(playerOneDeck);
         setup(playerTwoDeck);
-        if (numberOfRounds != 1 && numberOfRounds != 3) {
-            throw new InvalidRoundNumber();
-        }
         rounds = numberOfRounds;
         if (numberOfRounds == 3) {
             playerOneWin = 0;
@@ -574,10 +575,10 @@ public class GameController {
 
     public void setWinner(String nickname) throws Exception {
         if (playerOne.getNickname().equals(nickname)) {
-            playerOneWin = 2;
+            //playerOneWin = 2;
             playerTwoLp.set(0);
         } else if (playerTwo.getNickname().equals(nickname)) {
-            playerTwoWin = 2;
+            //playerTwoWin = 2;
             playerOneLp.set(0);
         } else
             throw new Exception("Nickname is invalid!");
@@ -703,7 +704,9 @@ public class GameController {
                 playerTwo.increaseMoney(1000 + playerTwoLp.getValue());
                 DatabaseController.updatePlayer(playerOne);
                 DatabaseController.updatePlayer(playerTwo);
-                HandleRequestType.currentMenu = Menu.MAIN_MENU;
+                GameView.getInstance().reset();
+                new MyAlert(Alert.AlertType.CONFIRMATION, "player one win!").show();
+                ViewSwitcher.switchTo(View.MAIN);
                 return String.format("%s won the game and the score is: %d-%d",
                         playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 100, 1000 + playerTwoLp.getValue());
             } else {
@@ -713,7 +716,9 @@ public class GameController {
                 playerOne.increaseMoney(1000 + playerOneLp.getValue());
                 DatabaseController.updatePlayer(playerOne);
                 DatabaseController.updatePlayer(playerTwo);
-                HandleRequestType.currentMenu = Menu.MAIN_MENU;
+                GameView.getInstance().reset();
+                new MyAlert(Alert.AlertType.CONFIRMATION, "player two win!").show();
+                ViewSwitcher.switchTo(View.MAIN);
                 return String.format("%s won the game and the score is: %d-%d",
                         playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 1000 + playerOneLp.getValue(), 100);
             }
@@ -726,7 +731,9 @@ public class GameController {
                     playerTwo.increaseMoney(3000 + 3 * playerTwoLp.getValue());
                     DatabaseController.updatePlayer(playerOne);
                     DatabaseController.updatePlayer(playerTwo);
-                    HandleRequestType.currentMenu = Menu.MAIN_MENU;
+                    GameView.getInstance().reset();
+                    new MyAlert(Alert.AlertType.CONFIRMATION, "player two win!").show();
+                    ViewSwitcher.switchTo(View.MAIN);
                     return String.format("%s won the game and the score is: %d-%d",
                             playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 300, 3000 + playerTwoLp.getValue());
                 } else {
@@ -737,6 +744,9 @@ public class GameController {
                     DatabaseController.updatePlayer(playerOne);
                     DatabaseController.updatePlayer(playerTwo);
                     HandleRequestType.currentMenu = Menu.MAIN_MENU;
+                    GameView.getInstance().reset();
+                    new MyAlert(Alert.AlertType.CONFIRMATION, "player one win!").show();
+                    ViewSwitcher.switchTo(View.MAIN);
                     return String.format("%s won the game and the score is: %d-%d",
                             playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 3000 + playerOneLp.getValue(), 300);
                 }
@@ -745,7 +755,9 @@ public class GameController {
                     playerTwoWin++;
                 else
                     playerOneWin++;
+                if (isReversed) swapPlayer();
                 startGame(playerTwo.getUsername(), 2);
+                ViewSwitcher.switchTo(View.GAME_VIEW);
             }
         }
         return "";
@@ -780,9 +792,16 @@ public class GameController {
     }
 
     public void swapPlayer(){
+        int winTemp = playerOneWin;
+        playerOneWin = playerTwoWin;
+        playerTwoWin = winTemp;
         Player temp = playerOne;
         playerOne = playerTwo;
         playerTwo = temp;
+    }
+
+    public void resetSummon() {
+        summonedCard = null;
     }
 }
 

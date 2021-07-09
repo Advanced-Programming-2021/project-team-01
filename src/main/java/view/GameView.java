@@ -364,9 +364,6 @@ public class GameView {
             if (playerOneLp.get() <= 0) {
                 try {
                     GameController.getInstance().finishGame();
-                    reset();
-                    new MyAlert(Alert.AlertType.CONFIRMATION, "player one win!").show();
-                    ViewSwitcher.switchTo(View.MAIN);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -376,9 +373,6 @@ public class GameView {
             if (playerTwoLp.get() <= 0) {
                 try {
                     GameController.getInstance().finishGame();
-                    reset();
-                    new MyAlert(Alert.AlertType.CONFIRMATION, "player two win!").show();
-                    ViewSwitcher.switchTo(View.MAIN);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
