@@ -10,7 +10,8 @@ public enum View {
     DECK("Deck.fxml"),
     PRE_DECK("PreDeck.fxml"),
     PRE_GAME("GamePreview.fxml"),
-    GAME_VIEW("GameView.fxml");
+    GAME_VIEW("GameView.fxml"),
+    CARD_CREATOR("");
 
     private String fileName;
 
