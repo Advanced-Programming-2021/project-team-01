@@ -35,6 +35,7 @@ public class ProfileView {
         }
         try {
             ProfileController.getInstance().changeNickname(nickname);
+            this.nickname.setText(nickname);
         } catch (Exception exception) {
             System.err.println(exception.getMessage());
         }

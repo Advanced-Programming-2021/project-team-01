@@ -20,6 +20,7 @@ public class ProfileController {
         if (DatabaseController.doesNicknameExist(nickname))
             throw new NicknameExists(nickname);
         onlineUser.setNickname(nickname);
+        DatabaseController.updatePlayer(onlineUser);
     }
 
     public void changePassword(String currentPassword, String newPassword) throws Exception {

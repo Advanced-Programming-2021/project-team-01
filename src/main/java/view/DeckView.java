@@ -89,7 +89,7 @@ public class DeckView implements Initializable {
         pane.setHgap(10);
         pane.setAlignment(Pos.CENTER);
         ArrayList<Card> sideDeck = DatabaseController.getDeckByName(currentDeck.getDeckName()).getSideDeck();
-        for (int i = 0; i < Math.round((double) sideDeck.size() / 6); i++) {
+        for (int i = 0; i < Math.ceil((double) sideDeck.size() / 6); i++) {
             for (int j = 0; j < (Math.min((sideDeck.size() - 6 * i), 6)); j++) {
                 ShopCardView rectangle = new ShopCardView(sideDeck.get(6 * i + j));
                 rectangle.setHeight(250);

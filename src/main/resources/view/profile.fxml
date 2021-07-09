@@ -12,13 +12,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="main" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ProfileView">
+<AnchorPane prefHeight="720.0" prefWidth="1366.0" styleClass="main" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ProfileView">
 
     <stylesheets>
         <URL value="@profile.css" />
     </stylesheets>
    <children>
-      <Button layoutX="462.0" layoutY="89.0" mnemonicParsing="false" onMouseClicked="#changeNickname" prefHeight="41.0" prefWidth="123.0" text="Change Nickname">
+      <Button layoutX="800.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#changeNickname" prefHeight="80.0" prefWidth="240.0" text="Change Nickname">
          <font>
             <Font name="Impact" size="14.0" />
          </font>
@@ -29,7 +29,7 @@
             <Bloom threshold="0.74" />
          </effect>
       </Button>
-      <Button layoutX="462.0" layoutY="179.0" mnemonicParsing="false" onMouseClicked="#changePassword" prefHeight="41.0" prefWidth="123.0" text="Change Password">
+      <Button layoutX="800.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#changePassword" prefHeight="80.0" prefWidth="240.0" text="Change Password">
          <font>
             <Font name="Impact" size="14.0" />
          </font>
@@ -40,7 +40,7 @@
             <Bloom threshold="0.53" />
          </effect>
       </Button>
-      <Button layoutX="462.0" layoutY="266.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="35.0" prefWidth="123.0" text="back">
+      <Button layoutX="800.0" layoutY="500.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="70.0" prefWidth="240.0" text="back">
          <font>
             <Font name="Impact" size="17.0" />
          </font>
@@ -51,20 +51,20 @@
             <Bloom threshold="0.5" />
          </effect>
       </Button>
-      <VBox alignment="CENTER" layoutX="31.0" layoutY="28.0" prefHeight="195.0" prefWidth="199.0">
+      <VBox alignment="CENTER" layoutX="100.0" layoutY="200.0" prefHeight="195.0" prefWidth="199.0">
          <children>
-            <ImageView fx:id="profileImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="profileImage" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
             <Region prefHeight="19.0" prefWidth="199.0" />
             <HBox alignment="CENTER" prefHeight="27.0" prefWidth="199.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username : " />
-                  <Text fx:id="username" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px" text="Username : " fill="aliceblue" />
+                  <Text fx:id="username" style="-fx-font-size: 20px" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="27.0" prefWidth="199.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname : " />
-                  <Text fx:id="nickname" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text strokeType="OUTSIDE" style="-fx-font-size: 20px" strokeWidth="0.0" text="Nickname : " fill="aliceblue" />
+                  <Text fx:id="nickname" style="-fx-font-size: 20px" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </HBox>
          </children>

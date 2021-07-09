@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import org.apache.commons.logging.Log;
 import view.transions.Lighting;
 
 import java.awt.*;
@@ -82,6 +83,7 @@ public class MainView {
     @FXML
     private void logout() {
         RegisterController.getInstance().logout();
+        LoginView.mediaView.getMediaPlayer().stop();
         ViewSwitcher.switchTo(View.LOGIN);
     }
 
