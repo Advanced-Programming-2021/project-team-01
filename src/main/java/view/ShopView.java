@@ -1,6 +1,5 @@
 package view;
 
-import controller.DatabaseController;
 import controller.RegisterController;
 import controller.ShopController;
 import javafx.event.EventHandler;
@@ -9,16 +8,23 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import model.card.Card;
 import model.card.MonsterCard;
 import view.transions.ShopCheatPopup;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
@@ -33,6 +39,7 @@ public class ShopView implements Initializable {
     public Tab monsterTab, spellTab;
     public BorderPane mainPane;
     public Pane imageBar;
+    private Label money;
     public ScrollPane monsterScroll, spellScroll;
     private Rectangle draggableRectangle = new Rectangle(150, 270);
 
@@ -45,6 +52,7 @@ public class ShopView implements Initializable {
         setupMonsterTab();
         setupSpellTrapTab();
         setupPlayersCard();
+        setupMoneyBar();
         imageBar.setPadding(new Insets(40, 40, 40, 40));
         ImageView button = new ImageView(new Image(getClass().getResource("k1.png").toExternalForm()));
         button.setFitWidth(100);
@@ -53,7 +61,15 @@ public class ShopView implements Initializable {
         button.setFitHeight(100);
         button.setOnMouseClicked(event -> buyCard());
         button.getStyleClass().add("but");
-        mainPane.getChildren().add(button);
+        mainPane.getChildren().addAll(button, money);
+    }
+
+    private void setupMoneyBar() {
+        money = new Label(String.valueOf(RegisterController.onlineUser.getMoney()));
+        money.setTextFill(Color.ORANGE);
+        money.setLayoutX(0);
+        money.setLayoutY(0);
+        money.setFont(Font.font("Arial", FontWeight.BOLD, 20));
     }
 
     private void setupMonsterTab() {
@@ -200,6 +216,7 @@ public class ShopView implements Initializable {
             return;
         }
         setupPlayersCard();
+        money.setText(String.valueOf(RegisterController.onlineUser.getMoney()));
         new MyAlert(Alert.AlertType.CONFIRMATION, "Card is bought").show();
     }
 
