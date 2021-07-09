@@ -66,6 +66,10 @@ public class ViewSwitcher {
                     });
                     break;
                 }
+                case CARD_CREATOR: {
+                    new CardCreator().init();
+                    break;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

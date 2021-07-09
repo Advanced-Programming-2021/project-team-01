@@ -72,4 +72,7 @@ public class CardCreator implements Initializable {
         return new Pair<>(monsterCard, effect);
     }
 
+    public void init() {
+
+    }
 }
