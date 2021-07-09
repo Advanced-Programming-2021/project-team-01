@@ -723,7 +723,7 @@ public class GameController {
                         playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 1000 + playerOneLp.getValue(), 100);
             }
         } else {
-            if (playerOneWin == 2 || playerTwoWin == 2) {
+            if ((playerOneWin == 1 && playerTwoWin == 1) || (playerOneWin == 2 || playerTwoWin == 2)){
                 if (playerOneLp.getValue() <= 0) {
                     playerOne.increaseLoseRate();
                     playerTwo.increaseWinRate(3000);
@@ -750,7 +750,7 @@ public class GameController {
                     return String.format("%s won the game and the score is: %d-%d",
                             playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 3000 + playerOneLp.getValue(), 300);
                 }
-            } else {
+            }  else {
                 if (playerOneLp.getValue() <= 0)
                     playerTwoWin++;
                 else
