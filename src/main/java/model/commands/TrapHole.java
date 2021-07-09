@@ -24,6 +24,8 @@ public class TrapHole extends Command implements Activate {
     @Override
     public boolean canActivate() throws Exception {
         boolean isStatSummon = gameController.getState() == State.SUMMON || gameController.getState() == State.FLIP_SUMMON;
-        return isStatSummon && ((MonsterCard)gameController.getSummonedCard()).getAttack() >= 1000;
+        if (!isStatSummon)
+            return false;
+        return isStatSummon && (((MonsterCard)(gameController.getSummonedCard())).getAttack() >= 1000);
     }
 }

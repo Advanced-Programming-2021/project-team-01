@@ -1,6 +1,6 @@
 .main{
     -fx-background-image: url("ImportExportBackground.jpeg");
-    -fx-background-size: cover
+    -fx-background-size: cover;
 }
 
 .button{
