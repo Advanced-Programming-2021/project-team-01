@@ -1,15 +1,15 @@
-.main{
+.main {
     -fx-background-image: url("ImportExportBackground.jpeg");
     -fx-background-size: cover;
 }
 
-.button{
+.button {
     -fx-background-image: url("IXButton.png");
     -fx-background-size: cover;
     -fx-background-color: transparent;
 }
 
-.button:hover{
+.button:hover {
     -fx-cursor: hand;
     -fx-border-color: transparent;
     -fx-scale-x: 1.2;
