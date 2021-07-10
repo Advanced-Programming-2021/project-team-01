@@ -34,6 +34,8 @@ import model.card.Property;
 import model.card.SpellCard;
 import view.transions.*;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
