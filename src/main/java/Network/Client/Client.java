@@ -44,4 +44,8 @@ public class Client {
     public void setOnlinePlayer(Player onlinePlayer) {
         this.onlinePlayer = onlinePlayer;
     }
+
+    public Player getOnlinePlayer() {
+        return onlinePlayer;
+    }
 }
