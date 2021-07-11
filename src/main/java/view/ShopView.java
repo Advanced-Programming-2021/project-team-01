@@ -1,10 +1,12 @@
 package view;
 
-import controller.DatabaseController;
+import Network.Client.Client;
+import Network.Requests.Account.BuyRequest;
+import Network.Requests.Request;
+import Network.Responses.Account.BuyResponse;
 import controller.RegisterController;
 import controller.ShopController;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -26,13 +28,11 @@ import javafx.scene.text.FontWeight;
 import model.card.Card;
 import model.card.MonsterCard;
 import view.transions.ShopCheatPopup;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.TreeMap;
 
-public class ShopView implements Initializable {
+public class ShopView implements GraphicalView {
     public Tab playerTab;
     public ScrollPane playerScroll;
     public Button exitButton;
@@ -46,11 +46,7 @@ public class ShopView implements Initializable {
     private Rectangle draggableRectangle = new Rectangle(150, 270);
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        init();
-    }
-
-    public void init() {
+    public void init(Pane root) {
         setupMonsterTab();
         setupSpellTrapTab();
         setupPlayersCard();
@@ -216,18 +212,8 @@ public class ShopView implements Initializable {
             return;
         }
         String cardName = selectedCard.getCard().getName();
-        try {
-            if (selectedCard.getCard().getPrice() > RegisterController.onlineUser.getMoney()){
-                return;
-            }
-            ShopController.getInstance().buyCard(cardName);
-        } catch (Exception exception) {
-            new MyAlert(Alert.AlertType.WARNING, exception.getMessage()).show();
-            return;
-        }
-        setupPlayersCard();
-        money.setText(String.valueOf(RegisterController.onlineUser.getMoney()));
-        new MyAlert(Alert.AlertType.CONFIRMATION, "Card is bought").show();
+        Request request = new BuyRequest(cardName);
+        Client.getInstance().sendData(request.toString());
     }
 
     public void exitMenu(MouseEvent mouseEvent) {
@@ -269,5 +255,18 @@ public class ShopView implements Initializable {
         label.setTranslateX(80);
         label.setTranslateY(345);
         imageBar.getChildren().addAll(rectangle, label);
+    }
+
+    public void buyResponse(BuyResponse response) {
+        try {
+            if (response.getException() != null)
+                throw response.getException();
+        } catch (Exception exception) {
+            new MyAlert(Alert.AlertType.WARNING, exception.getMessage()).show();
+            return;
+        }
+        setupPlayersCard();
+        money.setText(String.valueOf(RegisterController.onlineUser.getMoney()));
+        new MyAlert(Alert.AlertType.CONFIRMATION, "Card is bought").show();
     }
 }

@@ -1,10 +1,12 @@
 package Network.Server;
 
 
+import Network.Requests.Account.BuyRequest;
 import Network.Requests.Account.LoginRequest;
 import Network.Requests.Account.LogoutRequest;
 import Network.Requests.Account.RegisterRequest;
 import Network.Requests.Request;
+import Network.Responses.Account.BuyResponse;
 import Network.Responses.Account.LoginResponse;
 import Network.Responses.Account.LogoutResponse;
 import Network.Responses.Account.RegisterResponse;
@@ -61,9 +63,10 @@ public class ClientHandler extends Thread{
         } else if (request instanceof LogoutRequest){
             response = new LogoutResponse(request);
             response.handleRequest();
+        } else if (request instanceof BuyRequest) {
+            response = new BuyResponse(request);
+            response.handleRequest();
         }
-
-
 
 
         return response;

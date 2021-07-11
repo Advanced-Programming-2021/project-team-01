@@ -1,14 +1,10 @@
 package view;
 
-import controller.GameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -30,6 +26,8 @@ public class ViewSwitcher {
             scene = new Scene(root);
             switch (view) {
                 case SHOP: {
+                    currentView = fxmlLoader.getController();
+                    currentView.init(root);
                     scene.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
                         if (cheatKeyCombination.match(event))
                             ShopView.setupCheatScene();
