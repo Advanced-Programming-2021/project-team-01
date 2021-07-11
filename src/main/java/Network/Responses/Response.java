@@ -19,9 +19,7 @@ public abstract class Response {
         return content;
     }
 
-    public void handleResponse() {
-
-    }
+    public abstract void handleResponse();
 
     @Override
     public String toString() {

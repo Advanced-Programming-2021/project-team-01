@@ -2,9 +2,11 @@ package Network.Server;
 
 
 import Network.Requests.Account.LoginRequest;
+import Network.Requests.Account.LogoutRequest;
 import Network.Requests.Account.RegisterRequest;
 import Network.Requests.Request;
 import Network.Responses.Account.LoginResponse;
+import Network.Responses.Account.LogoutResponse;
 import Network.Responses.Account.RegisterResponse;
 import Network.Responses.Response;
 import Network.Utils.Logger;
@@ -55,6 +57,9 @@ public class ClientHandler extends Thread{
             response.handleRequest();
         } else if (request instanceof RegisterRequest){
             response = new RegisterResponse(request);
+            response.handleRequest();
+        } else if (request instanceof LogoutRequest){
+            response = new LogoutResponse(request);
             response.handleRequest();
         }
 

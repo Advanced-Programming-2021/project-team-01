@@ -11,16 +11,15 @@ import java.util.HashMap;
 public class Server {
 
     private static ServerSocket serverSocket;
-    public static Logger logger = new Logger();
     private static final int port = 12345;
-    private static HashMap<String, Player> loggedInUsers = new HashMap<>();
+    private static final HashMap<String, Player> loggedInUsers = new HashMap<>();
 
     public static void main(String[] args) {
         runServer();
     }
 
     private static void runServer() {
-        logger.set();
+        Logger.set();
         try {
             serverSocket = new ServerSocket(port);
             while (true) {
@@ -39,6 +38,10 @@ public class Server {
 
     public static HashMap<String, Player> getLoggedInUsers() {
         return loggedInUsers;
+    }
+
+    public static void removeUser(Player onlinePlayer) {
+        loggedInUsers.remove(onlinePlayer.getAuthToken());
     }
 }
 

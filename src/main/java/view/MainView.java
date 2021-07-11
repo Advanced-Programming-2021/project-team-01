@@ -1,5 +1,7 @@
 package view;
 
+import Network.Client.Client;
+import Network.Requests.Account.LogoutRequest;
 import controller.RegisterController;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -83,7 +85,9 @@ public class MainView implements GraphicalView {
 
     @FXML
     private void logout() {
-        RegisterController.getInstance().logout();
+        LogoutRequest logoutRequest = new LogoutRequest(Client.getInstance().getOnlinePlayer());
+        Client.getInstance().sendData(logoutRequest.toString());
+        //RegisterController.getInstance().logout();
         LoginView.mediaView.getMediaPlayer().stop();
         ViewSwitcher.switchTo(View.LOGIN);
     }
