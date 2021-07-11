@@ -35,6 +35,7 @@ public class LoginView implements GraphicalView{
         mediaView = new MediaView(new MediaPlayer(media));
         mediaView.getMediaPlayer().play();
         mediaView.getMediaPlayer().autoPlayProperty().setValue(true);
+        mediaView.getMediaPlayer().muteProperty().setValue(true);
     }
 
     public void signUp(MouseEvent event) {
@@ -63,6 +64,7 @@ public class LoginView implements GraphicalView{
         }
         Request request = new LoginRequest(username, password);
         Client.getInstance().out.println(request);
+        Client.getInstance().out.flush();
 //      RegisterController.getInstance().loginUser(username, password);
         }
 

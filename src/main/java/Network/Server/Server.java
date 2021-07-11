@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class Server {
 
     private static ServerSocket serverSocket;
-    public static Logger logger;
+    public static Logger logger = new Logger();
     private static final int port = 12345;
     private static HashMap<String, Player> loggedInUsers = new HashMap<>();
 
