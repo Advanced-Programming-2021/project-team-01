@@ -13,13 +13,13 @@ public class Server {
 
     private static ServerSocket serverSocket;
     public static Logger logger;
+    private static final int port = 12345;
 
     public static void main(String[] args) {
         runServer();
     }
 
     private static void runServer() {
-        int port = 12345;
         logger.set();
         try {
             serverSocket = new ServerSocket(port);
@@ -27,8 +27,6 @@ public class Server {
                 Logger.log("Waiting for a client");
                 Socket socket = serverSocket.accept();
                 Logger.log("Client connected");
-                DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-                DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 ClientHandler clientHandler = new ClientHandler(socket);
                 clientHandler.start();
             }

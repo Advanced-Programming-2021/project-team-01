@@ -9,6 +9,8 @@ public abstract class Response {
     protected String content;
 
     public abstract void handleRequest();
-    public abstract String getContent();
+    public String getContent(){
+        return content;
+    }
 
 }
