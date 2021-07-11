@@ -30,11 +30,13 @@ public class LoginResponse extends Response {
         if (!DatabaseController.doesUserExists(username)) {
             //throw new UsernameNotExists();
             exception = new UsernameNotExists();
+            return;
         }
         Player player = DatabaseController.getUserByName(username);
         if (!player.getPassword().equals(password)) {
             //throw new WrongUsernamePassword();
             exception = new WrongUsernamePassword();
+            return;
         }
         if (exception == null) {
             token = UUID.randomUUID().toString();

@@ -10,7 +10,7 @@ public class Logger {
         System.out.printf("%9s | %s\n", dateTimeFormatter.format(LocalDateTime.now()), content);
     }
 
-    public void set() {
+    public static void set() {
         Logger.dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     }
 }

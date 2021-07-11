@@ -42,6 +42,7 @@ public class ClientHandler extends Thread{
             Logger.log(input + " received");
             Request request = gson.fromJson(input, Request.class);
             Response response = processRequest(request);
+            Logger.log(response + " sent");
             out.println(gson.toJson(response));
             out.flush();
         }

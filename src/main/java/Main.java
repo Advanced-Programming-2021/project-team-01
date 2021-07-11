@@ -1,4 +1,5 @@
 import Network.Client.Client;
+import Network.Utils.Logger;
 import controller.DatabaseController;
 import controller.GameController;
 import javafx.application.Application;
@@ -17,6 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         DatabaseController.loadGameCards();
         GameController.getInstance();
+        Logger.set();
         Client.setInstance(12345);
         ViewSwitcher.setStage(primaryStage);
         ViewSwitcher.switchTo(View.LOGIN);

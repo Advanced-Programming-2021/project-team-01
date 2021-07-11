@@ -23,6 +23,16 @@ public abstract class Response {
 
     }
 
+    @Override
+    public String toString() {
+        return "Response{" +
+                "request=" + request +
+                ", responseType=" + responseType +
+                ", content='" + content + '\'' +
+                ", exception=" + exception +
+                '}';
+    }
+
     public Exception getException() {
         return exception;
     }

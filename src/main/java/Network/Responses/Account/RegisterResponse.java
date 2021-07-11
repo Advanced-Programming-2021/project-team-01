@@ -29,10 +29,12 @@ public class RegisterResponse extends Response {
         if (DatabaseController.doesUserExists(username)) {
             //throw new UsernameExists(username);
             exception = new UsernameExists(username);
+            return;
         }
         if (DatabaseController.doesNicknameExist(nickname)) {
             //throw new NicknameExists(nickname);
             exception = new NicknameExists(nickname);
+            return;
         }
         if (exception == null) {
             Player player = new Player(username, password, nickname);
