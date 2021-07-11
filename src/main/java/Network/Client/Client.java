@@ -14,7 +14,7 @@ public class Client {
     ResponseHandler responseHandler;
     private Client(int port){
         try {
-            socket = new Socket("localhost",port); //set to any port
+            socket = new Socket("localhost", port); //set to any port
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream());
             responseHandler = new ResponseHandler(in, out);

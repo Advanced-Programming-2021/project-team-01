@@ -3,7 +3,10 @@ package Network.Client;
 
 import Network.Responses.Response;
 import com.gilecode.yagson.YaGson;
+import com.sun.tools.example.debug.tty.EventHandler;
+import javafx.application.Platform;
 
+import java.awt.*;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -23,7 +26,8 @@ public class ResponseHandler extends Thread{
         while (true){
             String input = scanner.nextLine();
             Response response = yaGson.fromJson(input, Response.class);
-            response.handleResponse(); //fixme Potential Bug need to start a JavaFx Thread!
+            Platform.runLater(response::handleResponse);
+            //response.handleResponse(); //fixme Potential Bug need to start a JavaFx Thread!
         }
     }
 }

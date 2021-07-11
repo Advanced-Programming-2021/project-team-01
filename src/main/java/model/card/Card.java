@@ -47,12 +47,10 @@ public abstract class Card {
         String imageName = buildImage();
         if (cachedImage.containsKey(imageName)) return;
         Image image = null;
-        System.out.println(name);
         try {
             image = new Image(getClass().getResource("/Cards/" + imageName).toExternalForm());
         } catch (Exception e) {
             image = new Image(getClass().getResource("/Cards/custom.jpg").toExternalForm());
-            System.err.println(imageName);
         }
         cachedImage.put(imageName, image);
     }

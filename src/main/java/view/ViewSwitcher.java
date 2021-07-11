@@ -44,7 +44,7 @@ public class ViewSwitcher {
                     break;
                 }
                 case LOGIN: {
-                    currentView = new LoginView();
+                    currentView = fxmlLoader.getController();
                     currentView.init(root);
                     break;
                 }
