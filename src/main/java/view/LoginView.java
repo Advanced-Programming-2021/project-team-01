@@ -1,5 +1,9 @@
 package view;
 
+import Network.Client.Client;
+import Network.Requests.Account.LoginRequest;
+import Network.Requests.Request;
+import Network.Responses.Response;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import controller.RegisterController;
@@ -13,7 +17,7 @@ import javafx.scene.media.MediaView;
 
 import java.util.Random;
 
-public class LoginView {
+public class LoginView implements GraphicalView{
 
 
     public Label registerLabel;
@@ -57,15 +61,23 @@ public class LoginView {
             loginLabel.setText("empty field");
             return;
         }
+        Request request = new LoginRequest(username, password);
+        Client.getInstance().out.println(request);
+//      RegisterController.getInstance().loginUser(username, password);
+        }
+
+    public void loginResponse(Response response){
         try {
-            RegisterController.getInstance().loginUser(username, password);
+            if (response.getException() != null)
+                throw response.getException();
             mediaView.getMediaPlayer().stop();
             ViewSwitcher.switchTo(View.MAIN);
             registerLabel.setText("");
             System.out.println("user logged in successfully!");
-        } catch (Exception exception) {
+        }catch (Exception exception){
             loginLabel.setText(exception.getMessage());
         }
+
     }
 
 }

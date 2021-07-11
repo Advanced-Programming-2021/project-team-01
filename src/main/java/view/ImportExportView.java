@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
-public class ImportExportView {
+public class ImportExportView implements GraphicalView{
     public void init(Pane root) {
         HBox importHBox = new HBox(), exportHBox = new HBox();
         TextField importTextField = new TextField(), exportTextField = new TextField();

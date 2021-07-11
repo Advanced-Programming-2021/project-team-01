@@ -6,10 +6,12 @@ import controller.DatabaseController;
 import controller.GameController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import model.Player;
 
@@ -18,7 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-public class GamePreview implements Initializable {
+public class GamePreview implements  GraphicalView{
     public JFXTextField opponentUsername;
     public JFXButton playWithAIButton;
     public JFXButton headButton;
@@ -32,7 +34,14 @@ public class GamePreview implements Initializable {
     private ImageView tailImage = new ImageView(new Image(getClass().getResource("TailToss.gif").toExternalForm()));
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void init(Pane root) {
+        ChoiceBox<String> roundChoiceBox = null;
+        for (Node child : root.getChildren()) {
+            if (child instanceof ChoiceBox) {
+                roundChoiceBox = (ChoiceBox<String>) child;
+            }
+        }
+        assert roundChoiceBox != null;
         roundChoiceBox.getItems().addAll("1", "3");
     }
     

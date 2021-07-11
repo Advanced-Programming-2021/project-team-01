@@ -1,7 +1,9 @@
-package Network.Client;
+package Network.Server;
 
 
+import Network.Requests.Account.LoginRequest;
 import Network.Requests.Request;
+import Network.Responses.Account.LoginResponse;
 import Network.Responses.Response;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
@@ -42,7 +44,15 @@ public class ClientHandler extends Thread{
     }
 
     private Response processRequest(Request request) {
+        Response response = null;
+        if(request instanceof LoginRequest){
+            response = new LoginResponse(request);
+            response.handleRequest();
+        }
 
-        return null;
+
+
+
+        return response;
     }
 }

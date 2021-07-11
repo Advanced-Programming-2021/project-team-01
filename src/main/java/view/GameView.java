@@ -42,7 +42,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class GameView {
+public class GameView implements GraphicalView{
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1366;
     static StackPane imageCard;

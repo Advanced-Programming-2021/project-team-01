@@ -14,6 +14,7 @@ import java.util.Objects;
 
 public class ViewSwitcher {
     private static Stage stage;
+    private static GraphicalView currentView;
 
     public static void switchTo(View view) {
         Pane root = null;
@@ -43,7 +44,8 @@ public class ViewSwitcher {
                     break;
                 }
                 case LOGIN: {
-                    new LoginView().init(root);
+                    currentView = new LoginView();
+                    currentView.init(root);
                     break;
                 }
                 case MAIN: {
@@ -70,6 +72,10 @@ public class ViewSwitcher {
                     new CardCreator().init(root);
                     break;
                 }
+                case PRE_GAME: {
+                    new GamePreview().init(root);
+                    break;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -89,5 +95,9 @@ public class ViewSwitcher {
 
     public static Stage getStage() {
         return stage;
+    }
+
+    public static GraphicalView getCurrentView() {
+        return currentView;
     }
 }

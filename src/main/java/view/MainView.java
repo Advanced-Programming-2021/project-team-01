@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.Timer;
 
-public class MainView {
+public class MainView implements GraphicalView {
     Pane mainPane;
     ImagePattern beneathIcon = new ImagePattern(new Image(getClass().getResource("/Assets/Main/beneath.png").toExternalForm()));
     Rectangle characterRectangle = new Rectangle(300, 500);
