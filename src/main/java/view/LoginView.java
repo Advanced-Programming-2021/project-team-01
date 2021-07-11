@@ -2,10 +2,14 @@ package view;
 
 import Network.Client.Client;
 import Network.Requests.Account.LoginRequest;
+import Network.Requests.Account.RegisterRequest;
 import Network.Requests.Request;
+import Network.Responses.Account.LoginResponse;
+import Network.Responses.Account.RegisterResponse;
 import Network.Responses.Response;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import controller.DatabaseController;
 import controller.RegisterController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -46,8 +50,15 @@ public class LoginView implements GraphicalView{
             registerLabel.setText("empty field");
             return;
         }
+        Request request = new RegisterRequest(username, password, nickname);
+        Client.getInstance().sendData(request.toString());
+
+    }
+
+    public void signUpResponse(RegisterResponse response){
         try {
-            RegisterController.getInstance().createUser(username, password, nickname);
+            if (response.getException() != null)
+                throw response.getException();
             registerLabel.setText("");
             System.out.println("user created successfully!");
         } catch (Exception exception) {
@@ -63,12 +74,11 @@ public class LoginView implements GraphicalView{
             return;
         }
         Request request = new LoginRequest(username, password);
-        Client.getInstance().out.println(request);
-        Client.getInstance().out.flush();
+        Client.getInstance().sendData(request.toString());
 //      RegisterController.getInstance().loginUser(username, password);
         }
 
-    public void loginResponse(Response response){
+    public boolean loginResponse(Response response){
         try {
             if (response.getException() != null)
                 throw response.getException();
@@ -76,8 +86,10 @@ public class LoginView implements GraphicalView{
             ViewSwitcher.switchTo(View.MAIN);
             registerLabel.setText("");
             System.out.println("user logged in successfully!");
+            return true;
         }catch (Exception exception){
             loginLabel.setText(exception.getMessage());
+            return false;
         }
 
     }

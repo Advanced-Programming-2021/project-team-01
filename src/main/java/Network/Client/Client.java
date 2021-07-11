@@ -1,5 +1,7 @@
 package Network.Client;
 
+import model.Player;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -7,10 +9,11 @@ import java.util.Scanner;
 
 public class Client {
 
-    public PrintWriter out;
-    public Scanner in;
+    private PrintWriter out;
+    private Scanner in;
     private static Client instance;
     Socket socket;
+    private Player onlinePlayer = null;
     ResponseHandler responseHandler;
     private Client(int port){
         try {
@@ -25,11 +28,20 @@ public class Client {
         }
     }
 
+    public void sendData(String message){
+        out.println(message);
+        out.flush();
+    }
+
     public static void setInstance(int port) {
         instance = new Client(port);
     }
 
     public static Client getInstance() {
         return instance;
+    }
+
+    public void setOnlinePlayer(Player onlinePlayer) {
+        this.onlinePlayer = onlinePlayer;
     }
 }

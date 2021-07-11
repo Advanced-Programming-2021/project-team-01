@@ -7,16 +7,17 @@ import java.util.Comparator;
 
 public class Player {
     private final String username;
+    private final ArrayList<String> playerDecks = new ArrayList<>();
+    private final ArrayList<String> playerCards = new ArrayList<>();
     private String password;
     private String nickname;
     private int money;
     private int score;
     private String activeDeck;
-    private final ArrayList<String> playerDecks = new ArrayList<>();
-    private final ArrayList<String> playerCards = new ArrayList<>();
     private int profile;
     private int winRate;
     private int loseRate;
+    private String authToken;
 
     public Player(String username, String password, String nickname) {
         this.username = username;
@@ -25,6 +26,14 @@ public class Player {
         this.winRate = 0;
         this.loseRate = 0;
         this.money = 1000000;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 
     public void setPictureNumber(int pictureNumber) {
@@ -67,6 +76,10 @@ public class Player {
         return activeDeck;
     }
 
+    public void setActiveDeck(String deckName) {
+        activeDeck = deckName;
+    }
+
     public ArrayList<String> getPlayerDecks() {
         return playerDecks;
     }
@@ -88,10 +101,6 @@ public class Player {
 
     public void increaseMoney(int amount) {
         this.money = money + amount;
-    }
-
-    public void setActiveDeck(String deckName) {
-        activeDeck = deckName;
     }
 
     public ArrayList<String> getPlayerCards() {

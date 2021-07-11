@@ -2,8 +2,10 @@ package Network.Server;
 
 
 import Network.Requests.Account.LoginRequest;
+import Network.Requests.Account.RegisterRequest;
 import Network.Requests.Request;
 import Network.Responses.Account.LoginResponse;
+import Network.Responses.Account.RegisterResponse;
 import Network.Responses.Response;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
@@ -49,6 +51,9 @@ public class ClientHandler extends Thread{
         Response response = null;
         if(request instanceof LoginRequest){
             response = new LoginResponse(request);
+            response.handleRequest();
+        } else if (request instanceof RegisterRequest){
+            response = new RegisterResponse(request);
             response.handleRequest();
         }
 

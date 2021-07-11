@@ -5,9 +5,11 @@ import Network.Requests.Request;
 public class RegisterRequest extends Request {
     private String userName;
     private String password;
-    public RegisterRequest(String userName, String password){
+    private String nickname;
+    public RegisterRequest(String userName, String password, String nickname){
         this.userName = userName;
         this.password = password;
+        this.nickname = nickname;
     }
 
     public String getUserName() {
@@ -16,5 +18,9 @@ public class RegisterRequest extends Request {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 }

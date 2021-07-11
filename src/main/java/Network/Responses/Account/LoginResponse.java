@@ -1,5 +1,6 @@
 package Network.Responses.Account;
 
+import Network.Client.Client;
 import Network.Requests.Account.LoginRequest;
 import Network.Requests.Request;
 import Network.Responses.Response;
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class LoginResponse extends Response {
 
     private String token;
+    private Player player;
     public LoginResponse(Request request) {
         super(request);
     }
@@ -34,13 +36,18 @@ public class LoginResponse extends Response {
             //throw new WrongUsernamePassword();
             exception = new WrongUsernamePassword();
         }
-        token = UUID.randomUUID().toString();
-        Server.getLoggedInUsers().put(token,player);
+        if (exception == null) {
+            token = UUID.randomUUID().toString();
+            this.player = player;
+            Server.getLoggedInUsers().put(token, player);
+        }
     }
 
     @Override
     public void handleResponse() {
         LoginView loginView = (LoginView) ViewSwitcher.getCurrentView();
-        loginView.loginResponse(this);
+        if (loginView.loginResponse(this)){
+            Client.getInstance().setOnlinePlayer(player);
+        }
     }
 }

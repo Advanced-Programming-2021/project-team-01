@@ -3,10 +3,8 @@ package Network.Client;
 
 import Network.Responses.Response;
 import com.gilecode.yagson.YaGson;
-import com.sun.tools.example.debug.tty.EventHandler;
 import javafx.application.Platform;
 
-import java.awt.*;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
