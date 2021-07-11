@@ -5,6 +5,7 @@ import Network.Requests.Account.LoginRequest;
 import Network.Requests.Request;
 import Network.Responses.Account.LoginResponse;
 import Network.Responses.Response;
+import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 
@@ -36,6 +37,7 @@ public class ClientHandler extends Thread{
     public void run() {
         while(true){
             String input = in.nextLine();
+            Logger.log(input + " Relieved");
             Request request = gson.fromJson(input, Request.class);
             Response response = processRequest(request);
             out.println(gson.toJson(response));
