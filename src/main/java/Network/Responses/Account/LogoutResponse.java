@@ -15,12 +15,12 @@ public class LogoutResponse extends Response {
     @Override
     public void handleRequest() {
         LogoutRequest request = (LogoutRequest) super.request;
-        DatabaseController.updatePlayer(request.getOnlinePlayer());
-        Server.removeUser(request.getOnlinePlayer());
+        DatabaseController.updatePlayer(Server.getLoggedInUsers().get(request.getToken()));
+        Server.removeUser(request.getToken());
     }
 
     @Override
     public void handleResponse(){
-        Client.getInstance().setOnlinePlayer(null);
+        Client.getInstance().setToken(null);
     }
 }

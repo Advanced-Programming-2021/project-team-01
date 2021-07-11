@@ -40,8 +40,8 @@ public class Server {
         return loggedInUsers;
     }
 
-    public static void removeUser(Player onlinePlayer) {
-        loggedInUsers.remove(onlinePlayer.getAuthToken());
+    public static void removeUser(String onlinePlayer) {
+        loggedInUsers.remove(onlinePlayer);
     }
 }
 

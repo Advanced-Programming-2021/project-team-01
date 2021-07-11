@@ -13,7 +13,7 @@ public class Client {
     private Scanner in;
     private static Client instance;
     Socket socket;
-    private Player onlinePlayer = null;
+    private String token;
     ResponseHandler responseHandler;
     private Client(int port){
         try {
@@ -41,11 +41,13 @@ public class Client {
         return instance;
     }
 
-    public void setOnlinePlayer(Player onlinePlayer) {
-        this.onlinePlayer = onlinePlayer;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public Player getOnlinePlayer() {
-        return onlinePlayer;
+    public String getToken() {
+        return token;
     }
+
 }
+

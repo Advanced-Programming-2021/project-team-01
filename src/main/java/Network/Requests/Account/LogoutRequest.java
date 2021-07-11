@@ -4,13 +4,13 @@ import Network.Requests.Request;
 import model.Player;
 
 public class LogoutRequest extends Request {
-    Player onlinePlayer;
+    private String token;
 
-    public LogoutRequest(Player player){
-        this.onlinePlayer = player;
+    public LogoutRequest(String token){
+        this.token = token;
     }
 
-    public Player getOnlinePlayer() {
-        return onlinePlayer;
+    public String getToken() {
+        return token;
     }
 }
