@@ -49,8 +49,7 @@ public class LoginResponse extends Response {
     public void handleResponse() {
         LoginView loginView = (LoginView) ViewSwitcher.getCurrentView();
         if (loginView.loginResponse(this)){
-            player.setAuthToken(token);
-            Client.getInstance().setOnlinePlayer(player);
+            Client.getInstance().setToken(token);
         }
     }
 }
