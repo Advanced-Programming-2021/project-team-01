@@ -1,5 +1,8 @@
 package view;
 
+import Network.Client.Client;
+import Network.Requests.Account.ChangeNicknameRequest;
+import Network.Responses.Account.ChangeNicknameResponse;
 import controller.DatabaseController;
 import controller.GameController;
 import controller.ProfileController;
@@ -38,9 +41,15 @@ public class ProfileView implements GraphicalView{
             new MyAlert(Alert.AlertType.ERROR,"emptyField").show();
             return;
         }
+        ChangeNicknameRequest changeNicknameRequest = new ChangeNicknameRequest(Client.getInstance().getToken(), nickname);
+        Client.getInstance().sendData(changeNicknameRequest.toString());
+    }
+
+    public void changeNicknameResponse(ChangeNicknameResponse changeNicknameResponse){
         try {
-            ProfileController.getInstance().changeNickname(nickname);
-            this.nickname.setText(nickname);
+            if (changeNicknameResponse.getException() != null)
+                throw changeNicknameResponse.getException();
+            this.nickname.setText(((ChangeNicknameRequest) changeNicknameResponse.getRequest()).getNewNickname());
         } catch (Exception exception) {
             System.err.println(exception.getMessage());
         }

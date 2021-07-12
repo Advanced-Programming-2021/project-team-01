@@ -19,6 +19,10 @@ public abstract class Response {
         return content;
     }
 
+    public Request getRequest() {
+        return request;
+    }
+
     public abstract void handleResponse();
 
     @Override

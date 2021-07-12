@@ -1,5 +1,8 @@
 package controller;
 
+import Network.Client.Client;
+import Network.Requests.Account.ChangeNicknameRequest;
+import Network.Requests.Account.UpdatePlayerRequest;
 import controller.exceptions.InvalidPassword;
 import controller.exceptions.NicknameExists;
 import controller.exceptions.SameOldNewPassword;
@@ -19,8 +22,6 @@ public class ProfileController {
     public void changeNickname(String nickname) throws Exception {
         if (DatabaseController.doesNicknameExist(nickname))
             throw new NicknameExists(nickname);
-        onlineUser.setNickname(nickname);
-        DatabaseController.updatePlayer(onlineUser);
     }
 
     public void changePassword(String currentPassword, String newPassword) throws Exception {
