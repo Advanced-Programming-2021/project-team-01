@@ -2,7 +2,9 @@ package view;
 
 import Network.Client.Client;
 import Network.Requests.Account.ChangeNicknameRequest;
+import Network.Requests.Account.ChangePasswordRequest;
 import Network.Responses.Account.ChangeNicknameResponse;
+import Network.Responses.Account.ChangePasswordResponse;
 import controller.DatabaseController;
 import controller.GameController;
 import controller.ProfileController;
@@ -55,6 +57,16 @@ public class ProfileView implements GraphicalView{
         }
     }
 
+    public void changePasswordResponse(ChangePasswordResponse changePasswordResponse) {try {
+        if (changePasswordResponse.getException() != null)
+            throw changePasswordResponse.getException();
+        new MyAlert(Alert.AlertType.CONFIRMATION, "Password Changed successfully").show();
+    } catch (Exception exception) {
+        new MyAlert(Alert.AlertType.ERROR,exception.getMessage()).show();
+    }
+
+    }
+
     public void changePassword(MouseEvent event) {
         TextInputDialog inputDialog = new TextInputDialog();
         inputDialog.setHeaderText("enter your old password");
@@ -74,12 +86,8 @@ public class ProfileView implements GraphicalView{
             new MyAlert(Alert.AlertType.ERROR,"emptyField").show();
             return;
         }
-        try {
-            ProfileController.getInstance().changePassword(oldPassword, newPassword);
-        } catch (Exception exception) {
-            new MyAlert(Alert.AlertType.ERROR,exception.getMessage()).show();
-        }
-
+        ChangePasswordRequest request = new ChangePasswordRequest(Client.getInstance().getToken(), newPassword, oldPassword);
+        Client.getInstance().sendData(request.toString());
     }
 
     public void back(MouseEvent event) {
@@ -90,4 +98,5 @@ public class ProfileView implements GraphicalView{
     public void init(Pane root) {
 
     }
+
 }
