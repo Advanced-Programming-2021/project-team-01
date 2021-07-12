@@ -1,5 +1,9 @@
 package view;
 
+import Network.Client.Client;
+import Network.Requests.Account.AddCardToDeckRequest;
+import Network.Requests.Request;
+import Network.Responses.Response;
 import controller.DatabaseController;
 import controller.DeckController;
 import controller.RegisterController;
@@ -181,14 +185,10 @@ public class DeckView implements Initializable {
             new MyAlert(Alert.AlertType.WARNING, "No card is selected!").show();
             return;
         }
-        try {
-            DeckController.getInstance().addCardToDeck(
-                    selectedCard.getCard().getName(), currentDeck.getDeckName(), true);
-            setupMainDeckTab();
-            new MyAlert(Alert.AlertType.INFORMATION, "Card is added successfully.").show();
-        } catch (Exception expt) {
-            new MyAlert(Alert.AlertType.WARNING, expt.getMessage()).show();
-        }
+        Request request = new AddCardToDeckRequest("main", selectedCard.getCard().getName(),
+                currentDeck.getDeckName(), Client.getInstance().getToken());
+        Client.getInstance().sendData(request.toString());
+
     }
 
     @FXML
@@ -197,10 +197,21 @@ public class DeckView implements Initializable {
             new MyAlert(Alert.AlertType.WARNING, "No card is selected!").show();
             return;
         }
+        Request request = new AddCardToDeckRequest("side", selectedCard.getCard().getName(),
+                currentDeck.getDeckName(), Client.getInstance().getToken());
+        Client.getInstance().sendData(request.toString());
+    }
+
+    public void addCardResponse(Response response, boolean isMainDeck, Card card) {
         try {
-            DeckController.getInstance().addCardToDeck(
-                    selectedCard.getCard().getName(), currentDeck.getDeckName(), false);
-            setupSideDeckTab();
+            if (response.getException() != null) throw response.getException();
+            if (isMainDeck) {
+                currentDeck.getMainDeck().add(card);
+                setupMainDeckTab();
+            } else {
+                currentDeck.getSideDeck().add(card);
+                setupSideDeckTab();
+            }
             new MyAlert(Alert.AlertType.INFORMATION, "Card is added successfully.").show();
         } catch (Exception expt) {
             new MyAlert(Alert.AlertType.WARNING, expt.getMessage()).show();

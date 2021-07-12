@@ -72,6 +72,9 @@ public class ClientHandler extends Thread {
         } else if (request instanceof ShopInfoRequest) {
             response = new ShopInfoResponse(request);
             response.handleRequest();
+        } else if (request instanceof AddCardToDeckRequest) {
+            response = new AddCardToDeckResponse(request);
+            response.handleRequest();
         }
         return response;
     }
