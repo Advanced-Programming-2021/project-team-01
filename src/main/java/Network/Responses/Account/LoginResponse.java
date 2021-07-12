@@ -20,15 +20,11 @@ public class LoginResponse extends Response {
 
     private String token;
     private Player player;
-    @Expose(deserialize = false,serialize = false)
-    private transient ClientHandler clientHandler;
-    public LoginResponse(Request request, ClientHandler clientHandler) {
+    public LoginResponse(Request request) {
         super(request);
-        this.clientHandler = clientHandler;
     }
 
-    @Override
-    public void handleRequest() {
+    public void handleRequest(ClientHandler clientHandler) {
         LoginRequest request = (LoginRequest) super.request;
         String username = request.getUsername();
         String password = request.getPassword();
@@ -49,6 +45,11 @@ public class LoginResponse extends Response {
             Server.getLoggedInUsers().put(token, player);
             Server.getClientHandlers().put(username,clientHandler);
         }
+    }
+
+    @Override
+    public void handleRequest() {
+
     }
 
     @Override

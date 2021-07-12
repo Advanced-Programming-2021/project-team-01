@@ -4,6 +4,7 @@ package Network.Client;
 import Network.Responses.Response;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import javafx.application.Platform;
 
 import java.io.PrintWriter;

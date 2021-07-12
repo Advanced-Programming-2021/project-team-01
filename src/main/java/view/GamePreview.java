@@ -1,5 +1,7 @@
 package view;
 
+import Network.Client.Client;
+import Network.Requests.StartOnlineDuelRequest;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import controller.DatabaseController;
@@ -52,8 +54,11 @@ public class GamePreview implements  GraphicalView{
             if (isCoinTossed) {
                 if (DatabaseController.doesUserExists(opponentUsername.getText())) {
                     try {
-                        GameController.getInstance().startGame(opponentUsername.getText(), Integer.parseInt(roundChoiceBox.getValue()));
-                        ViewSwitcher.switchTo(View.GAME_VIEW);
+                        StartOnlineDuelRequest request = new StartOnlineDuelRequest(Client.getInstance().getToken(),
+                                opponentUsername.getText(), Integer.parseInt(roundChoiceBox.getValue()));
+                        Client.getInstance().sendData(request.toString());
+                        //GameController.getInstance().startGame(opponentUsername.getText(), Integer.parseInt(roundChoiceBox.getValue()));
+                        //ViewSwitcher.switchTo(View.GAME_VIEW);
                     } catch (Exception e) {
                         new MyAlert(Alert.AlertType.WARNING, e.getMessage()).show();
                     }

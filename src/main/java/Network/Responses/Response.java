@@ -2,6 +2,7 @@ package Network.Responses;
 
 import Network.Requests.Request;
 import Network.ResponseType;
+import com.gilecode.yagson.YaGson;
 
 public abstract class Response {
     protected Request request;
@@ -27,13 +28,9 @@ public abstract class Response {
 
     @Override
     public String toString() {
-        return "Response{" +
-                "request=" + request +
-                ", responseType=" + responseType +
-                ", content='" + content + '\'' +
-                ", exception=" + exception +
-                '}';
+        return new YaGson().toJson(this);
     }
+
 
     public Exception getException() {
         return exception;

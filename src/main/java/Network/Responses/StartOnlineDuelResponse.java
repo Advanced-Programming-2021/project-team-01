@@ -7,12 +7,14 @@ import javafx.scene.control.Alert;
 import view.GamePreview;
 import view.MyAlert;
 import view.ViewSwitcher;
+import view.transions.YesNoDialog;
 
 public class StartOnlineDuelResponse extends Response{
 
     boolean isOnline;
     private int rounds;
     private String username;
+    private String challenger;
     public StartOnlineDuelResponse(Request request) {
         super(request);
     }
@@ -20,6 +22,7 @@ public class StartOnlineDuelResponse extends Response{
     @Override
     public void handleRequest() {
         username = ((StartOnlineDuelRequest) request).getOpponentUsername();
+        challenger = Server.getLoggedInUsers().get(request.getAuthToken()).getUsername();
         if (!Server.getLoggedInUsers().containsValue(username)){
             isOnline = false;
             exception = new Exception("User is not online :(");
@@ -31,8 +34,13 @@ public class StartOnlineDuelResponse extends Response{
 
     @Override
     public void handleResponse() {
-        //GamePreview gamePreview = (GamePreview) ViewSwitcher.getCurrentView();
-        if (!isOnline) new MyAlert(Alert.AlertType.ERROR,"user is not online :(").show();
-        else new MyAlert(Alert.AlertType.CONFIRMATION,"invitation sent").show();
+        String prompt = challenger + " has challenged you to a duel!";
+        YesNoDialog yesNoDialog = new YesNoDialog(prompt);
+        yesNoDialog.showAndWait();
+        if (yesNoDialog.getResult()){
+            //TODO: create a game via NewGameRequest
+        }else {
+            //TODO: notify challenger that no game will be played
+        }
     }
 }

@@ -22,7 +22,6 @@ public class Client {
             out = new PrintWriter(socket.getOutputStream());
             responseHandler = new ResponseHandler(in, out);
             responseHandler.start();
-            responseHandler.setPriority(1);
         } catch (IOException e) {
             e.printStackTrace();
         }

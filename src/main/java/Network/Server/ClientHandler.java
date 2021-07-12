@@ -2,11 +2,9 @@ package Network.Server;
 
 
 import Network.Requests.Account.*;
-import Network.Requests.InvitationRequest;
 import Network.Requests.Request;
 import Network.Requests.StartOnlineDuelRequest;
 import Network.Responses.Account.*;
-import Network.Responses.InvitationResponse;
 import Network.Responses.Response;
 import Network.Responses.StartOnlineDuelResponse;
 import Network.Utils.Logger;
@@ -41,20 +39,17 @@ public class ClientHandler extends Thread {
     public void run() {
         while (true) {
             String input = in.nextLine();
-            Logger.log(input + " received");
+            Logger.log("Recieved: " + input);
             Request request = gson.fromJson(input, Request.class);
-            Response response = processRequestAndRespond(request);
-            Logger.log(response + " sent");
-            out.println(gson.toJson(response));
-            out.flush();
+            processRequestAndRespond(request);
         }
     }
 
-    private Response processRequestAndRespond(Request request) {
+    private void processRequestAndRespond(Request request) {
         Response response = null;
         if (request instanceof LoginRequest) {
-            response = new LoginResponse(request, this);
-            response.handleRequest();
+            response = new LoginResponse(request);
+            ((LoginResponse) response).handleRequest(this);
         } else if (request instanceof RegisterRequest) {
             response = new RegisterResponse(request);
             response.handleRequest();
@@ -83,25 +78,22 @@ public class ClientHandler extends Thread {
             response = new StartOnlineDuelResponse(request);
             response.handleRequest();
             if (response.getException() != null) {
-                sendInvitation(request);
-            }
-        } else if (request instanceof InvitationRequest) {
-            response = new InvitationResponse(request);
-            response.handleRequest();
-            if (((InvitationResponse) response).hasAccepted()){
-                //TODO: start a new game
-            }else {
-                //TODO: notify inviter
+                sendInvitation(response);
+                return;
             }
         }
-        return response;
+        Logger.log("Sent: " + response);
+        out.println(gson.toJson(response));
+        out.flush();
     }
 
-    private void sendInvitation(Request request) {
-        String username = ((StartOnlineDuelRequest) request).getOpponentUsername();
-        int noOfRounds = ((StartOnlineDuelRequest) request).getNoRounds();
-        InvitationRequest invitationRequest = new InvitationRequest(username, request.getAuthToken(), noOfRounds);
-        Server.getClientHandlers().get(username).out.println(invitationRequest);
-        Server.getClientHandlers().get(username).out.flush();
+    private void sendInvitation(Response response) {
+        String username = ((StartOnlineDuelRequest) response.getRequest()).getOpponentUsername();
+        try {
+            Server.getClientHandlers().get(username).out.println(response);
+            Server.getClientHandlers().get(username).out.flush();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
 }
