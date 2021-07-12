@@ -82,7 +82,8 @@ public class ViewSwitcher {
                     break;
                 }
                 case PRE_GAME: {
-                    new GamePreview().init(root);
+                    currentView = fxmlLoader.getController();
+                    currentView.init(root);
                     break;
                 }
             }

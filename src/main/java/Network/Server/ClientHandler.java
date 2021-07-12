@@ -2,9 +2,12 @@ package Network.Server;
 
 
 import Network.Requests.Account.*;
+import Network.Requests.InvitationRequest;
 import Network.Requests.Request;
+import Network.Requests.StartOnlineDuelRequest;
 import Network.Responses.Account.*;
 import Network.Responses.Response;
+import Network.Responses.StartOnlineDuelResponse;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
@@ -39,17 +42,17 @@ public class ClientHandler extends Thread {
             String input = in.nextLine();
             Logger.log(input + " received");
             Request request = gson.fromJson(input, Request.class);
-            Response response = processRequest(request);
+            Response response = processRequestAndRespond(request);
             Logger.log(response + " sent");
             out.println(gson.toJson(response));
             out.flush();
         }
     }
 
-    private Response processRequest(Request request) {
+    private Response processRequestAndRespond(Request request) {
         Response response = null;
         if (request instanceof LoginRequest) {
-            response = new LoginResponse(request);
+            response = new LoginResponse(request, this);
             response.handleRequest();
         } else if (request instanceof RegisterRequest) {
             response = new RegisterResponse(request);
@@ -75,7 +78,19 @@ public class ClientHandler extends Thread {
         } else if (request instanceof AddCardToDeckRequest) {
             response = new AddCardToDeckResponse(request);
             response.handleRequest();
+        } else if (request instanceof StartOnlineDuelRequest){
+            response = new StartOnlineDuelResponse(request);
+            response.handleRequest();
+            if (response.getException() != null) {
+                sendInvitation(request);
+            }
         }
         return response;
+    }
+
+    private void sendInvitation(Request request) {
+        String username = ((StartOnlineDuelRequest)request).getOpponentUsername();
+        int noOfRounds = ((StartOnlineDuelRequest)request).getNoRounds();
+        InvitationRequest invitationRequest = new InvitationRequest(username, noOfRounds);
     }
 }

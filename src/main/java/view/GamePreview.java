@@ -35,13 +35,6 @@ public class GamePreview implements  GraphicalView{
 
     @Override
     public void init(Pane root) {
-        ChoiceBox<String> roundChoiceBox = null;
-        for (Node child : root.getChildren()) {
-            if (child instanceof ChoiceBox) {
-                roundChoiceBox = (ChoiceBox<String>) child;
-            }
-        }
-        assert roundChoiceBox != null;
         roundChoiceBox.getItems().addAll("1", "3");
     }
     

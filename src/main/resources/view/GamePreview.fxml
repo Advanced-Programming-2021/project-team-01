@@ -14,7 +14,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.GamePreview"
-            prefHeight="700.0" prefWidth="1300.0" styleClass="background">
+            prefHeight="720.0" prefWidth="1366.0" styleClass="background">
     <stylesheets>
         <URL value="@gamepreview.css"/>
     </stylesheets>

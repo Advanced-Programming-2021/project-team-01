@@ -4,7 +4,9 @@ import Network.Client.Client;
 import Network.Requests.Account.LoginRequest;
 import Network.Requests.Request;
 import Network.Responses.Response;
+import Network.Server.ClientHandler;
 import Network.Server.Server;
+import com.gilecode.yagson.com.google.gson.annotations.Expose;
 import controller.DatabaseController;
 import controller.exceptions.UsernameNotExists;
 import controller.exceptions.WrongUsernamePassword;
@@ -18,8 +20,11 @@ public class LoginResponse extends Response {
 
     private String token;
     private Player player;
-    public LoginResponse(Request request) {
+    @Expose(deserialize = false,serialize = false)
+    private ClientHandler clientHandler;
+    public LoginResponse(Request request, ClientHandler clientHandler) {
         super(request);
+        this.clientHandler = clientHandler;
     }
 
     @Override
@@ -42,6 +47,7 @@ public class LoginResponse extends Response {
             token = UUID.randomUUID().toString();
             this.player = player;
             Server.getLoggedInUsers().put(token, player);
+            Server.getClientHandlers().put(username,clientHandler);
         }
     }
 
