@@ -1,15 +1,9 @@
 package Network.Server;
 
 
-import Network.Requests.Account.BuyRequest;
-import Network.Requests.Account.LoginRequest;
-import Network.Requests.Account.LogoutRequest;
-import Network.Requests.Account.RegisterRequest;
+import Network.Requests.Account.*;
 import Network.Requests.Request;
-import Network.Responses.Account.BuyResponse;
-import Network.Responses.Account.LoginResponse;
-import Network.Responses.Account.LogoutResponse;
-import Network.Responses.Account.RegisterResponse;
+import Network.Responses.Account.*;
 import Network.Responses.Response;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
@@ -65,6 +59,9 @@ public class ClientHandler extends Thread{
             response.handleRequest();
         } else if (request instanceof BuyRequest) {
             response = new BuyResponse(request);
+            response.handleRequest();
+        } else if (request instanceof ProfileInfoRequest) {
+            response = new ProfileInfoResponse(request);
             response.handleRequest();
         }
 

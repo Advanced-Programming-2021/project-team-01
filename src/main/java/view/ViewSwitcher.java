@@ -1,5 +1,7 @@
 package view;
 
+import Network.Client.Client;
+import Network.Requests.Account.ProfileInfoRequest;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.*;
@@ -32,6 +34,11 @@ public class ViewSwitcher {
                         if (cheatKeyCombination.match(event))
                             ShopView.setupCheatScene();
                     });
+                }
+                case PROFILE:{
+                    currentView = fxmlLoader.getController();
+                    Client.getInstance().sendData(new ProfileInfoRequest(Client.getInstance().getToken()).toString());
+                    break;
                 }
                 case SCOREBOARD: {
                     new ScoreboardView().init(root);
