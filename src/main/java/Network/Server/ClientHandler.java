@@ -66,6 +66,9 @@ public class ClientHandler extends Thread{
         } else if (request instanceof ChangeNicknameRequest){
             response = new ChangeNicknameResponse(request);
             response.handleRequest();
+        }else if (request instanceof ChangePasswordRequest){
+            response = new ChangePasswordResponse(request);
+            response.handleRequest();
         }
         return response;
     }
