@@ -2,10 +2,10 @@ package view;
 
 import Network.Client.Client;
 import Network.Requests.Account.BuyRequest;
+import Network.Requests.Account.ShopInfoRequest;
 import Network.Requests.Request;
 import Network.Responses.Account.BuyResponse;
-import controller.RegisterController;
-import controller.ShopController;
+import Network.Responses.Account.ShopInfoResponse;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,9 +25,11 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import model.Player;
 import model.card.Card;
 import model.card.MonsterCard;
 import view.transions.ShopCheatPopup;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -44,13 +46,15 @@ public class ShopView implements GraphicalView {
     public ScrollPane monsterScroll, spellScroll;
     private ImagePattern priceImage = new ImagePattern(new Image(getClass().getResource("/view/sb.png").toExternalForm()));
     private Rectangle draggableRectangle = new Rectangle(150, 270);
+    public Player player;
+
 
     @Override
     public void init(Pane root) {
+        Request request = new ShopInfoRequest(Client.getInstance().getToken());
+        Client.getInstance().sendData(request.toString());
         setupMonsterTab();
         setupSpellTrapTab();
-        setupPlayersCard();
-        setupMoneyBar();
         imageBar.setPadding(new Insets(40, 40, 40, 40));
         ImageView button = new ImageView(new Image(getClass().getResource("k1.png").toExternalForm()));
         button.setFitWidth(100);
@@ -63,7 +67,7 @@ public class ShopView implements GraphicalView {
     }
 
     private void setupMoneyBar() {
-        money = new Label(String.valueOf(RegisterController.onlineUser.getMoney()));
+        money = new Label(String.valueOf(player.getMoney()));
         money.setTextFill(Color.ORANGE);
         money.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         money.setTranslateX(40);
@@ -73,7 +77,7 @@ public class ShopView implements GraphicalView {
 
     private void setupMonsterTab() {
         GridPane pane = new GridPane();
-        pane.setPadding(new Insets(10,10,10,20));
+        pane.setPadding(new Insets(10, 10, 10, 20));
         monsterScroll.setContent(pane);
         monsterTab.setContent(monsterScroll);
         pane.setStyle("-fx-background-color: transparent");
@@ -98,7 +102,7 @@ public class ShopView implements GraphicalView {
                     rectangle1.setFill(selectedCard.getCard().getCardImage());
                     imageBar.getChildren().clear();
                     imageBar.getChildren().add(rectangle1);
-                    Label label = new Label("Amount: " + RegisterController.onlineUser.getNumberOfCards(rectangle.getCard().getName()));
+                    Label label = new Label("Amount: " + player.getNumberOfCards(rectangle.getCard().getName()));
                     label.setTranslateX(30);
                     label.setTranslateY(400);
                     label.setStyle("-fx-text-fill: #fcba03;-fx-font: 30px \"Arial\";");
@@ -140,7 +144,7 @@ public class ShopView implements GraphicalView {
                         rectangle1.setFill(selectedCard.getCard().getCardImage());
                         imageBar.getChildren().clear();
                         imageBar.getChildren().add(rectangle1);
-                        Label label = new Label("Amount: " + RegisterController.onlineUser.getNumberOfCards(rectangle.getCard().getName()));
+                        Label label = new Label("Amount: " + player.getNumberOfCards(rectangle.getCard().getName()));
                         label.setTranslateX(30);
                         label.setTranslateY(400);
                         label.setStyle("-fx-text-fill: #fcba03;-fx-font: 30px \"Arial\";");
@@ -169,7 +173,11 @@ public class ShopView implements GraphicalView {
                 ShopCardView rectangle = new ShopCardView(playerCards.get(3 * i + j));
                 rectangle.setHeight(250);
                 rectangle.setWidth(150);
-                rectangle.setFill(playerCards.get(3 * i + j).getCardImage());
+                try {
+                    rectangle.setFill(playerCards.get(3 * i + j).getCardImage());
+                } catch (Exception e) {
+                    System.out.println("this");
+                }
                 rectangle.getStyleClass().add("but");
                 pane.add(rectangle, j, i);
             }
@@ -199,11 +207,11 @@ public class ShopView implements GraphicalView {
     }
 
     private ArrayList<Card> getPlayerCards() {
-        ArrayList<Card> temp = new ArrayList<>();
-        for (String cardName : RegisterController.onlineUser.getPlayerCards()) {
-            temp.add(Card.getCardByName(cardName));
+        ArrayList<Card> playerCards = new ArrayList<>();
+        for (String cardName : player.getPlayerCards()) {
+            playerCards.add(Card.getCardByName(cardName));
         }
-        return temp;
+        return playerCards;
     }
 
     private void buyCard() {
@@ -212,7 +220,7 @@ public class ShopView implements GraphicalView {
             return;
         }
         String cardName = selectedCard.getCard().getName();
-        Request request = new BuyRequest(cardName);
+        Request request = new BuyRequest(cardName, Client.getInstance().getToken());
         Client.getInstance().sendData(request.toString());
     }
 
@@ -231,7 +239,7 @@ public class ShopView implements GraphicalView {
         cardView.setOnMouseReleased(event -> {
             mainPane.getChildren().remove(draggableRectangle);
             if (event.getSceneX() >= 325 && event.getSceneX() <= 760 &&
-                event.getSceneY() >= 35 && event.getSceneY() <= 600) {
+                    event.getSceneY() >= 35 && event.getSceneY() <= 600) {
                 selectedCard = cardView;
                 buyCard();
             }
@@ -257,16 +265,22 @@ public class ShopView implements GraphicalView {
         imageBar.getChildren().addAll(rectangle, label);
     }
 
-    public void buyResponse(BuyResponse response) {
+    public void buyResponse(BuyResponse response, String card) {
         try {
             if (response.getException() != null)
                 throw response.getException();
+            player.getPlayerCards().add(card);
         } catch (Exception exception) {
             new MyAlert(Alert.AlertType.WARNING, exception.getMessage()).show();
             return;
         }
         setupPlayersCard();
-        money.setText(String.valueOf(RegisterController.onlineUser.getMoney()));
+        money.setText(String.valueOf(player.getMoney()));
         new MyAlert(Alert.AlertType.CONFIRMATION, "Card is bought").show();
+    }
+
+    public void infoResponse(ShopInfoResponse response) {
+        setupPlayersCard();
+        setupMoneyBar();
     }
 }

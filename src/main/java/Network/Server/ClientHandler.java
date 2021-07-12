@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ClientHandler extends Thread{
+public class ClientHandler extends Thread {
 
     private Socket socket;
     private PrintWriter out;
@@ -23,19 +23,19 @@ public class ClientHandler extends Thread{
 
     //Server Side: handle requests that come from clients
 
-    public ClientHandler(Socket socket){
+    public ClientHandler(Socket socket) {
         this.socket = socket;
         try {
             out = new PrintWriter(socket.getOutputStream());
             in = new Scanner(socket.getInputStream());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void run() {
-        while(true){
+        while (true) {
             String input = in.nextLine();
             Logger.log(input + " received");
             Request request = gson.fromJson(input, Request.class);
@@ -48,13 +48,13 @@ public class ClientHandler extends Thread{
 
     private Response processRequest(Request request) {
         Response response = null;
-        if(request instanceof LoginRequest){
+        if (request instanceof LoginRequest) {
             response = new LoginResponse(request);
             response.handleRequest();
-        } else if (request instanceof RegisterRequest){
+        } else if (request instanceof RegisterRequest) {
             response = new RegisterResponse(request);
             response.handleRequest();
-        } else if (request instanceof LogoutRequest){
+        } else if (request instanceof LogoutRequest) {
             response = new LogoutResponse(request);
             response.handleRequest();
         } else if (request instanceof BuyRequest) {
@@ -68,6 +68,9 @@ public class ClientHandler extends Thread{
             response.handleRequest();
         }else if (request instanceof ChangePasswordRequest){
             response = new ChangePasswordResponse(request);
+            response.handleRequest();
+        } else if (request instanceof ShopInfoRequest) {
+            response = new ShopInfoResponse(request);
             response.handleRequest();
         }
         return response;

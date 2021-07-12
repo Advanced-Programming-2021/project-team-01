@@ -1,6 +1,10 @@
 package view;
 
 import Network.Client.Client;
+import Network.Requests.Account.ShopInfoRequest;
+import Network.Requests.Request;
+import Network.Responses.Response;
+import Network.Client.Client;
 import Network.Requests.Account.ProfileInfoRequest;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,12 +32,12 @@ public class ViewSwitcher {
             scene = new Scene(root);
             switch (view) {
                 case SHOP: {
-                    currentView = fxmlLoader.getController();
-                    currentView.init(root);
                     scene.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
                         if (cheatKeyCombination.match(event))
                             ShopView.setupCheatScene();
                     });
+                    currentView = fxmlLoader.getController();
+                    currentView.init(root);
                 }
                 case PROFILE:{
                     currentView = fxmlLoader.getController();

@@ -13,6 +13,8 @@ import view.ViewSwitcher;
 import static controller.RegisterController.onlineUser;
 
 public class BuyResponse extends Response {
+    Card card;
+
     public BuyResponse(Request request) {
         super(request);
     }
@@ -20,19 +22,26 @@ public class BuyResponse extends Response {
     @Override
     public void handleRequest() {
         BuyRequest buyRequest = (BuyRequest) super.request;
-        Card card = Card.getCardByName(buyRequest.getCardName());
-        if (card == null)
+        System.out.println(buyRequest.getCardName());
+        System.out.println(Card.getAllCards().size());
+        card = Card.getCardByName(buyRequest.getCardName());
+        System.out.println(buyRequest.getCardName());
+        if (card == null) {
             exception = new CardNameNotExists(buyRequest.getCardName());
-            //throw new CardNameNotExists(name);
-        if (card.getPrice() > onlineUser.getMoney())
+            return;
+        }
+        if (card.getPrice() > Server.getLoggedInUsers().get(request.getAuthToken()).getMoney()) {
             exception = new NotEnoughMoney();
-            //throw new NotEnoughMoney();
+            return;
+        }
         Server.getLoggedInUsers().get(buyRequest.getAuthToken()).addCardToPlayerCards(card.getName());
+        Server.getLoggedInUsers().get(buyRequest.getAuthToken()).decreaseMoney(card.getPrice());
     }
 
     @Override
     public void handleResponse() {
+        BuyRequest buyRequest = (BuyRequest) super.request;
         ShopView shopView = (ShopView) ViewSwitcher.getCurrentView();
-        shopView.buyResponse(this);
+        shopView.buyResponse(this, buyRequest.getCardName());
     }
 }
