@@ -21,7 +21,7 @@ public class LoginResponse extends Response {
     private String token;
     private Player player;
     @Expose(deserialize = false,serialize = false)
-    private ClientHandler clientHandler;
+    private transient ClientHandler clientHandler;
     public LoginResponse(Request request, ClientHandler clientHandler) {
         super(request);
         this.clientHandler = clientHandler;
