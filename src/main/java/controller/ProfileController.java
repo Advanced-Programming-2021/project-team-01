@@ -2,7 +2,6 @@ package controller;
 
 import Network.Client.Client;
 import Network.Requests.Account.ChangeNicknameRequest;
-import Network.Requests.Account.UpdatePlayerRequest;
 import controller.exceptions.InvalidPassword;
 import controller.exceptions.NicknameExists;
 import controller.exceptions.SameOldNewPassword;
