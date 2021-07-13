@@ -5,10 +5,7 @@ import Network.Requests.Account.*;
 import Network.Requests.Request;
 import Network.Requests.StartOnlineDuelRequest;
 import Network.Responses.Account.*;
-import Network.Responses.ActivateDeckResponse;
-import Network.Responses.DeckInfoResponse;
 import Network.Responses.Response;
-import Network.Responses.StartOnlineDuelResponse;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
@@ -88,6 +85,9 @@ public class ClientHandler extends Thread {
             response.handleRequest();
         } else if (request instanceof DeckInfoRequest) {
             response = new DeckInfoResponse(request);
+            response.handleRequest();
+        } else if (request instanceof CreateDeckRequest) {
+            response = new CreateDeckResponse(request);
             response.handleRequest();
         }
         Logger.log("Sent: " + response);

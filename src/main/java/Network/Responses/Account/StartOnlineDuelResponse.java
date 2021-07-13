@@ -1,7 +1,8 @@
-package Network.Responses;
+package Network.Responses.Account;
 
 import Network.Requests.Request;
 import Network.Requests.StartOnlineDuelRequest;
+import Network.Responses.Response;
 import Network.Server.Server;
 import javafx.scene.control.Alert;
 import view.GamePreview;
@@ -9,7 +10,7 @@ import view.MyAlert;
 import view.ViewSwitcher;
 import view.transions.YesNoDialog;
 
-public class StartOnlineDuelResponse extends Response{
+public class StartOnlineDuelResponse extends Response {
 
     boolean isOnline;
     private int rounds;

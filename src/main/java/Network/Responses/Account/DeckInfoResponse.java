@@ -1,7 +1,8 @@
-package Network.Responses;
+package Network.Responses.Account;
 
 import Network.Requests.Account.DeckInfoRequest;
 import Network.Requests.Request;
+import Network.Responses.Response;
 import Network.Server.Server;
 import model.Player;
 import view.DeckPreView;

@@ -1,7 +1,8 @@
-package Network.Responses;
+package Network.Responses.Account;
 
 import Network.Requests.Account.ActivateDeckRequest;
 import Network.Requests.Request;
+import Network.Responses.Response;
 import Network.Server.Server;
 import controller.DatabaseController;
 import controller.exceptions.DeckNotExists;
@@ -25,6 +26,7 @@ public class ActivateDeckResponse extends Response {
             return;
         }
         Server.getLoggedInUsers().get(request.getAuthToken()).setActiveDeck(deckName);
+        DatabaseController.updatePlayer(Server.getLoggedInUsers().get(request.getAuthToken()));
     }
 
     @Override

@@ -2,16 +2,14 @@ package view;
 
 import Network.Client.Client;
 import Network.Requests.Account.ActivateDeckRequest;
+import Network.Requests.Account.CreateDeckRequest;
 import Network.Requests.Account.DeckInfoRequest;
 import Network.Requests.Request;
-import Network.Responses.ActivateDeckResponse;
 import Network.Responses.Response;
 import controller.DatabaseController;
 import controller.DeckController;
-import controller.RegisterController;
 import controller.exceptions.DeckNotExists;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -20,8 +18,6 @@ import javafx.scene.layout.Pane;
 import model.Player;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class DeckPreView implements GraphicalView {
     public ChoiceBox<String> deckBar;
@@ -58,13 +54,8 @@ public class DeckPreView implements GraphicalView {
             new MyAlert(Alert.AlertType.ERROR, "No deck is selected.").show();
             return;
         }
-        try {
-            DeckController.getInstance().createDeck(textField.getText());
-            deckBar.getItems().add(textField.getText());
-            new MyAlert(Alert.AlertType.INFORMATION, "Deck is created.").show();
-        } catch (Exception expt) {
-            new MyAlert(Alert.AlertType.ERROR, expt.getMessage()).show();
-        }
+        Request request = new CreateDeckRequest(textField.getText(), Client.getInstance().getToken());
+        Client.getInstance().sendData(request.toString());
     }
 
     @FXML
@@ -98,7 +89,6 @@ public class DeckPreView implements GraphicalView {
     }
 
     public void receivePlayerResponse() {
-        System.out.println("------>" + player.getActiveDeck());
         activeDeckLabel.setText("Active deck: " + (player.getActiveDeck() == null ? "None" :
                 player.getActiveDeck()));
         deckBar.setOnAction(event -> {
@@ -112,6 +102,16 @@ public class DeckPreView implements GraphicalView {
         });
         for (String playerDeck : player.getPlayerDecks()) {
             deckBar.getItems().add(playerDeck);
+        }
+    }
+
+    public void createDeckResponse(Response response) {
+        try {
+            if (response.getException() != null) throw response.getException();
+            deckBar.getItems().add(textField.getText());
+            new MyAlert(Alert.AlertType.INFORMATION, "Deck is created.").show();
+        } catch (Exception expt) {
+            new MyAlert(Alert.AlertType.ERROR, expt.getMessage()).show();
         }
     }
 }
