@@ -4,6 +4,7 @@ import Network.Client.Client;
 import Network.Requests.Account.ActivateDeckRequest;
 import Network.Requests.Account.CreateDeckRequest;
 import Network.Requests.Account.DeckInfoRequest;
+import Network.Requests.Account.DeleteDeckRequest;
 import Network.Requests.Request;
 import Network.Responses.Response;
 import controller.DatabaseController;
@@ -43,9 +44,8 @@ public class DeckPreView implements GraphicalView {
             new MyAlert(Alert.AlertType.ERROR, "No deck is selected.").show();
             return;
         }
-        DeckController.getInstance().deleteDeck(deckBar.getValue());
-        deckBar.getItems().remove(deckBar.getValue());
-        new MyAlert(Alert.AlertType.CONFIRMATION, "Deck is deleted.").show();
+        Request request = new DeleteDeckRequest(deckBar.getValue(), Client.getInstance().getToken());
+        Client.getInstance().sendData(request.toString());
     }
 
     @FXML
@@ -110,6 +110,17 @@ public class DeckPreView implements GraphicalView {
             if (response.getException() != null) throw response.getException();
             deckBar.getItems().add(textField.getText());
             new MyAlert(Alert.AlertType.INFORMATION, "Deck is created.").show();
+        } catch (Exception expt) {
+            new MyAlert(Alert.AlertType.ERROR, expt.getMessage()).show();
+        }
+    }
+
+    public void deleteDeckResponse(Response response) {
+        try {
+            if (response.getException() != null)
+                throw response.getException();
+            deckBar.getItems().remove(deckBar.getValue());
+            new MyAlert(Alert.AlertType.CONFIRMATION, "Deck is deleted.").show();
         } catch (Exception expt) {
             new MyAlert(Alert.AlertType.ERROR, expt.getMessage()).show();
         }
