@@ -2,6 +2,7 @@ package model;
 
 import controller.DatabaseController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -78,6 +79,11 @@ public class Player {
 
     public void setActiveDeck(String deckName) {
         activeDeck = deckName;
+        try {
+            DatabaseController.updateDeck(DatabaseController.getDeckByName(deckName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<String> getPlayerDecks() {

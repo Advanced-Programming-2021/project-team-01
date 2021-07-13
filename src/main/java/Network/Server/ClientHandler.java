@@ -5,6 +5,8 @@ import Network.Requests.Account.*;
 import Network.Requests.Request;
 import Network.Requests.StartOnlineDuelRequest;
 import Network.Responses.Account.*;
+import Network.Responses.ActivateDeckResponse;
+import Network.Responses.DeckInfoResponse;
 import Network.Responses.Response;
 import Network.Responses.StartOnlineDuelResponse;
 import Network.Utils.Logger;
@@ -81,6 +83,12 @@ public class ClientHandler extends Thread {
                 sendInvitation(response);
                 return;
             }
+        } else if (request instanceof ActivateDeckRequest) {
+            response = new ActivateDeckResponse(request);
+            response.handleRequest();
+        } else if (request instanceof DeckInfoRequest) {
+            response = new DeckInfoResponse(request);
+            response.handleRequest();
         }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));

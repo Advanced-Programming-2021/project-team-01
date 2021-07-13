@@ -32,9 +32,8 @@ public class BuyResponse extends Response {
             exception = new NotEnoughMoney();
             return;
         }
-        Server.getLoggedInUsers().get(buyRequest.getAuthToken()).addCardToPlayerCards(card.getName());
         Server.getLoggedInUsers().get(buyRequest.getAuthToken()).decreaseMoney(card.getPrice());
-        DatabaseController.updatePlayer(Server.getLoggedInUsers().get(buyRequest.getAuthToken()));
+        Server.getLoggedInUsers().get(buyRequest.getAuthToken()).addCardToPlayerCards(card.getName());
     }
 
     @Override

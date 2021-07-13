@@ -52,7 +52,9 @@ public class ViewSwitcher {
                     new ImportExportView().init(root);
                     break;
                 }
-                case LOGIN: {
+                case LOGIN:
+                case PRE_GAME:
+                case PRE_DECK: {
                     currentView = fxmlLoader.getController();
                     currentView.init(root);
                     break;
@@ -79,11 +81,6 @@ public class ViewSwitcher {
                 }
                 case CARD_CREATOR: {
                     new CardCreator().init(root);
-                    break;
-                }
-                case PRE_GAME: {
-                    currentView = fxmlLoader.getController();
-                    currentView.init(root);
                     break;
                 }
             }
