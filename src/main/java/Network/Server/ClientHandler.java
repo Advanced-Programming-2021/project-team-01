@@ -1,19 +1,13 @@
 package Network.Server;
 
 
-import Network.Requests.AcceptOnlineGameRequest;
+import Network.Requests.*;
 import Network.Requests.Account.*;
-import Network.Requests.RejectOnlineGameRequest;
-import Network.Requests.Request;
-import Network.Requests.StartOnlineDuelRequest;
-import Network.Responses.AcceptOnlineGameResponse;
+import Network.Responses.*;
 import Network.Responses.Account.*;
-import Network.Responses.RejectOnlineGameResponse;
-import Network.Responses.Response;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
-import org.apache.commons.logging.Log;
 
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -109,10 +103,23 @@ public class ClientHandler extends Thread {
         } else if (request instanceof RemoveCardFromDeckRequest) {
             response = new RemoveCardFromDeckResponse(request);
             response.handleRequest();
+        } else if (request instanceof StartBattleSuccessfullyRequest){
+            startGame(request);
+            return;
         }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));
         out.flush();
+    }
+
+    private void startGame(Request request) {
+        StartBattleSuccessfullyRequest clientRequest = (StartBattleSuccessfullyRequest) request;
+        Response response = new StartBattleSuccessfullyResponse(request);
+        response.handleRequest();
+        ClientHandler clientHandler = Server.getClientHandlers().get(clientRequest.getChallenger());
+        clientHandler.out.println(gson.toJson(response));
+        clientHandler.out.flush();
+        Logger.log("**Sent: " + response);
     }
 
     private void sendInvitation(Response response) {

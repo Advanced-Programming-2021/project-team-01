@@ -170,9 +170,9 @@ public class GameController {
         playerTwoLp.set(playerTwoLp.getValue() + amount);
     }
 
-    public void startGame(String username, int numberOfRounds) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber, IOException {
-        playerTwo = DatabaseController.getUserByName(username);
-        playerOne = RegisterController.onlineUser;
+    public void startGame(String challenger, String opponent, int numberOfRounds, boolean isReversed) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber, IOException {
+        playerTwo = DatabaseController.getUserByName(challenger);
+        playerOne = DatabaseController.getUserByName(opponent);
         if (isReversed)
             swapPlayer();
         if (playerTwo == null) {
@@ -205,7 +205,7 @@ public class GameController {
         playerOneLp.set(8000);
         playerTwoLp.set(8000);
         gameBoard = new Board(playerOneDeck, playerTwoDeck);
-        isAI = username.equals("AI");
+        isAI = opponent.equals("AI");
         gameBoard.showBoard();
         setSummonedCard(null);
         selectedCard = new SelectedCard();
@@ -755,7 +755,7 @@ public class GameController {
                 else
                     playerOneWin++;
                 if (isReversed) swapPlayer();
-                startGame(playerTwo.getUsername(), 2);
+                startGame(playerTwo.getUsername(),playerOne.getUsername(), 2,false); //fixme : buggy maybe
                 ViewSwitcher.switchTo(View.GAME_VIEW);
             }
         }

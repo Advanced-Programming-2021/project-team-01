@@ -43,7 +43,7 @@ public class GamePreview implements  GraphicalView{
     @FXML
     private void startGameWithAI() throws Exception {
         if (isNumberOfRoundsValid(roundNumAI.getText())) {
-            GameController.getInstance().startGame("AI", Integer.parseInt(roundNumAI.getText()));
+            //GameController.getInstance().startGame("AI", Integer.parseInt(roundNumAI.getText()));
         } else
             new MyAlert(Alert.AlertType.WARNING, "Number of rounds not supported.").show();
     }
@@ -55,7 +55,8 @@ public class GamePreview implements  GraphicalView{
                 if (DatabaseController.doesUserExists(opponentUsername.getText())) {
                     try {
                         StartOnlineDuelRequest request = new StartOnlineDuelRequest(Client.getInstance().getToken(),
-                                opponentUsername.getText(), Integer.parseInt(roundChoiceBox.getValue()));
+                                opponentUsername.getText(), Integer.parseInt(roundChoiceBox.getValue()),
+                                GameController.getInstance().isReversed);
                         Client.getInstance().sendData(request.toString());
                         //GameController.getInstance().startGame(opponentUsername.getText(), Integer.parseInt(roundChoiceBox.getValue()));
                         //ViewSwitcher.switchTo(View.GAME_VIEW);

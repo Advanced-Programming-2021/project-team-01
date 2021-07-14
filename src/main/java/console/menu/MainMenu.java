@@ -1,5 +1,6 @@
 package console.menu;
 
+import com.sun.xml.internal.ws.policy.EffectiveAlternativeSelector;
 import controller.GameController;
 import controller.RegisterController;
 import controller.exceptions.*;
@@ -13,7 +14,7 @@ class MainMenu {
         try {
             int roundNumber = Integer.parseInt(matcher.group("roundNumber"));
             String username = matcher.group("username");
-            GameController.getInstance().startGame(username, roundNumber);
+            GameController.getInstance().startGame(username,username, roundNumber,false);//nonesense!
             System.out.println(GameController.getInstance().nextPhase());
         } catch (Exception expt) {
             System.out.println(expt.getMessage());
@@ -24,7 +25,7 @@ class MainMenu {
     private void newDuelWithAI(Matcher matcher) {
         try {
             int roundNumber = Integer.parseInt(matcher.group("roundNumber"));
-            GameController.getInstance().startGame("AI", roundNumber);
+            //GameController.getInstance().startGame("AI", roundNumber, EffectiveAlternativeSelector);
         } catch (Exception expt) {
             System.out.println(expt.getMessage());
         }

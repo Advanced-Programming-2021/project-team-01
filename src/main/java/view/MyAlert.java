@@ -15,6 +15,7 @@ import javafx.stage.StageStyle;
 
 public class MyAlert extends Dialog<String> {
     public MyAlert(Alert.AlertType alertType, String message) {
+        setResult("dummy");
         BorderPane pane = new BorderPane();
         BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/Assets/50061.png").toExternalForm()),
                 BackgroundRepeat.REPEAT,

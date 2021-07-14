@@ -3,9 +3,7 @@ import Network.Utils.Logger;
 import controller.DatabaseController;
 import controller.GameController;
 import javafx.application.Application;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import view.MyAlert;
 import view.View;
 import view.ViewSwitcher;
 
