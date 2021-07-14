@@ -76,7 +76,7 @@ public class ClientHandler extends Thread {
         } else if (request instanceof StartOnlineDuelRequest) {
             response = new StartOnlineDuelResponse(request);
             response.handleRequest();
-            if (response.getException() != null) {
+            if (response.getException() == null) {
                 sendInvitation(response);
                 return;
             }
