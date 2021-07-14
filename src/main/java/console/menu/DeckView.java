@@ -98,7 +98,7 @@ public class DeckView {
         boolean isMainDeck = (matcher.group("side") == null);
 
         try {
-            DeckController.getInstance().addCardToDeck(cardName, deckName, isMainDeck);
+            //DeckController.getInstance().addCardToDeck(cardName, deckName, isMainDeck);
             System.out.println("card added to deck successfully");
         } catch (Exception expt) {
             System.err.println(expt.getMessage());

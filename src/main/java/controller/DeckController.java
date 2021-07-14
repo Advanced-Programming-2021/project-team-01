@@ -48,43 +48,43 @@ public class DeckController {
             throw new DeckNotExists(name);
     }
 
-    public void addCardToDeck(String cardName, String deckName, boolean isMainDeck) throws Exception{
-        Card card = Card.getCardByName(cardName);
-        if (card != null) {
-            if (DatabaseController.doesDeckExists(deckName)) {
-                Deck deck = DatabaseController.getDeckByName(deckName);
-                if (isMainDeck) {
-                    if (deck.getMainDeck().size() < 60) {
-                        if (onlineUser.getPlayerCards().contains(cardName)) {
-                            if (deck.checkCardsLimit(card)) {
-                                if (!doesHaveEnoughCards(cardName,deck, getPlayerNumberOfCards(cardName)))
-                                    throw new Exception("you dont have enough cards");
-                              deck.addCardToMainDeck(card);
-                              DatabaseController.updateDeck(deck);
-                            } else
-                               throw new CardNumberLimit(cardName, deckName);
-                        } else
-                            throw new PlayerCardNotExist();
-                    } else
-                        throw new MainDeckIsFull();
-                } else {
-                    if (deck.getSideDeck().size() < 15) {
-                        if (onlineUser.getPlayerCards().contains(cardName)) {
-                            if (deck.checkCardsLimit(card)) {
-                                deck.addCardToSideDeck(card);
-                                DatabaseController.updateDeck(deck);
-                            } else
-                                throw new CardNumberLimit(cardName, deckName);
-                        } else
-                            throw new PlayerCardNotExist();
-                    } else
-                        throw new SideDeckIsFull();
-                }
-            } else
-                throw new DeckNotExists(deckName);
-        } else
-            throw new CardNameNotExists(cardName);
-    }
+//    public void addCardToDeck(String cardName, String deckName, boolean isMainDeck) throws Exception{
+//        Card card = Card.getCardByName(cardName);
+//        if (card != null) {
+//            if (DatabaseController.doesDeckExists(deckName)) {
+//                Deck deck = DatabaseController.getDeckByName(deckName);
+//                if (isMainDeck) {
+//                    if (deck.getMainDeck().size() < 60) {
+//                        if (onlineUser.getPlayerCards().contains(cardName)) {
+//                            if (deck.checkCardsLimit(card)) {
+//                                if (!doesHaveEnoughCards(cardName,deck, getPlayerNumberOfCards(cardName)))
+//                                    throw new Exception("you dont have enough cards");
+//                              deck.addCardToMainDeck(card);
+//                              DatabaseController.updateDeck(deck);
+//                            } else
+//                               throw new CardNumberLimit(cardName, deckName);
+//                        } else
+//                            throw new PlayerCardNotExist();
+//                    } else
+//                        throw new MainDeckIsFull();
+//                } else {
+//                    if (deck.getSideDeck().size() < 15) {
+//                        if (onlineUser.getPlayerCards().contains(cardName)) {
+//                            if (deck.checkCardsLimit(card)) {
+//                                deck.addCardToSideDeck(card);
+//                                DatabaseController.updateDeck(deck);
+//                            } else
+//                                throw new CardNumberLimit(cardName, deckName);
+//                        } else
+//                            throw new PlayerCardNotExist();
+//                    } else
+//                        throw new SideDeckIsFull();
+//                }
+//            } else
+//                throw new DeckNotExists(deckName);
+//        } else
+//            throw new CardNameNotExists(cardName);
+//    }
 
     private int getPlayerNumberOfCards(String cardName) {
         int counter = 0;

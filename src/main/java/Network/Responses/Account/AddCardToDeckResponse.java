@@ -46,11 +46,11 @@ public class AddCardToDeckResponse extends Response {
                 exception = new MainDeckIsFull();
                 return;
             }
-            if (!onlineUser.getPlayerCards().contains(cardName)) {
+            if (!Server.getLoggedInUsers().get(request.getAuthToken()).getPlayerCards().contains(cardName)) {
                 exception = new PlayerCardNotExist();
                 return;
             }
-            if (!deck.checkCardsLimit(card)) {
+            if (!deck.checkCardsLimit(card, Server.getLoggedInUsers().get(request.getAuthToken()))) {
                 exception = new CardNumberLimit(cardName, deckName);
                 return;
             }
@@ -60,15 +60,15 @@ public class AddCardToDeckResponse extends Response {
             deck.addCardToMainDeck(card);
             DatabaseController.updateDeck(deck);
         } else {
-            if (deck.getSideDeck().size() < 15) {
+            if (deck.getSideDeck().size() >= 15) {
                 exception = new SideDeckIsFull();
                 return;
             }
-            if (onlineUser.getPlayerCards().contains(cardName)) {
+            if (!Server.getLoggedInUsers().get(request.getAuthToken()).getPlayerCards().contains(cardName)) {
                 exception = new PlayerCardNotExist();
                 return;
             }
-            if (!deck.checkCardsLimit(card)) {
+            if (!deck.checkCardsLimit(card, Server.getLoggedInUsers().get(request.getAuthToken()))) {
                 exception = new CardNumberLimit(cardName, deckName);
                 return;
             }
