@@ -92,6 +92,9 @@ public class ClientHandler extends Thread {
         } else if (request instanceof DeleteDeckRequest) {
             response = new DeleteDeckResponse(request);
             response.handleRequest();
+        } else if (request instanceof CustomizeDeckRequest) {
+            response = new CustomizeDeckResponse(request);
+            response.handleRequest();
         }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));

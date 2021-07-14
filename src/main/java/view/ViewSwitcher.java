@@ -1,10 +1,6 @@
 package view;
 
 import Network.Client.Client;
-import Network.Requests.Account.ShopInfoRequest;
-import Network.Requests.Request;
-import Network.Responses.Response;
-import Network.Client.Client;
 import Network.Requests.Account.ProfileInfoRequest;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -53,6 +49,7 @@ public class ViewSwitcher {
                     break;
                 }
                 case LOGIN:
+                case DECK:
                 case PRE_GAME:
                 case PRE_DECK: {
                     currentView = fxmlLoader.getController();

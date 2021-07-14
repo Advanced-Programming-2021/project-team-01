@@ -21,32 +21,29 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import model.Deck;
+import model.Player;
 import model.card.Card;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class DeckView implements Initializable {
+public class DeckView implements GraphicalView {
     public static Deck currentDeck;
+    public static Player player;
     private ShopCardView selectedCard = null;
     public Pane imageBar;
     public ScrollPane sideDeckScroll, mainDeckScroll, cardsScroll;
     public Tab mainDeckTab, sideDeckTab;
 
-    public void init() throws Exception {
-        setupMainDeckTab();
-        setupSideDeckTab();
-        setupCardsSection();
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void init(Pane root) {
         try {
-            init();
+            setupMainDeckTab();
+            setupSideDeckTab();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        setupCardsSection();
     }
 
     private void setupMainDeckTab() throws Exception {
@@ -58,7 +55,7 @@ public class DeckView implements Initializable {
         pane.setVgap(10);
         pane.setHgap(10);
         pane.setAlignment(Pos.CENTER);
-        ArrayList<Card> mainDeck = DatabaseController.getDeckByName(currentDeck.getDeckName()).getMainDeck();
+        ArrayList<Card> mainDeck = currentDeck.getMainDeck();
         for (int i = 0; i < Math.ceil((double) mainDeck.size() / 5); i++) {
             for (int j = 0; j < (Math.min((mainDeck.size() - 5 * i), 5)); j++) {
                 ShopCardView rectangle = new ShopCardView(mainDeck.get(5 * i + j));
@@ -129,7 +126,7 @@ public class DeckView implements Initializable {
         pane.setHgap(10);
         pane.setAlignment(Pos.CENTER);
         ArrayList<Card> cards = new ArrayList<>();
-        for (String card : RegisterController.onlineUser.getPlayerCards())
+        for (String card : player.getPlayerCards())
             cards.add(Card.getCardByName(card));
         for (int i = 0; i < Math.round((double) cards.size()); i++) {
             for (int j = 0; j < (Math.min((cards.size() - 1 * i), 1)); j++) {

@@ -1,11 +1,9 @@
 package view;
 
 import Network.Client.Client;
-import Network.Requests.Account.ActivateDeckRequest;
-import Network.Requests.Account.CreateDeckRequest;
-import Network.Requests.Account.DeckInfoRequest;
-import Network.Requests.Account.DeleteDeckRequest;
+import Network.Requests.Account.*;
 import Network.Requests.Request;
+import Network.Responses.Account.CustomizeDeckResponse;
 import Network.Responses.Response;
 import controller.DatabaseController;
 import controller.DeckController;
@@ -16,6 +14,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import model.Deck;
 import model.Player;
 
 import java.io.IOException;
@@ -64,8 +63,8 @@ public class DeckPreView implements GraphicalView {
             new MyAlert(Alert.AlertType.ERROR, "No deck is selected.").show();
             return;
         }
-        DeckView.currentDeck = DatabaseController.getDeckByName(deckBar.getValue());
-        ViewSwitcher.switchTo(View.DECK);
+        Request request = new CustomizeDeckRequest(deckBar.getValue(), Client.getInstance().getToken());
+        Client.getInstance().sendData(request.toString());
     }
 
     @FXML
@@ -124,5 +123,11 @@ public class DeckPreView implements GraphicalView {
         } catch (Exception expt) {
             new MyAlert(Alert.AlertType.ERROR, expt.getMessage()).show();
         }
+    }
+
+    public void customizeDeckResponse(Response response, Deck deck) {
+        DeckView.currentDeck = deck;
+        DeckView.player = player;
+        ViewSwitcher.switchTo(View.DECK);
     }
 }
