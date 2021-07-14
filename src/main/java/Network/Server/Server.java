@@ -1,7 +1,6 @@
 package Network.Server;
 
 import Network.Utils.Logger;
-import com.opencsv.exceptions.CsvValidationException;
 import controller.DatabaseController;
 import javafx.application.Application;
 import javafx.stage.Stage;

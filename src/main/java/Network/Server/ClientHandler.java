@@ -103,11 +103,8 @@ public class ClientHandler extends Thread {
 
     private void sendInvitation(Response response) {
         String username = ((StartOnlineDuelRequest) response.getRequest()).getOpponentUsername();
-        try {
-            Server.getClientHandlers().get(username).out.println(response);
-            Server.getClientHandlers().get(username).out.flush();
-        }catch (NullPointerException e){
-            e.printStackTrace();
-        }
+        ClientHandler clientHandler = Server.getClientHandlers().get(username);
+        clientHandler.out.println(gson.toJson(response));
+        out.flush();
     }
 }
