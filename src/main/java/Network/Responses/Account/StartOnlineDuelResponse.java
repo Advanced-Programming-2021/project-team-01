@@ -1,5 +1,7 @@
 package Network.Responses.Account;
 
+import Network.Client.Client;
+import Network.Requests.RejectOnlineGameRequest;
 import Network.Requests.Request;
 import Network.Requests.StartOnlineDuelRequest;
 import Network.Responses.Response;
@@ -8,7 +10,6 @@ import controller.DatabaseController;
 import javafx.scene.control.Alert;
 import model.Player;
 import view.MyAlert;
-import view.ViewSwitcher;
 import view.transions.YesNoDialog;
 
 import java.util.HashMap;
@@ -17,7 +18,7 @@ public class StartOnlineDuelResponse extends Response {
 
     boolean isOnline;
     private int rounds;
-    private String username;
+    private String opponent;
     private String challenger;
 
     public StartOnlineDuelResponse(Request request) {
@@ -26,15 +27,15 @@ public class StartOnlineDuelResponse extends Response {
 
     @Override
     public void handleRequest() {
-        username = ((StartOnlineDuelRequest) request).getOpponentUsername();
+        opponent = ((StartOnlineDuelRequest) request).getOpponentUsername();
         challenger = Server.getLoggedInUsers().get(request.getAuthToken()).getUsername();
-        if (!DatabaseController.doesUserExists(username)) {
+        if (!DatabaseController.doesUserExists(opponent)) {
             exception = new Exception("User doesnt Exists");
             return;
         }
         HashMap<String, Player> playerHashMap = Server.getLoggedInUsers();
         playerHashMap.forEach(((token, player) -> {
-            if (player.getUsername().equals(username)) isOnline = true;
+            if (player.getUsername().equals(opponent)) isOnline = true;
         }));
         if (!isOnline) {
             exception = new Exception("User is not online");
@@ -52,7 +53,8 @@ public class StartOnlineDuelResponse extends Response {
             if (yesNoDialog.getResult()) {
                 //TODO: create a game via NewGameRequest
             } else {
-                //TODO: notify challenger that no game will be played
+                Request request = new RejectOnlineGameRequest(opponent);
+                Client.getInstance().sendData(request.toString());
             }
         }else { //will go to player Client
             String prompt = exception.getMessage();

@@ -1,10 +1,14 @@
 package Network.Server;
 
 
+import Network.Requests.AcceptOnlineGameRequest;
 import Network.Requests.Account.*;
+import Network.Requests.RejectOnlineGameRequest;
 import Network.Requests.Request;
 import Network.Requests.StartOnlineDuelRequest;
+import Network.Responses.AcceptOnlineGameResponse;
 import Network.Responses.Account.*;
+import Network.Responses.RejectOnlineGameResponse;
 import Network.Responses.Response;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
@@ -94,6 +98,12 @@ public class ClientHandler extends Thread {
             response.handleRequest();
         } else if (request instanceof CustomizeDeckRequest) {
             response = new CustomizeDeckResponse(request);
+            response.handleRequest();
+        } else if (request instanceof RejectOnlineGameRequest) {
+            response = new RejectOnlineGameResponse(request);
+            response.handleRequest();
+        } else if (request instanceof AcceptOnlineGameRequest) {
+            response = new AcceptOnlineGameResponse(request);
             response.handleRequest();
         }
         Logger.log("Sent: " + response);
