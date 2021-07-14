@@ -57,7 +57,7 @@ public class StartOnlineDuelResponse extends Response {
             yesNoDialog.showAndWait();
             if (yesNoDialog.getResult()) {
                 try {
-                    GameController.getInstance().startGame(challenger, opponent, rounds, !isReversed);
+                    GameController.getInstance().startGame(opponent, challenger, rounds, !isReversed);
                 } catch (Exception exception) {
                     new MyAlert(Alert.AlertType.ERROR, exception.getMessage()).show(); //fixme: buggy if user dont have active deck or has invalid deck!
                 }

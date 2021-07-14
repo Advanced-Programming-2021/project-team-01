@@ -171,8 +171,8 @@ public class GameController {
     }
 
     public void startGame(String challenger, String opponent, int numberOfRounds, boolean isReversed) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber, IOException {
-        playerTwo = DatabaseController.getUserByName(challenger);
-        playerOne = DatabaseController.getUserByName(opponent);
+        playerTwo = DatabaseController.getUserByName(opponent);
+        playerOne = DatabaseController.getUserByName(challenger);
         if (isReversed)
             swapPlayer();
         if (playerTwo == null) {
