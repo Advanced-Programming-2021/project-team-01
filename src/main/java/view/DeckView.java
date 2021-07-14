@@ -2,6 +2,7 @@ package view;
 
 import Network.Client.Client;
 import Network.Requests.Account.AddCardToDeckRequest;
+import Network.Requests.Account.RemoveCardFromDeckRequest;
 import Network.Requests.Request;
 import Network.Responses.Response;
 import controller.DatabaseController;
@@ -89,7 +90,7 @@ public class DeckView implements GraphicalView {
         pane.setVgap(10);
         pane.setHgap(10);
         pane.setAlignment(Pos.CENTER);
-        ArrayList<Card> sideDeck = DatabaseController.getDeckByName(currentDeck.getDeckName()).getSideDeck();
+        ArrayList<Card> sideDeck = currentDeck.getSideDeck();
         for (int i = 0; i < Math.ceil((double) sideDeck.size() / 6); i++) {
             for (int j = 0; j < (Math.min((sideDeck.size() - 6 * i), 6)); j++) {
                 ShopCardView rectangle = new ShopCardView(sideDeck.get(6 * i + j));
@@ -166,14 +167,14 @@ public class DeckView implements GraphicalView {
             new MyAlert(Alert.AlertType.WARNING, "No card is selected!").show();
             return;
         } else if (selectedCard.getDeckViewLocation() == DeckViewLocation.MAIN_DECK) {
-            DeckController.getInstance().removeCardFromDeck(selectedCard.getCard().getName(), currentDeck.getDeckName(), true);
-            setupMainDeckTab();
+            Request request = new RemoveCardFromDeckRequest("main",
+                    selectedCard.getCard().getName(), currentDeck.getDeckName(), Client.getInstance().getToken());
+            Client.getInstance().sendData(request.toString());
         } else if (selectedCard.getDeckViewLocation() == DeckViewLocation.SIDE_DECK) {
-            DeckController.getInstance().removeCardFromDeck(selectedCard.getCard().getName(), currentDeck.getDeckName(), false);
-            setupSideDeckTab();
+            Request request = new RemoveCardFromDeckRequest("side",
+                    selectedCard.getCard().getName(), currentDeck.getDeckName(), Client.getInstance().getToken());
+            Client.getInstance().sendData(request.toString());
         }
-        imageBar.getChildren().clear();
-        new MyAlert(Alert.AlertType.INFORMATION, "Card got removed successfully.").show();
     }
 
     @FXML
@@ -210,6 +211,24 @@ public class DeckView implements GraphicalView {
                 setupSideDeckTab();
             }
             new MyAlert(Alert.AlertType.INFORMATION, "Card is added successfully.").show();
+        } catch (Exception expt) {
+            new MyAlert(Alert.AlertType.WARNING, expt.getMessage()).show();
+        }
+    }
+
+    public void removeCardResponse(Response response, String deckType, Card card) {
+        try {
+            if (response.getException() != null)
+                throw response.getException();
+            if (deckType.equals("main")) {
+                currentDeck.removeCardFromMainDeck(card);
+                setupMainDeckTab();
+            } else {
+                currentDeck.removeCardFromSideDeck(card);
+                setupSideDeckTab();
+            }
+            imageBar.getChildren().clear();
+            new MyAlert(Alert.AlertType.INFORMATION, "Card got removed successfully.").show();
         } catch (Exception expt) {
             new MyAlert(Alert.AlertType.WARNING, expt.getMessage()).show();
         }

@@ -105,6 +105,9 @@ public class ClientHandler extends Thread {
         } else if (request instanceof AcceptOnlineGameRequest) {
             response = new AcceptOnlineGameResponse(request);
             response.handleRequest();
+        } else if (request instanceof RemoveCardFromDeckRequest) {
+            response = new RemoveCardFromDeckResponse(request);
+            response.handleRequest();
         }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));
