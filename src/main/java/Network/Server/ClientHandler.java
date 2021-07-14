@@ -13,6 +13,7 @@ import Network.Responses.Response;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import org.apache.commons.logging.Log;
 
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -118,6 +119,7 @@ public class ClientHandler extends Thread {
         String username = ((StartOnlineDuelRequest) response.getRequest()).getOpponentUsername();
         ClientHandler clientHandler = Server.getClientHandlers().get(username);
         clientHandler.out.println(gson.toJson(response));
-        out.flush();
+        clientHandler.out.flush();
+        Logger.log("*Sent: " + response);
     }
 }
