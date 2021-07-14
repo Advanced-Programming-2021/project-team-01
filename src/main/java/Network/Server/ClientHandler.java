@@ -76,7 +76,7 @@ public class ClientHandler extends Thread {
         } else if (request instanceof StartOnlineDuelRequest) {
             response = new StartOnlineDuelResponse(request);
             response.handleRequest();
-            if (response.getException() != null) {
+            if (response.getException() == null) {
                 sendInvitation(response);
                 return;
             }
@@ -106,11 +106,8 @@ public class ClientHandler extends Thread {
 
     private void sendInvitation(Response response) {
         String username = ((StartOnlineDuelRequest) response.getRequest()).getOpponentUsername();
-        try {
-            Server.getClientHandlers().get(username).out.println(response);
-            Server.getClientHandlers().get(username).out.flush();
-        }catch (NullPointerException e){
-            e.printStackTrace();
-        }
+        ClientHandler clientHandler = Server.getClientHandlers().get(username);
+        clientHandler.out.println(gson.toJson(response));
+        out.flush();
     }
 }
