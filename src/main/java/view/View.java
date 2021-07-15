@@ -11,7 +11,8 @@ public enum View {
     PRE_DECK("PreDeck.fxml"),
     PRE_GAME("GamePreview.fxml"),
     GAME_VIEW("GameView.fxml"),
-    CARD_CREATOR("card_creator.fxml");
+    CARD_CREATOR("card_creator.fxml"),
+    CHAT("chat.fxml");
 
     private String fileName;
 

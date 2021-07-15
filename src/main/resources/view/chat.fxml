@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import com.jfoenix.controls.JFXScrollPane?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.ChatView"
+            styleClass="background1"
+            prefHeight="627.0" prefWidth="525.0">
+    <stylesheets>
+        <URL value="@chat.css"/>
+    </stylesheets>
+    <ImageView fitWidth="50" fitHeight="50" translateX="20" translateY="20" styleClass="button"
+               onMouseClicked="#exit">
+        <Image url="@LeftArrow.png"/>
+    </ImageView>
+    <AnchorPane prefWidth="480" prefHeight="550" translateX="30" translateY="50">
+        <TextArea fx:id="messageField" layoutX="15.0" layoutY="490.0" prefHeight="30.0" prefWidth="337.0" promptText="Type your message" wrapText="true"/>
+        <ImageView fitWidth="50" fitHeight="50" layoutX="380" layoutY="485" styleClass="button">
+            <Image url="@SendMessage.png"/>
+        </ImageView>
+    </AnchorPane>
+</AnchorPane>

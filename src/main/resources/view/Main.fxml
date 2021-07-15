@@ -39,5 +39,9 @@
                    onMouseClicked="#startShopView">
             <Image url="@icons8-buy-100.png"/>
         </ImageView>
+        <ImageView fitWidth="100" fitHeight="99" translateX="670" translateY="-330" styleClass="button"
+                   onMouseClicked="#startChatView">
+            <Image url="@Chat.png"/>
+        </ImageView>
     </VBox>
 </AnchorPane>
