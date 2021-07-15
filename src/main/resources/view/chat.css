@@ -8,3 +8,11 @@
     -fx-scale-y: 1.1;
     -fx-effect: dropshadow(gaussian, aqua, 20, 0.3, 0, 0);
 }
+
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
+
+.scroll-pane {
+   -fx-background-color: transparent;
+}

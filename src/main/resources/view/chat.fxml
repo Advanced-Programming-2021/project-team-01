@@ -23,8 +23,11 @@
         <Image url="@LeftArrow.png"/>
     </ImageView>
     <AnchorPane prefWidth="480" prefHeight="550" translateX="30" translateY="50">
+        <ScrollPane fx:id="scrollPane" styleClass="scroll-pane" translateX="20" translateY="70" prefWidth="400" prefHeight="400">
+            <VBox fx:id="messagesVBox" spacing="20"/>
+        </ScrollPane>
         <TextArea fx:id="messageField" layoutX="15.0" layoutY="490.0" prefHeight="30.0" prefWidth="337.0" promptText="Type your message" wrapText="true"/>
-        <ImageView fitWidth="50" fitHeight="50" layoutX="380" layoutY="485" styleClass="button">
+        <ImageView fitWidth="50" fitHeight="50" layoutX="380" layoutY="485" styleClass="button" onMouseClicked="#sendMessage">
             <Image url="@SendMessage.png"/>
         </ImageView>
     </AnchorPane>
