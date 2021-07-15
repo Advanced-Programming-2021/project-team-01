@@ -1128,7 +1128,7 @@ public class GameView implements GraphicalView{
 
     private void setMonster(int index, int playerNumber, Card card) {
         if (playerNumber == 1) {
-            StackPane zone = (StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard);
+            StackPane zone = (StackPane) getNodeByRowColumnIndex(i > 0 ? 0 : 1, index - 1, playerOneCardsInBoard);
             assert zone != null;
             zone.getChildren().clear();
             CardView cardView = new CardView(card, playerNumber, true, false);
@@ -1137,7 +1137,7 @@ public class GameView implements GraphicalView{
             zone.getChildren().add(cardView);
             cardView.setRotate(90);
         } else {
-            StackPane zone = (StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard);
+            StackPane zone = (StackPane) getNodeByRowColumnIndex(i > 0 ? 1 : 0, index - 1, playerTwoCardsInBoard);
             assert zone != null;
             zone.getChildren().clear();
             CardView cardView = new CardView(card, playerNumber, true, false);
