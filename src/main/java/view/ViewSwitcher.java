@@ -80,6 +80,10 @@ public class ViewSwitcher {
                     new CardCreator().init(root);
                     break;
                 }
+                case CHAT: {
+                    new ChatView().init(root);
+                    break;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -43,9 +43,9 @@ public class MainView implements GraphicalView {
     }
 
     private void lightingAnimation() {
-        Rectangle rectangle = new Rectangle(100,600, Color.TRANSPARENT);
+        Rectangle rectangle = new Rectangle(100, 600, Color.TRANSPARENT);
         Timeline timeline = new Timeline();
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(2000),event -> {
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(2000), event -> {
             Lighting lighting = new Lighting(rectangle);
             lighting.play();
             lighting.setOnFinished(event1 -> {
@@ -104,7 +104,9 @@ public class MainView implements GraphicalView {
     }
 
     @FXML
-    private void startDeckView() { ViewSwitcher.switchTo(View.PRE_DECK); }
+    private void startDeckView() {
+        ViewSwitcher.switchTo(View.PRE_DECK);
+    }
 
     @FXML
     private void startShopView() {
@@ -118,6 +120,9 @@ public class MainView implements GraphicalView {
 
     @FXML
     private void startGamePreview() { ViewSwitcher.switchTo(View.PRE_GAME); }
+
+    @FXML
+    private void startChatView() { ViewSwitcher.switchTo(View.CHAT); }
 
     public void startCardCreator(MouseEvent event) {
         ViewSwitcher.switchTo(View.CARD_CREATOR);
