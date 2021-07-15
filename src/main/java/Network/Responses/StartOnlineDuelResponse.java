@@ -9,13 +9,16 @@ import Network.Server.Server;
 import controller.DatabaseController;
 import controller.GameController;
 import javafx.scene.control.Alert;
+import model.OnlineGame;
 import model.Player;
+import model.card.Card;
 import view.MyAlert;
 import view.View;
 import view.ViewSwitcher;
 import view.transions.YesNoDialog;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class StartOnlineDuelResponse extends Response {
 
@@ -24,6 +27,7 @@ public class StartOnlineDuelResponse extends Response {
     private String opponent;
     private String challenger;
     private boolean isReversed;
+    private OnlineGame game;
 
     public StartOnlineDuelResponse(Request request) {
         super(request);
@@ -47,6 +51,7 @@ public class StartOnlineDuelResponse extends Response {
             return;
         }
         rounds = ((StartOnlineDuelRequest) request).getNoRounds();
+        game = new OnlineGame(challenger, opponent, isReversed, rounds);
     }
 
     @Override
@@ -57,12 +62,15 @@ public class StartOnlineDuelResponse extends Response {
             yesNoDialog.showAndWait();
             if (yesNoDialog.getResult()) {
                 try {
-                    GameController.getInstance().startGame(opponent, challenger, rounds, isReversed);
+                    game.swapPlayers();
+                    GameController.getInstance().startGame(game);
+                    game.swapPlayers();
                 } catch (Exception exception) {
                     new MyAlert(Alert.AlertType.ERROR, exception.getMessage()).show(); //fixme: buggy if user dont have active deck or has invalid deck!
                 }
                 ViewSwitcher.switchTo(View.GAME_VIEW);
-                Request request = new StartBattleSuccessfullyRequest(opponent, challenger, rounds);
+
+                Request request = new StartBattleSuccessfullyRequest(opponent, challenger, rounds, game);
                 Client.getInstance().sendData(request.toString());
             } else {
                 Request request = new RejectOnlineGameRequest(opponent);

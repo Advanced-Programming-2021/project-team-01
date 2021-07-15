@@ -1,7 +1,9 @@
 package Network.Client;
 
 
+import Network.Requests.StartBattleSuccessfullyRequest;
 import Network.Responses.Response;
+import Network.Responses.StartBattleSuccessfullyResponse;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
@@ -25,8 +27,8 @@ public class ResponseHandler extends Thread {
     public void run() {
         while (true) {
             String input = scanner.nextLine();
-            Logger.log("received: " + input);
             Response response = yaGson.fromJson(input, Response.class);
+            if (!(response instanceof StartBattleSuccessfullyResponse)) Logger.log("received: " + input);
             Platform.runLater(response::handleResponse);
             //response.handleResponse(); //fixme Potential Bug need to start a JavaFx Thread!
         }

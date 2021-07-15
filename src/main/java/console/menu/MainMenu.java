@@ -14,7 +14,7 @@ class MainMenu {
         try {
             int roundNumber = Integer.parseInt(matcher.group("roundNumber"));
             String username = matcher.group("username");
-            GameController.getInstance().startGame(username,username, roundNumber,false);//nonesense!
+            //GameController.getInstance().startGame(username,username, roundNumber,false);//nonesense!
             System.out.println(GameController.getInstance().nextPhase());
         } catch (Exception expt) {
             System.out.println(expt.getMessage());

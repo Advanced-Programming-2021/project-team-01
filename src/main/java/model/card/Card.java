@@ -1,5 +1,6 @@
 package model.card;
 
+import Network.Requests.SkipSerialisation;
 import com.google.gson.annotations.Expose;
 import controller.Effect;
 import javafx.scene.image.Image;
@@ -11,16 +12,17 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 public abstract class Card {
-    @Expose(serialize = false, deserialize = false)
+    @SkipSerialisation
     private transient Image cardImage;
-    private static final TreeMap<String, Card> allCards = new TreeMap<>();
+    @SkipSerialisation
+    private transient static TreeMap<String, Card> allCards = new TreeMap<>();
     protected String name;
     private String description;
     protected String type = "type";
     private int price;
-    @Expose(serialize = false, deserialize = false)
+    @SkipSerialisation
     protected transient ArrayList<Command> commands = new ArrayList<>();
-    @Expose(serialize = false, deserialize = false)
+    @SkipSerialisation
     static transient HashMap<String, Image> cachedImage = new HashMap<>();
 
     public Card(String name, String description, int price) {
@@ -29,6 +31,10 @@ public abstract class Card {
         this.price = price;
         addImage();
         cardImage = cachedImage.get(buildImage());
+    }
+
+    public static void setAllcard(TreeMap temp) {
+        allCards = temp;
     }
 
 
@@ -226,4 +232,7 @@ public abstract class Card {
     public void setType(String trap) {
         this.type = trap;
     }
+
+
+
 }

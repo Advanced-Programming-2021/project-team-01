@@ -43,6 +43,7 @@ public class GameController {
     protected Chain chain;
     protected ChainController chainController;
     public boolean isReversed = false;
+    private OnlineGame game;
 
     private GameController() {
 
@@ -170,9 +171,10 @@ public class GameController {
         playerTwoLp.set(playerTwoLp.getValue() + amount);
     }
 
-    public void startGame(String challenger, String opponent, int numberOfRounds, boolean isReversed) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber, IOException {
-        playerTwo = DatabaseController.getUserByName(opponent);
-        playerOne = DatabaseController.getUserByName(challenger);
+    public void startGame(OnlineGame game) throws UsernameNotExists, NoActiveDeck, InvalidDeck, InvalidRoundNumber, IOException {
+        playerTwo = game.getOpponent();
+        playerOne = game.getChallenger();
+        this.game = game;
         if (isReversed)
             swapPlayer();
         if (playerTwo == null) {
@@ -184,8 +186,8 @@ public class GameController {
         }
         currentPlayer = playerOne;//TODO: SHASMAGHZ NABASHIM DAR SHAFEL
 //        currentPlayer = tossCoin() == 1 ? playerOne : playerTwo; //TODO : AI IS ALwAys player two
-        Deck playerOneDeck = DatabaseController.getDeckByName(playerOne.getActiveDeck());
-        Deck playerTwoDeck = DatabaseController.getDeckByName(playerTwo.getActiveDeck());
+        Deck playerOneDeck = game.getChallengerDeck();
+        Deck playerTwoDeck = game.getOpponentDeck();
         if (!playerOneDeck.isDeckValid()) {
             throw new InvalidDeck(playerOne.getUsername());
         } else if (!playerTwoDeck.isDeckValid()) {
@@ -193,19 +195,17 @@ public class GameController {
         }
         setup(playerOneDeck);
         setup(playerTwoDeck);
-        rounds = numberOfRounds;
+        int numberOfRounds = game.getNoOfRounds();
         if (numberOfRounds == 3) {
             playerOneWin = 0;
             playerTwoWin = 0;
         }
-        Collections.shuffle(playerOneDeck.getMainDeck());
-        Collections.shuffle(playerTwoDeck.getMainDeck());
         playerOneLp = new SimpleIntegerProperty();
         playerTwoLp = new SimpleIntegerProperty();
         playerOneLp.set(8000);
         playerTwoLp.set(8000);
         gameBoard = new Board(playerOneDeck, playerTwoDeck);
-        isAI = opponent.equals("AI");
+        isAI = game.getOpponent().getUsername().equals("AI");
         gameBoard.showBoard();
         setSummonedCard(null);
         selectedCard = new SelectedCard();
@@ -755,7 +755,8 @@ public class GameController {
                 else
                     playerOneWin++;
                 if (isReversed) swapPlayer();
-                startGame(playerTwo.getUsername(),playerOne.getUsername(), 2,false); //fixme : buggy maybe
+                startGame(game); //fixme : buggy maybe
+                game.setRounds(2);
                 ViewSwitcher.switchTo(View.GAME_VIEW);
             }
         }

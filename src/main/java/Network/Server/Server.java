@@ -4,12 +4,15 @@ import Network.Utils.Logger;
 import controller.DatabaseController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.OnlineGame;
 import model.Player;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Server extends Application {
 
@@ -17,6 +20,8 @@ public class Server extends Application {
     private static final int port = 12345;
     private static final HashMap<String, Player> loggedInUsers = new HashMap<>();
     private static final HashMap<String, ClientHandler> clientHandlers = new HashMap<>();
+    private static final HashMap<String, OnlineGame> onlineGames = new HashMap<String, OnlineGame>();
+    private static final List<Message> messages = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
         DatabaseController.loadGameCards();
@@ -43,6 +48,10 @@ public class Server extends Application {
 
     public static HashMap<String, Player> getLoggedInUsers() {
         return loggedInUsers;
+    }
+
+    public static HashMap<String, OnlineGame> getOnlineGames() {
+        return onlineGames;
     }
 
     public static HashMap<String, ClientHandler> getClientHandlers() {
