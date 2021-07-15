@@ -487,7 +487,7 @@ public class GameView implements GraphicalView{
                     GameController.getOpponent().getUsername(), battleAction);
             Client.getInstance().sendData(request.toString());
         }catch (Exception e){
-            new MyAlert(Alert.AlertType.ERROR,e.getMessage());
+            new MyAlert(Alert.AlertType.ERROR,e.getMessage()).show();
         }
 
     }
