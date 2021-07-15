@@ -69,8 +69,45 @@ public class GameView implements GraphicalView{
     CardView targetCard;
     boolean isPlaying = true;
     boolean isAttacking = false;
+    int i = 1;
 
     private GameView() {
+
+    }
+
+    public void init(Pane root) {
+        try {
+            if(GameController.getInstance().controllerNumber == 2) i = -1;
+            else i = 1;
+            root.getStylesheets().add(getClass().getResource("/view/game.css").toExternalForm());
+            gameController = GameController.getInstance();
+//            RegisterController.onlineUser = DatabaseController.getUserByName("ali"); //TODO: used for testing
+//            GameController.getInstance().startGame("username", 1);
+            resetPanes();
+            setupPiecePlayer();
+            setupMusic();
+            setupImageCard();
+            StackPane cardText = setupCardInformation();
+            setupProfile();
+            setZoneInBoard();
+            setupGraveYard();
+            setupDrawPhase();
+            setupGamePane();
+            setupFieldZone();
+            setupBackgroundImages(cardText);
+            setMainPaneSize();
+            setupHealthBar();
+            setupPhaseButtons();
+            setupHands();
+            setupEndGameCondition();
+            setupPhaseNames();
+            mainPane.getChildren().addAll(nameOfPhases, playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
+                    profileDetails1, profileDetails2, playerFieldZone1, playerFieldZone2, graveyardPlayer1, graveyardPlayer2);
+            setupHandObservables();
+            root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
@@ -114,35 +151,34 @@ public class GameView implements GraphicalView{
         Board board = GameController.getInstance().getGameBoard();
         int player = GameController.getInstance().getCurrentPlayerNumber();
         try {
-            GameController.getInstance().summon();
-            System.out.println("summoned successfully");
             BattleAction battleAction = new BattleAction(BattleState.SUMMON,CardLocation.HAND,
-                    board.getIndexOfCard(GameController.getInstance().getSelectedCard()));
+                    board.getIndexOfCard(GameController.getInstance().getSelectedCard()),
+                    GameController.getInstance().getCurrentPlayerNumber());
             sendRequest(battleAction);
-        } catch (LevelFiveException exception) {
-            try {
-                if (board.numberOfMonsterCards(player) == 0)
-                    throw new Exception("you have not monster");
-                List<Card> cardsInMonsterZone = board.getCardInMonsterZone(player);
-                Card card = getNeededCards(cardsInMonsterZone, 1).get(0);
-                GameController.getInstance().tributeSummonLevel5(card);
-                System.out.println("summoned successfully");
-            } catch (Exception e) {
-                MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, e.getMessage());
-                myAlert.show();
-            }
-        } catch (LevelSevenException levelSevenException) {
-            try {
-                if (board.numberOfMonsterCards(player) < 2)
-                    throw new Exception("you have not enough monsters");
-                List<Card> cardsInMonsterZone = board.getCardInMonsterZone(player);
-                List<Card> selectedCards = getNeededCards(cardsInMonsterZone, 2);
-                GameController.getInstance().tributeSummonLevel7(selectedCards.get(0), selectedCards.get(1));
-                System.out.println("summoned successfully");
-            } catch (Exception e) {
-                MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, e.getMessage());
-                myAlert.show();
-            }
+//        } catch (LevelFiveException exception) {
+//            try {
+//                if (board.numberOfMonsterCards(player) == 0)
+//                    throw new Exception("you have not monster");
+//                List<Card> cardsInMonsterZone = board.getCardInMonsterZone(player);
+//                Card card = getNeededCards(cardsInMonsterZone, 1).get(0);
+//                GameController.getInstance().tributeSummonLevel5(card);
+//                System.out.println("summoned successfully");
+//            } catch (Exception e) {
+//                MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, e.getMessage());
+//                myAlert.show();
+//            }
+//        } catch (LevelSevenException levelSevenException) {
+//            try {
+//                if (board.numberOfMonsterCards(player) < 2)
+//                    throw new Exception("you have not enough monsters");
+//                List<Card> cardsInMonsterZone = board.getCardInMonsterZone(player);
+//                List<Card> selectedCards = getNeededCards(cardsInMonsterZone, 2);
+//                GameController.getInstance().tributeSummonLevel7(selectedCards.get(0), selectedCards.get(1));
+//                System.out.println("summoned successfully");
+//            } catch (Exception e) {
+//                MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, e.getMessage());
+//                myAlert.show();
+//            }
         } catch (Exception exp) {
             MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
             myAlert.show();
@@ -279,40 +315,6 @@ public class GameView implements GraphicalView{
             GameController.getInstance().getSelectedCard().unlock();
             GameController.getInstance().getGameBoard().showBoard();
         }
-    }
-
-    public void init(Pane root) {
-        try {
-            root.getStylesheets().add(getClass().getResource("/view/game.css").toExternalForm());
-            gameController = GameController.getInstance();
-//            RegisterController.onlineUser = DatabaseController.getUserByName("ali"); //TODO: used for testing
-//            GameController.getInstance().startGame("username", 1);
-            resetPanes();
-            setupPiecePlayer();
-            setupMusic();
-            setupImageCard();
-            StackPane cardText = setupCardInformation();
-            setupProfile();
-            setZoneInBoard();
-            setupGraveYard();
-            setupDrawPhase();
-            setupGamePane();
-            setupFieldZone();
-            setupBackgroundImages(cardText);
-            setMainPaneSize();
-            setupHealthBar();
-            setupPhaseButtons();
-            setupHands();
-            setupEndGameCondition();
-            setupPhaseNames();
-            mainPane.getChildren().addAll(nameOfPhases, playerOneHand, playerTwoHand, playerOneCardsInBoard, playerTwoCardsInBoard,
-                    profileDetails1, profileDetails2, playerFieldZone1, playerFieldZone2, graveyardPlayer1, graveyardPlayer2);
-            setupHandObservables();
-            root.getChildren().addAll(mainPane, playerOneHealthBar, playerTwoHealthBar, imageCard, cardInformation);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
     }
 
     private void resetPanes() {
@@ -460,7 +462,8 @@ public class GameView implements GraphicalView{
         nextPhaseButton.setTranslateY(-330);
         phase = new ImageView();
         nextPhaseButton.setOnMouseClicked(event -> {
-            BattleAction battleAction = new BattleAction(BattleState.NEXT_PHASE, CardLocation.NONE, 0);
+            BattleAction battleAction = new BattleAction(BattleState.NEXT_PHASE, CardLocation.NONE, 0,
+                    GameController.getInstance().getCurrentPlayerNumber());
             sendRequest(battleAction);
         });
         mainPane.getChildren().addAll(nextPhaseButton, phase);
@@ -504,6 +507,7 @@ public class GameView implements GraphicalView{
 
     private void summonAction(BattleAction battleAction) throws Exception {
         SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
+        selectedCard.set(GameController.getInstance().getGameBoard().getPlayerHand(battleAction.getPlayerNumber()).get(battleAction.getIndex()));
         selectedCard.setIndex(battleAction.getIndex());
         selectedCard.setPlayer(( battleAction.getPlayerNumber() == 1 )? GameController.getPlayerOne() : GameController.getPlayerTwo());
         GameController.getInstance().summon();
@@ -739,7 +743,7 @@ public class GameView implements GraphicalView{
 
     private void setZoneInBoard() {
 
-        playerOneCardsInBoard.setTranslateY(133);
+        playerOneCardsInBoard.setTranslateY(133 * i);
         playerOneCardsInBoard.setTranslateX(10);
         playerOneCardsInBoard.setMaxWidth(680);
         playerOneCardsInBoard.setMaxHeight(220);
@@ -748,7 +752,7 @@ public class GameView implements GraphicalView{
         playerOneCardsInBoard.setHgap(40);
 
 
-        playerTwoCardsInBoard.setTranslateY(-130);
+        playerTwoCardsInBoard.setTranslateY(-130 * i);
         playerTwoCardsInBoard.setTranslateX(10);
         playerTwoCardsInBoard.setMaxWidth(680);
         playerTwoCardsInBoard.setMaxHeight(220);
@@ -1084,18 +1088,18 @@ public class GameView implements GraphicalView{
     private void summonMonsterCard(int playerNumber, int index, Card card) {
         StackPane zone;
         if (playerNumber == 1) {
-            zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
+            zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 0 : 1, index - 1, playerOneCardsInBoard));
             assert zone != null;
             zone.getChildren().clear();
-            CardView cardView = new CardView(card, playerNumber, false, false);
+            CardView cardView = new CardView(card, playerNumber, false, i <= 0);
             cardView.setToBoard();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             zone.getChildren().add(cardView);
         } else {
-            zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
+            zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 1 : 0 , index - 1, playerTwoCardsInBoard));
             assert zone != null;
             zone.getChildren().clear();
-            CardView cardView = new CardView(card, playerNumber, false, true);
+            CardView cardView = new CardView(card, playerNumber, false, i > 0);
             cardView.setToBoard();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             zone.getChildren().add(cardView);

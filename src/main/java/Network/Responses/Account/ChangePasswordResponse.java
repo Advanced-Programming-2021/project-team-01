@@ -28,7 +28,7 @@ public class ChangePasswordResponse extends Response {
             exception = new TokenFailException();
             return;
         }
-        if (!onlineUser.getPassword().equals(currentPassword)) {
+        if (!Server.getLoggedInUsers().get(request.getAuthToken()).getPassword().equals(currentPassword)) {
             exception = new InvalidPassword();
             return;
         }
