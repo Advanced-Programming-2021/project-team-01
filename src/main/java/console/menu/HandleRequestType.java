@@ -5,7 +5,7 @@ import console.ChainView;
 import console.Menu;
 
 import java.util.Scanner;
-
+@Deprecated
 public class HandleRequestType {
     public static Scanner scanner = new Scanner(System.in);
     public static Menu currentMenu = Menu.REGISTER_MENU;

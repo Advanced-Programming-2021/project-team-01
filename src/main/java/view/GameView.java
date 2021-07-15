@@ -1,8 +1,8 @@
 package view;
 
-import controller.DatabaseController;
+import Network.Client.Client;
+import Network.Requests.Battle.BattleActionRequest;
 import controller.GameController;
-import controller.RegisterController;
 import controller.exceptions.LevelFiveException;
 import controller.exceptions.LevelSevenException;
 import javafx.animation.*;
@@ -32,10 +32,10 @@ import model.card.Card;
 import model.card.CardLocation;
 import model.card.Property;
 import model.card.SpellCard;
+import model.networkLocators.BattleAction;
+import model.networkLocators.BattleState;
 import view.transions.*;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
@@ -460,16 +460,37 @@ public class GameView implements GraphicalView{
         nextPhaseButton.setTranslateY(-330);
         phase = new ImageView();
         nextPhaseButton.setOnMouseClicked(event -> {
-            GameController gameController = GameController.getInstance();
-            try {
-                gameController.nextPhase();
-                setNextPhaseImage();
-            } catch (Exception e) {
-                new MyAlert(Alert.AlertType.ERROR, e.getMessage()).show();
-            }
+            BattleAction battleAction = new BattleAction(BattleState.NEXT_PHASE, CardLocation.NONE, 0);
+            senRequest(battleAction);
         });
         mainPane.getChildren().addAll(nextPhaseButton, phase);
 
+    }
+
+    private void clickOnNextPhase() {
+        GameController gameController = GameController.getInstance();
+        try {
+            gameController.nextPhase();
+            setNextPhaseImage();
+        } catch (Exception e) {
+            new MyAlert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+    }
+
+    private void senRequest(BattleAction battleAction) {
+        doAction(battleAction);
+        BattleActionRequest request = new BattleActionRequest(Client.getInstance().getToken(),
+                GameController.getOpponent().getUsername(), battleAction);
+        Client.getInstance().sendData(request.toString());
+
+    }
+
+    public void doAction(BattleAction battleAction) {
+        switch (battleAction.getBattleState()) {
+            case NEXT_PHASE:{
+                clickOnNextPhase();
+            }
+        }
     }
 
     private void setNextPhaseImage() {

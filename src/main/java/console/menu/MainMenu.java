@@ -9,6 +9,7 @@ import console.Menu;
 
 import java.util.regex.Matcher;
 
+@Deprecated
 class MainMenu {
     private void newDuelWithFriend(Matcher matcher) {
         try {

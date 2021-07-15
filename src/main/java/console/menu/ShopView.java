@@ -9,6 +9,7 @@ import console.Menu;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 
+@Deprecated
 class ShopView {
 
     public void run(String input) {

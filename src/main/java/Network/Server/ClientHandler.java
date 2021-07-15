@@ -3,11 +3,14 @@ package Network.Server;
 
 import Network.Requests.*;
 import Network.Requests.Account.*;
+import Network.Requests.Battle.BattleActionRequest;
 import Network.Responses.*;
 import Network.Responses.Account.*;
+import Network.Responses.Battle.BattleActionResponse;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import org.apache.commons.logging.Log;
 
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -105,6 +108,13 @@ public class ClientHandler extends Thread {
             response.handleRequest();
         } else if (request instanceof StartBattleSuccessfullyRequest){
             startGame(request);
+            return;
+        } else if (request instanceof BattleActionRequest) {
+            ClientHandler clientHandler = Server.getClientHandlers().get(((BattleActionRequest) request).getOpponentUserName());
+            BattleActionResponse battleResponse = new BattleActionResponse(request);
+            clientHandler.out.println(battleResponse);
+            clientHandler.out.flush();
+            Logger.log("Sent: " + battleResponse);
             return;
         }
         Logger.log("Sent: " + response);

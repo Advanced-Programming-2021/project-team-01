@@ -15,7 +15,7 @@ import console.Menu;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
-
+@Deprecated
 public class GameView {
 
     public void run(String input) throws Exception {

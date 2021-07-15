@@ -8,11 +8,10 @@ public class BattleAction {
     private int index;
     private int playerNumber;
 
-    public BattleAction(BattleState battleState, CardLocation cardLocation, int index, int playerNumber) {
+    public BattleAction(BattleState battleState, CardLocation cardLocation, int index) {
         this.battleState = battleState;
         this.cardLocation = cardLocation;
         this.index = index;
-        this.playerNumber = playerNumber;
     }
 
     public BattleState getBattleState() {

@@ -9,6 +9,7 @@ import console.Menu;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
+@Deprecated
 public class ScoreBoardView {
     public void run(String input) {
         Matcher matcher;

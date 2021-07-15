@@ -8,7 +8,7 @@ import console.Menu;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
-
+@Deprecated
 public class ImportExportView {
     public void run(String input) throws CardNameNotExists, IOException {
         Matcher matcher;

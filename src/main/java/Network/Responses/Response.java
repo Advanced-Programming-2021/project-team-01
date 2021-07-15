@@ -4,6 +4,8 @@ import Network.Requests.Request;
 import Network.ResponseType;
 import com.gilecode.yagson.YaGson;
 
+import static Network.Requests.Request.PRETTY_PRINT_JSON;
+
 public abstract class Response {
     protected Request request;
     protected ResponseType responseType;
@@ -28,7 +30,7 @@ public abstract class Response {
 
     @Override
     public String toString() {
-        return new YaGson().toJson(this);
+        return PRETTY_PRINT_JSON.toJson(this);
     }
 
 

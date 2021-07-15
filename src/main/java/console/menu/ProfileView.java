@@ -6,6 +6,7 @@ import console.Menu;
 
 import java.util.regex.Matcher;
 
+@Deprecated
 class ProfileView {
 
     public void run(String input) {

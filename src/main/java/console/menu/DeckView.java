@@ -13,7 +13,7 @@ import console.Menu;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
-
+@Deprecated
 public class DeckView {
     public void run(String input) throws IOException {
         Matcher matcher;

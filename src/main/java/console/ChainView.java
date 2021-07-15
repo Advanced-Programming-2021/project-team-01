@@ -13,6 +13,7 @@ import view.GameView;
 import java.util.List;
 import java.util.regex.Matcher;
 
+@Deprecated
 public class ChainView {
     public static void printTurn(Player player) {
         System.out.println("now it will be " + player.getUsername() + "'s turn");

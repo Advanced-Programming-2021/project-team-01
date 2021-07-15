@@ -6,6 +6,7 @@ import console.Menu;
 
 import java.util.regex.Matcher;
 
+@Deprecated
 class RegisterView {
 
     public void run(String input) {

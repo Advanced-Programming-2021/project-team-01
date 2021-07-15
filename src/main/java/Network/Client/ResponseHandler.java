@@ -28,7 +28,7 @@ public class ResponseHandler extends Thread {
         while (true) {
             String input = scanner.nextLine();
             Response response = yaGson.fromJson(input, Response.class);
-            if (!(response instanceof StartBattleSuccessfullyResponse)) Logger.log("received: " + input);
+            Logger.log("received: " + input);
             Platform.runLater(response::handleResponse);
             //response.handleResponse(); //fixme Potential Bug need to start a JavaFx Thread!
         }
