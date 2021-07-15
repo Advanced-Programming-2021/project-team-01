@@ -263,7 +263,7 @@ public class CardView extends Rectangle {
             case "Normal summon":
                 menuItem.setGraphic(normalSummonView);
                 menuItem.setOnAction(event -> {
-                    GameView.summonCard();
+                    GameView.getInstance().summonCard();
                 });
                 break;
         }

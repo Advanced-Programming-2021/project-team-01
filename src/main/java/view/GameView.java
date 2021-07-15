@@ -28,10 +28,7 @@ import javafx.util.Duration;
 import model.Board;
 import model.GamePhase;
 import model.ZoneSlot;
-import model.card.Card;
-import model.card.CardLocation;
-import model.card.Property;
-import model.card.SpellCard;
+import model.card.*;
 import model.networkLocators.BattleAction;
 import model.networkLocators.BattleState;
 import view.transions.*;
@@ -113,12 +110,15 @@ public class GameView implements GraphicalView{
         }
     }
 
-    public static void summonCard() {
+    public void summonCard() {
         Board board = GameController.getInstance().getGameBoard();
         int player = GameController.getInstance().getCurrentPlayerNumber();
         try {
             GameController.getInstance().summon();
             System.out.println("summoned successfully");
+            BattleAction battleAction = new BattleAction(BattleState.SUMMON,CardLocation.HAND,
+                    board.getIndexOfCard(GameController.getInstance().getSelectedCard()));
+            sendRequest(battleAction);
         } catch (LevelFiveException exception) {
             try {
                 if (board.numberOfMonsterCards(player) == 0)
@@ -461,7 +461,7 @@ public class GameView implements GraphicalView{
         phase = new ImageView();
         nextPhaseButton.setOnMouseClicked(event -> {
             BattleAction battleAction = new BattleAction(BattleState.NEXT_PHASE, CardLocation.NONE, 0);
-            senRequest(battleAction);
+            sendRequest(battleAction);
         });
         mainPane.getChildren().addAll(nextPhaseButton, phase);
 
@@ -477,20 +477,36 @@ public class GameView implements GraphicalView{
         }
     }
 
-    private void senRequest(BattleAction battleAction) {
-        doAction(battleAction);
-        BattleActionRequest request = new BattleActionRequest(Client.getInstance().getToken(),
-                GameController.getOpponent().getUsername(), battleAction);
-        Client.getInstance().sendData(request.toString());
+    private void sendRequest(BattleAction battleAction) {
+        try {
+            doAction(battleAction);
+            BattleActionRequest request = new BattleActionRequest(Client.getInstance().getToken(),
+                    GameController.getOpponent().getUsername(), battleAction);
+            Client.getInstance().sendData(request.toString());
+        }catch (Exception e){
+            new MyAlert(Alert.AlertType.ERROR,e.getMessage());
+        }
 
     }
 
-    public void doAction(BattleAction battleAction) {
+    public void doAction(BattleAction battleAction) throws Exception {
         switch (battleAction.getBattleState()) {
             case NEXT_PHASE:{
                 clickOnNextPhase();
+                break;
+            }
+            case SUMMON:{
+                summonAction(battleAction);
+                break;
             }
         }
+    }
+
+    private void summonAction(BattleAction battleAction) throws Exception {
+        SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
+        selectedCard.setIndex(battleAction.getIndex());
+        selectedCard.setPlayer(( battleAction.getPlayerNumber() == 1 )? GameController.getPlayerOne() : GameController.getPlayerTwo());
+        GameController.getInstance().summon();
     }
 
     private void setNextPhaseImage() {

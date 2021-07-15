@@ -770,6 +770,43 @@ public class Board {
         return -1;
     }
 
+    public int getIndexOfCard(Card card, CardLocation location) {
+        switch (location) {
+            case HAND:
+                if (getOwnerOfCard(card) == 1) {
+                    if (playerOneHand.contains(card))
+                        return playerOneHand.indexOf(card);
+                } else {
+                    if (playerTwoHand.contains(card))
+                        return playerTwoHand.indexOf(card);
+                }
+                break;
+            case MONSTER:
+                if (getOwnerOfCard(card) == 1) {
+                    for (int i = 1; i < 7; i++)
+                        if (playerOneMonsterZone[i].getCard() == card)
+                            return i;
+                } else {
+                    for (int i = 1; i < 7; i++)
+                        if (playerTwoMonsterZone[i].getCard() == card)
+                            return i;
+                }
+                break;
+            case SPELL:
+                if (getOwnerOfCard(card) == 1) {
+                    for (int i = 1; i < 7; i++)
+                        if (playerOneSpellZone[i].getCard() == card)
+                            return i;
+                } else {
+                    for (int i = 1; i < 7; i++)
+                        if (playerTwoSpellZone[i].getCard() == card)
+                            return i;
+                }
+                break;
+        }
+        return -1;
+    }
+
 
     public void setCardFromHandToFieldZone(int player, Card card) {
         if (player == 1) {

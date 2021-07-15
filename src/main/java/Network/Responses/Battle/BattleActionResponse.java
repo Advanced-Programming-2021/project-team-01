@@ -22,6 +22,10 @@ public class BattleActionResponse extends Response {
     public void handleResponse() {
         GameView gameView = (GameView) ViewSwitcher.getCurrentView();
         BattleAction battleAction = ((BattleActionRequest) request).getBattleAction();
-        gameView.doAction(battleAction);
+        try {
+            gameView.doAction(battleAction);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

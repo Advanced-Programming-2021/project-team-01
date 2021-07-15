@@ -379,6 +379,8 @@ public class GameController {
             chainController.chain.run();
             selectedCard.reset();
             state = State.NONE;
+
+
         } else if (((MonsterCard) selectedCard.getCard()).getLevel() == 5 ||
                 ((MonsterCard) selectedCard.getCard()).getLevel() == 6) {
             throw new LevelFiveException();
