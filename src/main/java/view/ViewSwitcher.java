@@ -57,6 +57,7 @@ public class ViewSwitcher {
                     break;
                 }
                 case MAIN: {
+                    currentView = fxmlLoader.getController();
                     LoginView.mediaView.getMediaPlayer().stop();
                     LoginView.mediaView.getMediaPlayer().play();
                     new MainView().init(root);
@@ -64,7 +65,9 @@ public class ViewSwitcher {
                 }
                 case GAME_VIEW: {
                     LoginView.mediaView.getMediaPlayer().stop();
-                    GameView.getInstance().init(root);
+                    currentView = fxmlLoader.getController();
+                    currentView.init(root);
+                    //GameView.getInstance().init(root);
                     scene.setOnKeyPressed(event -> {
                         if(event.getCode() == KeyCode.ESCAPE){
                             GameView.getInstance().setupEscPressed();
