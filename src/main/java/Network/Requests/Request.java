@@ -14,12 +14,7 @@ public class Request {
 
     @Override
     public String toString() {
-        if (this instanceof StartBattleSuccessfullyRequest) {
-            String x = PRETTY_PRINT_JSON.toJson(this);
-            x = x.replaceAll("\r", "").replaceAll("\n", "").replaceAll("\t", "");
-            return x;
-        }
-        return new YaGson().toJson(this);
+        return PRETTY_PRINT_JSON.toJson(this);
     }
 
     public static final YaGson PRETTY_PRINT_JSON = new YaGsonBuilder()
@@ -37,6 +32,5 @@ public class Request {
                     return false;
                 }
             })
-            .setPrettyPrinting()
             .create();
 }
