@@ -21,11 +21,8 @@ public class StartBattleSuccessfullyResponse extends Response {
     @Override
     public void handleResponse() {
         StartBattleSuccessfullyRequest request = (StartBattleSuccessfullyRequest) getRequest();
-        String opponent = request.getOpponent();
-        String player = request.getChallenger();
-        int numberOfRounds = request.getRounds();
-        boolean isReversed = GameController.getInstance().isReversed;
         try {
+            GameController.getInstance().setControllerNumber(1);
             GameController.getInstance().startGame(game);
         } catch (Exception exception) {
             exception.printStackTrace();

@@ -51,7 +51,7 @@ public class StartOnlineDuelResponse extends Response {
             return;
         }
         rounds = ((StartOnlineDuelRequest) request).getNoRounds();
-        game = new OnlineGame(challenger, opponent, isReversed, rounds);
+        game = new OnlineGame(challenger, opponent, (isReversed ? 2 : 1), rounds);
     }
 
     @Override
@@ -62,14 +62,15 @@ public class StartOnlineDuelResponse extends Response {
             yesNoDialog.showAndWait();
             if (yesNoDialog.getResult()) {
                 try {
-                    game.swapPlayers();
+                    GameController.getInstance().setControllerNumber(2);
                     GameController.getInstance().startGame(game);
-                    game.swapPlayers();
                 } catch (Exception exception) {
                     new MyAlert(Alert.AlertType.ERROR, exception.getMessage()).show(); //fixme: buggy if user dont have active deck or has invalid deck!
                 }
+                GameController.getInstance().swap();
                 ViewSwitcher.switchTo(View.GAME_VIEW);
-
+                GameController.getInstance().swap();
+                GameController.getInstance().done = false;
                 Request request = new StartBattleSuccessfullyRequest(opponent, challenger, rounds, game);
                 Client.getInstance().sendData(request.toString());
             } else {

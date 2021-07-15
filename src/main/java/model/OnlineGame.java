@@ -14,14 +14,14 @@ public class OnlineGame {
     private Player opponent;
     Deck challengerDeck;
     Deck opponentDeck;
-    boolean isChallengerSecond;
+    int starterPlayer;
     private int noOfRounds;
 
-    public OnlineGame(String challenger, String opponent, boolean isChallengerSecond, int noOfRounds) {
+    public OnlineGame(String challenger, String opponent, int starterPlayer, int noOfRounds) {
         this.challenger = DatabaseController.getUserByName(challenger);
         this.opponent = DatabaseController.getUserByName(opponent);
         this.noOfRounds = noOfRounds;
-        this.isChallengerSecond = isChallengerSecond;
+        this.starterPlayer = starterPlayer;
         try {
             challengerDeck = DatabaseController.getDeckByName(DatabaseController.getUserByName(challenger).getActiveDeck());
             opponentDeck = DatabaseController.getDeckByName(DatabaseController.getUserByName(opponent).getActiveDeck());
@@ -51,10 +51,6 @@ public class OnlineGame {
         return opponentDeck;
     }
 
-    public boolean isChallengerSecond() {
-        return isChallengerSecond;
-    }
-
     public int getNoOfRounds() {
         return noOfRounds;
     }
@@ -68,6 +64,10 @@ public class OnlineGame {
         challenger = opponent;
         opponent = tempPlayer;
         opponentDeck = tempDeck;
+    }
+
+    public int getStarterPlayer() {
+        return starterPlayer;
     }
 
     public void setRounds(int i) {

@@ -44,6 +44,12 @@ public class GameController {
     protected ChainController chainController;
     public boolean isReversed = false;
     private OnlineGame game;
+    public int controllerNumber;
+    public boolean done = true;
+
+    public void setControllerNumber(int controllerNumber) {
+        this.controllerNumber = controllerNumber;
+    }
 
     private GameController() {
 
@@ -175,8 +181,8 @@ public class GameController {
         playerTwo = game.getOpponent();
         playerOne = game.getChallenger();
         this.game = game;
-        if (isReversed)
-            swapPlayer();
+//        if (isReversed)
+//            swapPlayer();
         if (playerTwo == null) {
             throw new UsernameNotExists();
         } else if (playerOne.getActiveDeck() == null) {
@@ -184,8 +190,10 @@ public class GameController {
         } else if (playerTwo.getActiveDeck() == null) {
             throw new NoActiveDeck(playerTwo.getUsername());
         }
-        currentPlayer = playerOne;//TODO: SHASMAGHZ NABASHIM DAR SHAFEL
-//        currentPlayer = tossCoin() == 1 ? playerOne : playerTwo; //TODO : AI IS ALwAys player two
+        currentPlayer = playerOne;
+        if (game.getStarterPlayer() == 2){ //fixme : what the hell
+            currentPlayer = playerTwo;
+        }
         Deck playerOneDeck = game.getChallengerDeck();
         Deck playerTwoDeck = game.getOpponentDeck();
         if (!playerOneDeck.isDeckValid()) {
@@ -802,6 +810,23 @@ public class GameController {
 
     public void resetSummon() {
         summonedCard = null;
+    }
+
+    public void swap() {
+        Player temp = playerOne;
+        playerOne = playerTwo;
+        playerTwo = temp;
+        IntegerProperty tempLIfe = playerOneLp;
+        playerOneLp = playerTwoLp;
+        playerTwoLp = tempLIfe;
+        int winTemp = playerOneWin;
+        playerOneWin = playerTwoWin;
+        playerTwoWin = winTemp;
+        gameBoard.swap();
+    }
+
+    public boolean isDone() {
+        return done;
     }
 }
 

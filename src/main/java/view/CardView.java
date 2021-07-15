@@ -62,6 +62,8 @@ public class CardView extends Rectangle {
         super(421.0 / 3, 614.0 / 3);
         this.card = card;
         this.cardOwner = owner;
+        if (GameController.getInstance().isDone() && GameController.getInstance().controllerNumber == 2) //fixme: do we new CardView()
+            this.cardOwner = (owner == 1 ? 2 : 1);
         this.setOnMouseExited(event -> {
             setScaleX(1);
             setScaleY(1);
@@ -184,7 +186,8 @@ public class CardView extends Rectangle {
         else if (viewLocation == ViewLocation.HAND_SPELL)
             contextMenu.getItems().addAll(addMenuItem("Set"), addMenuItem("Activate effect"));
         setOnContextMenuRequested(event -> {
-            if (GameController.getInstance().getCurrentPlayerNumber() == cardOwner) {
+            if (GameController.getInstance().getCurrentPlayerNumber() == cardOwner &&
+            GameController.getInstance().controllerNumber == GameController.getInstance().getCurrentPlayerNumber()) {
                 contextMenu.show(this, event.getScreenX(), event.getScreenY() - 100);
             }
         });

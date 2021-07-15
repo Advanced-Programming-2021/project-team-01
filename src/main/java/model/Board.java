@@ -16,18 +16,18 @@ import java.util.Collections;
 import java.util.List;
 
 public class Board {
-    private final ZoneSlot[] playerOneMonsterZone;
-    private final ZoneSlot[] playerTwoMonsterZone;
-    private final ZoneSlot[] playerOneSpellZone;
-    private final ZoneSlot[] playerTwoSpellZone;
-    private final ObservableList<Card> playerOneGraveYard;
-    private final ObservableList<Card> playerTwoGraveYard;
-    private final ObservableList<Card> playerOneDrawZone;
-    private final ObservableList<Card> playerTwoDrawZone;
-    private final ZoneSlot playerOneFieldZone;
-    private final ZoneSlot playerTwoFieldZone;
-    private final ObservableList<Card> playerOneHand;
-    private final ObservableList<Card> playerTwoHand;
+    private ZoneSlot[] playerOneMonsterZone;
+    private ZoneSlot[] playerTwoMonsterZone;
+    private ZoneSlot[] playerOneSpellZone;
+    private ZoneSlot[] playerTwoSpellZone;
+    private ObservableList<Card> playerOneGraveYard;
+    private ObservableList<Card> playerTwoGraveYard;
+    private ObservableList<Card> playerOneDrawZone;
+    private ObservableList<Card> playerTwoDrawZone;
+    private ZoneSlot playerOneFieldZone;
+    private ZoneSlot playerTwoFieldZone;
+    private ObservableList<Card> playerOneHand;
+    private ObservableList<Card> playerTwoHand;
 
 
     {
@@ -1000,5 +1000,26 @@ public class Board {
             }
         }
         return false;
+    }
+
+    public void swap() {
+        ZoneSlot[] playerOneMonsterZone = this.playerOneMonsterZone;
+        ZoneSlot[] playerOneSpellZone = this.playerOneSpellZone;
+        ObservableList<Card> playerOneGraveYard = this.playerOneGraveYard;
+        ObservableList<Card> playerOneDrawZone = this.playerOneDrawZone;
+        ZoneSlot playerOneFieldZone = this.playerOneFieldZone;
+        ObservableList<Card> playerOneHand = this.playerOneHand;
+        this.playerOneHand = playerTwoHand;
+        playerTwoHand = playerOneHand;
+        this.playerOneFieldZone = playerTwoFieldZone;
+        playerTwoFieldZone = playerOneFieldZone;
+        this.playerOneDrawZone = playerTwoDrawZone;
+        playerTwoDrawZone = playerOneDrawZone;
+        this.playerOneGraveYard = playerTwoGraveYard;
+        playerTwoGraveYard = playerOneGraveYard;
+        this.playerOneSpellZone = playerTwoSpellZone;
+        playerTwoSpellZone = playerOneSpellZone;
+        this.playerOneMonsterZone = playerTwoMonsterZone;
+        playerTwoMonsterZone = playerOneMonsterZone;
     }
 }
