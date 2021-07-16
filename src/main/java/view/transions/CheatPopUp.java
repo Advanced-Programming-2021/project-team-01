@@ -1,5 +1,8 @@
 package view.transions;
 
+import Network.Client.Client;
+import Network.Requests.Battle.BattleActionRequest;
+import Network.Requests.Battle.CheatActionRequest;
 import com.jfoenix.controls.JFXSlider;
 import controller.GameController;
 import javafx.beans.binding.Bindings;
@@ -12,6 +15,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Popup;
 import model.card.Card;
+import model.card.CardLocation;
+import model.networkLocators.BattleAction;
+import model.networkLocators.BattleState;
+import model.networkLocators.CheatBattleAction;
 import view.MyAlert;
 
 import java.util.ArrayList;
@@ -110,6 +117,9 @@ public class CheatPopUp extends Popup {
         forceHandButton.setOnMouseClicked(event -> {
             if (cardsChoiceBox.getValue() != null) {
                 try {
+                    CheatBattleAction battleAction = new CheatBattleAction(cardsChoiceBox.getValue(), BattleState.CHEAT, CardLocation.HAND,-1,GameController.getInstance().getCurrentPlayerNumber());
+                    CheatActionRequest battleActionRequest = new CheatActionRequest(cardsChoiceBox.getValue(), Client.getInstance().getToken(), GameController.getOpponent().getUsername(),battleAction);
+                    Client.getInstance().sendData(battleActionRequest.toString());
                     GameController.getInstance().cheater(cardsChoiceBox.getValue());
                 } catch (Exception e) {
                     e.printStackTrace();

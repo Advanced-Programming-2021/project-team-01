@@ -32,6 +32,7 @@ import model.ZoneSlot;
 import model.card.*;
 import model.networkLocators.BattleAction;
 import model.networkLocators.BattleState;
+import model.networkLocators.CheatBattleAction;
 import view.transions.*;
 
 import java.util.List;
@@ -504,7 +505,16 @@ public class GameView implements GraphicalView {
                 attackAction(battleAction);
                 break;
             }
+            case CHEAT: {
+                cheat(battleAction);
+                break;
+            }
         }
+    }
+
+    private void cheat(BattleAction battleAction) throws Exception {
+        String cardName = ((CheatBattleAction) battleAction).getCardName();
+        GameController.getInstance().cheater(cardName);
     }
 
     private void attackAction(BattleAction battleAction) throws Exception {
