@@ -700,6 +700,8 @@ public class GameView implements GraphicalView {
                 for (Card card : c.getRemoved()) {
                     for (int i = 0; i < playerHand.getChildren().size(); i++) {
                         CardView cardView = (CardView) playerHand.getChildren().get(i);
+                        if (GameController.getInstance().controllerNumber != GameController.getInstance().getCurrentPlayerNumber())
+                            cardView.setImage(true, true);
                         if (cardView.getCard().getName().equals(card.getName())) {
                             FadeTransition fadeTransition = new FadeTransition();
                             fadeTransition.setNode(cardView);
@@ -720,6 +722,8 @@ public class GameView implements GraphicalView {
                         cardView = new CardView(card, gameController.getGameBoard().getOwnerOfCard(card), false, false);
                     else
                         cardView = new CardView(card, gameController.getGameBoard().getOwnerOfCard(card), false, true);
+                    if (GameController.getInstance().controllerNumber != GameController.getInstance().getCurrentPlayerNumber())
+                        cardView.setImage(true, true);
                     playerHand.addRow(1, cardView);
                 }
             }
