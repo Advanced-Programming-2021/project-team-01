@@ -11,4 +11,16 @@ public class Message {
         this.content = content;
         this.ID = idCounter++;
     }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public int getID() {
+        return ID;
+    }
 }

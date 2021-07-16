@@ -1,7 +1,9 @@
 package view;
 
 import Network.Client.Client;
+import Network.Requests.Account.EnterChatRoomRequest;
 import Network.Requests.Account.ProfileInfoRequest;
+import Network.Requests.Request;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.*;
@@ -84,7 +86,10 @@ public class ViewSwitcher {
                     break;
                 }
                 case CHAT: {
-                    new ChatView().init(root);
+                    currentView = fxmlLoader.getController();
+                    currentView.init(root);
+                    Request request = new EnterChatRoomRequest(Client.getInstance().getToken());
+                    Client.getInstance().sendData(request.toString());
                     break;
                 }
             }

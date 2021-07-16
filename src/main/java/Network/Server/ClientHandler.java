@@ -10,7 +10,6 @@ import Network.Responses.Battle.BattleActionResponse;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
-import org.apache.commons.logging.Log;
 
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -116,6 +115,9 @@ public class ClientHandler extends Thread {
             clientHandler.out.flush();
             Logger.log("Sent: " + battleResponse);
             return;
+        } else if (request instanceof EnterChatRoomRequest) {
+            response = new EnterChatRoomResponse(request);
+            response.handleRequest();
         }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));
