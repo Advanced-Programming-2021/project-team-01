@@ -22,6 +22,7 @@ public class Server extends Application {
     private static final HashMap<String, ClientHandler> clientHandlers = new HashMap<>();
     private static final HashMap<String, OnlineGame> onlineGames = new HashMap<String, OnlineGame>();
     private static final List<Message> messages = new ArrayList<>();
+    private static final List<String> chatRoomOnlineUsernames = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
         DatabaseController.loadGameCards();
@@ -60,6 +61,14 @@ public class Server extends Application {
 
     public static void removeUser(String onlinePlayer) {
         loggedInUsers.remove(onlinePlayer);
+    }
+
+    public static ArrayList<Message> getMessages() {
+        return (ArrayList<Message>) messages;
+    }
+
+    public static List<String> getChatRoomOnlineUsernames() {
+        return chatRoomOnlineUsernames;
     }
 
     @Override
