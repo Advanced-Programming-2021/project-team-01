@@ -2,7 +2,6 @@ package view;
 
 import model.card.CardLocation;
 
-@Deprecated
 public class ZoneLocation {
 
     private int playerNumber;
