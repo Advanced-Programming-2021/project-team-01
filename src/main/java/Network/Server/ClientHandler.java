@@ -118,11 +118,14 @@ public class ClientHandler extends Thread {
         } else if (request instanceof EnterChatRoomRequest) {
             response = new EnterChatRoomResponse(request);
             response.handleRequest();
-        } else if (request instanceof  ExitChatRoomRequest) {
+        } else if (request instanceof ExitChatRoomRequest) {
             response = new ExitChatRoomResponse(request);
             response.handleRequest();
-        } else if (request instanceof  SendMessageRequest) {
+        } else if (request instanceof SendMessageRequest) {
             response = new SendMessageResponse(request);
+            response.handleRequest();
+        } else if (request instanceof DeleteMessageRequest) {
+            response = new DeleteMessageResponse(request);
             response.handleRequest();
         }
         Logger.log("Sent: " + response);
