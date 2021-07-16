@@ -21,7 +21,8 @@ public class MyAlert extends Dialog<String> {
                 BackgroundRepeat.REPEAT,
                 BackgroundRepeat.REPEAT,
                 BackgroundPosition.DEFAULT,
-                new BackgroundSize(500, 180, false, false, false, false));        pane.setBackground(new Background(backgroundimage));
+                new BackgroundSize(500, 180, false, false, false, false));
+        pane.setBackground(new Background(backgroundimage));
         pane.setPrefWidth(450);
         pane.setPrefHeight(180);
         pane.setBackground(new Background(backgroundimage));
@@ -31,7 +32,7 @@ public class MyAlert extends Dialog<String> {
         getDialogPane().getStylesheets().add(getClass().getResource("/view/game.css").toExternalForm());
 
         Text text = new Text(message);
-        text.setFont(Font.font("Helvetica", FontWeight.BOLD,20));
+        text.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
         text.setWrappingWidth(400);
         text.setFill(Color.WHITE);
         text.setTranslateX(+15);
@@ -50,16 +51,19 @@ public class MyAlert extends Dialog<String> {
         Image image;
         ImageView imageView;
         switch (alertType) {
-            case WARNING:{
+            case WARNING: {
                 image = new Image("/Assets/warning.png");
                 break;
-            }case ERROR:{
+            }
+            case ERROR: {
                 image = new Image("Assets/error.png");
                 break;
-            }case CONFIRMATION:{
+            }
+            case CONFIRMATION: {
                 image = new Image("Assets/confirm.png");
                 break;
-            }case INFORMATION:{
+            }
+            case INFORMATION: {
                 image = new Image("Assets/info.png");
                 break;
             }

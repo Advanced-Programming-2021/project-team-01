@@ -233,19 +233,19 @@ public class CardView extends Rectangle {
             case "Activate effect":
                 menuItem.setGraphic(activateEffectView);
                 menuItem.setOnAction(event -> {
-                    GameView.activateSpellCard();
+                    GameView.getInstance().activateSpellCard();
                 });
                 break;
             case "Set":
                 menuItem.setGraphic(setView);
                 menuItem.setOnAction(event -> {
-                    GameView.setCard();
+                    GameView.getInstance().setCard();
                 });
                 break;
             case "Defensive set":
                 menuItem.setGraphic(defensiveSetView);
                 menuItem.setOnAction(event -> {
-                    GameView.setCard();
+                    GameView.getInstance().setCard();
                 });
                 break;
             case "Flip summon":

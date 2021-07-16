@@ -6,14 +6,10 @@ import Network.Requests.Account.ShopInfoRequest;
 import Network.Requests.Request;
 import Network.Responses.Account.BuyResponse;
 import Network.Responses.Account.ShopInfoResponse;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -38,16 +34,20 @@ public class ShopView implements GraphicalView {
     public Tab playerTab;
     public ScrollPane playerScroll;
     public Button exitButton;
-    private ShopCardView selectedCard = null;
     public Tab monsterTab, spellTab;
     public BorderPane mainPane;
     public Pane imageBar;
-    private Label money;
     public ScrollPane monsterScroll, spellScroll;
+    public Player player;
+    private ShopCardView selectedCard = null;
+    private Label money;
     private ImagePattern priceImage = new ImagePattern(new Image(getClass().getResource("/view/sb.png").toExternalForm()));
     private Rectangle draggableRectangle = new Rectangle(150, 270);
-    public Player player;
 
+    public static void setupCheatScene() {
+        ShopCheatPopup shopCheatPopup = new ShopCheatPopup();
+        shopCheatPopup.show(ViewSwitcher.getStage());
+    }
 
     @Override
     public void init(Pane root) {
@@ -132,26 +132,23 @@ public class ShopView implements GraphicalView {
                 rectangle.setWidth(150);
                 rectangle.setFill(spells.get(3 * i + j).getCardImage());
                 rectangle.getStyleClass().add("but");
-                rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        selectedCard = rectangle;
-                        for (Node child : pane.getChildren()) {
-                            child.getStyleClass().remove("butoo");
-                        }
-                        rectangle.getStyleClass().add("butoo");
-                        Rectangle rectangle1 = new Rectangle(200, 360);
-                        rectangle1.setFill(selectedCard.getCard().getCardImage());
-                        imageBar.getChildren().clear();
-                        imageBar.getChildren().add(rectangle1);
-                        Label label = new Label("Amount: " + player.getNumberOfCards(rectangle.getCard().getName()));
-                        label.setTranslateX(30);
-                        label.setTranslateY(400);
-                        label.setStyle("-fx-text-fill: #fcba03;-fx-font: 30px \"Arial\";");
-                        setupPriceLabel();
-                        imageBar.getChildren().add(label);
-                        imageBar.getChildren().add(money);
+                rectangle.setOnMouseClicked(event -> {
+                    selectedCard = rectangle;
+                    for (Node child : pane.getChildren()) {
+                        child.getStyleClass().remove("butoo");
                     }
+                    rectangle.getStyleClass().add("butoo");
+                    Rectangle rectangle1 = new Rectangle(200, 360);
+                    rectangle1.setFill(selectedCard.getCard().getCardImage());
+                    imageBar.getChildren().clear();
+                    imageBar.getChildren().add(rectangle1);
+                    Label label = new Label("Amount: " + player.getNumberOfCards(rectangle.getCard().getName()));
+                    label.setTranslateX(30);
+                    label.setTranslateY(400);
+                    label.setStyle("-fx-text-fill: #fcba03;-fx-font: 30px \"Arial\";");
+                    setupPriceLabel();
+                    imageBar.getChildren().add(label);
+                    imageBar.getChildren().add(money);
                 });
                 setupDragAndDrop(rectangle);
                 pane.add(rectangle, j, i);
@@ -244,11 +241,6 @@ public class ShopView implements GraphicalView {
                 buyCard();
             }
         });
-    }
-
-    public static void setupCheatScene() {
-        ShopCheatPopup shopCheatPopup = new ShopCheatPopup();
-        shopCheatPopup.show(ViewSwitcher.getStage());
     }
 
     private void setupPriceLabel() {

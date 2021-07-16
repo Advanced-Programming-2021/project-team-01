@@ -92,35 +92,13 @@ public class GameView implements GraphicalView {
         return null;
     }
 
-    public static void setCard() {
-        try {
-            GameController.getInstance().setCard();
-            GameController.getInstance().getGameBoard().showBoard();
-            System.out.println("set successfully");
-        } catch (Exception exp) {
-            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
-            myAlert.show();
-        }
-    }
 
     public static void flipSummonCard() {
         try {
             GameController.getInstance().flipSummon();
             System.out.println("flip summoned successfully");
         } catch (Exception exp) {
-            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
-            myAlert.show();
-        }
-    }
-
-    public static void activateSpellCard() {
-        try {
-            GameController.getInstance().activateEffect();
-            System.out.println("spell activated");
-            GameController.getInstance().getGameBoard().showBoard();
-        } catch (Exception error) {
-            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, error.getMessage());
-            myAlert.show();
+            new MyAlert(Alert.AlertType.ERROR, exp.getMessage()).show();
         }
     }
 
@@ -271,6 +249,37 @@ public class GameView implements GraphicalView {
         }
 
     }
+
+    public void activateSpellCard() {
+        Board board = gameController.getGameBoard();
+        int player = gameController.getCurrentPlayerNumber();
+        try {
+            BattleAction battleAction = new BattleAction(BattleState.ACTIVATE_SPELL, gameController.getSelectedCard().getCardLocation(),
+                    board.getIndexOfCard(gameController.getSelectedCard()), player);
+            sendRequest(battleAction);
+//            GameController.getInstance().activateEffect();
+//            System.out.println("spell activated");
+//            GameController.getInstance().getGameBoard().showBoard();
+        } catch (Exception error) {
+            new MyAlert(Alert.AlertType.ERROR, error.getMessage()).show();
+        }
+    }
+
+    public void setCard() {
+        Board board = gameController.getGameBoard();
+        int player = GameController.getInstance().getCurrentPlayerNumber();
+        try {
+            BattleAction battleAction = new BattleAction(BattleState.SET_SPELL, CardLocation.HAND,
+                    board.getIndexOfCard(gameController.getSelectedCard()), player);
+            sendRequest(battleAction);
+//            GameController.getInstance().setCard();
+//            GameController.getInstance().getGameBoard().showBoard();
+//            System.out.println("set successfully");
+        } catch (Exception exp) {
+            new MyAlert(Alert.AlertType.ERROR, exp.getMessage()).show();
+        }
+    }
+
 
     public void showDirectAttack() {
         Image image = new Image(getClass().getResource("/view/2.gif").toExternalForm());
@@ -493,24 +502,43 @@ public class GameView implements GraphicalView {
 
     public void doAction(BattleAction battleAction) throws Exception {
         switch (battleAction.getBattleState()) {
-            case NEXT_PHASE: {
+            case NEXT_PHASE:
                 clickOnNextPhase();
                 break;
-            }
-            case SUMMON: {
+            case SUMMON:
                 summonAction(battleAction);
                 break;
-            }
-            case ATTACK: {
+            case ATTACK:
                 attackAction(battleAction);
                 break;
-            }
-            case CHEAT: {
+            case CHEAT:
                 cheat(battleAction);
                 break;
-            }
+            case SET_SPELL:
+                setSpellAction(battleAction);
+                break;
+            case ACTIVATE_SPELL:
+                activateSpellAction(battleAction);
+                break;
         }
     }
+
+    private void activateSpellAction(BattleAction battleAction) throws Exception {
+        SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
+        selectedCard.set(GameController.getInstance().getGameBoard().getPlayerHand(battleAction.getPlayerNumber()).get(battleAction.getIndex()));
+        selectedCard.setIndex(battleAction.getIndex());
+        selectedCard.setPlayer((battleAction.getPlayerNumber() == 1) ? GameController.getPlayerOne() : GameController.getPlayerTwo());
+        GameController.getInstance().activateEffect();
+    }
+
+    private void setSpellAction(BattleAction battleAction) throws Exception {
+        SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
+        selectedCard.set(GameController.getInstance().getGameBoard().getPlayerHand(battleAction.getPlayerNumber()).get(battleAction.getIndex()));
+        selectedCard.setIndex(battleAction.getIndex());
+        selectedCard.setPlayer((battleAction.getPlayerNumber() == 1) ? GameController.getPlayerOne() : GameController.getPlayerTwo());
+        gameController.setCard();
+    }
+
 
     private void cheat(BattleAction battleAction) throws Exception {
         String cardName = ((CheatBattleAction) battleAction).getCardName();
@@ -957,7 +985,7 @@ public class GameView implements GraphicalView {
     private void removeFromPlayerZone(CardLocation cardLocation, int playerNumber, int index) {
         if (playerNumber == 1) {
             if (cardLocation == CardLocation.MONSTER) {
-                StackPane zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 0 : 1 , index - 1, playerOneCardsInBoard));
+                StackPane zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 0 : 1, index - 1, playerOneCardsInBoard));
                 assert zone != null;
                 zone.getChildren().clear();
                 zone.getChildren().add(new Rectangle(100, 100, Color.TRANSPARENT));
@@ -1034,22 +1062,22 @@ public class GameView implements GraphicalView {
                 zone = playerFieldZone1;
                 setFieldBackground(card);
             } else
-                zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerOneCardsInBoard));
+                zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 1 : 0, index - 1, playerOneCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             cardView.setViewLocation(ViewLocation.SPELL_ACTIVATED);
-            cardView.setImage(false, false);
+            cardView.setImage(false, i < 0);
         } else {
             StackPane zone;
             if (card instanceof SpellCard && ((SpellCard) card).getProperty() == Property.FIELD) {
                 zone = playerFieldZone2;
                 setFieldBackground(card);
             } else
-                zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
+                zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 0 : 1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             cardView.setViewLocation(ViewLocation.SPELL_ACTIVATED);
-            cardView.setImage(false, true);
+            cardView.setImage(false, i > 0);
         }
         MyMusicPlayer.blip();
     }
@@ -1141,7 +1169,7 @@ public class GameView implements GraphicalView {
         } else {
             ZoneSlot fieldZonePlayerOne = GameController.getInstance().getGameBoard().getPlayerFieldZone(2);
             playerFieldZone2.getChildren().clear();
-            CardView cardView = new CardView(fieldZonePlayerOne.getCard(), playerNumber, true, true);
+            CardView cardView = new CardView(fieldZonePlayerOne.getCard(), playerNumber, true, false);
             cardView.setToBoard();
             cardView.setViewLocation(ViewLocation.SPELL_HIDDEN);
             playerFieldZone2.getChildren().add(cardView);
@@ -1174,7 +1202,7 @@ public class GameView implements GraphicalView {
 
     private void setSpell(int index, int playerNumber, Card card) {
         if (playerNumber == 1) {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerOneCardsInBoard));
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 1 : 0, index - 1, playerOneCardsInBoard));
             assert zone != null;
             zone.getChildren().clear();
             CardView cardView = new CardView(card, playerNumber, true, false);
@@ -1182,10 +1210,10 @@ public class GameView implements GraphicalView {
             cardView.setViewLocation(ViewLocation.SPELL_HIDDEN);
             zone.getChildren().add(cardView);
         } else {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerTwoCardsInBoard));
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 0 : 1, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             zone.getChildren().clear();
-            CardView cardView = new CardView(card, playerNumber, true, true);
+            CardView cardView = new CardView(card, playerNumber, true, false);
             cardView.setToBoard();
             cardView.setViewLocation(ViewLocation.SPELL_HIDDEN);
             zone.getChildren().add(cardView);

@@ -1,13 +1,12 @@
 package controller;
 
+import console.menu.GameView;
 import model.GamePhase;
 import model.ZoneSlot;
 import model.card.Card;
 import model.card.MonsterCard;
 import model.card.SpellCard;
-import console.menu.GameView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -97,15 +96,15 @@ public class AiBasicController {
                         !gameController.gameBoard.getPlayerTwoMonsterZone()[i].isDefending()) {
                     for (int j = 1; j <= 5; j++) {
                         ZoneSlot zoneSlot = gameController.gameBoard.getPlayerOneMonsterZone()[i];
-                        if (zoneSlot.getCard() != null && !zoneSlot.isDefending() && ((MonsterCard)(zoneSlot.getCard())).getAttack() <=
-                                ((MonsterCard)(gameController.gameBoard.getPlayerTwoMonsterZone()[i].getCard())).getAttack()) {
+                        if (zoneSlot.getCard() != null && !zoneSlot.isDefending() && ((MonsterCard) (zoneSlot.getCard())).getAttack() <=
+                                ((MonsterCard) (gameController.gameBoard.getPlayerTwoMonsterZone()[i].getCard())).getAttack()) {
                             gameController.selectPlayerCard("monster", i);
                             gameController.attack(j);
                             GameView.showConsole("AI attacked you");
                             return;
                         }
-                        if (zoneSlot.getCard() != null && zoneSlot.isDefending() && ((MonsterCard)(zoneSlot.getCard())).getDefense() <=
-                                ((MonsterCard)(gameController.gameBoard.getPlayerTwoMonsterZone()[i].getCard())).getAttack()) {
+                        if (zoneSlot.getCard() != null && zoneSlot.isDefending() && ((MonsterCard) (zoneSlot.getCard())).getDefense() <=
+                                ((MonsterCard) (gameController.gameBoard.getPlayerTwoMonsterZone()[i].getCard())).getAttack()) {
                             gameController.selectPlayerCard("monster", i);
                             gameController.attack(j);
                             GameView.showConsole("AI attacked you");
@@ -115,7 +114,6 @@ public class AiBasicController {
                 }
             }
         }
-        return;
     }
 
     private String phaseChangerActions() throws Exception {

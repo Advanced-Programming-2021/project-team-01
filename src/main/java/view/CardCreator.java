@@ -85,6 +85,7 @@ public class CardCreator implements Initializable {
         RegisterController.onlineUser.getPlayerCards().add(name);
         DatabaseController.updatePlayer(RegisterController.onlineUser);
         MonsterCard monsterCard = new MonsterCard(name, description, price, attack, defense, cardType,arrayList,attribute,level);
+        CardCreator.addPairToJSON(new Pair<>(monsterCard,effect));
         DatabaseController.loadGameCards();
     }
 
