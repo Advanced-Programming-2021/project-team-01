@@ -118,6 +118,9 @@ public class ClientHandler extends Thread {
         } else if (request instanceof EnterChatRoomRequest) {
             response = new EnterChatRoomResponse(request);
             response.handleRequest();
+        } else if (request instanceof  ExitChatRoomRequest) {
+            response = new ExitChatRoomResponse(request);
+            response.handleRequest();
         }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));

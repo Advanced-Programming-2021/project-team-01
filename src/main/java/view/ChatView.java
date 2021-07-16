@@ -1,5 +1,8 @@
 package view;
 
+import Network.Client.Client;
+import Network.Requests.Account.ExitChatRoomRequest;
+import Network.Requests.Request;
 import Network.Server.Message;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -34,6 +37,8 @@ public class ChatView implements GraphicalView {
 
     @FXML
     private void exit() {
+        Request request = new ExitChatRoomRequest(Client.getInstance().getToken());
+        Client.getInstance().sendData(request.toString());
         ViewSwitcher.switchTo(View.MAIN);
     }
 }
