@@ -508,6 +508,10 @@ public class GameView implements GraphicalView {
     }
 
     private void attackAction(BattleAction battleAction) throws Exception {
+        SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
+        selectedCard.set(GameController.getInstance().getGameBoard().getCardFromMonsterZone(battleAction.getIndex(), battleAction.getPlayerNumber()));
+        selectedCard.setIndex(battleAction.getIndex());
+        selectedCard.setPlayer((battleAction.getPlayerNumber() == 1) ? GameController.getPlayerOne() : GameController.getPlayerTwo());
         String response = GameController.getInstance().attack(battleAction.getIndex());
         System.out.println(response);
         new MyAlert(Alert.AlertType.INFORMATION, response).show();
