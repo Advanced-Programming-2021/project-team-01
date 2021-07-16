@@ -2,6 +2,7 @@ package view;
 
 import Network.Client.Client;
 import Network.Requests.Account.ExitChatRoomRequest;
+import Network.Requests.Account.SendMessageRequest;
 import Network.Requests.Request;
 import Network.Server.Message;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 
 public class ChatView implements GraphicalView {
+    public String username;
     public TextArea messageField;
     public ScrollPane scrollPane;
     public VBox messagesVBox;
@@ -22,6 +24,7 @@ public class ChatView implements GraphicalView {
     public void init(Pane root) { }
 
     public void loadChatMessages(ArrayList<Message> messages) {
+        messagesVBox.getChildren().clear();
         for (Message message : messages)
             messagesVBox.getChildren().add(new ChatLabel(message));
     }
@@ -29,9 +32,10 @@ public class ChatView implements GraphicalView {
     @FXML
     private void sendMessage() {
         if (messageField.getText().length() > 0) {
-            Label label = new Label(messageField.getText());
-            messagesVBox.getChildren().add(label);
+            Request request = new SendMessageRequest(new Message(username, messageField.getText()),
+                    Client.getInstance().getToken());
             messageField.setText("");
+            Client.getInstance().sendData(request.toString());
         }
     }
 

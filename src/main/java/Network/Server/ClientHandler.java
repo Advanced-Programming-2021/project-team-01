@@ -121,6 +121,9 @@ public class ClientHandler extends Thread {
         } else if (request instanceof  ExitChatRoomRequest) {
             response = new ExitChatRoomResponse(request);
             response.handleRequest();
+        } else if (request instanceof  SendMessageRequest) {
+            response = new SendMessageResponse(request);
+            response.handleRequest();
         }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));
@@ -143,5 +146,12 @@ public class ClientHandler extends Thread {
         clientHandler.out.println(gson.toJson(response));
         clientHandler.out.flush();
         Logger.log("*Sent: " + response);
+    }
+
+    public void updateChatRoom(String username) {
+        EnterChatRoomResponse response = new EnterChatRoomResponse(new Request());
+        response.setUsername(username);
+        out.println(gson.toJson(response));
+        out.flush();
     }
 }

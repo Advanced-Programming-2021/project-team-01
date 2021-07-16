@@ -31,8 +31,6 @@ public class Server extends Application {
 
     private static void runServer() {
         Logger.set();
-        messages.add(new Message("ali", "kos nagoo"));
-        messages.add(new Message("dad", "kir bao"));
         try {
             serverSocket = new ServerSocket(port);
             while (true) {
