@@ -549,6 +549,13 @@ public class Board {
 
     public void setSpellFaceUp(Card card) throws SpellZoneFullError {
         ZoneSlot zoneSlot = getZoneSlotByCard(card);
+        if (zoneSlot == null) {
+            if (card instanceof SpellCard)
+                setSpell(getOwnerOfCard(card), (SpellCard) card);
+            else if (card instanceof TrapCard)
+                setTrap(getOwnerOfCard(card), (TrapCard) card);
+        }
+        zoneSlot = getZoneSlotByCard(card);
         zoneSlot.setHidden(false);
     }
 
