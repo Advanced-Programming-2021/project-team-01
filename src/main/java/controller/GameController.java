@@ -491,6 +491,8 @@ public class GameController {
 
     public void activateEffect() throws Exception {
         state = State.ACTIVE_SPELL;
+        if (selectedCard.getCard() == null)
+            throw new Exception("No Card Selected");
         if (selectedCard.getCard() instanceof SpellCard) {
             if (!selectedCard.getCard().canActivate()) {
                 state = State.NONE;

@@ -727,6 +727,14 @@ public class Board {
             return 1;
         if (playerTwoHand.contains(card))
             return 2;
+        if (playerOneDrawZone.contains(card))
+            return 1;
+        if (playerTwoDrawZone.contains(card))
+            return 2;
+        if (playerOneGraveYard.contains(card))
+            return 1;
+        if (playerTwoGraveYard.contains(card))
+            return 2;
         for (int i = 1; i < 6; i++) {
             if (card == playerOneSpellZone[i].getCard())
                 return 1;
@@ -750,6 +758,10 @@ public class Board {
             return CardLocation.HAND;
         if (playerTwoHand.contains(card))
             return CardLocation.HAND;
+        if(playerOneGraveYard.contains(card) || playerTwoGraveYard.contains(card))
+            return CardLocation.GRAVEYARD;
+        if (playerOneDrawZone.contains(card) || playerTwoDrawZone.contains(card))
+            return CardLocation.DECK;
         for (int i = 1; i < 6; i++) {
             if (card == playerOneSpellZone[i].getCard())
                 return CardLocation.SPELL;
@@ -872,6 +884,19 @@ public class Board {
                             return i;
                 }
                 break;
+            case GRAVEYARD:
+                if (getOwnerOfCard(card) == 1) {
+                    return playerOneGraveYard.indexOf(card);
+                } else {
+                    return playerTwoGraveYard.indexOf(card);
+                }
+            case DECK:
+                if (getOwnerOfCard(card) == 1) {
+                    return playerOneDrawZone.indexOf(card);
+                } else {
+                    return playerTwoDrawZone.indexOf(card);
+                }
+
         }
         return -1;
     }
