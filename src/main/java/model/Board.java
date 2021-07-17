@@ -204,29 +204,59 @@ public class Board {
         }
     }
 
-    public Card getCard(String field, int player, int number) {
+    @Deprecated
+    public Card getCard(String field, int player, int index) {
         switch (field) {
             case "monster":
                 if (player == 1)
-                    return playerOneMonsterZone[number].getCard();
+                    return playerOneMonsterZone[index].getCard();
                 else if (player == 2)
-                    return playerTwoMonsterZone[number].getCard();
+                    return playerTwoMonsterZone[index].getCard();
 
                 break;
             case "spell":
                 if (player == 1)
-                    return playerOneSpellZone[number].getCard();
+                    return playerOneSpellZone[index].getCard();
                 else if (player == 2)
-                    return playerTwoSpellZone[number].getCard();
+                    return playerTwoSpellZone[index].getCard();
 
                 break;
             case "hand":
-                number--;
+                index--;
                 if (player == 1)
-                    return playerOneHand.get(number);
+                    return playerOneHand.get(index);
                 else if (player == 2)
-                    return playerTwoHand.get(number);
+                    return playerTwoHand.get(index);
                 break;
+        }
+        return null;
+    }
+
+    public Card getCard(CardLocation cardLocation, int index, int player) {
+        switch (cardLocation) {
+            case MONSTER:
+                if (player == 1)
+                    return playerOneMonsterZone[index].getCard();
+                else if (player == 2)
+                    return playerTwoMonsterZone[index].getCard();
+
+                break;
+            case SPELL:
+                if (player == 1)
+                    return playerOneSpellZone[index].getCard();
+                else if (player == 2)
+                    return playerTwoSpellZone[index].getCard();
+
+                break;
+            case HAND:
+                index--;
+                if (player == 1)
+                    return playerOneHand.get(index);
+                else if (player == 2)
+                    return playerTwoHand.get(index);
+                break;
+            case FIELD:
+                return player == 1 ? playerOneFieldZone.getCard() : playerTwoFieldZone.getCard();
         }
         return null;
     }

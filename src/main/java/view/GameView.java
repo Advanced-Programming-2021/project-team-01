@@ -86,14 +86,6 @@ public class GameView implements GraphicalView {
         return instance;
     }
 
-    public Response getCurrentResponse() {
-        return currentResponse;
-    }
-
-    public void setCurrentResponse(Response currentResponse) {
-        this.currentResponse = currentResponse;
-    }
-
     public static Node getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
         ObservableList<Node> childrens = gridPane.getChildren();
         for (Node node : childrens) {
@@ -103,7 +95,6 @@ public class GameView implements GraphicalView {
         }
         return null;
     }
-
 
     public static void flipSummonCard() {
         try {
@@ -134,7 +125,7 @@ public class GameView implements GraphicalView {
     }
 
     public static List<Card> getNeededCards(List<Card> cards, int number) {
-        if(GameController.getInstance().controllerNumber == GameController.getInstance().getCurrentPlayerNumber()) {
+        if (GameController.getInstance().controllerNumber == GameController.getInstance().getCurrentPlayerNumber()) {
             SelectCardDialog selectCardDialog = new SelectCardDialog(cards, number);
             GameController.getInstance().getSelectedCard().lock();
             selectCardDialog.showAndWait();
@@ -143,7 +134,7 @@ public class GameView implements GraphicalView {
             SendNeededCardsRequest request = new SendNeededCardsRequest(selectCardDialog.getSelectedCards(), GameController.getOpponent().getUsername());
             Client.getInstance().sendData(request.toString());
             return selectCardDialog.getSelectedCards();
-        }else {
+        } else {
             GetNeededCardResponse response = (GetNeededCardResponse) GameView.getInstance().getCurrentResponse();
             return ((SendNeededCardsRequest) response.getRequest()).getNeededCards();
         }
@@ -192,6 +183,14 @@ public class GameView implements GraphicalView {
             MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, error.getMessage());
             myAlert.show();
         }
+    }
+
+    public Response getCurrentResponse() {
+        return currentResponse;
+    }
+
+    public void setCurrentResponse(Response currentResponse) {
+        this.currentResponse = currentResponse;
     }
 
     public void init(Pane root) {
@@ -405,8 +404,8 @@ public class GameView implements GraphicalView {
     }
 
     private void setupFieldZone() {
-        playerFieldZone1 = createStackPane(100, 120, -430, 60);
-        playerFieldZone2 = createStackPane(100, 120, 460, -75);
+        playerFieldZone1 = createStackPane(100, 120, i > 0 ? -430 : 460, i > 0 ? 60 : -75);
+        playerFieldZone2 = createStackPane(100, 120, i > 0 ? 460 : -430, i > 0 ? -75 : 60);
     }
 
     private void setupImageCard() {
@@ -544,9 +543,7 @@ public class GameView implements GraphicalView {
 
     private void activateSpellAction(BattleAction battleAction) throws Exception {
         SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
-        selectedCard.set(GameController.getInstance().getGameBoard().getPlayerHand(battleAction.getPlayerNumber()).get(battleAction.getIndex()));
-        selectedCard.setIndex(battleAction.getIndex());
-        selectedCard.setPlayer((battleAction.getPlayerNumber() == 1) ? GameController.getPlayerOne() : GameController.getPlayerTwo());
+        selectedCard.set(GameController.getInstance().getGameBoard().getCard(battleAction.getCardLocation(),battleAction.getIndex(),battleAction.getPlayerNumber()));
         GameController.getInstance().activateEffect();
     }
 
