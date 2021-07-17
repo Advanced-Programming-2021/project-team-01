@@ -127,6 +127,9 @@ public class ClientHandler extends Thread {
         } else if (request instanceof DeleteMessageRequest) {
             response = new DeleteMessageResponse(request);
             response.handleRequest();
+        } else if (request instanceof ScoreboardInfoRequest) {
+            response = new ScoreboardInfoResponse(request);
+            response.handleRequest();
         }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));
