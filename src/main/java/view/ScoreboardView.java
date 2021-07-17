@@ -27,6 +27,7 @@ import java.util.List;
 public class ScoreboardView implements GraphicalView {
     public Player player;
     public ArrayList<Player> players;
+    public ArrayList<Boolean> isPlayerOnline;
     Pane root;
 
     public void init(Pane root) {
@@ -69,10 +70,9 @@ public class ScoreboardView implements GraphicalView {
 
     private List<String> getSortedScoreBoard() {
         ArrayList<String> nameOfPlayers = new ArrayList<>();
-        int index = 1;
-        for (Player player : players) {
-            nameOfPlayers.add(index + "- " + player.getUsername() + " : " + player.getScore());
-            index++;
+        for (int i = 0; i < players.size(); i++) {
+            nameOfPlayers.add((i + 1) + "- " + players.get(i).getUsername() + " : " +
+                    players.get(i).getScore() + " -  " + (isPlayerOnline.get(i) ? "Online" : "Offline"));
         }
         return nameOfPlayers;
     }
