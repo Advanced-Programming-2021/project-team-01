@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import model.card.*;
 import model.commands.HeraldOfCreation;
 import model.commands.Scanner;
+import model.networkLocators.BattleAction;
 import view.ZoneLocation;
 
 import java.util.ArrayList;
@@ -237,26 +238,17 @@ public class Board {
     public Card getCard(CardLocation cardLocation, int index, int player) {
         switch (cardLocation) {
             case MONSTER:
-                if (player == 1)
-                    return playerOneMonsterZone[index].getCard();
-                else if (player == 2)
-                    return playerTwoMonsterZone[index].getCard();
-                break;
+                return player == 1 ? playerOneMonsterZone[index].getCard() : playerTwoMonsterZone[index].getCard();
             case SPELL:
-                if (player == 1)
-                    return playerOneSpellZone[index].getCard();
-                else if (player == 2)
-                    return playerTwoSpellZone[index].getCard();
-
-                break;
+                return player == 1 ? playerOneSpellZone[index].getCard() : playerTwoSpellZone[index].getCard();
             case HAND:
-                if (player == 1)
-                    return playerOneHand.get(index);
-                else if (player == 2)
-                    return playerTwoHand.get(index);
-                break;
+                return player == 1 ? playerOneHand.get(index) : playerTwoHand.get(index);
             case FIELD:
                 return player == 1 ? playerOneFieldZone.getCard() : playerTwoFieldZone.getCard();
+            case DECK:
+                return player == 1 ? playerOneDrawZone.get(index) : playerTwoDrawZone.get(index);
+            case GRAVEYARD:
+                return player == 1 ? playerOneGraveYard.get(index) : playerTwoGraveYard.get(index);
         }
         return null;
     }
@@ -844,6 +836,50 @@ public class Board {
         return -1;
     }
 
+    public int getIndexOfCard(Card card) {
+        CardLocation location = getCardLocation(card);
+        switch (location) {
+            case HAND:
+                if (getOwnerOfCard(card) == 1) {
+                    if (playerOneHand.contains(card))
+                        return playerOneHand.indexOf(card);
+                } else {
+                    if (playerTwoHand.contains(card))
+                        return playerTwoHand.indexOf(card);
+                }
+                break;
+            case MONSTER:
+                if (getOwnerOfCard(card) == 1) {
+                    for (int i = 1; i < 7; i++)
+                        if (playerOneMonsterZone[i].getCard() == card)
+                            return i;
+                } else {
+                    for (int i = 1; i < 7; i++)
+                        if (playerTwoMonsterZone[i].getCard() == card)
+                            return i;
+                }
+                break;
+            case SPELL:
+                if (getOwnerOfCard(card) == 1) {
+                    for (int i = 1; i < 7; i++)
+                        if (playerOneSpellZone[i].getCard() == card)
+                            return i;
+                } else {
+                    for (int i = 1; i < 7; i++)
+                        if (playerTwoSpellZone[i].getCard() == card)
+                            return i;
+                }
+                break;
+        }
+        return -1;
+    }
+
+    public Card getCardByBattleAction(BattleAction battleAction) {
+        CardLocation location = battleAction.getCardLocation();
+        int index = battleAction.getIndex();
+        int player = battleAction.getPlayerNumber();
+        return getCard(location, index, player);
+    }
 
     public void setCardFromHandToFieldZone(int player, Card card) {
         if (player == 1) {

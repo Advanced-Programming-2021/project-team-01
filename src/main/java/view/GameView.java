@@ -142,7 +142,7 @@ public class GameView implements GraphicalView {
             return selectCardDialog.getSelectedCards();
         } else {
             GetNeededCardResponse response = (GetNeededCardResponse) GameView.getInstance().getCurrentResponse();
-            return ((SendNeededCardsRequest) response.getRequest()).getNeededCards();
+            return response.getCards();
         }
     }
 

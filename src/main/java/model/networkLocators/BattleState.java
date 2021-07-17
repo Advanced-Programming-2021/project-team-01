@@ -13,5 +13,6 @@ public enum BattleState {
     CHEAT,
     DIRECT_ATTACK,
     SURRENDER,
-    SPECIAL_SUMMON;
+    SPECIAL_SUMMON,
+    CARD_INFO;
 }
