@@ -5,6 +5,7 @@ import Network.Requests.Battle.BattleActionRequest;
 import Network.Requests.Battle.SendNeededCardsRequest;
 import Network.Responses.Battle.GetNeededCardResponse;
 import Network.Responses.Response;
+import Network.Utils.Logger;
 import controller.GameController;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -185,7 +186,7 @@ public class GameView implements GraphicalView {
 //            GameController.getInstance().activateEffect();
 //            System.out.println("spell activated");
 //            GameController.getInstance().getGameBoard().showBoard();
-        }  catch (Exception error) {
+        } catch (Exception error) {
             new MyAlert(Alert.AlertType.ERROR, error.getMessage()).show();
         }
     }
@@ -727,18 +728,18 @@ public class GameView implements GraphicalView {
         logicHand.addListener((ListChangeListener<Card>) c -> {
             while (c.next()) {
                 for (Card card : c.getRemoved()) {
+                    System.err.println(card.getName());
                     for (int i = 0; i < playerHand.getChildren().size(); i++) {
                         CardView cardView = (CardView) playerHand.getChildren().get(i);
-                        if (GameController.getInstance().controllerNumber != GameController.getInstance().getCurrentPlayerNumber())
-                            cardView.setImage(true, true);
                         if (cardView.getCard().getName().equals(card.getName())) {
                             FadeTransition fadeTransition = new FadeTransition();
                             fadeTransition.setNode(cardView);
-                            fadeTransition.setDuration(Duration.millis(500));
+                            fadeTransition.setDuration(Duration.millis(150));
                             fadeTransition.setFromValue(1);
                             fadeTransition.setToValue(0);
                             fadeTransition.play();
                             fadeTransition.setOnFinished(event -> {
+                                System.err.println("called for " + cardView.getCard().getName());
                                 playerHand.getChildren().remove(cardView);
                             });
                             break;

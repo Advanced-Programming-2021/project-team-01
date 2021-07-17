@@ -86,6 +86,7 @@ public class CardView extends Rectangle {
             GameView.getInstance().addTargetCard(this);
             GameView.getInstance().attackOnCard();
         }
+        System.out.println(card.getName());
     }
 
     public void setToBoard() {

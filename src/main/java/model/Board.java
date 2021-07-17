@@ -110,11 +110,13 @@ public class Board {
     public void sendCardFromHandToGraveYard(int player, Card card) {
         if (player == 1) {
             playerOneGraveYard.add(card);
-            playerOneHand.remove(card);
+            playerOneHand.remove(playerOneHand.stream().
+                    filter(card1 -> card1.getName().equals(card.getName())).findFirst().get());
             GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
         } else {
             playerTwoGraveYard.add(card);
-            playerTwoHand.remove(card);
+            playerTwoHand.remove(playerTwoHand.stream().
+                    filter(card1 -> card1.getName().equals(card.getName())).findFirst().get());
             GameController.getInstance().getDestroyedCardsForPlayerTwo().add(card);
         }
     }
@@ -1087,4 +1089,5 @@ public class Board {
         this.playerOneMonsterZone = playerTwoMonsterZone;
         playerTwoMonsterZone = playerOneMonsterZone;
     }
+
 }
