@@ -1,5 +1,7 @@
 package controller;
 
+import Network.Client.Client;
+import Network.Responses.Battle.ActivateChainResponse;
 import console.ChainView;
 import javafx.collections.FXCollections;
 import model.Board;
@@ -32,8 +34,9 @@ public class ChainController {
         }
         ChainView.printTurn(GameController.getCurrentPlayer());
         GameController.getInstance().getGameBoard().showBoard();
-        if (GameView.getYesOrNo(GameController.currentPlayer.getNickname() + ",Do you want to activate your trap and spell?")) {
-            start();
+        if (gameController.controllerNumber == gameController.getCurrentPlayerNumber()){
+            if (GameView.getYesOrNo(GameController.currentPlayer.getNickname() + ",Do you want to activate your trap and spell?"))
+                start();
         }
         back();
     }

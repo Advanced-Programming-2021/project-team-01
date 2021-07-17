@@ -3,10 +3,12 @@ package Network.Server;
 
 import Network.Requests.*;
 import Network.Requests.Account.*;
+import Network.Requests.Battle.ActivateChainRequest;
 import Network.Requests.Battle.BattleActionRequest;
 import Network.Requests.Battle.SendNeededCardsRequest;
 import Network.Responses.*;
 import Network.Responses.Account.*;
+import Network.Responses.Battle.ActivateChainResponse;
 import Network.Responses.Battle.BattleActionResponse;
 import Network.Responses.Battle.GetNeededCardResponse;
 import Network.Utils.Logger;
@@ -139,6 +141,13 @@ public class ClientHandler extends Thread {
         } else if (request instanceof ScoreboardInfoRequest) {
             response = new ScoreboardInfoResponse(request);
             response.handleRequest();
+        } else if (request instanceof ActivateChainRequest){
+            response = new ActivateChainResponse(request);
+            response.handleRequest();
+            ClientHandler clientHandler = Server.getClientHandlers().get(((ActivateChainRequest) request).getOpponent());
+            clientHandler.out.println(gson.toJson(response));
+            clientHandler.out.flush();
+            return;
         }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));

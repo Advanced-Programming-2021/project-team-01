@@ -1,6 +1,7 @@
 package view;
 
 import Network.Client.Client;
+import Network.Requests.Battle.ActivateChainRequest;
 import Network.Requests.Battle.BattleActionRequest;
 import Network.Requests.Battle.SendNeededCardsRequest;
 import Network.Responses.Battle.GetNeededCardResponse;
@@ -169,6 +170,8 @@ public class GameView implements GraphicalView {
     public static boolean getYesOrNo(String prompt) {
         YesNoDialog yesNoDialog = new YesNoDialog(prompt);
         yesNoDialog.showAndWait();
+        ActivateChainRequest activateChainRequest = new ActivateChainRequest(GameController.getOpponent().getUsername(),yesNoDialog.getResult());
+        Client.getInstance().sendData(activateChainRequest.toString());
         return yesNoDialog.getResult();
     }
 
