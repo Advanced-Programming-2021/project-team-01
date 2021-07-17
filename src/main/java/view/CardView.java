@@ -104,7 +104,7 @@ public class CardView extends Rectangle {
         setScaleY(1.2);
         StackPane cardText = (StackPane) GameView.cardInformation.getContent();
         cardText.getChildren().clear();
-        if (!isHidden() || (cardOwner == GameController.getInstance().getCurrentPlayerNumber())) {
+        if (!isHidden() || (cardOwner == GameController.getInstance().controllerNumber)) {
             Text text = new Text();
             String power = "";
             if (card instanceof MonsterCard) {
@@ -149,8 +149,8 @@ public class CardView extends Rectangle {
     }
 
     public ImagePattern getImage() {
-        boolean isOwnerTurn = cardOwner == GameController.getInstance().getCurrentPlayerNumber() || !isHidden;
-        if (isOwnerTurn)
+        boolean shouldShow = cardOwner == GameController.getInstance().controllerNumber || !isHidden;
+        if (shouldShow)
             return card.getCardImage();
         else
             return card.getBackImage();
