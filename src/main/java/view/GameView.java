@@ -79,6 +79,7 @@ public class GameView implements GraphicalView {
 
     private GameView() {
 
+
     }
 
     public static GameView getInstance() {
@@ -598,7 +599,6 @@ public class GameView implements GraphicalView {
         Image image = null;
         switch (current) {
             case END_PHASE: {
-                drawPhaseGraphicActions();
                 image = new Image(Objects.requireNonNull(getClass().getResource("/Assets/Battle/6.png")).toExternalForm());
                 setCurrentPhase(5);
                 break;
