@@ -2,6 +2,9 @@ package view;
 
 import Network.Client.Client;
 import Network.Requests.Battle.BattleActionRequest;
+import Network.Requests.Battle.SendNeededCardsRequest;
+import Network.Responses.Battle.GetNeededCardResponse;
+import Network.Responses.Response;
 import controller.GameController;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -72,6 +75,7 @@ public class GameView implements GraphicalView {
     boolean isPlaying = true;
     boolean isAttacking = false;
     int i = 1;
+    private Response currentResponse;
 
     private GameView() {
 
@@ -80,6 +84,14 @@ public class GameView implements GraphicalView {
     public static GameView getInstance() {
         if (instance == null) instance = new GameView();
         return instance;
+    }
+
+    public Response getCurrentResponse() {
+        return currentResponse;
+    }
+
+    public void setCurrentResponse(Response currentResponse) {
+        this.currentResponse = currentResponse;
     }
 
     public static Node getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
@@ -122,12 +134,19 @@ public class GameView implements GraphicalView {
     }
 
     public static List<Card> getNeededCards(List<Card> cards, int number) {
-        SelectCardDialog selectCardDialog = new SelectCardDialog(cards, number);
-        GameController.getInstance().getSelectedCard().lock();
-        selectCardDialog.showAndWait();
-        selectCardDialog.close();
-        GameController.getInstance().getSelectedCard().unlock();
-        return selectCardDialog.getSelectedCards();
+        if(GameController.getInstance().controllerNumber == GameController.getInstance().getCurrentPlayerNumber()) {
+            SelectCardDialog selectCardDialog = new SelectCardDialog(cards, number);
+            GameController.getInstance().getSelectedCard().lock();
+            selectCardDialog.showAndWait();
+            selectCardDialog.close();
+            GameController.getInstance().getSelectedCard().unlock();
+            SendNeededCardsRequest request = new SendNeededCardsRequest(selectCardDialog.getSelectedCards(), GameController.getOpponent().getUsername());
+            Client.getInstance().sendData(request.toString());
+            return selectCardDialog.getSelectedCards();
+        }else {
+            GetNeededCardResponse response = (GetNeededCardResponse) GameView.getInstance().getCurrentResponse();
+            return ((SendNeededCardsRequest) response.getRequest()).getNeededCards();
+        }
     }
 
     public static String getChoiceBox(List<String> items, String header) {

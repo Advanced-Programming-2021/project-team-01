@@ -4,9 +4,11 @@ package Network.Server;
 import Network.Requests.*;
 import Network.Requests.Account.*;
 import Network.Requests.Battle.BattleActionRequest;
+import Network.Requests.Battle.SendNeededCardsRequest;
 import Network.Responses.*;
 import Network.Responses.Account.*;
 import Network.Responses.Battle.BattleActionResponse;
+import Network.Responses.Battle.GetNeededCardResponse;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
@@ -127,6 +129,13 @@ public class ClientHandler extends Thread {
         } else if (request instanceof DeleteMessageRequest) {
             response = new DeleteMessageResponse(request);
             response.handleRequest();
+        } else if (request instanceof SendNeededCardsRequest) {
+            response = new GetNeededCardResponse(request);
+            response.handleRequest();
+            ClientHandler clientHandler = Server.getClientHandlers().get(((SendNeededCardsRequest) request).getOpponent());
+            clientHandler.out.println(gson.toJson(response));
+            clientHandler.out.flush();
+            return;
         }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));
@@ -140,7 +149,7 @@ public class ClientHandler extends Thread {
         ClientHandler clientHandler = Server.getClientHandlers().get(clientRequest.getChallenger());
         clientHandler.out.println(gson.toJson(response));
         clientHandler.out.flush();
-        Logger.log("**Sent: " + response);
+        Logger.log("Sent: " + response);
     }
 
     private void sendInvitation(Response response) {
@@ -148,7 +157,7 @@ public class ClientHandler extends Thread {
         ClientHandler clientHandler = Server.getClientHandlers().get(username);
         clientHandler.out.println(gson.toJson(response));
         clientHandler.out.flush();
-        Logger.log("*Sent: " + response);
+        Logger.log("Sent: " + response);
     }
 
     public void updateChatRoom(String username) {
