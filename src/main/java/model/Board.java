@@ -111,13 +111,15 @@ public class Board {
     public void sendCardFromHandToGraveYard(int player, Card card) {
         if (player == 1) {
             playerOneGraveYard.add(card);
-            playerOneHand.remove(playerOneHand.stream().
-                    filter(card1 -> card1.getName().equals(card.getName())).findFirst().get());
+//            playerOneHand.remove(playerOneHand.stream().
+//                    filter(card1 -> card1.getName().equals(card.getName())).findFirst().get());
+            playerOneHand.remove(card);
             GameController.getInstance().getDestroyedCardsForPlayerOne().add(card);
         } else {
             playerTwoGraveYard.add(card);
-            playerTwoHand.remove(playerTwoHand.stream().
-                    filter(card1 -> card1.getName().equals(card.getName())).findFirst().get());
+//            playerTwoHand.remove(playerTwoHand.stream().
+//                    filter(card1 -> card1.getName().equals(card.getName())).findFirst().get());
+            playerTwoHand.remove(card);
             GameController.getInstance().getDestroyedCardsForPlayerTwo().add(card);
         }
     }
@@ -958,7 +960,7 @@ public class Board {
     public void sendCardFromMonsterZoneToAnother(Card card, int fromPlayer, int toPlayer) {
         if (fromPlayer == 1) {
             for (int i = 1; i < 6; i++) {
-                if (playerOneMonsterZone[i].getCard().getName().equals(card.getName())) {
+                if (playerOneMonsterZone[i].getCard() == card) {
                     playerOneMonsterZone[i].setCard(null);
                     for (int j = 1; j < 6; j++) {
                         if (playerTwoMonsterZone[j].getCard() == null) {
@@ -972,7 +974,7 @@ public class Board {
             }
         } else if (fromPlayer == 2) {
             for (int i = 1; i < 6; i++) {
-                if (playerTwoMonsterZone[i].getCard().getName().equals(card.getName())) {
+                if (playerTwoMonsterZone[i].getCard() == card) {
                     playerTwoMonsterZone[i].setCard(null);
                     for (int j = 1; j < 6; j++) {
                         if (playerOneMonsterZone[j].getCard() == null) {

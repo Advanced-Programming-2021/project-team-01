@@ -19,7 +19,7 @@ public class SendNeededCardsRequest extends Request {
         Board board = GameController.getInstance().getGameBoard();
         for (Card card : cards) {
             BattleAction battleAction = new BattleAction(BattleState.CARD_INFO, board.getCardLocation(card),
-                    board.getIndexOfCard(card), GameController.getInstance().getCurrentPlayerNumber());
+                    board.getIndexOfCard(card), board.getOwnerOfCard(card));
             neededCards.add(battleAction);
         }
         this.opponent = opponent;

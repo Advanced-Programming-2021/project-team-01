@@ -21,6 +21,7 @@ public class ChangeOfHeart extends Command implements Activate {
     @Override
     public void run() throws Exception {
         board = gameController.getGameBoard();
+        board.setSpellFaceUp(myCard);
         if (board.numberOfMonsterCards(gameController.getCurrentPlayerNumber()) == 5)
             throw new MonsterZoneFull();
         if (board.numberOfMonsterCards(gameController.getOpponentPlayerNumber()) == 0)
