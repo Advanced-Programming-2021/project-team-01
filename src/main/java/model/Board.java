@@ -239,7 +239,6 @@ public class Board {
                     return playerOneMonsterZone[index].getCard();
                 else if (player == 2)
                     return playerTwoMonsterZone[index].getCard();
-
                 break;
             case SPELL:
                 if (player == 1)
@@ -249,7 +248,6 @@ public class Board {
 
                 break;
             case HAND:
-                index--;
                 if (player == 1)
                     return playerOneHand.get(index);
                 else if (player == 2)

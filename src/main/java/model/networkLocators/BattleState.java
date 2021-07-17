@@ -11,5 +11,6 @@ public enum BattleState {
     CHANGE_POSITION,
     FLIP_SUMMON,
     CHEAT,
-    SURRENDER
+    SURRENDER,
+    SPECIAL_SUMMON;
 }

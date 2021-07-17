@@ -174,14 +174,18 @@ public class GameView implements GraphicalView {
         return selectableDialog.getResult();
     }
 
-    public static void specialSummon() {
+    public void specialSummon() {
+        Board board = gameController.getGameBoard();
+        int player = gameController.getCurrentPlayerNumber();
         try {
-            GameController.getInstance().activateEffect();
-            System.out.println("effect activated");
-            GameController.getInstance().getGameBoard().showBoard();
-        } catch (Exception error) {
-            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, error.getMessage());
-            myAlert.show();
+            BattleAction battleAction = new BattleAction(BattleState.SPECIAL_SUMMON, gameController.getSelectedCard().getCardLocation(),
+                    board.getIndexOfCard(gameController.getSelectedCard()), player);
+            sendRequest(battleAction);
+//            GameController.getInstance().activateEffect();
+//            System.out.println("spell activated");
+//            GameController.getInstance().getGameBoard().showBoard();
+        }  catch (Exception error) {
+            new MyAlert(Alert.AlertType.ERROR, error.getMessage()).show();
         }
     }
 
@@ -538,12 +542,21 @@ public class GameView implements GraphicalView {
             case ACTIVATE_SPELL:
                 activateSpellAction(battleAction);
                 break;
+            case SPECIAL_SUMMON:
+                specialSummonAction(battleAction);
+                break;
         }
+    }
+
+    private void specialSummonAction(BattleAction battleAction) throws Exception {
+        SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
+        selectedCard.set(GameController.getInstance().getGameBoard().getCard(battleAction.getCardLocation(), battleAction.getIndex(), battleAction.getPlayerNumber()));
+        GameController.getInstance().activateEffect();
     }
 
     private void activateSpellAction(BattleAction battleAction) throws Exception {
         SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
-        selectedCard.set(GameController.getInstance().getGameBoard().getCard(battleAction.getCardLocation(),battleAction.getIndex(),battleAction.getPlayerNumber()));
+        selectedCard.set(GameController.getInstance().getGameBoard().getCard(battleAction.getCardLocation(), battleAction.getIndex(), battleAction.getPlayerNumber()));
         GameController.getInstance().activateEffect();
     }
 
