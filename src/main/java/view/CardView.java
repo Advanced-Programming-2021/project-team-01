@@ -228,7 +228,7 @@ public class CardView extends Rectangle {
             case "Change position":
                 menuItem.setGraphic(changePositionView);
                 menuItem.setOnAction(event -> {
-                    GameView.changeCardPosition();
+                    GameView.getInstance().changeCardPosition();
                 });
                 break;
             case "Activate effect":
@@ -246,13 +246,13 @@ public class CardView extends Rectangle {
             case "Defensive set":
                 menuItem.setGraphic(defensiveSetView);
                 menuItem.setOnAction(event -> {
-                    GameView.getInstance().setCard();
+                    GameView.getInstance().setMonster();
                 });
                 break;
             case "Flip summon":
                 menuItem.setGraphic(flipSummonView);
                 menuItem.setOnAction(event -> {
-                    GameView.flipSummonCard();
+                    GameView.getInstance().flipSummonCard();
                 });
                 break;
             case "Special summon":

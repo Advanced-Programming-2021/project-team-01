@@ -98,24 +98,29 @@ public class GameView implements GraphicalView {
         return null;
     }
 
-    public static void flipSummonCard() {
+    public void flipSummonCard() {
+        Board board = gameController.getGameBoard();
+        int player = gameController.getCurrentPlayerNumber();
         try {
-            GameController.getInstance().flipSummon();
-            System.out.println("flip summoned successfully");
-        } catch (Exception exp) {
-            new MyAlert(Alert.AlertType.ERROR, exp.getMessage()).show();
+            BattleAction battleAction = new BattleAction(BattleState.FLIP_SUMMON, gameController.getSelectedCard().getCardLocation(),
+                    board.getIndexOfCard(gameController.getSelectedCard()), player);
+            sendRequest(battleAction);
+//            GameController.getInstance().activateEffect();
+//            System.out.println("spell activated");
+//            GameController.getInstance().getGameBoard().showBoard();
+        } catch (Exception error) {
+            new MyAlert(Alert.AlertType.ERROR, error.getMessage()).show();
         }
     }
 
-    public static void changeCardPosition() {
+    public void changeCardPosition() {
+        Board board = gameController.getGameBoard();
+        int player = gameController.getCurrentPlayerNumber();
         try {
-            String newPosition;
-            if (GameController.getInstance().getZoneSlotSelectedCard().isDefending())
-                newPosition = "attack";
-            else
-                newPosition = "defense";
-            GameController.getInstance().changeCardPosition(newPosition);
-            System.out.println("monster card position changed successfully");
+            BattleAction battleAction = new BattleAction(BattleState.CHANGE_POSITION, gameController.getSelectedCard().getCardLocation(),
+                    board.getIndexOfCard(gameController.getSelectedCard()), player);
+            sendRequest(battleAction);
+
         } catch (Exception exp) {
             MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
             myAlert.show();
@@ -286,6 +291,21 @@ public class GameView implements GraphicalView {
 //            GameController.getInstance().getGameBoard().showBoard();
         } catch (Exception error) {
             new MyAlert(Alert.AlertType.ERROR, error.getMessage()).show();
+        }
+    }
+
+    public void setMonster(){
+        Board board = gameController.getGameBoard();
+        int player = GameController.getInstance().getCurrentPlayerNumber();
+        try {
+            BattleAction battleAction = new BattleAction(BattleState.SET_MONSTER, CardLocation.HAND,
+                    board.getIndexOfCard(gameController.getSelectedCard()), player);
+            sendRequest(battleAction);
+//            GameController.getInstance().setCard();
+//            GameController.getInstance().getGameBoard().showBoard();
+//            System.out.println("set successfully");
+        } catch (Exception exp) {
+            new MyAlert(Alert.AlertType.ERROR, exp.getMessage()).show();
         }
     }
 
@@ -547,7 +567,38 @@ public class GameView implements GraphicalView {
             case SPECIAL_SUMMON:
                 specialSummonAction(battleAction);
                 break;
+            case FLIP_SUMMON:
+                flipSummonAction(battleAction);
+                break;
+            case CHANGE_POSITION:
+                changePositionAction(battleAction);
+                break;
+            case SET_MONSTER:
+                setMonsterAction(battleAction);
+                break;
         }
+    }
+
+    private void setMonsterAction(BattleAction battleAction) throws Exception {
+        SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
+        selectedCard.set(GameController.getInstance().getGameBoard().getCard(battleAction.getCardLocation(), battleAction.getIndex(), battleAction.getPlayerNumber()));
+        GameController.getInstance().setMonster();
+    }
+
+    private void changePositionAction(BattleAction battleAction) throws Exception {
+        SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
+        selectedCard.set(GameController.getInstance().getGameBoard().getCard(battleAction.getCardLocation(), battleAction.getIndex(), battleAction.getPlayerNumber()));
+        String newPosition;
+        if (GameController.getInstance().getZoneSlotSelectedCard().isDefending())
+            newPosition = "attack";
+        else
+            newPosition = "defense";
+        GameController.getInstance().changeCardPosition(newPosition);    }
+
+    private void flipSummonAction(BattleAction battleAction) throws Exception {
+        SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
+        selectedCard.set(GameController.getInstance().getGameBoard().getCard(battleAction.getCardLocation(), battleAction.getIndex(), battleAction.getPlayerNumber()));
+        GameController.getInstance().flipSummon();
     }
 
     private void specialSummonAction(BattleAction battleAction) throws Exception {
@@ -997,7 +1048,7 @@ public class GameView implements GraphicalView {
         flipAnimation.setUpsideDown(true);
         flipAnimation.setFrontToBack(false);
         if (playerNumber == 1) {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 0 : 1, index - 1, playerOneCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             flipAnimation.setNode(cardView);
@@ -1005,7 +1056,7 @@ public class GameView implements GraphicalView {
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             cardView.setImage(false, false);
         } else {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 1 : 0, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             flipAnimation.setNode(cardView);
@@ -1054,7 +1105,7 @@ public class GameView implements GraphicalView {
 
     private void changePosition(int playerNumber, int index) {
         if (playerNumber == 1) {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 0 : 1, index - 1, playerOneCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             RotateTransition rotateTransition = new RotateTransition();
@@ -1070,7 +1121,7 @@ public class GameView implements GraphicalView {
             }
             rotateTransition.play();
         } else {
-            StackPane zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
+            StackPane zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 1 : 0, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             RotateTransition rotateTransition = new RotateTransition();
@@ -1145,26 +1196,26 @@ public class GameView implements GraphicalView {
         flipAnimation.setUpsideDown(false);
         StackPane zone;
         if (playerNumber == 1) {
-            zone = ((StackPane) getNodeByRowColumnIndex(0, index - 1, playerOneCardsInBoard));
+            zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 0 : 1, index - 1, playerOneCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             rotateTransition.setNode(cardView);
             flipAnimation.setNode(cardView);
-            rotateTransition.setByAngle(-90);
+            rotateTransition.setByAngle(-90*i);
             rotateTransition.play();
             flipAnimation.play();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
-            cardView.setImage(false, false);
+            cardView.setImage(false, i > 0);
             cardView.setRotate(0);
         } else {
-            zone = ((StackPane) getNodeByRowColumnIndex(1, index - 1, playerTwoCardsInBoard));
+            zone = ((StackPane) getNodeByRowColumnIndex(i > 0 ? 1 : 0, index - 1, playerTwoCardsInBoard));
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             rotateTransition.setNode(cardView);
-            rotateTransition.setByAngle(90);
+            rotateTransition.setByAngle(90*i);
             rotateTransition.play();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
-            cardView.setImage(false, true);
+            cardView.setImage(false, i < 0);
             cardView.setRotate(0);
         }
         MyMusicPlayer.flip();
