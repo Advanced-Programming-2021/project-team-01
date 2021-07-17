@@ -5,7 +5,6 @@ import Network.Requests.Battle.BattleActionRequest;
 import Network.Requests.Battle.SendNeededCardsRequest;
 import Network.Responses.Battle.GetNeededCardResponse;
 import Network.Responses.Response;
-import Network.Utils.Logger;
 import controller.GameController;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -507,6 +506,17 @@ public class GameView implements GraphicalView {
         nextPhaseButton.setTranslateY(-330);
         phase = new ImageView();
         nextPhaseButton.setOnMouseClicked(event -> {
+            boolean bool = false;
+            System.out.println(GameController.getInstance().getPhaseController().getGamePhase());
+            if(GameController.getInstance().getCurrentPlayerNumber() != GameController.getInstance().controllerNumber &&
+            GameController.getInstance().getPhaseController().getGamePhase() == GamePhase.END_PHASE){
+                bool = true;
+            }
+            if(GameController.getInstance().getPhaseController().getGamePhase() != GamePhase.END_PHASE &&
+            GameController.getInstance().getCurrentPlayerNumber() == GameController.getInstance().controllerNumber){
+                bool = true;
+            }
+            if (!bool) return;
             BattleAction battleAction = new BattleAction(BattleState.NEXT_PHASE, CardLocation.NONE, 0,
                     GameController.getInstance().getCurrentPlayerNumber());
             sendRequest(battleAction);
