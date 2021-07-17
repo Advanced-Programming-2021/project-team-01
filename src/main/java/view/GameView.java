@@ -525,7 +525,7 @@ public class GameView implements GraphicalView {
         }
     }
 
-    private void sendRequest(BattleAction battleAction) {
+    public void sendRequest(BattleAction battleAction) {
         try {
             doAction(battleAction);
             BattleActionRequest request = new BattleActionRequest(Client.getInstance().getToken(),
@@ -576,7 +576,17 @@ public class GameView implements GraphicalView {
             case SET_MONSTER:
                 setMonsterAction(battleAction);
                 break;
+            case DIRECT_ATTACK:
+                doDirectAttackActions(battleAction);
+                break;
         }
+    }
+
+    private void doDirectAttackActions(BattleAction battleAction) throws Exception {
+        showDirectAttack();
+        SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
+        selectedCard.set(GameController.getInstance().getGameBoard().getCard(battleAction.getCardLocation(), battleAction.getIndex(), battleAction.getPlayerNumber()));
+        GameController.getInstance().directAttack();
     }
 
     private void setMonsterAction(BattleAction battleAction) throws Exception {

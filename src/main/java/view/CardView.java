@@ -18,6 +18,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.card.*;
+import model.networkLocators.BattleAction;
+import model.networkLocators.BattleState;
 
 
 public class CardView extends Rectangle {
@@ -208,8 +210,10 @@ public class CardView extends Rectangle {
                     if(GameController.getInstance().getGameBoard().getCardInMonsterZone(GameController.getInstance().getOpponentPlayerNumber()).size() == 0) {
                         GameController.getInstance().getSelectedCard().lock();
                         try {
-                            GameView.getInstance().showDirectAttack();
-                            GameController.getInstance().directAttack();
+                            BattleAction battleAction = new BattleAction(BattleState.DIRECT_ATTACK, CardLocation.MONSTER,
+                                    GameController.getInstance().getGameBoard().getIndexOfCard(card,CardLocation.MONSTER),
+                                    GameController.getInstance().getCurrentPlayerNumber());
+                            GameView.getInstance().sendRequest(battleAction);
                         } catch (Exception exception) {
                             new MyAlert(Alert.AlertType.ERROR, exception.getMessage()).show();
                         }
