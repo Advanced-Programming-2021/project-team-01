@@ -6,8 +6,6 @@ import Network.Requests.Account.ExitChatRoomRequest;
 import Network.Requests.Account.SendMessageRequest;
 import Network.Requests.Request;
 import Network.Server.Message;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -32,9 +30,9 @@ public class ChatView implements GraphicalView {
         for (Message message : messages) {
             HBox hBox = new HBox();
             ImageView profileView = new ImageView(new Image(getClass().getResource(
-                    "/Assets/ProfileDatabase/Chara001.dds" + String.valueOf(message.getProfileNum())).toExternalForm()));
-            profileView.setFitHeight(10);
-            profileView.setFitWidth(10);
+                    "/Assets/ProfileDatabase/Chara001.dds" + String.valueOf(message.getProfileNum()) + ".png").toExternalForm()));
+            profileView.setFitHeight(25);
+            profileView.setFitWidth(25);
             hBox.setSpacing(10);
             hBox.getChildren().addAll(profileView, new ChatLabel(message));
             messagesVBox.getChildren().add(hBox);

@@ -42,20 +42,17 @@ public class ViewSwitcher {
                     Client.getInstance().sendData(new ProfileInfoRequest(Client.getInstance().getToken()).toString());
                     break;
                 }
-                case SCOREBOARD: {
-                    new ScoreboardView().init(root);
-                    break;
-                }
-                case IMPORTEXPORT: {
-                    new ImportExportView().init(root);
-                    break;
-                }
+                case SCOREBOARD:
                 case LOGIN:
                 case DECK:
                 case PRE_GAME:
                 case PRE_DECK: {
                     currentView = fxmlLoader.getController();
                     currentView.init(root);
+                    break;
+                }
+                case IMPORTEXPORT: {
+                    new ImportExportView().init(root);
                     break;
                 }
                 case MAIN: {

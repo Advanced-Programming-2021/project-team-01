@@ -136,6 +136,9 @@ public class ClientHandler extends Thread {
             clientHandler.out.println(gson.toJson(response));
             clientHandler.out.flush();
             return;
+        } else if (request instanceof ScoreboardInfoRequest) {
+            response = new ScoreboardInfoResponse(request);
+            response.handleRequest();
         }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));

@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.ScoreboardView"
@@ -12,4 +14,8 @@
         <URL value="@Scoreboard.css"/>
     </stylesheets>
     <Button onMouseClicked="#exitMenu" styleClass="button" translateX="190" translateY="300" text="Exit" prefWidth="100" prefHeight="50"/>
+    <ImageView fitWidth="50" fitHeight="50" translateX="670" translateY="90" styleClass="button1"
+               onMouseClicked="#refresh">
+        <Image url="@refresh.png"/>
+    </ImageView>
 </AnchorPane>
