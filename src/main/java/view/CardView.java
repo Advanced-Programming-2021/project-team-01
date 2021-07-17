@@ -245,7 +245,7 @@ public class CardView extends Rectangle {
             case "Defensive set":
                 menuItem.setGraphic(defensiveSetView);
                 menuItem.setOnAction(event -> {
-                    GameView.getInstance().setCard();
+                    GameView.getInstance().setMonster();
                 });
                 break;
             case "Flip summon":
