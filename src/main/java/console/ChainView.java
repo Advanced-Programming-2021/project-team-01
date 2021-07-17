@@ -57,24 +57,24 @@ public class ChainView {
     }
 
     public void start() throws Exception {
-        List<Card> cards = FXCollections.observableArrayList();
-        List<Card> playerCards = FXCollections.observableArrayList();
-        Board board = GameController.getInstance().getGameBoard();
-        int player = GameController.getInstance().getCurrentPlayerNumber();
-        playerCards.addAll(board.getPlayerHand(player));
-        playerCards.addAll(board.getCardInSpellZone(player));
-        for (Card card : playerCards) {
-            if (card instanceof TrapCard || (card instanceof SpellCard &&
-                    (((SpellCard) card).getProperty() == Property.QUICK_PLAY || ((SpellCard) card).getProperty() == Property.COUNTER)))
-                cards.add(card);
-        }
-        List<Card> selectedCards = GameView.selectedCardsWithSelectableDialog(cards);
-        for (Card selectedCard : selectedCards) {
-            GameController.getInstance().getSelectedCard().unlock();
-            GameController.getInstance().getSelectedCard().set(selectedCard);
-            GameController.getInstance().getChainController().activeEffect();
-        }
-        GameController.getInstance().getChainController().back();
+//        List<Card> cards = FXCollections.observableArrayList();
+//        List<Card> playerCards = FXCollections.observableArrayList();
+//        Board board = GameController.getInstance().getGameBoard();
+//        int player = GameController.getInstance().getCurrentPlayerNumber();
+//        playerCards.addAll(board.getPlayerHand(player));
+//        playerCards.addAll(board.getCardInSpellZone(player));
+//        for (Card card : playerCards) {
+//            if (card instanceof TrapCard || (card instanceof SpellCard &&
+//                    (((SpellCard) card).getProperty() == Property.QUICK_PLAY || ((SpellCard) card).getProperty() == Property.COUNTER)))
+//                cards.add(card);
+//        }
+//        List<Card> selectedCards = GameView.selectedCardsWithSelectableDialog(cards);
+//        for (Card selectedCard : selectedCards) {
+//            GameController.getInstance().getSelectedCard().unlock();
+//            GameController.getInstance().getSelectedCard().set(selectedCard);
+//            GameController.getInstance().getChainController().activeEffect();
+//        }
+//        GameController.getInstance().getChainController().back();
     }
 
     private void forbiddenCommand() {

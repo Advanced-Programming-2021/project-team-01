@@ -1,11 +1,16 @@
 package controller;
 
 import console.ChainView;
+import javafx.collections.FXCollections;
+import model.Board;
 import model.Chain;
 import model.card.Card;
 import model.card.Property;
 import model.card.SpellCard;
 import model.card.TrapCard;
+import view.GameView;
+
+import java.util.List;
 
 public class ChainController {
     GameController gameController = GameController.getInstance();
@@ -27,12 +32,30 @@ public class ChainController {
         }
         ChainView.printTurn(GameController.getCurrentPlayer());
         GameController.getInstance().getGameBoard().showBoard();
-        if (!view.GameView.getYesOrNo(GameController.currentPlayer.getNickname() + ",Do you want to activate your trap and spell?")) {
-            back();
-            return;
+        if (GameView.getYesOrNo(GameController.currentPlayer.getNickname() + ",Do you want to activate your trap and spell?")) {
+            start();
         }
-        ChainView chainView = new ChainView();
-        chainView.start();
+        back();
+    }
+
+    public void start() throws Exception {
+        List<Card> cards = FXCollections.observableArrayList();
+        List<Card> playerCards = FXCollections.observableArrayList();
+        Board board = GameController.getInstance().getGameBoard();
+        int player = GameController.getInstance().getCurrentPlayerNumber();
+        playerCards.addAll(board.getPlayerHand(player));
+        playerCards.addAll(board.getCardInSpellZone(player));
+        for (Card card : playerCards) {
+            if (card instanceof TrapCard || (card instanceof SpellCard &&
+                    (((SpellCard) card).getProperty() == Property.QUICK_PLAY || ((SpellCard) card).getProperty() == Property.COUNTER)))
+                cards.add(card);
+        }
+        List<Card> selectedCards = GameView.selectedCardsWithSelectableDialog(cards);
+        for (Card selectedCard : selectedCards) {
+            GameController.getInstance().getSelectedCard().unlock();
+            GameController.getInstance().getSelectedCard().set(selectedCard);
+            activeEffect();
+        }
     }
 
 

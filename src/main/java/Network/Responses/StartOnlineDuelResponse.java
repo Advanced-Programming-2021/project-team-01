@@ -57,7 +57,7 @@ public class StartOnlineDuelResponse extends Response {
     @Override
     public void handleResponse() {
         if (exception == null) { //will go to the opponent Client
-            String prompt = challenger + " has challenged you to a duel!\nacept?";
+            String prompt = challenger + " has challenged you to a duel!\naccept?";
             YesNoDialog yesNoDialog = new YesNoDialog(prompt);
             yesNoDialog.showAndWait();
             if (yesNoDialog.getResult()) {

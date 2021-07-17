@@ -6,6 +6,8 @@ import Network.Requests.Battle.SendNeededCardsRequest;
 import Network.Responses.Battle.GetNeededCardResponse;
 import Network.Responses.Response;
 import controller.GameController;
+import controller.exceptions.LevelFiveException;
+import controller.exceptions.LevelSevenException;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
@@ -38,7 +40,10 @@ import model.networkLocators.BattleState;
 import model.networkLocators.CheatBattleAction;
 import view.transions.*;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -94,35 +99,6 @@ public class GameView implements GraphicalView {
             }
         }
         return null;
-    }
-
-    public void flipSummonCard() {
-        Board board = gameController.getGameBoard();
-        int player = gameController.getCurrentPlayerNumber();
-        try {
-            BattleAction battleAction = new BattleAction(BattleState.FLIP_SUMMON, gameController.getSelectedCard().getCardLocation(),
-                    board.getIndexOfCard(gameController.getSelectedCard()), player);
-            sendRequest(battleAction);
-//            GameController.getInstance().activateEffect();
-//            System.out.println("spell activated");
-//            GameController.getInstance().getGameBoard().showBoard();
-        } catch (Exception error) {
-            new MyAlert(Alert.AlertType.ERROR, error.getMessage()).show();
-        }
-    }
-
-    public void changeCardPosition() {
-        Board board = gameController.getGameBoard();
-        int player = gameController.getCurrentPlayerNumber();
-        try {
-            BattleAction battleAction = new BattleAction(BattleState.CHANGE_POSITION, gameController.getSelectedCard().getCardLocation(),
-                    board.getIndexOfCard(gameController.getSelectedCard()), player);
-            sendRequest(battleAction);
-
-        } catch (Exception exp) {
-            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
-            myAlert.show();
-        }
     }
 
     public static GraveyardPopUp showListOfCards(List<Card> cards) {
@@ -196,6 +172,35 @@ public class GameView implements GraphicalView {
         return yesNoDialog.getResult();
     }
 
+    public void flipSummonCard() {
+        Board board = gameController.getGameBoard();
+        int player = gameController.getCurrentPlayerNumber();
+        try {
+            BattleAction battleAction = new BattleAction(BattleState.FLIP_SUMMON, gameController.getSelectedCard().getCardLocation(),
+                    board.getIndexOfCard(gameController.getSelectedCard()), player);
+            sendRequest(battleAction);
+//            GameController.getInstance().activateEffect();
+//            System.out.println("spell activated");
+//            GameController.getInstance().getGameBoard().showBoard();
+        } catch (Exception error) {
+            new MyAlert(Alert.AlertType.ERROR, error.getMessage()).show();
+        }
+    }
+
+    public void changeCardPosition() {
+        Board board = gameController.getGameBoard();
+        int player = gameController.getCurrentPlayerNumber();
+        try {
+            BattleAction battleAction = new BattleAction(BattleState.CHANGE_POSITION, gameController.getSelectedCard().getCardLocation(),
+                    board.getIndexOfCard(gameController.getSelectedCard()), player);
+            sendRequest(battleAction);
+
+        } catch (Exception exp) {
+            MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
+            myAlert.show();
+        }
+    }
+
     public void specialSummon() {
         Board board = gameController.getGameBoard();
         int player = gameController.getCurrentPlayerNumber();
@@ -259,30 +264,6 @@ public class GameView implements GraphicalView {
                     board.getIndexOfCard(GameController.getInstance().getSelectedCard()),
                     GameController.getInstance().getCurrentPlayerNumber());
             sendRequest(battleAction);
-//        } catch (LevelFiveException exception) {
-//            try {
-//                if (board.numberOfMonsterCards(player) == 0)
-//                    throw new Exception("you have not monster");
-//                List<Card> cardsInMonsterZone = board.getCardInMonsterZone(player);
-//                Card card = getNeededCards(cardsInMonsterZone, 1).get(0);
-//                GameController.getInstance().tributeSummonLevel5(card);
-//                System.out.println("summoned successfully");
-//            } catch (Exception e) {
-//                MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, e.getMessage());
-//                myAlert.show();
-//            }
-//        } catch (LevelSevenException levelSevenException) {
-//            try {
-//                if (board.numberOfMonsterCards(player) < 2)
-//                    throw new Exception("you have not enough monsters");
-//                List<Card> cardsInMonsterZone = board.getCardInMonsterZone(player);
-//                List<Card> selectedCards = getNeededCards(cardsInMonsterZone, 2);
-//                GameController.getInstance().tributeSummonLevel7(selectedCards.get(0), selectedCards.get(1));
-//                System.out.println("summoned successfully");
-//            } catch (Exception e) {
-//                MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, e.getMessage());
-//                myAlert.show();
-//            }
         } catch (Exception exp) {
             MyAlert myAlert = new MyAlert(Alert.AlertType.ERROR, exp.getMessage());
             myAlert.show();
@@ -305,7 +286,7 @@ public class GameView implements GraphicalView {
         }
     }
 
-    public void setMonster(){
+    public void setMonster() {
         Board board = gameController.getGameBoard();
         int player = GameController.getInstance().getCurrentPlayerNumber();
         try {
@@ -520,12 +501,12 @@ public class GameView implements GraphicalView {
         nextPhaseButton.setOnMouseClicked(event -> {
             boolean bool = false;
             System.out.println(GameController.getInstance().getPhaseController().getGamePhase());
-            if(GameController.getInstance().getCurrentPlayerNumber() != GameController.getInstance().controllerNumber &&
-            GameController.getInstance().getPhaseController().getGamePhase() == GamePhase.END_PHASE){
+            if (GameController.getInstance().getCurrentPlayerNumber() != GameController.getInstance().controllerNumber &&
+                    GameController.getInstance().getPhaseController().getGamePhase() == GamePhase.END_PHASE) {
                 bool = true;
             }
-            if(GameController.getInstance().getPhaseController().getGamePhase() != GamePhase.END_PHASE &&
-            GameController.getInstance().getCurrentPlayerNumber() == GameController.getInstance().controllerNumber){
+            if (GameController.getInstance().getPhaseController().getGamePhase() != GamePhase.END_PHASE &&
+                    GameController.getInstance().getCurrentPlayerNumber() == GameController.getInstance().controllerNumber) {
                 bool = true;
             }
             if (!bool) return;
@@ -625,7 +606,8 @@ public class GameView implements GraphicalView {
             newPosition = "attack";
         else
             newPosition = "defense";
-        GameController.getInstance().changeCardPosition(newPosition);    }
+        GameController.getInstance().changeCardPosition(newPosition);
+    }
 
     private void flipSummonAction(BattleAction battleAction) throws Exception {
         SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
@@ -670,12 +652,38 @@ public class GameView implements GraphicalView {
         MyMusicPlayer.attack();
     }
 
-    private void summonAction(BattleAction battleAction) throws Exception {
+    private void summonAction(BattleAction battleAction) {
         SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
         selectedCard.set(GameController.getInstance().getGameBoard().getPlayerHand(battleAction.getPlayerNumber()).get(battleAction.getIndex()));
-        selectedCard.setIndex(battleAction.getIndex());
-        selectedCard.setPlayer((battleAction.getPlayerNumber() == 1) ? GameController.getPlayerOne() : GameController.getPlayerTwo());
-        GameController.getInstance().summon();
+        Board board = GameController.getInstance().getGameBoard();
+        int player = GameController.getInstance().getCurrentPlayerNumber();
+        try {
+            GameController.getInstance().summon();
+        } catch (LevelFiveException exception) {
+            try {
+                if (board.numberOfMonsterCards(player) == 0)
+                    throw new Exception("you have not monster");
+                List<Card> cardsInMonsterZone = board.getCardInMonsterZone(player);
+                Card card = getNeededCards(cardsInMonsterZone, 1).get(0);
+                GameController.getInstance().tributeSummonLevel5(card);
+                System.out.println("summoned successfully");
+            } catch (Exception e) {
+                new MyAlert(Alert.AlertType.ERROR, e.getMessage()).show();
+            }
+        } catch (LevelSevenException levelSevenException) {
+            try {
+                if (board.numberOfMonsterCards(player) < 2)
+                    throw new Exception("you have not enough monsters");
+                List<Card> cardsInMonsterZone = board.getCardInMonsterZone(player);
+                List<Card> selectedCards = getNeededCards(cardsInMonsterZone, 2);
+                GameController.getInstance().tributeSummonLevel7(selectedCards.get(0), selectedCards.get(1));
+                System.out.println("summoned successfully");
+            } catch (Exception e) {
+                new MyAlert(Alert.AlertType.ERROR, e.getMessage()).show();
+            }
+        } catch (Exception e) {
+            new MyAlert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
     }
 
     private void setNextPhaseImage() {
@@ -1233,7 +1241,7 @@ public class GameView implements GraphicalView {
             CardView cardView = (CardView) zone.getChildren().get(0);
             rotateTransition.setNode(cardView);
             flipAnimation.setNode(cardView);
-            rotateTransition.setByAngle(-90*i);
+            rotateTransition.setByAngle(-90 * i);
             rotateTransition.play();
             flipAnimation.play();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
@@ -1244,7 +1252,7 @@ public class GameView implements GraphicalView {
             assert zone != null;
             CardView cardView = (CardView) zone.getChildren().get(0);
             rotateTransition.setNode(cardView);
-            rotateTransition.setByAngle(90*i);
+            rotateTransition.setByAngle(90 * i);
             rotateTransition.play();
             cardView.setViewLocation(ViewLocation.MONSTER_OFFENSIVE);
             cardView.setImage(false, i < 0);
