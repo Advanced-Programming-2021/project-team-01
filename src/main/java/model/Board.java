@@ -306,6 +306,7 @@ public class Board {
     }
 
     public void summonCard(MonsterCard monsterCard, int player) throws Exception {
+        System.out.println(monsterCard.getName() + "*" + monsterCard.getCardType());
         if (monsterCard.getCardType() != CardType.RITUAL && GameController.getInstance().getState() != State.SPECIAL_SUMMON) {
             if (GameController.getInstance().isSummoned()) {
                 throw new AlreadySummonedError();

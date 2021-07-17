@@ -38,10 +38,8 @@ import model.networkLocators.BattleState;
 import model.networkLocators.CheatBattleAction;
 import view.transions.*;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class GameView implements GraphicalView {
@@ -75,7 +73,8 @@ public class GameView implements GraphicalView {
     boolean isPlaying = true;
     boolean isAttacking = false;
     int i = 1;
-    private Response currentResponse;
+    private LinkedBlockingQueue<Response> responses = new LinkedBlockingQueue<>();
+    //private Response currentResponse;
 
     private GameView() {
 
@@ -141,7 +140,32 @@ public class GameView implements GraphicalView {
             Client.getInstance().sendData(request.toString());
             return selectCardDialog.getSelectedCards();
         } else {
-            GetNeededCardResponse response = (GetNeededCardResponse) GameView.getInstance().getCurrentResponse();
+            GetNeededCardResponse response = null;
+            try {
+                response = (GetNeededCardResponse) GameView.getInstance().responses.take();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return response.getCards();
+        }
+    }
+
+    public static List<Card> selectedCardsWithSelectableDialog(List<Card> cards) {
+        if (GameController.getInstance().controllerNumber == GameController.getInstance().getCurrentPlayerNumber()) {
+            GameController.getInstance().getSelectedCard().lock();
+            SelectableDialog selectableDialog = new SelectableDialog(cards);
+            selectableDialog.showAndWait();
+            GameController.getInstance().getSelectedCard().unlock();
+            SendNeededCardsRequest request = new SendNeededCardsRequest(selectableDialog.getResult(), GameController.getOpponent().getUsername());
+            Client.getInstance().sendData(request.toString());
+            return selectableDialog.getResult();
+        } else {
+            GetNeededCardResponse response = null;
+            try {
+                response = (GetNeededCardResponse) GameView.getInstance().responses.take();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return response.getCards();
         }
     }
@@ -172,14 +196,6 @@ public class GameView implements GraphicalView {
         return yesNoDialog.getResult();
     }
 
-    public static List<Card> selectedCardsWithSelectableDialog(List<Card> cards) {
-        GameController.getInstance().getSelectedCard().lock();
-        SelectableDialog selectableDialog = new SelectableDialog(cards);
-        selectableDialog.showAndWait();
-        GameController.getInstance().getSelectedCard().unlock();
-        return selectableDialog.getResult();
-    }
-
     public void specialSummon() {
         Board board = gameController.getGameBoard();
         int player = gameController.getCurrentPlayerNumber();
@@ -195,12 +211,8 @@ public class GameView implements GraphicalView {
         }
     }
 
-    public Response getCurrentResponse() {
-        return currentResponse;
-    }
-
     public void setCurrentResponse(Response currentResponse) {
-        this.currentResponse = currentResponse;
+        responses.offer(currentResponse);
     }
 
     public void init(Pane root) {
