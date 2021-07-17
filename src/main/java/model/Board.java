@@ -915,7 +915,7 @@ public class Board {
     public void sendCardFromMonsterZoneToAnother(Card card, int fromPlayer, int toPlayer) {
         if (fromPlayer == 1) {
             for (int i = 1; i < 6; i++) {
-                if (playerOneMonsterZone[i].getCard() == card) {
+                if (playerOneMonsterZone[i].getCard().getName().equals(card.getName())) {
                     playerOneMonsterZone[i].setCard(null);
                     for (int j = 1; j < 6; j++) {
                         if (playerTwoMonsterZone[j].getCard() == null) {
@@ -929,7 +929,7 @@ public class Board {
             }
         } else if (fromPlayer == 2) {
             for (int i = 1; i < 6; i++) {
-                if (playerTwoMonsterZone[i].getCard() == card) {
+                if (playerTwoMonsterZone[i].getCard().getName().equals(card.getName())) {
                     playerTwoMonsterZone[i].setCard(null);
                     for (int j = 1; j < 6; j++) {
                         if (playerOneMonsterZone[j].getCard() == null) {
