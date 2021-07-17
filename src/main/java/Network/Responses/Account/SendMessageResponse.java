@@ -13,6 +13,7 @@ public class SendMessageResponse extends Response {
     @Override
     public void handleRequest() {
         SendMessageRequest request = (SendMessageRequest) super.request;
+        request.getMessage().setProfileNum(Server.getLoggedInUsers().get(request.getAuthToken()).getProfile());
         Server.getMessages().add(request.getMessage());
         for (String username : Server.getChatRoomOnlineUsernames()) {
             Server.getClientHandlers().get(username).updateChatRoom(username);

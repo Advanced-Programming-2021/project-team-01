@@ -3,7 +3,7 @@ package Network.Server;
 public class Message {
     private String sender;
     private String content;
-    private int ID;
+    private int ID, profileNum;
     private static int idCounter;
 
     public Message(String sender, String content) {
@@ -22,5 +22,13 @@ public class Message {
 
     public int getID() {
         return ID;
+    }
+
+    public int getProfileNum() {
+        return profileNum;
+    }
+
+    public void setProfileNum(int profileNum) {
+        this.profileNum = profileNum;
     }
 }

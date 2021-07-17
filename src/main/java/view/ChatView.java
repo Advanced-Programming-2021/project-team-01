@@ -10,6 +10,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -26,8 +29,16 @@ public class ChatView implements GraphicalView {
 
     public void loadChatMessages(ArrayList<Message> messages) {
         messagesVBox.getChildren().clear();
-        for (Message message : messages)
-            messagesVBox.getChildren().add(new ChatLabel(message));
+        for (Message message : messages) {
+            HBox hBox = new HBox();
+            ImageView profileView = new ImageView(new Image(getClass().getResource(
+                    "/Assets/ProfileDatabase/Chara001.dds" + String.valueOf(message.getProfileNum())).toExternalForm()));
+            profileView.setFitHeight(10);
+            profileView.setFitWidth(10);
+            hBox.setSpacing(10);
+            hBox.getChildren().addAll(profileView, new ChatLabel(message));
+            messagesVBox.getChildren().add(hBox);
+        }
     }
 
     @FXML

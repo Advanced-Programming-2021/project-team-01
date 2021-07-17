@@ -1,6 +1,7 @@
-package Network.Responses;
+package Network.Responses.Account;
 
 import Network.Requests.Request;
+import Network.Responses.Response;
 import Network.Server.Message;
 import Network.Server.Server;
 import view.ChatView;
