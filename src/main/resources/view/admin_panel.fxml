@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXSlider?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.AdminPanelView"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox translateX="170" translateY="100" spacing="20" alignment="CENTER">
+        <ChoiceBox fx:id="cardsChoiceBox"/>
+        <JFXSlider fx:id="slider"/>
+        <Button fx:id="decreaseButton" text="Decrease" onMouseClicked="#decreaseCardAmount" prefWidth="120"/>
+        <Button fx:id="increaseButton" text="Increase" onMouseClicked="#increaseCardAmount" prefWidth="120"/>
+        <Button fx:id="activateButton" text="Change allowance" onMouseClicked="#allowCard" prefWidth="120"/>
+        <Button fx:id="exitButton" text="Exit" onMouseClicked="#exit" prefWidth="120"/>
+    </VBox>
+</AnchorPane>

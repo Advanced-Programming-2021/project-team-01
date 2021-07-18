@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+import model.AdminCard;
 import model.Deck;
 import model.Player;
 import model.card.*;
@@ -19,6 +20,7 @@ public class DatabaseController {
         FileReader fileReader = new FileReader(file);
         CSVReader reader = new CSVReader(fileReader);
 
+        AdminCard.loadAdminCards();
         String[] monsterArray = reader.readNext();
         while ((monsterArray = reader.readNext()) != null) {
             Card.addCardToDatabase(new MonsterCard(monsterArray[0], monsterArray[7], Integer.parseInt(monsterArray[8]),
@@ -42,7 +44,7 @@ public class DatabaseController {
         }
         fileReader.close();
         reader.close();
-        addExportFolderFiles();
+        //addExportFolderFiles();
     }
 
     private static String getUserDirectory(String username) {

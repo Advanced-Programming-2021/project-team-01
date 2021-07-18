@@ -36,12 +36,14 @@ public class ViewSwitcher {
                     });
                     currentView = fxmlLoader.getController();
                     currentView.init(root);
+                    break;
                 }
                 case PROFILE:{
                     currentView = fxmlLoader.getController();
                     Client.getInstance().sendData(new ProfileInfoRequest(Client.getInstance().getToken()).toString());
                     break;
                 }
+                case ADMIN_PANEL:
                 case SCOREBOARD:
                 case LOGIN:
                 case DECK:

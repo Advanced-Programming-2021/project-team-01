@@ -124,7 +124,11 @@ public class MainView implements GraphicalView {
     @FXML
     private void startChatView() { ViewSwitcher.switchTo(View.CHAT); }
 
+    @FXML
     public void startCardCreator(MouseEvent event) {
         ViewSwitcher.switchTo(View.CARD_CREATOR);
     }
+
+    @FXML
+    public void startAdminView(MouseEvent mouseEvent) { ViewSwitcher.switchTo(View.ADMIN_PANEL);}
 }
