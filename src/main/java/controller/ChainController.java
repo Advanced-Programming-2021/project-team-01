@@ -47,13 +47,15 @@ public class ChainController {
         } else {
             hasSended = true;
             BattleActionRequest request = new BattleActionRequest(Client.getInstance().getToken(),
-                    GameController.getCurrentPlayer().getUsername(), GameView.getInstance().currentAction);
+                    GameController.getCurrentPlayer().getUsername(), GameView.getInstance().lastBattleAction);
             Client.getInstance().sendData(request.toString());
             waitingDialog = new WaitingDialog();
             waitingDialog.showAndWait();
             System.out.println("dododo2");
+            System.out.println(GameView.getInstance().lastBattleAction);
             ActivateChainResponse response = (ActivateChainResponse) GameView.getInstance().getResponses().take();
-            if (response.shouldActive)
+            System.out.println(response.shouldActive);
+            if (response.shouldActive);
                 start();
         }
         back();

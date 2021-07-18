@@ -6,14 +6,17 @@ import Network.Requests.Account.*;
 import Network.Requests.Battle.ActivateChainRequest;
 import Network.Requests.Battle.BattleActionRequest;
 import Network.Requests.Battle.SendNeededCardsRequest;
+import Network.Requests.Battle.UpdateActionRequest;
 import Network.Responses.*;
 import Network.Responses.Account.*;
 import Network.Responses.Battle.ActivateChainResponse;
 import Network.Responses.Battle.BattleActionResponse;
 import Network.Responses.Battle.GetNeededCardResponse;
+import Network.Responses.Battle.UpdateActionResponse;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import model.networkLocators.BattleAction;
 
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -26,6 +29,7 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private PrintWriter out;
     private Scanner in;
+
 
     //Server Side: handle requests that come from clients
 
@@ -149,6 +153,14 @@ public class ClientHandler extends Thread {
             clientHandler.out.flush();
             return;
         }
+//        else if (request instanceof UpdateActionRequest){
+//            response = new UpdateActionResponse(request);
+//            response.handleRequest();
+//            ClientHandler clientHandler = Server.getClientHandlers().get(((UpdateActionRequest) request).getOpponentUsername());
+//            clientHandler.out.println(gson.toJson(response));
+//            clientHandler.out.flush();
+//            return;
+//        }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));
         out.flush();

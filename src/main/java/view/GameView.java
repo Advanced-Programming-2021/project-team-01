@@ -4,6 +4,7 @@ import Network.Client.Client;
 import Network.Requests.Battle.ActivateChainRequest;
 import Network.Requests.Battle.BattleActionRequest;
 import Network.Requests.Battle.SendNeededCardsRequest;
+import Network.Requests.Battle.UpdateActionRequest;
 import Network.Responses.Battle.GetNeededCardResponse;
 import Network.Responses.Response;
 import controller.GameController;
@@ -54,6 +55,7 @@ public class GameView implements GraphicalView {
     static StackPane imageCard;
     static ScrollPane cardInformation;
     private static GameView instance;
+    public BattleAction lastBattleAction;
     ImageView phase;
     ImageView nextPhaseButton;
     StackPane playerOneHealthBar;
@@ -80,12 +82,12 @@ public class GameView implements GraphicalView {
     boolean isAttacking = false;
     int i = 1;
     private LinkedBlockingQueue<Response> responses = new LinkedBlockingQueue<>();
+    //private Response currentResponse;
 
     private GameView() {
 
 
     }
-    //private Response currentResponse;
 
     public static GameView getInstance() {
         if (instance == null) instance = new GameView();
@@ -323,7 +325,6 @@ public class GameView implements GraphicalView {
         }
     }
 
-
     public void showDirectAttack() {
         Image image = new Image(getClass().getResource("/view/2.gif").toExternalForm());
         ImageView imageView = new ImageView(image);
@@ -534,21 +535,25 @@ public class GameView implements GraphicalView {
             new MyAlert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
-    public BattleAction currentAction;
+
+    public void setLastBattleAction(BattleAction lastBattleAction) {
+        this.lastBattleAction = lastBattleAction;
+        UpdateActionRequest request = new UpdateActionRequest(GameController.getOpponent().getUsername(),lastBattleAction);
+        Client.getInstance().sendData(request.toString());
+    }
+
     public void sendRequest(BattleAction battleAction) {
         try {
-            currentAction = battleAction;
+            setLastBattleAction(battleAction);
             doAction(battleAction);
             if (GameController.getInstance().getChainController() != null &&
-                    GameController.getInstance().getChainController().hasSended()){
+                    GameController.getInstance().getChainController().hasSended()) {
                 GameController.getInstance().getChainController().setHasSended(false);
-                currentAction = null;
                 return;
             }
             BattleActionRequest request = new BattleActionRequest(Client.getInstance().getToken(),
                     GameController.getOpponent().getUsername(), battleAction);
             Client.getInstance().sendData(request.toString());
-            currentAction = null;
         } catch (Exception e) {
             new MyAlert(Alert.AlertType.ERROR, e.getMessage()).show();
             e.printStackTrace();

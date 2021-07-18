@@ -3,6 +3,7 @@ package model;
 import Network.Server.Server;
 import controller.DatabaseController;
 import model.card.Card;
+import model.networkLocators.BattleAction;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -16,6 +17,11 @@ public class OnlineGame {
     Deck opponentDeck;
     int starterPlayer;
     private int noOfRounds;
+    private BattleAction lastBattleAction;
+
+    public void setLastBattleAction(BattleAction lastBattleAction) {
+        this.lastBattleAction = lastBattleAction;
+    }
 
     public OnlineGame(String challenger, String opponent, int starterPlayer, int noOfRounds) {
         this.challenger = DatabaseController.getUserByName(challenger);

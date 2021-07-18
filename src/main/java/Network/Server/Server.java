@@ -20,7 +20,7 @@ public class Server extends Application {
     private static final int port = 12345;
     private static final HashMap<String, Player> loggedInUsers = new HashMap<>();
     private static final HashMap<String, ClientHandler> clientHandlers = new HashMap<>();
-    private static final HashMap<String, OnlineGame> onlineGames = new HashMap<String, OnlineGame>();
+    private static final HashMap<String, OnlineGame> onlineGames = new HashMap<>();
     private static final List<Message> messages = new ArrayList<>();
     private static final List<String> chatRoomOnlineUsernames = new ArrayList<>();
 
