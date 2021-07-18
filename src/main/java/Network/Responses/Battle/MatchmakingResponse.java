@@ -24,8 +24,9 @@ public class MatchmakingResponse extends Response {
                 StartOnlineDuelRequest startOnlineDuelRequest = new StartOnlineDuelRequest(Server.getOneRoundGames().get(0),
                         Server.getLoggedInUsers().get(Server.getOneRoundGames().get(1)).getUsername(),
                         trueRequest.getNumberOfRounds(),
-                        true); // TODO: a simple coin toss by the server!
+                        false); // TODO: a simple coin toss by the server!
                 StartOnlineDuelResponse response = new StartOnlineDuelResponse(startOnlineDuelRequest);
+                response.handleRequest();
                 String username = ((StartOnlineDuelRequest) response.getRequest()).getOpponentUsername();
                 ClientHandler clientHandler = Server.getClientHandlers().get(username);
                 clientHandler.out.println(ClientHandler.gson.toJson(response));

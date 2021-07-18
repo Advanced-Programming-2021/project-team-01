@@ -156,7 +156,7 @@ public class ClientHandler extends Thread {
             response = new MatchmakingResponse(request);
             response.handleRequest();
         }
-            Logger.log("Sent: " + response);
+        Logger.log("Sent: " + response);
         out.println(gson.toJson(response));
         out.flush();
     }
