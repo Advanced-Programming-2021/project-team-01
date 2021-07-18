@@ -45,7 +45,7 @@ public class ChainController {
             if (GameView.getYesOrNo(GameController.currentPlayer.getNickname() + ",Do you want to activate your trap and spell?"))
                 start();
         } else {
-            hasSended = true;
+            GameView.getInstance().hasSent = true;
             BattleActionRequest request = new BattleActionRequest(Client.getInstance().getToken(),
                     GameController.getCurrentPlayer().getUsername(), GameView.getInstance().lastBattleAction);
             Client.getInstance().sendData(request.toString());

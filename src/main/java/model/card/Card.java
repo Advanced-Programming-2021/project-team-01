@@ -120,13 +120,14 @@ public abstract class Card {
         if (commands == null) {
             commands = new ArrayList<>();
         }
+        if (commands.size() == 1)
+            return;
         commands.add(command);
     }
 
     public void addCommands() {
         if (commands == null)
             commands = new ArrayList<>();
-
     }
 
     public int getPrice() {

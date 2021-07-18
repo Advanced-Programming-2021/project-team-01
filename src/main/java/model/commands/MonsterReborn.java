@@ -16,6 +16,7 @@ public class MonsterReborn extends Command implements Activate {
     public MonsterReborn(Card card) {
         super(card);
     }
+
     @Override
     public void run() throws InvalidCommandException, MonsterZoneFull {
         board = gameController.getGameBoard();
@@ -33,10 +34,7 @@ public class MonsterReborn extends Command implements Activate {
     public boolean canActivate() throws Exception {
         board = gameController.getGameBoard();
         boolean canActivate;
-        if (gameController.getCurrentPlayerNumber() == 1)
-            canActivate = board.getPlayerOneGraveYard().size() != 0;
-        else
-            canActivate = board.getPlayerTwoGraveYard().size() != 0;
+        canActivate = board.getPlayerTwoGraveYard().size() + board.getPlayerOneGraveYard().size() != 0;
         boolean correctPhase = gameController.getGamePhase() == GamePhase.MAIN_PHASE1 ||
                 gameController.getGamePhase() == GamePhase.MAIN_PHASE2 ||
                 gameController.getGamePhase() == GamePhase.BATTLE_PHASE;

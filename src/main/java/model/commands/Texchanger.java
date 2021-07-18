@@ -65,7 +65,7 @@ public class Texchanger extends Command implements Activate {
         groups.addAll(graveyard);
         if (groups.isEmpty()) {
             canSummon = false;
-            return false;
+            return true;
         }
         canSummon = true;
         shouldSummon = GameView.getNeededCards(groups,1).get(0);

@@ -56,6 +56,7 @@ public class GameView implements GraphicalView {
     static ScrollPane cardInformation;
     private static GameView instance;
     public BattleAction lastBattleAction;
+    public boolean hasSent;
     ImageView phase;
     ImageView nextPhaseButton;
     StackPane playerOneHealthBar;
@@ -544,11 +545,10 @@ public class GameView implements GraphicalView {
 
     public void sendRequest(BattleAction battleAction) {
         try {
+            hasSent = false;
             setLastBattleAction(battleAction);
             doAction(battleAction);
-            if (GameController.getInstance().getChainController() != null &&
-                    GameController.getInstance().getChainController().hasSended()) {
-                GameController.getInstance().getChainController().setHasSended(false);
+            if (hasSent) {
                 return;
             }
             BattleActionRequest request = new BattleActionRequest(Client.getInstance().getToken(),
@@ -561,11 +561,10 @@ public class GameView implements GraphicalView {
             if (battleAction.getBattleState() == BattleState.ATTACK) {
                 targetCard = null;
                 isAttacking = false;
-                GameController.getInstance().getSelectedCard().unlock();
                 GameController.getInstance().getGameBoard().showBoard();
             }
+            GameController.getInstance().getSelectedCard().unlock();
         }
-
     }
 
     public void doAction(BattleAction battleAction) throws Exception {
@@ -665,8 +664,6 @@ public class GameView implements GraphicalView {
     private void attackAction(BattleAction battleAction) throws Exception {
         SelectedCard selectedCard = GameController.getInstance().getSelectedCard();
         selectedCard.set(GameController.getInstance().getGameBoard().getCardFromMonsterZone(battleAction.getIndex(), battleAction.getPlayerNumber()));
-        selectedCard.setIndex(battleAction.getIndex());
-        selectedCard.setPlayer((battleAction.getPlayerNumber() == 1) ? GameController.getPlayerOne() : GameController.getPlayerTwo());
         String response = GameController.getInstance().attack(battleAction.getIndex());
         System.out.println(response);
         new MyAlert(Alert.AlertType.INFORMATION, response).show();
