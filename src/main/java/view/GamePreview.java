@@ -1,6 +1,8 @@
 package view;
 
 import Network.Client.Client;
+import Network.Requests.Battle.CancelMatchMakingRequest;
+import Network.Requests.Battle.NewMatchmakingRequest;
 import Network.Requests.StartOnlineDuelRequest;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -13,9 +15,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import model.Player;
+import view.transions.SuperWaitingDialog;
+import view.transions.WaitingDialog;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -31,6 +36,10 @@ public class GamePreview implements  GraphicalView{
     public JFXTextField roundNumAI;
     public StackPane coinStackPane;
     public ChoiceBox<String> roundChoiceBox;
+    public ChoiceBox<String> roundNumberChoiceBox;
+    public JFXButton sendRequest;
+    public JFXButton cancelRequest;
+    public SuperWaitingDialog superWaitingDialog;
     private boolean isCoinTossed = false, isUserFirstPlayer;
     private ImageView headImage = new ImageView(new Image(getClass().getResource("HeadToss.gif").toExternalForm()));
     private ImageView tailImage = new ImageView(new Image(getClass().getResource("TailToss.gif").toExternalForm()));
@@ -117,4 +126,13 @@ public class GamePreview implements  GraphicalView{
         int result = random.nextInt() % 2;
         return result < 0 ? -1 * result : result;
     }
+
+    public void sendRequest(MouseEvent event) {
+        int numberOfRounds = Integer.parseInt(roundNumberChoiceBox.getValue());
+        NewMatchmakingRequest request = new NewMatchmakingRequest(Client.getInstance().getToken(),numberOfRounds);
+        Client.getInstance().sendData(request.toString());
+        superWaitingDialog = new SuperWaitingDialog();
+        superWaitingDialog.showAndWait();
+    }
+
 }

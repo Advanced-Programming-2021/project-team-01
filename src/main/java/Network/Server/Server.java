@@ -23,6 +23,8 @@ public class Server extends Application {
     private static final HashMap<String, OnlineGame> onlineGames = new HashMap<>();
     private static final List<Message> messages = new ArrayList<>();
     private static final List<String> chatRoomOnlineUsernames = new ArrayList<>();
+    private static final List<String> oneRoundGames = new ArrayList<>();
+    private static final List<String> threeRoundGames = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
         DatabaseController.loadGameCards();
@@ -69,6 +71,14 @@ public class Server extends Application {
 
     public static List<String> getChatRoomOnlineUsernames() {
         return chatRoomOnlineUsernames;
+    }
+
+    public static List<String> getOneRoundGames() {
+        return oneRoundGames;
+    }
+
+    public static List<String> getThreeRoundGames() {
+        return threeRoundGames;
     }
 
     @Override

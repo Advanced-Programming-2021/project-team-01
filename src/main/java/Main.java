@@ -18,7 +18,7 @@ public class Main extends Application {
         GameController.getInstance();
         Logger.set();
         Client.setInstance(12345);
-        ViewSwitcher.setStage(primaryStage);
+        ViewSwitcher.setStage (primaryStage);
         ViewSwitcher.switchTo(View.LOGIN);
     }
 }

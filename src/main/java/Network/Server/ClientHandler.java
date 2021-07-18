@@ -3,20 +3,13 @@ package Network.Server;
 
 import Network.Requests.*;
 import Network.Requests.Account.*;
-import Network.Requests.Battle.ActivateChainRequest;
-import Network.Requests.Battle.BattleActionRequest;
-import Network.Requests.Battle.SendNeededCardsRequest;
-import Network.Requests.Battle.UpdateActionRequest;
+import Network.Requests.Battle.*;
 import Network.Responses.*;
 import Network.Responses.Account.*;
-import Network.Responses.Battle.ActivateChainResponse;
-import Network.Responses.Battle.BattleActionResponse;
-import Network.Responses.Battle.GetNeededCardResponse;
-import Network.Responses.Battle.UpdateActionResponse;
+import Network.Responses.Battle.*;
 import Network.Utils.Logger;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
-import model.networkLocators.BattleAction;
 
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -27,8 +20,8 @@ public class ClientHandler extends Thread {
     public static YaGsonBuilder gsonBuilder = new YaGsonBuilder();
     public static YaGson gson = gsonBuilder.create();
     private Socket socket;
-    private PrintWriter out;
-    private Scanner in;
+    public PrintWriter out;
+    public Scanner in;
 
 
     //Server Side: handle requests that come from clients
@@ -113,7 +106,7 @@ public class ClientHandler extends Thread {
         } else if (request instanceof RemoveCardFromDeckRequest) {
             response = new RemoveCardFromDeckResponse(request);
             response.handleRequest();
-        } else if (request instanceof StartBattleSuccessfullyRequest){
+        } else if (request instanceof StartBattleSuccessfullyRequest) {
             startGame(request);
             return;
         } else if (request instanceof BattleActionRequest) {
@@ -145,22 +138,25 @@ public class ClientHandler extends Thread {
         } else if (request instanceof ScoreboardInfoRequest) {
             response = new ScoreboardInfoResponse(request);
             response.handleRequest();
-        } else if (request instanceof ActivateChainRequest){
+        } else if (request instanceof ActivateChainRequest) {
             response = new ActivateChainResponse(request);
             response.handleRequest();
             ClientHandler clientHandler = Server.getClientHandlers().get(((ActivateChainRequest) request).getOpponent());
             clientHandler.out.println(gson.toJson(response));
             clientHandler.out.flush();
             return;
-        } else if (request instanceof UpdateActionRequest){
+        } else if (request instanceof UpdateActionRequest) {
             response = new UpdateActionResponse(request);
             response.handleRequest();
             ClientHandler clientHandler = Server.getClientHandlers().get(((UpdateActionRequest) request).getOpponentUsername());
             clientHandler.out.println(gson.toJson(response));
             clientHandler.out.flush();
             return;
+        } else if (request instanceof NewMatchmakingRequest) {
+            response = new MatchmakingResponse(request);
+            response.handleRequest();
         }
-        Logger.log("Sent: " + response);
+            Logger.log("Sent: " + response);
         out.println(gson.toJson(response));
         out.flush();
     }

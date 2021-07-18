@@ -11,6 +11,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.collections.FXCollections?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.GamePreview"
@@ -19,13 +20,22 @@
         <URL value="@gamepreview.css"/>
     </stylesheets>
     <JFXTabPane styleClass="tab" translateX="400" translateY="300">
-        <Tab text="AI" styleClass="tabTop">
+        <Tab text="matchmaking" styleClass="tabTop">
             <VBox styleClass="vBoxTop" spacing="20">
-                <JFXTextField fx:id="roundNumAI" styleClass="writeBox" promptText="Number of rounds:" prefWidth="100"/>
-                <JFXButton fx:id="playWithAIButton" buttonType="RAISED" text="Play" styleClass="button1" onMouseClicked="#startGameWithAI"/>
+                <ChoiceBox fx:id="roundNumberChoiceBox" prefWidth="200" styleClass="choice-box">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="1" />
+                            <String fx:value="3" />
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+                <HBox translateX="140" spacing="20">
+                    <JFXButton fx:id="sendRequest" buttonType="RAISED" text="Duel!" styleClass="button1" onMouseClicked="#sendRequest"/>
+                </HBox>
             </VBox>
         </Tab>
-        <Tab text="MultiPlayer" styleClass="tabTop">
+        <Tab text="invitation" styleClass="tabTop">
             <VBox styleClass="vBoxTop" spacing="15">
                 <JFXTextField fx:id="opponentUsername" styleClass="writeBox" promptText="Opponent's username:" prefWidth="100"/>
                 <ChoiceBox fx:id="roundChoiceBox" prefWidth="200" styleClass="choice-box"/>
