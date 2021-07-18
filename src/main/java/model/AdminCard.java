@@ -28,16 +28,8 @@ public class AdminCard {
         return amount;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
     public boolean isAllowed() {
         return isAllowed;
-    }
-
-    public void setAllowed(boolean allowed) {
-        isAllowed = allowed;
     }
 
     public String getCardName() {
@@ -65,7 +57,54 @@ public class AdminCard {
     public static void decreaseCardAmount(String cardName, int amount) {
         for (AdminCard adminCard : adminCards) {
             if (adminCard.cardName.equals(cardName)) {
-                adminCard.amount -= amount;
+                if (adminCard.amount - amount < 0) adminCard.amount = 0;
+                else {
+                    adminCard.amount -= amount;
+                    FileWriter fileWriter = null;
+                    try {
+                        fileWriter = new FileWriter("src/resources/Creator/AdminDatabase.json");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Gson gson = new Gson();
+                    gson.toJson(adminCards, fileWriter);
+                    try {
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return;
+                }
+            }
+        }
+    }
+
+    public static void increaseCardAmount(String cardName, int amount) {
+        for (AdminCard adminCard : adminCards) {
+            if (adminCard.cardName.equals(cardName)) {
+                adminCard.amount += amount;
+                FileWriter fileWriter = null;
+                try {
+                    fileWriter = new FileWriter("src/resources/Creator/AdminDatabase.json");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Gson gson = new Gson();
+                gson.toJson(adminCards, fileWriter);
+                try {
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return;
+            }
+        }
+    }
+
+    public static void setAllowed(String cardName) {
+        for (AdminCard adminCard : adminCards) {
+            if (adminCard.cardName.equals(cardName)) {
+                adminCard.isAllowed = !adminCard.isAllowed;
                 FileWriter fileWriter = null;
                 try {
                     fileWriter = new FileWriter("src/resources/Creator/AdminDatabase.json");

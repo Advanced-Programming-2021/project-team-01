@@ -43,6 +43,7 @@ public class ViewSwitcher {
                     Client.getInstance().sendData(new ProfileInfoRequest(Client.getInstance().getToken()).toString());
                     break;
                 }
+                case ADMIN_PANEL:
                 case SCOREBOARD:
                 case LOGIN:
                 case DECK:

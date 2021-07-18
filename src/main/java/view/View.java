@@ -12,7 +12,8 @@ public enum View {
     PRE_GAME("GamePreview.fxml"),
     GAME_VIEW("GameView.fxml"),
     CARD_CREATOR("card_creator.fxml"),
-    CHAT("chat.fxml");
+    CHAT("chat.fxml"),
+    ADMIN_PANEL("admin_panel.fxml");
 
     private String fileName;
 
