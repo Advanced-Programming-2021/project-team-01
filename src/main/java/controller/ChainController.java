@@ -55,7 +55,7 @@ public class ChainController {
             System.out.println(GameView.getInstance().lastBattleAction);
             ActivateChainResponse response = (ActivateChainResponse) GameView.getInstance().getResponses().take();
             System.out.println(response.shouldActive);
-            if (response.shouldActive);
+            if (response.shouldActive)
                 start();
         }
         back();
