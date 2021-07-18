@@ -48,14 +48,6 @@ public class GamePreview implements  GraphicalView{
     public void init(Pane root) {
         roundChoiceBox.getItems().addAll("1", "3");
     }
-    
-    @FXML
-    private void startGameWithAI() throws Exception {
-        if (isNumberOfRoundsValid(roundNumAI.getText())) {
-            //GameController.getInstance().startGame("AI", Integer.parseInt(roundNumAI.getText()));
-        } else
-            new MyAlert(Alert.AlertType.WARNING, "Number of rounds not supported.").show();
-    }
 
     @FXML
     private void startGameWithOpponent() throws Exception {

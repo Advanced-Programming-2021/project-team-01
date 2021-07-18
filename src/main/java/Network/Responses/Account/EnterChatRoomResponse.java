@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class EnterChatRoomResponse extends Response {
     ArrayList<Message> messages;
     String username;
+    int numberOfOnlineUsers;
 
     public EnterChatRoomResponse(Request request) {
         super(request);
@@ -21,6 +22,7 @@ public class EnterChatRoomResponse extends Response {
     @Override
     public void handleRequest() {
         Server.getChatRoomOnlineUsernames().add(Server.getLoggedInUsers().get(request.getAuthToken()).getUsername());
+        numberOfOnlineUsers = Server.getLoggedInUsers().size();
         username = Server.getLoggedInUsers().get(request.getAuthToken()).getUsername();
     }
 

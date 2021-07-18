@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
 <?import java.net.URL?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
-<?import com.jfoenix.controls.JFXScrollPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.ChatView"
-            styleClass="background1"
-            prefHeight="627.0" prefWidth="525.0">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="627.0" prefWidth="525.0" styleClass="background1" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ChatView">
     <stylesheets>
-        <URL value="@chat.css"/>
+        <URL value="@chat.css" />
     </stylesheets>
-    <ImageView fitWidth="50" fitHeight="50" translateX="20" translateY="20" styleClass="button"
-               onMouseClicked="#exit">
-        <Image url="@LeftArrow.png"/>
+    <ImageView fitHeight="50" fitWidth="50" onMouseClicked="#exit" styleClass="button" translateX="20" translateY="20">
+        <Image url="@LeftArrow.png" />
     </ImageView>
-    <AnchorPane prefWidth="480" prefHeight="550" translateX="30" translateY="50">
-        <ScrollPane fx:id="scrollPane" styleClass="scroll-pane" translateX="20" translateY="70" prefWidth="400" prefHeight="400">
-            <VBox fx:id="messagesVBox" spacing="20"/>
+    <AnchorPane prefHeight="550" prefWidth="480" translateX="30" translateY="50">
+        <ScrollPane fx:id="scrollPane" prefHeight="400" prefWidth="400" styleClass="scroll-pane" translateX="20" translateY="70">
+            <VBox fx:id="messagesVBox" spacing="20" />
         </ScrollPane>
-        <TextArea fx:id="messageField" layoutX="15.0" layoutY="490.0" prefHeight="30.0" prefWidth="337.0" promptText="Type your message" wrapText="true"/>
-        <ImageView fitWidth="50" fitHeight="50" layoutX="380" layoutY="485" styleClass="button" onMouseClicked="#sendMessage">
-            <Image url="@SendMessage.png"/>
+        <TextArea fx:id="messageField" layoutX="15.0" layoutY="490.0" prefHeight="30.0" prefWidth="337.0" promptText="Type your message" wrapText="true" />
+        <ImageView fitHeight="50" fitWidth="50" layoutX="380" layoutY="485" onMouseClicked="#sendMessage" styleClass="button">
+            <Image url="@SendMessage.png" />
         </ImageView>
     </AnchorPane>
+    <HBox alignment="CENTER_LEFT" layoutX="343.0" layoutY="20.0" prefHeight="18.0" prefWidth="166.0">
+        <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Online Users : " wrappingWidth="140.53668212890625" />
+            <Text fx:id="numberOfOnlineUsers" fill="#00ff11" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="18.936767578125" />
+        </children>
+    </HBox>
 </AnchorPane>
