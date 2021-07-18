@@ -2,14 +2,14 @@ package model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.opencsv.exceptions.CsvValidationException;
-import controller.DatabaseController;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdminCard {
     int amount;
@@ -44,16 +44,43 @@ public class AdminCard {
         return cardName;
     }
 
-    public void setCardName(String cardName) {
-        this.cardName = cardName;
-    }
-
-    public void loadAdminCards() {
+    public static void loadAdminCards() {
+        FileReader fileReader = null;
         try {
-            FileReader fileReader = new FileReader("src/resources/Creator/AdminDatabase.json");
+            fileReader = new FileReader("src/resources/Creator/AdminDatabase.json");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         GsonBuilder gsonBuilder = new GsonBuilder();
+        adminCards = gsonBuilder.create().fromJson(fileReader, new TypeToken<List<AdminCard>>(){}.getType());
+    }
+
+    public static AdminCard getCardByName(String cardName) {
+        for (AdminCard adminCard : adminCards) {
+            if (adminCard.cardName.equals(cardName)) return adminCard;
+        }
+        return null;
+    }
+
+    public static void decreaseCardAmount(String cardName, int amount) {
+        for (AdminCard adminCard : adminCards) {
+            if (adminCard.cardName.equals(cardName)) {
+                adminCard.amount -= amount;
+                FileWriter fileWriter = null;
+                try {
+                    fileWriter = new FileWriter("src/resources/Creator/AdminDatabase.json");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Gson gson = new Gson();
+                gson.toJson(adminCards, fileWriter);
+                try {
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return;
+            }
+        }
     }
 }

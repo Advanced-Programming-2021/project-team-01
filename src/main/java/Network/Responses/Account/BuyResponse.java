@@ -7,6 +7,7 @@ import Network.Server.Server;
 import controller.DatabaseController;
 import controller.exceptions.CardNameNotExists;
 import controller.exceptions.NotEnoughMoney;
+import model.AdminCard;
 import model.card.Card;
 import view.ShopView;
 import view.ViewSwitcher;
@@ -32,8 +33,17 @@ public class BuyResponse extends Response {
             exception = new NotEnoughMoney();
             return;
         }
+        if (!AdminCard.getCardByName(buyRequest.getCardName()).isAllowed()) {
+            exception = new Exception("Not allowed");
+            return;
+        }
+        if (AdminCard.getCardByName(buyRequest.getCardName()).getAmount() < 1) {
+            exception = new Exception("Not available");
+            return;
+        }
         Server.getLoggedInUsers().get(buyRequest.getAuthToken()).decreaseMoney(card.getPrice());
         Server.getLoggedInUsers().get(buyRequest.getAuthToken()).addCardToPlayerCards(card.getName());
+        AdminCard.decreaseCardAmount(buyRequest.getCardName(), 1);
     }
 
     @Override

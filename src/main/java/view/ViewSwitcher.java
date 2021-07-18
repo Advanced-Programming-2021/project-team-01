@@ -36,6 +36,7 @@ public class ViewSwitcher {
                     });
                     currentView = fxmlLoader.getController();
                     currentView.init(root);
+                    break;
                 }
                 case PROFILE:{
                     currentView = fxmlLoader.getController();
