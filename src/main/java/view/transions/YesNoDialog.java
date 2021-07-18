@@ -38,14 +38,14 @@ public class YesNoDialog extends Dialog<Boolean> {
         yesButton.setPrefHeight(40);
         yesButton.setOnMouseClicked(event -> {
             setResult(true);
-            close();
+            this.close();
         });
 
         noButton.setPrefWidth(80);
         noButton.setPrefHeight(40);
         noButton.setOnMouseClicked(event -> {
             setResult(false);
-            close();
+            this.close();
         });
 
         Label label = new Label(prompt);

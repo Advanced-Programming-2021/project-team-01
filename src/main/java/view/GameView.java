@@ -80,12 +80,12 @@ public class GameView implements GraphicalView {
     boolean isAttacking = false;
     int i = 1;
     private LinkedBlockingQueue<Response> responses = new LinkedBlockingQueue<>();
-    //private Response currentResponse;
 
     private GameView() {
 
 
     }
+    //private Response currentResponse;
 
     public static GameView getInstance() {
         if (instance == null) instance = new GameView();
@@ -170,9 +170,13 @@ public class GameView implements GraphicalView {
     public static boolean getYesOrNo(String prompt) {
         YesNoDialog yesNoDialog = new YesNoDialog(prompt);
         yesNoDialog.showAndWait();
-        ActivateChainRequest activateChainRequest = new ActivateChainRequest(GameController.getOpponent().getUsername(),yesNoDialog.getResult());
+        ActivateChainRequest activateChainRequest = new ActivateChainRequest(GameController.getOpponent().getUsername(), yesNoDialog.getResult());
         Client.getInstance().sendData(activateChainRequest.toString());
         return yesNoDialog.getResult();
+    }
+
+    public LinkedBlockingQueue<Response> getResponses() {
+        return responses;
     }
 
     public void flipSummonCard() {
@@ -530,15 +534,24 @@ public class GameView implements GraphicalView {
             new MyAlert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
-
+    public BattleAction currentAction;
     public void sendRequest(BattleAction battleAction) {
         try {
+            currentAction = battleAction;
             doAction(battleAction);
+            if (GameController.getInstance().getChainController() != null &&
+                    GameController.getInstance().getChainController().hasSended()){
+                GameController.getInstance().getChainController().setHasSended(false);
+                currentAction = null;
+                return;
+            }
             BattleActionRequest request = new BattleActionRequest(Client.getInstance().getToken(),
                     GameController.getOpponent().getUsername(), battleAction);
             Client.getInstance().sendData(request.toString());
+            currentAction = null;
         } catch (Exception e) {
             new MyAlert(Alert.AlertType.ERROR, e.getMessage()).show();
+            e.printStackTrace();
         } finally {
             if (battleAction.getBattleState() == BattleState.ATTACK) {
                 targetCard = null;

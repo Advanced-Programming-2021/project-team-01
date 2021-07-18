@@ -4,10 +4,11 @@ import Network.Requests.Battle.ActivateChainRequest;
 import Network.Requests.Request;
 import Network.Responses.Response;
 import controller.GameController;
-import javafx.scene.control.Alert;
-import view.MyAlert;
 
 public class ActivateChainResponse extends Response {
+    public boolean shouldActive;
+    public boolean hasHandledResponse = false;
+
     public ActivateChainResponse(Request request) {
         super(request);
     }
@@ -20,12 +21,8 @@ public class ActivateChainResponse extends Response {
     @Override
     public void handleResponse() {
         ActivateChainRequest request1 = (ActivateChainRequest) request;
-        if (request1.getBoolean()) {
-            try {
-                GameController.getInstance().getChainController().start();
-            } catch (Exception e) {
-                new MyAlert(Alert.AlertType.ERROR, e.getMessage()).show();
-            }
-        }
+        shouldActive = request1.getBoolean();
+        hasHandledResponse = true;
+        GameController.getInstance().getChainController().waitingDialog.boroGomsho = Boolean.TRUE;
     }
 }

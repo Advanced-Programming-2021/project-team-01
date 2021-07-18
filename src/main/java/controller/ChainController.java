@@ -1,9 +1,11 @@
 package controller;
 
 import Network.Client.Client;
+import Network.Requests.Battle.BattleActionRequest;
 import Network.Responses.Battle.ActivateChainResponse;
 import console.ChainView;
 import javafx.collections.FXCollections;
+import javafx.scene.control.Alert;
 import model.Board;
 import model.Chain;
 import model.card.Card;
@@ -11,15 +13,20 @@ import model.card.Property;
 import model.card.SpellCard;
 import model.card.TrapCard;
 import view.GameView;
+import view.MyAlert;
+import view.transions.WaitingDialog;
 
 import java.util.List;
 
 public class ChainController {
+    public WaitingDialog waitingDialog;
     GameController gameController = GameController.getInstance();
     Chain chain;
+    private boolean hasSended;
 
     public ChainController(Chain chain) {
         this.chain = chain;
+        hasSended = false;
     }
 
     public Chain getChain() {
@@ -34,8 +41,19 @@ public class ChainController {
         }
         ChainView.printTurn(GameController.getCurrentPlayer());
         GameController.getInstance().getGameBoard().showBoard();
-        if (gameController.controllerNumber == gameController.getCurrentPlayerNumber()){
+        if (GameController.getInstance().controllerNumber == gameController.getCurrentPlayerNumber()) {
             if (GameView.getYesOrNo(GameController.currentPlayer.getNickname() + ",Do you want to activate your trap and spell?"))
+                start();
+        } else {
+            hasSended = true;
+            BattleActionRequest request = new BattleActionRequest(Client.getInstance().getToken(),
+                    GameController.getCurrentPlayer().getUsername(), GameView.getInstance().currentAction);
+            Client.getInstance().sendData(request.toString());
+            waitingDialog = new WaitingDialog();
+            waitingDialog.showAndWait();
+            System.out.println("dododo2");
+            ActivateChainResponse response = (ActivateChainResponse) GameView.getInstance().getResponses().take();
+            if (response.shouldActive)
                 start();
         }
         back();
@@ -93,5 +111,13 @@ public class ChainController {
         gameController.changeTurn();
         ChainView.printTurn(GameController.getCurrentPlayer());
         GameController.getInstance().getGameBoard().showBoard();
+    }
+
+    public boolean hasSended() {
+        return hasSended;
+    }
+
+    public void setHasSended(boolean hasSended) {
+        this.hasSended = hasSended;
     }
 }
