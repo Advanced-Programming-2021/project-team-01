@@ -152,15 +152,14 @@ public class ClientHandler extends Thread {
             clientHandler.out.println(gson.toJson(response));
             clientHandler.out.flush();
             return;
+        } else if (request instanceof UpdateActionRequest){
+            response = new UpdateActionResponse(request);
+            response.handleRequest();
+            ClientHandler clientHandler = Server.getClientHandlers().get(((UpdateActionRequest) request).getOpponentUsername());
+            clientHandler.out.println(gson.toJson(response));
+            clientHandler.out.flush();
+            return;
         }
-//        else if (request instanceof UpdateActionRequest){
-//            response = new UpdateActionResponse(request);
-//            response.handleRequest();
-//            ClientHandler clientHandler = Server.getClientHandlers().get(((UpdateActionRequest) request).getOpponentUsername());
-//            clientHandler.out.println(gson.toJson(response));
-//            clientHandler.out.flush();
-//            return;
-//        }
         Logger.log("Sent: " + response);
         out.println(gson.toJson(response));
         out.flush();
