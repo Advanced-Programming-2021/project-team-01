@@ -43,7 +43,6 @@ public class ScoreboardInfoResponse extends Response {
         }
         for (int i = 0; i < players.size(); i++) {
             for (Map.Entry<String, Player> entry : Server.getLoggedInUsers().entrySet()) {
-                System.out.println("shit");
                 if (entry.getValue().getUsername().equals(players.get(i).getUsername())) {
                     isPlayerOnline.set(i, true);
                 }
