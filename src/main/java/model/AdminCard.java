@@ -45,9 +45,15 @@ public class AdminCard {
         }
         GsonBuilder gsonBuilder = new GsonBuilder();
         adminCards = gsonBuilder.create().fromJson(fileReader, new TypeToken<List<AdminCard>>(){}.getType());
+        try {
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static AdminCard getCardByName(String cardName) {
+        System.out.println("--->   "  + adminCards.get(0).cardName);
         for (AdminCard adminCard : adminCards) {
             if (adminCard.cardName.equals(cardName)) return adminCard;
         }

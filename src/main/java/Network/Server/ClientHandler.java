@@ -18,10 +18,12 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
+import static Network.Requests.Request.PRETTY_PRINT_JSON;
+
 public class ClientHandler extends Thread {
 
     public static YaGsonBuilder gsonBuilder = new YaGsonBuilder();
-    public static YaGson gson = gsonBuilder.create();
+    public static YaGson gson = PRETTY_PRINT_JSON;
     public PrintWriter out;
     public Scanner in;
     private Socket socket;
