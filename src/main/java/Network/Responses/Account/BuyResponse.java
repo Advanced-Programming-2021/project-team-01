@@ -23,6 +23,8 @@ public class BuyResponse extends Response {
 
     @Override
     public void handleRequest() {
+        AdminCard.adminCards.clear();
+        AdminCard.loadAdminCards();
         BuyRequest buyRequest = (BuyRequest) super.request;
         card = Card.getCardByName(buyRequest.getCardName());
         if (card == null) {
