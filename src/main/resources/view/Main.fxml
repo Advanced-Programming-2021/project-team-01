@@ -4,48 +4,52 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import java.net.URL?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.MainView"
-            prefHeight="720.0" prefWidth="1366.0" styleClass="main">
+<AnchorPane prefHeight="720.0" prefWidth="1366.0" styleClass="main" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainView">
     <stylesheets>
         <URL value="@main.css"/>
     </stylesheets>
     <VBox spacing="10" translateX="40" translateY="50">
-        <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startGamePreview">
+        <ImageView fitHeight="99" fitWidth="237" onMouseClicked="#startGamePreview" styleClass="button">
             <Image url="@duelbox.png"/>
         </ImageView>
-        <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startScoreboardView">
+        <ImageView fitHeight="99" fitWidth="237" onMouseClicked="#startScoreboardView" styleClass="button">
             <Image url="@scoreboardbox.png"/>
         </ImageView>
-        <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startDeckView">
+        <ImageView fitHeight="99" fitWidth="237" onMouseClicked="#startDeckView" styleClass="button">
             <Image url="@deckbox.png"/>
         </ImageView>
-        <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startProfileView">
+        <ImageView fitHeight="99" fitWidth="237" onMouseClicked="#startProfileView" styleClass="button">
             <Image url="@profilebox.png"/>
         </ImageView>
-        <ImageView fitWidth="237" fitHeight="99" styleClass="button" onMouseClicked="#startImportExportView">
+        <ImageView fitHeight="99" fitWidth="237" onMouseClicked="#startImportExportView" styleClass="button">
             <Image url="@importexportbox.png"/>
         </ImageView>
-        <ImageView fitWidth="90" fitHeight="90" translateX="810" translateY="-20" styleClass="button"
-                   onMouseClicked="#startCardCreator">
+        <ImageView fitHeight="90" fitWidth="90" onMouseClicked="#startCardCreator" styleClass="button" translateX="810"
+                   translateY="-20">
             <Image url="@hammer.png"/>
         </ImageView>
-        <ImageView fitWidth="90" fitHeight="90" translateX="1190" translateY="-120" styleClass="button"
-                   onMouseClicked="#logout">
+        <ImageView fitHeight="90" fitWidth="90" onMouseClicked="#logout" styleClass="button" translateX="1190"
+                   translateY="-120">
             <Image url="@icons8-shutdown-80.png"/>
         </ImageView>
-        <ImageView fitWidth="90" fitHeight="90" translateX="1080" translateY="-220" styleClass="button"
-                   onMouseClicked="#startAdminView">
+        <ImageView fitHeight="90" fitWidth="90" onMouseClicked="#startAdminView" styleClass="button" translateX="1080"
+                   translateY="-220">
             <Image url="@admin.png"/>
         </ImageView>
-        <ImageView fitWidth="110" fitHeight="110" translateX="940" translateY="-330" styleClass="button"
-                   onMouseClicked="#startShopView">
+        <ImageView fitHeight="110" fitWidth="110" onMouseClicked="#startShopView" styleClass="button" translateX="940"
+                   translateY="-330">
             <Image url="@icons8-buy-100.png"/>
         </ImageView>
-        <ImageView fitWidth="100" fitHeight="99" translateX="670" translateY="-440" styleClass="button"
-                   onMouseClicked="#startChatView">
+        <ImageView fitHeight="99.0" fitWidth="101.0" onMouseClicked="#startChatView" styleClass="button"
+                   translateX="670" translateY="-440">
             <Image url="@Chat.png"/>
         </ImageView>
     </VBox>
+    <ImageView fitHeight="90.0" fitWidth="90.0" layoutX="593.0" layoutY="585.0" onMouseClicked="#startTv"
+               styleClass="button">
+        <image>
+            <Image url="@TV.png"/>
+        </image>
+    </ImageView>
 </AnchorPane>
