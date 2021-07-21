@@ -8,6 +8,8 @@ import model.OnlineGame;
 import model.Player;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class Server extends Application {
     private static void runServer() {
         Logger.set();
         try {
-            serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(12345,0,InetAddress.getByName("localhost"));
             while (true) {
                 Logger.log("Waiting for a client");
                 Socket socket = serverSocket.accept();

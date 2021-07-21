@@ -15,9 +15,9 @@ public class Client {
     Socket socket;
     private String token;
     ResponseHandler responseHandler;
-    private Client(int port){
+    private Client(String localHost, int port){
         try {
-            socket = new Socket("localhost", port); //set to any port
+            socket = new Socket(localHost, port); //set to any port and ip
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream());
             responseHandler = new ResponseHandler(in, out);
@@ -32,8 +32,8 @@ public class Client {
         out.flush();
     }
 
-    public static void setInstance(int port) {
-        instance = new Client(port);
+    public static void setInstance(String localHost,int port) {
+        instance = new Client(localHost, port);
     }
 
     public static Client getInstance() {
