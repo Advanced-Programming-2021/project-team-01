@@ -13,15 +13,20 @@ import com.gilecode.yagson.YaGsonBuilder;
 
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Scanner;
+
+import static Network.Requests.Request.PRETTY_PRINT_JSON;
 
 public class ClientHandler extends Thread {
 
     public static YaGsonBuilder gsonBuilder = new YaGsonBuilder();
-    public static YaGson gson = gsonBuilder.create();
-    private Socket socket;
+    public static YaGson gson = PRETTY_PRINT_JSON;
     public PrintWriter out;
     public Scanner in;
+    private Socket socket;
 
 
     //Server Side: handle requests that come from clients
@@ -36,10 +41,33 @@ public class ClientHandler extends Thread {
         }
     }
 
+    public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+        for (Map.Entry<T, E> entry : map.entrySet()) {
+            if (Objects.equals(value, entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
     @Override
     public void run() {
+        String input = "";
         while (true) {
-            String input = in.nextLine();
+            try {
+                input = in.nextLine();
+            } catch (NoSuchElementException e) {
+                String username = ClientHandler.getKeyByValue(Server.getClientHandlers(), this);
+                String[] token = {""};
+                Server.getLoggedInUsers().forEach((s, player) -> {
+                    if (player.getUsername().equals(username))
+                        token[0] = player.getAuthToken();
+                });
+                Server.getClientHandlers().remove(username);
+                Server.getLoggedInUsers().remove(token[0]);
+                Logger.log("Client disconnected");
+                break;
+            }
             Logger.log("Recieved: " + input);
             Request request = gson.fromJson(input, Request.class);
             processRequestAndRespond(request);
@@ -154,6 +182,9 @@ public class ClientHandler extends Thread {
             return;
         } else if (request instanceof NewMatchmakingRequest) {
             response = new MatchmakingResponse(request);
+            response.handleRequest();
+        } else if (request instanceof CancelMatchMakingRequest){
+            response = new CancelMatchMakingResponse(request);
             response.handleRequest();
         }
         Logger.log("Sent: " + response);

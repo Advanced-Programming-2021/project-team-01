@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import model.OnlineGame;
 import model.Player;
 import model.card.Card;
+import view.GamePreview;
 import view.MyAlert;
 import view.View;
 import view.ViewSwitcher;
@@ -58,9 +59,25 @@ public class StartOnlineDuelResponse extends Response {
     public void handleResponse() {
         if (exception == null) { //will go to the opponent Client
             String prompt = challenger + " has challenged you to a duel!\naccept?";
-            YesNoDialog yesNoDialog = new YesNoDialog(prompt);
-            yesNoDialog.showAndWait();
-            if (yesNoDialog.getResult()) {
+            boolean shouldGameStart = true;
+            try {
+                if ((((GamePreview)ViewSwitcher.getCurrentView()).superWaitingDialog != null &&
+                        (((GamePreview)ViewSwitcher.getCurrentView()).superWaitingDialog.isShowing()))) {
+                    ((GamePreview) ViewSwitcher.getCurrentView()).superWaitingDialog.setResult(true);
+                    ((GamePreview) ViewSwitcher.getCurrentView()).superWaitingDialog.close();
+                }else {
+                    YesNoDialog yesNoDialog = new YesNoDialog(prompt);
+                    yesNoDialog.showAndWait();
+                    System.out.println(prompt);
+                    shouldGameStart = yesNoDialog.getResult();
+                }
+            }catch (ClassCastException e){
+                YesNoDialog yesNoDialog = new YesNoDialog(prompt);
+                yesNoDialog.showAndWait();
+                System.out.println(prompt);
+                shouldGameStart = yesNoDialog.getResult();
+            }
+            if (shouldGameStart) {
                 try {
                     GameController.getInstance().setControllerNumber(2);
                     GameController.getInstance().startGame(game);

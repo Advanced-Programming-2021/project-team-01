@@ -15,7 +15,6 @@ import view.ViewSwitcher;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GameController {
@@ -23,6 +22,9 @@ public class GameController {
     protected static Player playerOne;
     protected static Player playerTwo;
     protected static Player currentPlayer;
+    public boolean isReversed = false;
+    public int controllerNumber;
+    public boolean done = true;
     protected PhaseController phaseController;
     protected AttackController attackController;
     protected EffectController effectController;
@@ -42,14 +44,7 @@ public class GameController {
     protected State state;
     protected Chain chain;
     protected ChainController chainController;
-    public boolean isReversed = false;
     private OnlineGame game;
-    public int controllerNumber;
-    public boolean done = true;
-
-    public void setControllerNumber(int controllerNumber) {
-        this.controllerNumber = controllerNumber;
-    }
 
     private GameController() {
 
@@ -79,6 +74,10 @@ public class GameController {
             return playerTwo;
         }
         return playerOne;
+    }
+
+    public void setControllerNumber(int controllerNumber) {
+        this.controllerNumber = controllerNumber;
     }
 
     public void resetChainController() {
@@ -191,7 +190,7 @@ public class GameController {
             throw new NoActiveDeck(playerTwo.getUsername());
         }
         currentPlayer = playerOne;
-        if (game.getStarterPlayer() == 2){ //fixme : what the hell
+        if (game.getStarterPlayer() == 2) { //fixme : what the hell
             currentPlayer = playerTwo;
         }
         Deck playerOneDeck = game.getChallengerDeck();
@@ -203,8 +202,8 @@ public class GameController {
         }
         setup(playerOneDeck);
         setup(playerTwoDeck);
-        int numberOfRounds = game.getNoOfRounds();
-        if (numberOfRounds == 3) {
+        rounds = game.getNoOfRounds();
+        if (rounds == 3) {
             playerOneWin = 0;
             playerTwoWin = 0;
         }
@@ -716,7 +715,7 @@ public class GameController {
                 DatabaseController.updatePlayer(playerOne);
                 DatabaseController.updatePlayer(playerTwo);
                 GameView.getInstance().reset();
-                new MyAlert(Alert.AlertType.CONFIRMATION, "player one win!").show();
+                new MyAlert(Alert.AlertType.CONFIRMATION, playerOne.getUsername() + "win!").show();
                 ViewSwitcher.switchTo(View.MAIN);
                 return String.format("%s won the game and the score is: %d-%d",
                         playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 100, 1000 + playerTwoLp.getValue());
@@ -728,13 +727,13 @@ public class GameController {
                 DatabaseController.updatePlayer(playerOne);
                 DatabaseController.updatePlayer(playerTwo);
                 GameView.getInstance().reset();
-                new MyAlert(Alert.AlertType.CONFIRMATION, "player two win!").show();
+                new MyAlert(Alert.AlertType.CONFIRMATION, playerTwo.getUsername() + " win!").show();
                 ViewSwitcher.switchTo(View.MAIN);
                 return String.format("%s won the game and the score is: %d-%d",
                         playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 1000 + playerOneLp.getValue(), 100);
             }
         } else {
-            if ((playerOneWin == 1 && playerTwoWin == 1) || (playerOneWin == 2 || playerTwoWin == 2)){
+            if ((playerOneWin == 1 && playerTwoWin == 1) || (playerOneWin == 2 || playerTwoWin == 2)) {
                 if (playerOneLp.getValue() <= 0) {
                     playerOne.increaseLoseRate();
                     playerTwo.increaseWinRate(3000);
@@ -743,7 +742,7 @@ public class GameController {
                     DatabaseController.updatePlayer(playerOne);
                     DatabaseController.updatePlayer(playerTwo);
                     GameView.getInstance().reset();
-                    new MyAlert(Alert.AlertType.CONFIRMATION, "player two win!").show();
+                    new MyAlert(Alert.AlertType.CONFIRMATION, playerTwo.getUsername() + " win!").show();
                     ViewSwitcher.switchTo(View.MAIN);
                     return String.format("%s won the game and the score is: %d-%d",
                             playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 300, 3000 + playerTwoLp.getValue());
@@ -756,12 +755,12 @@ public class GameController {
                     DatabaseController.updatePlayer(playerTwo);
                     HandleRequestType.currentMenu = Menu.MAIN_MENU;
                     GameView.getInstance().reset();
-                    new MyAlert(Alert.AlertType.CONFIRMATION, "player one win!").show();
+                    new MyAlert(Alert.AlertType.CONFIRMATION, playerOne.getUsername() + " win!").show();
                     ViewSwitcher.switchTo(View.MAIN);
                     return String.format("%s won the game and the score is: %d-%d",
                             playerOneLp.getValue() <= 0 ? playerTwo.getUsername() : playerOne.getUsername(), 3000 + playerOneLp.getValue(), 300);
                 }
-            }  else {
+            } else {
                 if (playerOneLp.getValue() <= 0)
                     playerTwoWin++;
                 else
@@ -803,7 +802,7 @@ public class GameController {
 
     }
 
-    public void swapPlayer(){
+    public void swapPlayer() {
         int winTemp = playerOneWin;
         playerOneWin = playerTwoWin;
         playerTwoWin = winTemp;

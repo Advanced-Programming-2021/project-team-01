@@ -15,10 +15,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Server extends Application {
 
-    private static ServerSocket serverSocket;
     private static final int port = 12345;
     private static final HashMap<String, Player> loggedInUsers = new HashMap<>();
     private static final HashMap<String, ClientHandler> clientHandlers = new HashMap<>();
@@ -27,6 +27,7 @@ public class Server extends Application {
     private static final List<String> chatRoomOnlineUsernames = new ArrayList<>();
     private static final List<String> oneRoundGames = new ArrayList<>();
     private static final List<String> threeRoundGames = new ArrayList<>();
+    private static ServerSocket serverSocket;
 
     public static void main(String[] args) throws Exception {
         DatabaseController.loadGameCards();
@@ -44,7 +45,7 @@ public class Server extends Application {
                 ClientHandler clientHandler = new ClientHandler(socket);
                 clientHandler.start();
             }
-        } catch (IOException e) {
+        }catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -64,6 +65,7 @@ public class Server extends Application {
     }
 
     public static void removeUser(String onlinePlayer) {
+        clientHandlers.remove(loggedInUsers.get(onlinePlayer).getUsername());
         loggedInUsers.remove(onlinePlayer);
     }
 

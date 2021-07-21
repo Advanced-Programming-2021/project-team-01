@@ -6,7 +6,6 @@ import Network.Requests.Request;
 import Network.Responses.Response;
 import Network.Server.ClientHandler;
 import Network.Server.Server;
-import com.gilecode.yagson.com.google.gson.annotations.Expose;
 import controller.DatabaseController;
 import controller.exceptions.UsernameNotExists;
 import controller.exceptions.WrongUsernamePassword;
@@ -14,12 +13,14 @@ import model.Player;
 import view.LoginView;
 import view.ViewSwitcher;
 
+import javax.security.auth.login.LoginException;
 import java.util.UUID;
 
 public class LoginResponse extends Response {
 
     private String token;
     private Player player;
+
     public LoginResponse(Request request) {
         super(request);
     }
@@ -39,11 +40,15 @@ public class LoginResponse extends Response {
             exception = new WrongUsernamePassword();
             return;
         }
+        if (Server.getClientHandlers().containsKey(player.getUsername())) {
+            exception = new Exception("user has already logged in");
+            return;
+        }
         if (exception == null) {
             token = UUID.randomUUID().toString();
             this.player = player;
             Server.getLoggedInUsers().put(token, player);
-            Server.getClientHandlers().put(username,clientHandler);
+            Server.getClientHandlers().put(username, clientHandler);
         }
     }
 
@@ -55,7 +60,7 @@ public class LoginResponse extends Response {
     @Override
     public void handleResponse() {
         LoginView loginView = (LoginView) ViewSwitcher.getCurrentView();
-        if (loginView.loginResponse(this)){
+        if (loginView.loginResponse(this)) {
             Client.getInstance().setToken(token);
         }
     }

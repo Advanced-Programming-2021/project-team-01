@@ -2,27 +2,23 @@ package view;
 
 import Network.Client.Client;
 import Network.Requests.Account.LogoutRequest;
-import Network.Server.Server;
 import controller.RegisterController;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import org.apache.commons.logging.Log;
 import view.transions.Lighting;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.Random;
-import java.util.Timer;
 
 public class MainView implements GraphicalView {
     Pane mainPane;
@@ -119,10 +115,14 @@ public class MainView implements GraphicalView {
     }
 
     @FXML
-    private void startGamePreview() { ViewSwitcher.switchTo(View.PRE_GAME); }
+    private void startGamePreview() {
+        ViewSwitcher.switchTo(View.PRE_GAME);
+    }
 
     @FXML
-    private void startChatView() { ViewSwitcher.switchTo(View.CHAT); }
+    private void startChatView() {
+        ViewSwitcher.switchTo(View.CHAT);
+    }
 
     @FXML
     public void startCardCreator(MouseEvent event) {
@@ -130,5 +130,15 @@ public class MainView implements GraphicalView {
     }
 
     @FXML
-    public void startAdminView(MouseEvent mouseEvent) { ViewSwitcher.switchTo(View.ADMIN_PANEL);}
+    public void startAdminView(MouseEvent mouseEvent) {
+        if (RegisterController.onlineUser.getUsername().equals("a"))
+            ViewSwitcher.switchTo(View.ADMIN_PANEL);
+        else
+            new MyAlert(Alert.AlertType.ERROR,"you are not Admin bro").show();
+    }
+
+    @FXML
+    public void startTv(MouseEvent mouseEvent) {
+        ViewSwitcher.switchTo(View.TV);
+    }
 }

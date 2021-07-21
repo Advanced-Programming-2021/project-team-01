@@ -20,7 +20,7 @@ public class DatabaseController {
         FileReader fileReader = new FileReader(file);
         CSVReader reader = new CSVReader(fileReader);
 
-        //AdminCard.loadAdminCards();
+        AdminCard.loadAdminCards();
         String[] monsterArray = reader.readNext();
         while ((monsterArray = reader.readNext()) != null) {
             Card.addCardToDatabase(new MonsterCard(monsterArray[0], monsterArray[7], Integer.parseInt(monsterArray[8]),

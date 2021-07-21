@@ -13,8 +13,8 @@ public enum View {
     GAME_VIEW("GameView.fxml"),
     CARD_CREATOR("card_creator.fxml"),
     CHAT("chat.fxml"),
-    ADMIN_PANEL("admin_panel.fxml");
-
+    ADMIN_PANEL("admin_panel.fxml"),
+    TV("tv.fxml");
     private String fileName;
 
     View(String fileName) {

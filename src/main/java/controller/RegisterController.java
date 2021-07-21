@@ -41,6 +41,7 @@ public class RegisterController {
         if (!player.getPassword().equals(password)) {
             throw new WrongUsernamePassword();
         }
+
         onlineUser = player;
         HandleRequestType.currentMenu = Menu.MAIN_MENU;
     }

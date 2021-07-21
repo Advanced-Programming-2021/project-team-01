@@ -18,7 +18,6 @@ public class WaitingDialog extends Dialog<Boolean> {
     public Boolean boroGomsho = Boolean.FALSE;
 
     public WaitingDialog() {
-        setX(0);
         pane = new BorderPane();
         BackgroundImage backgroundimage = new BackgroundImage(new Image(getClass().getResource("/Assets/50061.png").toExternalForm()),
                 BackgroundRepeat.REPEAT,

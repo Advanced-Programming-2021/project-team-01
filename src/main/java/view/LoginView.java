@@ -8,6 +8,7 @@ import Network.Responses.Account.RegisterResponse;
 import Network.Responses.Response;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import controller.RegisterController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -70,7 +71,11 @@ public class LoginView implements GraphicalView {
         }
         Request request = new LoginRequest(username, password);
         Client.getInstance().sendData(request.toString());
-//      RegisterController.getInstance().loginUser(username, password);
+        try {
+            RegisterController.getInstance().loginUser(username, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean loginResponse(Response response) {
